@@ -1,19 +1,32 @@
-#auto lo
-#auto eth0
-#auto eth1
-#auto wlan0
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
 
-#iface lo inet loopback
+# The loopback network interface
+auto lo
+iface lo inet loopback
 
-#iface eth0 inet static
-# address 10.152.187.1
-# netmask 255.255.255.0
-
-#iface eth1 inet dhcp
-
-#iface wlan0 inet static
-# address 192.168.1.1
-# netmask 255.255.255.0
-# up /sbin/iwconfig wlan0 mode TTTTTT && /sbin/iwconfig wlan0 enc restricted && /sbin/iwconfig wlan0 key [Y] XXXXXXXX && /sbin/iwconfig wlan0 essid SSSSSSSS
+# The primary network interface
+auto eth0
+iface eth0 inet dhcp
 
 
+#iface wlan0 inet manual
+# pre-up killall hostapd || true
+# up hostapd -B /etc/hostapd/hostapd.conf
+# post-down killall hostapd || true
+
+auto br0
+iface br0 inet static
+# bridge_ports regex eth[1-9] wlan0
+ bridge_ports regex eth[1-9]
+ bridge_maxwait 10
+ address 192.168.11.1
+ network 192.168.11.0
+ netmask 255.255.255.0
+ broadcast 192.168.11.255
+ pre-up killall dhcpd 2>/dev/null || true
+# pre-up killall hostapd 2>/dev/null || true
+ post-up dhcpd br0
+# post-up hostapd -B /etc/hostapd/hostapd.conf
+# post-down killall hostapd 2>/dev/null || true
+ post-down killall dhcpd 2>/dev/null || true
