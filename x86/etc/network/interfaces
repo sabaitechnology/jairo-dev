@@ -1,0 +1,19 @@
+#auto lo
+#auto eth0
+#auto eth1
+#auto wlan0
+
+#iface lo inet loopback
+
+#iface eth0 inet static
+# address 10.152.187.1
+# netmask 255.255.255.0
+
+#iface eth1 inet dhcp
+
+#iface wlan0 inet static
+# address 192.168.1.1
+# netmask 255.255.255.0
+# up /sbin/iwconfig wlan0 mode TTTTTT && /sbin/iwconfig wlan0 enc restricted && /sbin/iwconfig wlan0 key [Y] XXXXXXXX && /sbin/iwconfig wlan0 essid SSSSSSSS
+
+

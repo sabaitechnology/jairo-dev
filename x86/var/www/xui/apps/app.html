@@ -1,0 +1,86 @@
+<!DOCTYPE html><html><head>
+<!--
+<link rel='stylesheet' type='text/css' href='xui.css'>
+<script type='text/ecmascript' src='jquery-1.9.1.min.js'></script>
+<script type='text/ecmascript' src='jquery-ui.js'></script>
+<script type='text/ecmascript' src='xui.js'></script>
+ -->
+<script type='text/ecmascript'>
+/*
+<!-- ?php
+ $apps = array('familyFilter','freeNAS','freePBX','mediaServer','printServer','zoneMinder');
+ $appList = array();
+
+ foreach($apps as $app){ if(!is_dir('img/demos/'. $app )) continue;
+  $images = scandir('img/demos/'.$app);
+  foreach($images as $k => $v){ if($v=='..' || $v=='.') unset($images[$k]); }
+  $appList[]="\t$app: [\n\t\t'". implode($images,"',\n\t\t'") ."'\n\t]";
+ }
+ echo "appList = {\n". implode($appList,",\n") ."\n}\n";
+? -->
+*/
+/*
+var appList = {
+	familyFilter: [
+		'opendns-familyshield.jpg'
+	],
+	freeNAS: [
+		'FreeNAS_win_cifs.jpg',
+		'freenas-01.png',
+		'freenas_disk.png'
+	],
+	freePBX: [
+		'FreePBX Administration.png',
+		'FreePBX-module-admin.jpg',
+		'FreePBXInbound rules.png',
+		'FreePBX_login.png',
+		'freepbx-module-admin_1.jpg'
+	],
+	mediaServer: [
+		'XMBC_web.jpg',
+		'xbmc_image1.jpg',
+		'xbmc_image2.jpg',
+		'xbmc_image3.jpg',
+		'xbmc_image4.jpg'
+	],
+	printServer: [
+		'CUPS_add_printer.png',
+		'cups_main.jpg'
+	],
+	zoneMinder: [
+		'Admin-page.gif',
+		'zm-montage.jpg'
+	]
+}
+
+var slide = 0;
+var slides = false;
+var appName;
+
+function nextSlide(){ if(!slides) return;
+ $('body').css('background-image', 'url("img/demos/'+ appName +'/'+ appList[appName][slide++] +'")');
+ slide %= appList[appName].length;
+}
+
+$(function(){
+ appName = window.location.search.replace('?app=','');
+ if(appName==null || appName=='') backToMain();
+ if(appList[appName]) slides = appList[appName];
+ nextSlide();
+});
+*/
+</script>
+
+</head><body id='slideShow' onclick='nextSlide();'>
+<!--
+<div id='ribbon' class='graded' onclick='backToMain();'>
+-->
+<span id='ribbonTxt'>&laquo;BACK</span>
+<!--
+<img id='ribbonImg' src='img/sabaiTab.jpg'>
+</div>
+
+</div>
+-->
+</body>
+</html>

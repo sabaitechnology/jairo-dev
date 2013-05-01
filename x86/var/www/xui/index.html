@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><link rel='stylesheet' type='text/css' href='libs/xui.css'>
+<script type='text/ecmascript' src='libs/jquery-1.9.1.min.js'></script>
+<script type='text/ecmascript' src='libs/jquery-ui.min.js'></script>
+<script type='text/ecmascript' src='apps/apps.js'></script>
+<script type='text/ecmascript' src='libs/xui.js'></script>
+<script type='text/ecmascript'>
+var toID = [];
+
+function updateIconHeight(){
+ $('.app').css('height',$('.app').first().width());
+ var sz = $(document).height(); var rsz = sz / 65;
+ $('.appName').css('font-size', rsz+'px' );
+}
+
+function appShow(){ for(var i=0; i<toID.length; i++){ clearTimeout(toID[i]); }; $('#footer').show('slide', { direction: 'down' }); $('#infoText').html(apps[this.id].desc); }
+function appHide(){ $('#footer').hide('slide', { direction: 'down' }); $('#infoText').html(''); }
+function setHide(){ toID.push(setTimeout(appHide, 500)); }
+
+function addApps(){
+ var appList=[];
+ for(var i in apps){
+  appList.push(""
++"<div class='app' id='"+ i +"' onclick=\"location.href = 'apps/"+ i +"';\" style=\"background-image: url('apps/"+ i +"/img/"+ apps[i].icon +"')\">"
++"<span class='appName'>"+ apps[i].name +"</span>"
++(apps[i].req?"<img class='lockBox' src='img/lock.jpg'>":"")
++"</div>");
+ }
+ $('#appFrame').html(appList.join('\n'));
+}
+
+//function doApp(appName){ location.href = 'apps/'+ appName; }
+
+function loadApps(){ $('.app').hover(appShow,setHide); $(window).resize(updateIconHeight); updateIconHeight(); }
+
+$(function(){
+ addApps();
+ loadApps();
+});
+</script>
+</head><body>
+
+	<div id='appFrame'>
+<!--
+<div class="app" id="basicNetwork" onclick="doApp('basicNetwork');" style="background-image: url('img/appIcons/networking.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Basic Networking</span><img class="lockBox" src="img/lock.jpg"></div>
+<div class="app" id="vpn" onclick="doApp('vpn');" style="background-image: url('img/appIcons/vpn.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">VPN</span><img class="lockBox" src="img/lock.jpg"></div>
+<div class="app" id="modStore" onclick="doApp('modStore');" style="background-image: url('img/appIcons/modstore.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Mod Store</span><img class="lockBox" src="img/lock.jpg"></div>
+<div class="app" id="freePBX" onclick="doApp('freePBX');" style="background-image: url('img/appIcons/freepbx.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Free PBX</span></div>
+<div class="app" id="freeNAS" onclick="doApp('freeNAS');" style="background-image: url('img/appIcons/freenas.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Free NAS</span></div>
+<div class="app" id="mediaServer" onclick="doApp('mediaServer');" style="background-image: url('img/appIcons/mediashare.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Media Server</span></div>
+<div class="app" id="zoneMinder" onclick="doApp('zoneMinder');" style="background-image: url('img/appIcons/zoneminder.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">ZoneMinder</span></div>
+<div class="app" id="familyFilter" onclick="doApp('familyFilter');" style="background-image: url('img/appIcons/familyshield.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Family Filter</span></div>
+<div class="app" id="printServer" onclick="doApp('printServer');" style="background-image: url('img/appIcons/unixprinting.jpg'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Print Server</span></div>
+<div class="app" id="off" onclick="doApp('off');" style="background-image: url('img/appIcons/Shutdown.png'); height: 234.767px;"><span style="font-size: 20.1692px;" class="appName">Off</span><img class="lockBox" src="img/lock.jpg"></div>
+-->
+	</div>
+	<div id='header' class='graded'>
+<img id='sabaiBug' src='img/sabaiBug.png'>
+<span class='headText'>MODE: Sabai Protected</span>
+
+<span class='headSeparator'></span>
+
+<span class='headText'>STATUS: Online</span>
+	</div>
+	<div id='footer' class='noshow'>
+
+<img id='infoLine' src='img/infoLine.jpg'>
+<div id='infoText'></div>
+
+	</div>
+
+</body></html>
+
+
+
+
