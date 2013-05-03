@@ -19,14 +19,16 @@ auto br0
 iface br0 inet static
 # bridge_ports regex eth[1-9] wlan0
  bridge_ports regex eth[1-9]
- bridge_maxwait 10
+ bridge_maxwait 0
  address 192.168.11.1
  network 192.168.11.0
  netmask 255.255.255.0
  broadcast 192.168.11.255
  pre-up killall dhcpd 2>/dev/null || true
 # pre-up killall hostapd 2>/dev/null || true
+# pre-up ifup wlan0
  post-up dhcpd br0
 # post-up hostapd -B /etc/hostapd/hostapd.conf
 # post-down killall hostapd 2>/dev/null || true
+# post-down ifdown wlan0
  post-down killall dhcpd 2>/dev/null || true
