@@ -1,8 +1,6 @@
 <div class='pageTitle'>Network: Wan</div>
 <div class='controlBox'>
 
-<!--
-
 <ul id='wanType' class='radioSwitch'>
  <li class='button'>DHCP
  <li class='button'>Static
@@ -21,7 +19,6 @@
 </label>
 
 <br>
--->
 
  <div id='dhcpRange'>
   DHCP Range: <input id='dhcpRangeMin' name='dhcpRangeMinValue' /> - <input id='dhcpRangeMax' name='dhcpRangeMaxValue' />

@@ -7,6 +7,8 @@
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script src="/libs/jquery.mousewheel.js"></script>
 <!-- script type='text/ecmascript' src='/libs/xui.js'></script -->
+<script type='text/ecmascript' src='js/math.js'></script>
+<script type='text/ecmascript' src='js/widgets.js'></script>
 <script type='text/ecmascript' src='js/main.js'></script>
 <script type='text/ecmascript'>
 <?php

@@ -1,9 +1,9 @@
 
 function what(obj,pre){
- if($.isPlainObject(obj)) return 'EMPTY';
+// if($.isPlainObject(obj)) return 'EMPTY';
  var txt=[];
  if(pre) txt.push('<pre>');
- var txt=[obj];
+ txt.push(obj);
  for(var i in obj){ txt.push(i +': '+ obj[i]); }; 
  if(pre) txt.push('</pre>');
  return txt.join('\n');
@@ -17,4 +17,3 @@ $(function(){ if(panel==''){ panel = 'network'; }; if(section==''){ section = 'w
  $('.subMenu').hide(); $('.superMenuLink').click(showSubMenu); $('#'+ panel +'SubMenu' ).show();
  $('#'+ panel +'_'+ section ).addClass('buttonSelected');
 });
-
