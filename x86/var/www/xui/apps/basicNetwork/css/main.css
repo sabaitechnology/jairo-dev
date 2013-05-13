@@ -128,6 +128,10 @@ ul#superMenu, ul.subMenu {
 
  /* radioSwitch BEGIN */
 
+/*
+.radioSwitchElement { display: none; visibility: hidden; }
+*/
+
 .radioSwitch {
  list-style-type: none;
  display: inline-block;
@@ -151,7 +155,10 @@ ul#superMenu, ul.subMenu {
 
  /* slideToggle BEGIN */
 
-.slideToggle { display: none; visibility: none; }
+.slideToggle {
+ display: none;
+ visibility: hidden;
+}
 .slideToggleButton,
 .slideToggleContent,
 .slideToggleSlider {
@@ -222,19 +229,26 @@ ul#superMenu, ul.subMenu {
 }
 
 .slideToggleRight span { float: right; }
+.slideToggle + .slideToggleViewport .slideToggleContent { width: 41.75%; }
 
+.slideToggle:checked + .slideToggleViewport > .slideToggleSlider { left: 0; }
+.slideToggle:checked + .slideToggleViewport .slideToggleButton { left: 34%; }
+.slideToggle:checked + .slideToggleViewport .slideToggleLeft { margin-left: 0; }
+
+.slideToggle + .slideToggleViewport > .slideToggleSlider { left: -100%; }
+.slideToggle + .slideToggleViewport .slideToggleButton { left: 50%; }
+.slideToggle + .slideToggleViewport .slideToggleLeft { margin-left: 16.5%; }
+
+/*
 .slideToggle + .slideToggleViewport > .slideToggleSlider { left: 0; }
 .slideToggle + .slideToggleViewport .slideToggleButton { left: 34%; }
-.slideToggle + .slideToggleViewport .slideToggleContent { width: 41.75%; }
 .slideToggle + .slideToggleViewport .slideToggleLeft { margin-left: 0; }
 
 .slideToggle:checked + .slideToggleViewport > .slideToggleSlider { left: -100%; }
 .slideToggle:checked + .slideToggleViewport .slideToggleButton { left: 50%; }
 .slideToggle:checked + .slideToggleViewport .slideToggleLeft { margin-left: 16.5%; }
-
+*/
  /* slideToggle END */
-
-#dhcpRange { margin: 1em; }
 
 .rangeSlider { margin: 1em 0 0; }
 

@@ -1,5 +1,7 @@
 <?php
 
+ $rtd = '/home/vaelyn/Dropbox/x86/x86'; // Default: ''
+
  $uiid = 'CADAEIC';
 
  $wanif = 'eth0';

@@ -40,7 +40,7 @@
    <li>
     <a id='wireless' class='superMenuLink button'>Wireless</a>
     <ul id='wirelessSubMenu' class='subMenu'>
-     <li><a id='wireless_wl0' href='?panel=wireless&section=wl0' class='subMenuLink button'>2.4Ghz</a></li>
+     <li><a id='wireless_wl0' href='?panel=wireless&section=wl0' class='subMenuLink button'>WL0</a></li>
      <li><a id='wireless_survey' href='?panel=wireless&section=survey' class='subMenuLink button'>Survey</a></li>
      <li><a id='wireless_macfilter' href='?panel=wireless&section=macfilter' class='subMenuLink button'>MAC Filter</a></li>
     </ul>

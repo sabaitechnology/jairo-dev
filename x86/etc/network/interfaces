@@ -10,7 +10,8 @@ auto eth0
 iface eth0 inet dhcp
 
 
-#iface wlan0 inet manual
+iface wlan0 inet manual
+ hostapd /etc/hostapd/hostapd.conf
 # pre-up killall hostapd || true
 # up hostapd -B /etc/hostapd/hostapd.conf
 # post-down killall hostapd || true
@@ -28,7 +29,8 @@ iface br0 inet static
 # pre-up killall hostapd 2>/dev/null || true
 # pre-up ifup wlan0
  post-up dhcpd br0
+ post-up ifup wlan0
 # post-up hostapd -B /etc/hostapd/hostapd.conf
 # post-down killall hostapd 2>/dev/null || true
-# post-down ifdown wlan0
- post-down killall dhcpd 2>/dev/null || true
+ pre-down ifdown wlan0
+ pre-down killall dhcpd 2>/dev/null || true
