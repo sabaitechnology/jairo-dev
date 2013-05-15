@@ -9,6 +9,11 @@ $.widget("jai.maskspinner", $.ui.spinner, {
  _format: function(value){ return cidr2mask(value); }
 });
 
+$.widget("jai.macspinner", $.ui.spinner, {
+ _parse: function(value){ return ( (typeof value === "string") ? mac2long(value) : value ); },
+ _format: function(value){ return long2mac(value); }
+});
+
 $.widget('jai.radioswitch', $.Widget, {
  _create: function(){
 //  var opts = this.options; //.change;

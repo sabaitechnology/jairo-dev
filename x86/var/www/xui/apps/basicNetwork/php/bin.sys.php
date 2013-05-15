@@ -1,11 +1,14 @@
 <?php
 
- $rtd = '/home/vaelyn/Dropbox/x86/x86'; // Default: ''
+ function setConf($w,$conf){
+  // TODO: Assign values
+  if(file_put_contents('../etc.new.js',json_encode($conf,JSON_PRETTY_PRINT),LOCK_EX) === FALSE) return; // TODO: Handle conf write failure
+ }
 
- $uiid = 'CADAEIC';
+ function getConf($q){ global $conf; //  $q = explode(',','sys,'. $q);//  $q[] = 'sys';
+  foreach(explode(',','sys,'. $q) as $i){ if(array_key_exists($i,$conf)) echo $i .' = '. json_encode($conf->$i) .";\n"; }
+ }
 
- $wanif = 'eth0';
- $lanif = 'br0';
- $lanifs = array('eth1','eth2','eth3','eth4','eth5'); 
+ $conf = json_decode(file_get_contents('../etc.js'));
 
 ?>

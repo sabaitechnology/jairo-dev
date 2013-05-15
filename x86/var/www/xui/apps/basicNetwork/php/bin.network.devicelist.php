@@ -1,41 +1,35 @@
 <?php
 
+ header('Content-type: text/ecmascript');
  include('bin.sys.php');
 
-if(0){
-?>
-<form id='fe'>
-<div class='pageTitle'>Network: Lan</div>
-<div class='controlBox'>
-<!--
- DHCP Leases
- ARP List
- Static Addresses?
--->
-<table><tbody>
-<tr><td></td><td></td></tr>
-</tbody></table>
+function parsedhcpLeases(){
+/*
+$dhcp_info = array(
+ 'starts'=> array( 'name'=>'start', 'search'=>"/^starts [\d]* (.*)/" ),
+ 'ends'=> array( 'name'=>'end', 'search'=>"/^ends [\d]* (.*)/" ),
+ 'cltt'=> array( 'name'=>'last', 'search'=>"/^cltt [\d]* (.*)/" ),
+ 'hardware'=> array( 'name'=>'mac', 'search'=>"/^hardware [^ ]* ([:0-9A-F]*)/" ),
+ 'binding state'=> array( 'name'=>'state', 'search'=>"/^binding state (.*)/" ),
+ 'client-hostname'=> array( 'name'=>'hostname', 'search'=>"/^client-hostname \"([^\"]*)\"/" )
+);
+*/
 
-<table id='list'></table>
+$dhcp_info = array(
+ 'start'=>"/^starts [\d]* (.*)/",
+ 'end'=>"/^ends [\d]* (.*)/",
+ 'last'=>"/^cltt [\d]* (.*)/",
+ 'mac'=>"/^hardware [^ ]* ([:0-9A-F]*)/",
+ 'state'=>"/^binding state (.*)/",
+ 'hostname'=>"/^client-hostname \"([^\"]*)\"/"
+);
 
-<input type='button' value='test' onclick='sub();'>
+//var_dump($dhcp_info );
 
-</div>
+//return;
 
-<div class='controlBox'>
-<pre id='demov'></pre>
-<pre id='demo'></pre>
-
-</div>
-</form>
-<script type='text/ecmascript'>
-<?php
-}
-header('Content-type: text/ecmascript');
-
-function parsedhcpLeases(){ $dl = '';
- $dl1 = file_get_contents("/var/lib/dhcp/dhcpd.leases");
-$dl2 = <<<EOF
+// $dl = file_get_contents("/var/lib/dhcp/dhcpd.leases");
+$dl = <<<EOF
 # The format of this file is documented in the dhcpd.leases(5) manual page.
 # This lease file was written by isc-dhcp-4.1-ESV-R4
 
@@ -70,83 +64,37 @@ lease 10.0.134.100 {
 
 EOF
 ;
-
-$dn = explode("\n",$dl1);
-$dm = explode("\n",$dl2);
-
-for($i=0; $i<count($dn); $i++){
- echo strcmp($dn[$i],$dm[$i]) ."\n";
+ preg_match_all("/^lease ([^ ]*) {([^}]*)/m",$dl, $dg);
+ $dhcp_clients = array();
+ for($i=0; $i<count($dg[0]); $i++){
+  $dli = explode(';',preg_replace(array("/^[ ]{1,}/m","/\n/"),'',trim($dg[2][$i])));
+  $dhcp_clients[$i] = array();
+  $dhcp_clients[$i]['src'] = 'dhcp';
+  $dhcp_clients[$i]['ip'] = $dg[1][$i];
+  foreach($dhcp_info as $k => $v){
+   $dhcp_clients[$i][$k] = preg_filter($v,"$1",array_shift(preg_grep($v,$dli)));
+  }
+ }
+ return $dhcp_clients;
 }
 
-// $dl = trim(preg_replace(array("/^#[^\n]*/m","/\n{1,}/","/^[ \t]+/m"),array('',"\n",''),$dl));
-// $dl = preg_replace(array("/\n/"),'',$dl);
-// $dl = preg_replace(array("/^lease/","/^}/"),"\n",$dl);
-
-// echo "~$dl~";
-
-
-// preg_match_all("/^lease ([^ ]*) {([^}]*)/m",$dl, $dg);
-
-// var_dump($dg);
-
-// echo preg_replace("/lease ([^ ]*) /","\n - $1~$2 - \n",$dl);
-
-// $df = preg_filter("/lease ([^ ]*) {([^}]*)/","~ $1 : $2 ~",$dl);
-
-// var_dump($dl);
-// echo "\n---\n";
-// var_dump($df);
-// exit;
-// return $dl;
-}
-
-function parseArpList(){ global $rtd;
-
-// exec("/usr/sbin/arp -na",$al);
-$al = array(
+function parseArpList(){ // exec("/usr/sbin/arp -na",$arp_list);
+$arp_list = array(
  "? (10.0.134.100) at 20:6a:8a:6d:45:05 [ether] on br0",
  "? (192.168.134.1) at c0:c1:c0:11:2c:1b [ether] on eth0"
 );
-// foreach($al as $ai){
-//  echo preg_filter("/? ([^)])* at ([^ ]*) \[[^\]]\] on (.*)/","$1,$2,$3",$ai);
-//  echo preg_filter("/^\? \(([^)]*)\) at ([^ ]*) \[[^\]]*\] on (.*)/","~:$1,$2,$3:~ ",$ai) ."\n";
-// }
 
-// exit;
-/*
- $dl = file("$rtd/tmp/arp.list", FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES );
- foreach($dl as &$line){
-  $line = explode(' ',$line);
-  if($line[0]=='?' && count($line)==7){
-   $line = array( preg_replace("/[()]/",'',$line[1]), $line[3], $line[6] );
-  }else if(count($line)==5){
-   $line = array( $line[0], $line[2], $line[4] );
-  }
-  echo implode(', ',$line) ."\n";
+ $arp_list = preg_filter("/^\? \(([^)]*)\) at ([^ ]*) \[[^\]]*\] on (.*)/","$1,$2,$3",$arp_list);
+ foreach($arp_list as &$arp_entry){
+  $arp_entry = explode(',',$arp_entry);
+  $arp_entry = array( 'src'=>'arp', 'ip'=>$arp_entry[0], 'mac'=>strtoupper($arp_entry[1]), 'device'=>$arp_entry[2] );
  }
-
- echo "\n\n";
-  echo json_encode($dl) ."\n";
-// var_dump($dl);
-*/
-// return $dl;
+ return $arp_list;
 }
 
+echo json_encode( array_merge(parsedhcpLeases(),parseArpList()), JSON_PRETTY_PRINT );
 
- $dhcpLeases = parsedhcpLeases();
- $arpTables = parseArpList();
+//echo 'var devicelist = '. 
+// echo json_encode( array( 'aaData'=>array_merge(parsedhcpLeases(),parseArpList()) ) ); //,JSON_PRETTY_PRINT );
 
-return;
 ?>
-
-
-$(function(){
- $('#list').dataTable({
-  "aaData": [
-  ],
-  "aoColumns": [
-  ]
- });
-});
-
-</script>

@@ -52,23 +52,9 @@ WINS?
 
 </form>
 </div>
-
+<script type='text/ecmascript' src='php/bin.etc.php?q=lan,dhcp'></script>
 <script type='text/ecmascript'>
-
-
- var network = {
-//  ipMin: 
- }
-
- var lan = {
-  ip: '10.0.0.1',
-  mask: '255.255.255.0'
- }
-
- var dhcp = {
-  lower: '10.0.0.100',
-  upper: '10.0.0.199'
- }
+ var network = {}
 
  var dhcpRangeMin = ip2long('10.0.0.1');
  var dhcpRangeMax = ip2long('10.0.0.254');

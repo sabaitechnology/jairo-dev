@@ -30,3 +30,11 @@ function long2ip(ip) {
 
 function cidr2mask(cidr){ return long2ip( ( cidr<=0 || cidr > 32)?0:( -1 << 32-cidr ) ); }
 function mask2cidr(mask){ if(typeof mask !=='string'){ return 0; }; mask = mask.split('.'); var cidr=0, n=0; while(n=mask.shift()) while(n>0){ n = ((n<<1) % 256); cidr++; }; return cidr; }
+
+function padString(pad, length){ var padstr = ''; while(length-->0){ padstr += pad; }; return padstr; }
+
+function mac2long(value){ return ( (typeof value === "string") ? parseInt(value.replace(/:/g,''),16) : value ); }
+function long2mac(value){ var v = value.toString(16); return (padString('0',12-v.length) + v).match(/.{0,2}/g).slice(0,-1).join(':'); }
+
+
+
