@@ -2,7 +2,7 @@
 // include('../php/bin.sys.php');
 ?>
 <form id='fe'>
-<div class='pageTitle'>Network: Lan</div>
+<div class='pageTitle'>Network: Device List</div>
 <div class='controlBox'>
 <!--
  DHCP Leases
@@ -30,7 +30,7 @@
    { "sTitle": "Lease Ends",	"mData":"end" },
    { "sTitle": "Last Contact",	"mData":"last" }
   ]
- });
+ })
 
-//$(function(){ });
+//$(function(){});
 </script>

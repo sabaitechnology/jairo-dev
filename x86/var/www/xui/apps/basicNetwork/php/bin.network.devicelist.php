@@ -3,7 +3,6 @@
  header('Content-type: text/ecmascript');
  include('bin.sys.php');
 
-$lanDevice='br0';
 $dhcp_info = array(
  'start'=>"/^starts [\d]* (.*)/",
  'end'=>"/^ends [\d]* (.*)/",
@@ -57,7 +56,7 @@ function parsedhcpLeases(){ global $dl; global $dhcp_info;// $dl = file_get_cont
  $dhcp_clients = array();
  for($i=0; $i<count($dg[0]); $i++){
   $dli = explode(';',preg_replace(array("/^[ ]{1,}/m","/\n/"),'',trim($dg[2][$i])));
-  $dhcp_clients[$i] = array('src'=>'dhcp', 'ip'=>$dg[1][$i], 'device'=>$GLOBALS['lanDevice']);
+  $dhcp_clients[$i] = array('src'=>'dhcp', 'ip'=>$dg[1][$i], 'device'=>$GLOBALS['conf']->lan->if);
   foreach($dhcp_info as $k => $v){
    $dhcp_clients[$i][$k] = preg_filter($v,"$1",array_shift(preg_grep($v,$dli)));
   }
