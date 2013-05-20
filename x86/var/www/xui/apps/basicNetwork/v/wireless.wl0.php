@@ -1,5 +1,5 @@
 <form id='fe'>
-<div class='pageTitle'>Network: Wan</div>
+<div class='pageTitle'>Network: WL0</div>
 <!--	TODO:
 WAN PPPoE { username, password, options, mode/interval } and IPv6
 DDNS: { ip, interval, services }

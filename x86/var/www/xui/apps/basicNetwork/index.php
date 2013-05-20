@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-<title id='mainTitle'>Sabai x86</title>
+<title id='mainTitle'>Jai</title>
 <link rel='stylesheet' type='text/css' href='/libs/jquery-ui.min.css'>
 <link rel='stylesheet' type='text/css' href='css/main.css'>
 
