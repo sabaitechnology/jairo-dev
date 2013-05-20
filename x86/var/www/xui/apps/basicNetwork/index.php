@@ -33,7 +33,7 @@
      <li><a id='network_wan' href='?panel=network&section=wan' class='subMenuLink button'>WAN</a></li>
      <li><a id='network_lan' href='?panel=network&section=lan' class='subMenuLink button'>LAN</a></li>
      <li><a id='network_devicelist' href='?panel=network&section=devicelist' class='subMenuLink button'>Device List</a></li>
-     <li><a id='network_staticip' href='?panel=network&section=staticip' class='subMenuLink button'>Static IPs</a></li>
+     <li><a id='network_staticips' href='?panel=network&section=staticips' class='subMenuLink button'>Static IPs</a></li>
     </ul>
    </li>
 
