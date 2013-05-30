@@ -16,7 +16,7 @@ function init(){ hidden = E('hideme'); hide = E('hiddentext'); logWindow = E('re
 #response { width: 99%; max-width: 800px; min-height: 480px; margin-top: 4px; box-shadow: .3px .3px .3px .3px inset; background:#FFF; padding: 4px; overflow: auto; }
 .pointy { cursor: pointer; }
 #shellbox { font: 12px monospace; height: 12em; width: 99%; }
-</style></head><body onload='init();'><form id='_fom' method='post'>
+</style></head><body onload='init();'>
 <input type='hidden' name='act' value='all'>
 <table id='container' cellspacing=0>
 <tr><td colspan=2 id='header'><a href='http://www.sabaitechnology.com'><img src='images/sabai.png' id='headlogo'></a><div class='title' id='SVPNstatus'>Sabai VPN</div><div class='version' id='subversion'>Accelerator</div></td></tr>
@@ -37,7 +37,7 @@ switch($tool){
 ?></td></tr></tbody></table>
 <pre id='response'></pre>
 </div></div></td></tr>
-</table></form>
+</table>
 
 <div id='hideme'><div class='centercolumncontainer'><div class='middlecontainer'>
 <div id='hiddentext'>Please wait...</div><br><center><img src='images/SabaiSpin.gif'></center>

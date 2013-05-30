@@ -1,4 +1,3 @@
-<form id='fe'>
 <div class='pageTitle'>VPN: PPTP</div>
 <div class='controlBox'>
 
@@ -23,7 +22,6 @@
 <!-- table><tbody><tr><td id='footer' colspan=2><span id='footer-msg'></span></td></tr></tbody></table -->
 </div>
 
-</form>
 <script type='text/javascript'>
 var f;
 var processing = ['Sav','Start','Stopp','Eras'];

@@ -32,3 +32,60 @@ $.widget('jai.radioswitch', $.Widget, {
   $(this.element).hide();
  }
 });
+
+$.widget( "ui.timespinner", $.ui.spinner, {
+ options: {
+  step: 60000, // 60 * 1000, // seconds
+  page: 60 // hours
+ },
+ _parse: function(value){
+  if( typeof value !== "string" ) return value;
+  if( Number( value ) == value ) return Number( value );
+  return +Globalize.parseDate( value );
+ },
+ _format: function(value){ return Globalize.format(new Date(value),'t'); }
+});
+
+$.widget( "jai.hidespinner", $.ui.spinner, {
+ _parse: function(value){
+//  if(typeof value ==="string"){}
+  return value;
+ },
+ _format: function(value){
+  return value;
+//  return Globalize.format(new Date(value),'t');
+ }
+});
+
+
+/* BEGIN Editable List Widget Junk*/
+
+function addLI(UL){
+ var LI = document.createElement('li');
+ $('#'+UL).append(LI).sortable('refresh').sortable().trigger('create');
+ makeEditable(LI);
+ $(LI).trigger('dblclick');
+}
+
+function makeEditable(item){
+ $(item).editable(function(value, settings){ if(value==''){ $(this).remove(); }; return value; },
+  { 'onblur': 'submit', 'event': 'dblclick' }
+ ).click(function(event,ui){ if(event.ctrlKey) $(this).remove(); });
+}
+
+function makeEditableList(listArray, listElement, formElement){
+ $(listElement).html( $.map(listArray,function(v,i){ return "<li id='"+ v +"'>"+v+"</li>"; }).join('') ).sortable({
+  forcePlaceholderSize: true,
+  forceHelperSize: true,
+  placeholder: "editableListPlaceholder",
+  create: function(event,ui){
+   makeEditable($(this).children('li'));
+   $(formElement).val($(listElement).sortable('toArray'));
+  },
+  stop: function(event,ui){
+   $(formElement).val($(listElement).sortable('toArray'));
+  }
+ });
+}
+
+/* END Editable List Widget Junk*/

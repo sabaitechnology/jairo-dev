@@ -2,7 +2,10 @@ html,body { height: 100%; width: 100%; margin: 0; padding: 0; }
 body { background-color: hsl(210,25%,95%); /*#f0f3f6*/ font: 16px Arial,Helvetica,sans-serif; }
 #backdrop { position: relative; margin: 0 auto; width: 80%; min-width: 750px; min-height: 100%;
  background-color: hsl(213,42%,91%); /*#dde6f1*/
- border: solid white; border-width: 0 1px; box-shadow: 0 0 5px 5px #ccc; }
+ border: 1px solid white;
+ border-width: 0 1px;
+ box-shadow: 0 0 5px 5px #ccc;
+}
 #menuContainer {
  position: fixed;
  min-width: 150px;
@@ -11,7 +14,7 @@ body { background-color: hsl(210,25%,95%); /*#f0f3f6*/ font: 16px Arial,Helvetic
  overflow: auto;
 }
 #panelContainer { position: relative; left: 20%; width: 80%; min-width: 600px; min-height: 100%; }
-#panel { background-color: hsl(213,42%,91%); /*#dde6f1*/ padding: 10px; border: 0 solid gray; border-width: 0 0 0 1px; }
+#panel { background-color: hsl(213,42%,91%); /*#dde6f1*/ padding: 10px; border: 0; min-height: 100%; border: 0 solid silver; border-width: 0 0 0 1px; }
 
 #currentPanel {
 
@@ -74,12 +77,38 @@ ul#superMenu, ul.subMenu {
 }
 
 .controlBox {
- border: 1px solid silver;
- outline: 1px dashed white;
+/*
+ outline: 1px solid silver;
+*/
  margin: 10px 5px;
- padding: 5px;
+ background: #CED7E1;
+/*
+ background: #EFF2F5;
+ background: #DEE7F1;
+ background: #EFF2F5;
+*/
 }
 
+.controlBoxTitle {
+ display: inline-block;
+ font-size: 1.2em;
+ font-weight: bold;
+ text-indent: .5em;
+ color: #1B75BB;
+ margin: .4em 0 .4em .25em;
+}
+
+.controlBoxContent {
+/*
+ background: #DEE7F1;
+ background: #CED7E1;
+ background: #EFF2F5;
+ background: #CED7E1;
+*/
+ padding: .25em 1em;
+ background: #EFF2F5;
+ border: 1px solid transparent;
+}
 
  /* Control Page styles END */
 
@@ -251,4 +280,42 @@ ul#superMenu, ul.subMenu {
  /* slideToggle END */
 
 .rangeSlider { margin: 1em 0 0; }
+
+.deleteX { float: right; margin-left: .5em; border: 1px solid silver; line-height: 1em; }
+
+ul.editableList {
+ display: inline-block;
+ padding: 0;
+ list-style-type: none;
+ cursor: pointer;
+ border: 1px solid silver;
+}
+
+ul.editableList > li {
+ display: block;
+ padding: .25em;
+
+ color: hsl(204, 70%, 59%);
+ background: #F0F3F6;
+ background: hsl(210, 25%, 95%);
+
+ background: -webkit-linear-gradient(top, #F0F3F6 50%, #E5E5E5 99%);
+ background: -ms-linear-gradient(top, #F0F3F6 50%, #E5E5E5 99%); 
+ background: -moz-linear-gradient(top, #F0F3F6 50%, #E5E5E5 99%);
+ background: -o-linear-gradient(top, #F0F3F6 50%, #E5E5E5 99%); 
+ background: linear-gradient(top, #F0F3F6 50%, #E5E5E5 99%);
+ cursor: pointer;
+
+}
+
+.editableListPlaceholder {
+ display: table-row;
+ border: 0 !important;
+ background-color: red !important;
+ padding: 0 !important;
+ width: 100%;
+ height: 2em;
+}
+/* TODO: make image for slider handles. .ui-slider-handle { background: url("images/ui-bg_glass_custom_slider_handle.png") repeat-x scroll 50% 50% #E6E6E6; } */
+
 

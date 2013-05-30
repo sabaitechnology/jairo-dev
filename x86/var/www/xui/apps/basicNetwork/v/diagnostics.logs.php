@@ -7,7 +7,6 @@
 #response { width: 100%; height: 480px; margin-top:2px; box-shadow: .3px .3px .3px .3px inset; background:#FFF; }
 .pointy { cursor: pointer; }
 </style -->
-<form id='fe'>
 
 <input type='hidden' name='act' value='all'>
 
@@ -22,9 +21,9 @@
   Lines</a>
 </td>
 <td><a onclick="getLog('all');" class="pointy">View All</a></td>
-<td><select id='log' name='log' onchange="getLog('last');"><?php
+<td><select id='log' name='log' onchange="getLog('last');"><!-- ?php
  foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
-?></select></td>
+? --></select></td>
 <td><input type="text" maxsize=32 size=33 id='findText' name='find'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
 </tr></tbody></table>
 
@@ -32,15 +31,47 @@
 
 </div>
 
+
+
+<div class='controlBox'>
+ <span class='controlBoxTitle'>Demo</span>
+ <div class='controlBoxContent'>
+  <pre id='demo'>
+
+<?php
+
+// $logs = glob('/var/log/*.log');
+// $logs = glob('/var/log/*');
+ $logdir = '/var/log/';
+ $logs = scandir($logdir);
+
+ foreach($logs as $log){
+  if($log=='.' || $log=='..') continue;
+  if(is_dir($logdir.$log)){
+  }
+  echo $log .": ". is_dir($logdir.$log) ."\n";
+ }
+
+// var_dump($logs);
+
+// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
+
+?>
+
+
+
+  </pre>
+ </div>
+</div>
+
+
+
 <!-- div id='hideme'><div class='centercolumncontainer'><div class='middlecontainer'>
 <div id='hiddentext'>Please wait...</div><br><center><img src='images/SabaiSpin.gif'></center>
 </div></div></div -->
 
-</form>
-$(function(){
+<script type='text/javascript'>
 
-});
-<!-- script type='text/javascript'>
 var logWindow, logForm, logSelect, hidden, hide;
 function setDropdown(res){ eval(res);
  while(i = logs.shift()){ $('#log').append(new Option(i,i)); }
@@ -62,4 +93,9 @@ function init(){ hidden = E('hideme'); hide = E('hiddentext');
  getDropdown();
  $('#findText').on("keydown", catchEnter);
 }
-</script -->
+
+$(function(){
+
+});
+
+</script>

@@ -1,22 +1,22 @@
 <?php
 // include('../php/bin.sys.php');
 ?>
-<form id='fe'>
 <div class='pageTitle'>Network: Device List</div>
-<div class='controlBox'>
 <!--
  DHCP Leases
  ARP List
  Static Addresses?
 -->
-<table id='list'></table>
+<div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'>
+ <table id='list'></table>
 <!-- input type='button' value='test' onclick='sub();' -->
-</div>
+</div></div>
 
-</form>
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript'>
  $('#list').dataTable({
+  'bPaginate': false,
+  'bInfo': false,
   "sAjaxDataProp": "devicelist",
   "sAjaxSource": "php/bin.network.devicelist.php",
   "aoColumns": [

@@ -1,7 +1,9 @@
 <!DOCTYPE html><html><head>
 <title id='mainTitle'>Jai</title>
 <link rel='stylesheet' type='text/css' href='/libs/jquery-ui.min.css'>
+<link rel='stylesheet' type='text/css' href='/libs/jquery.ui.menu.css'>
 <link rel='stylesheet' type='text/css' href='css/main.css'>
+
 
 <script type='text/ecmascript' src='/libs/jquery-1.9.1.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
@@ -32,6 +34,7 @@
     <ul id='networkSubMenu' class='subMenu'>
      <li><a id='network_wan' href='?panel=network&section=wan' class='subMenuLink button'>WAN</a></li>
      <li><a id='network_lan' href='?panel=network&section=lan' class='subMenuLink button'>LAN</a></li>
+     <li><a id='network_time' href='?panel=network&section=time' class='subMenuLink button'>Time</a></li>
      <li><a id='network_devicelist' href='?panel=network&section=devicelist' class='subMenuLink button'>Device List</a></li>
      <li><a id='network_staticips' href='?panel=network&section=staticips' class='subMenuLink button'>Static IPs</a></li>
     </ul>
@@ -40,7 +43,7 @@
    <li>
     <a id='wireless' class='superMenuLink button'>Wireless</a>
     <ul id='wirelessSubMenu' class='subMenu'>
-     <li><a id='wireless_wl0' href='?panel=wireless&section=wl0' class='subMenuLink button'>WL0</a></li>
+     <li><a id='wireless_radio' href='?panel=wireless&section=radio' class='subMenuLink button'>Radio</a></li>
      <li><a id='wireless_survey' href='?panel=wireless&section=survey' class='subMenuLink button'>Survey</a></li>
      <li><a id='wireless_macfilter' href='?panel=wireless&section=macfilter' class='subMenuLink button'>MAC Filter</a></li>
     </ul>
@@ -92,7 +95,11 @@
  <div id='panelContainer'>
   <div id='panel'>
 
+<form id='fe'>
+
 <?php include($page); ?>
+
+</form>
 
   </div>
  </div>

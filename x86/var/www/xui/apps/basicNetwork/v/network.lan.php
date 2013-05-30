@@ -1,18 +1,19 @@
-<form id='fe'>
 <div class='pageTitle'>Network: Lan</div>
-<div class='controlBox'>
-<pre>
+<!-- TODO:
 WINS?
-</pre>
-<br>
+-->
+<div class='controlBox'><span class='controlBoxTitle'>Address</span><div class='controlBoxContent'>
 
 <table><tbody>
 <tr><td>Lan IP</td><td><input id='lanip' name='lanip' /></td></tr>
 <tr><td>Mask</td><td><input id='lanmask' name='lanmaskValue' /></td></tr>
 </tbody></table>
 
+</div></div>
+
+<div class='controlBox'><span class='controlBoxTitle'>DHCP Server</span><div class='controlBoxContent'>
 <table><tbody>
-<tr><td>DHCP Server</td><td>
+<tr><td colspan=2>
  <input type="checkbox" id="dhcpToggle" name='dhcpToggle' class="slideToggle" />
  <label class="slideToggleViewport" for="dhcpToggle">
  <div class="slideToggleSlider">
@@ -28,30 +29,21 @@ WINS?
  <input id='dhcpLower' name='dhcpLower' /> - <input id='dhcpUpper' name='dhcpUpper' />
  <div id='dhcpSlider' class='rangeSlider'></div>
 </td></tr>
-
-
 </tbody></table>
 
-<table><tbody>
-
-<tr><td></td><td>
-</td></tr>
-
-<tr><td></td><td>
-</td></tr>
-
-</tbody></table>
+</div></div>
 
 <input type='button' value='test' onclick='sub();'>
 
-</div>
 
 <div class='controlBox'>
+ <span class='controlBoxTitle'>Demo</span>
+ <div class='controlBoxContent'>
 <pre id='demov'></pre>
 <pre id='demo'></pre>
-
-</form>
+ </div>
 </div>
+
 <script type='text/ecmascript' src='php/bin.etc.php?q=lan,dhcp'></script>
 <script type='text/ecmascript'>
  var network = {}

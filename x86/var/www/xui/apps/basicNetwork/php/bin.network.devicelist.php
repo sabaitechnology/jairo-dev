@@ -7,7 +7,7 @@ $dhcp_info = array(
  'start'=>"/^starts [\d]* (.*)/",
  'end'=>"/^ends [\d]* (.*)/",
  'last'=>"/^cltt [\d]* (.*)/",
- 'mac'=>"/^hardware [^ ]* ([:0-9A-F]*)/",
+ 'mac'=>"/^hardware [^ ]* ([:0-9A-Fa-f]*)/",
  'state'=>"/^binding state (.*)/",
  'hostname'=>"/^client-hostname \"([^\"]*)\"/"
 );
@@ -85,7 +85,9 @@ function parseArpList(){ global $arp_list; // exec("/usr/sbin/arp -na",$arp_list
 
 //echo 'var devicelist = '. json_encode( array_merge(parsedhcpLeases(),parseArpList()), JSON_PRETTY_PRINT );
 
- echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) ); //,JSON_PRETTY_PRINT );
+ echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) ,JSON_PRETTY_PRINT );
+
+// echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) ); //,JSON_PRETTY_PRINT );
 
 // echo json_encode( array( 'devicelist'=>array_merge(parsedhcpLeases(),parseArpList()) ) ); //,JSON_PRETTY_PRINT );
 

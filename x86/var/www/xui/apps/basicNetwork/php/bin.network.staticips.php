@@ -43,11 +43,13 @@ function parseStaticLeases(){ global $sl; global $static_info;// $dl = file_get_
  return $static_clients;
 }
 
- echo json_encode( array( 'staticips'=>parseStaticLeases() ) ); //,JSON_PRETTY_PRINT );
+// echo json_encode( array( 'staticips'=>parseStaticLeases() ) ); //,JSON_PRETTY_PRINT );
+ echo json_encode( array( 'staticips'=>parseStaticLeases() ) ,JSON_PRETTY_PRINT );
+
 
 //if(!array_key_exists('sub',$_REQUEST)) return;
 
- file_put_contents('phpsubje.txt',json_encode($_REQUEST, JSON_PRETTY_PRINT));
+// file_put_contents('phpsubje.txt',json_encode($_REQUEST, JSON_PRETTY_PRINT));
 
 // echo "\n\n/*\n";
 // var_dump($_REQUEST);

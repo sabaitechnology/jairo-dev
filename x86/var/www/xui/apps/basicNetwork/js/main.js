@@ -28,10 +28,6 @@ $(function(){ if(panel==''){ panel = 'network'; }; if(section==''){ section = 'w
 });
 
 function sub(){
-// $('form').each(function(){
-//  $('#demo').append( $(this).serializeArray()) +"\n\n" );
-//  $('#demo').append( $(this).serialize() +"\n" );
-// })
  $('#demo').html( ($('#fe').serialize()).replace(/&/g,'&\n') );
 }
 
