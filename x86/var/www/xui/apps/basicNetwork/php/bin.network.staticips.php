@@ -1,7 +1,7 @@
 <?php
 
  header('Content-type: text/ecmascript');
- include('bin.sys.php');
+ include(__DIR__ .'/bin.sys.php');
 
 $static_info = array(
  'mac'=>"/^hardware [^ ]* ([:0-9A-F]*)/",

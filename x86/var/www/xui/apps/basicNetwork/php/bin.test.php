@@ -2,10 +2,9 @@
  header('Content-type: text/ecmascript');
 // include('bin.sys.php');
 
-var_dump( $_REQUEST );
+// var_dump( $GLOBALS );
 
-//var_dump( $_REQUEST['t'] );
+ echo JSON_encode( $_REQUEST['new']);//, JSON_PRETTY_PRINT );
 
-//$_REQUEST['wanType']
 
 ?>

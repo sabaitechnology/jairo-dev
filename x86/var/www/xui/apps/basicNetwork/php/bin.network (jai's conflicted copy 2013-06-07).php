@@ -1,7 +1,10 @@
 <?php
  header('Content-type: text/ecmascript');
- include(__DIR__ .'/bin.sys.php');
+ include('bin.sys.php');
 
+
+
+function writeConfig(){
  $wanType = $_REQUEST['wanType'];
  switch($wanType){
   case 'dhcp':
@@ -46,5 +49,7 @@ iface $lanif inet static
 
 lanConfig
 ;
+
+}
 
 ?>

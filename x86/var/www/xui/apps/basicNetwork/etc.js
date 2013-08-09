@@ -28,7 +28,7 @@
   "serve": false
  },
  "dhcp": {
-  "on": true,
+  "on": false,
   "lower": "10.0.0.100",
   "upper": "10.0.0.199",
   "lease": 86400
@@ -36,11 +36,36 @@
  "wl": [
   {
    "type": "server",
+   "ssid": "JaiRo",
    "security": "wpapersonal",
    "wpa": {
     "type": 3,
-    "encryption": 3
+    "encryption": 3,
+    "psk": "sabaijai321",
+    "rekey": 3600
+   },
+   "wep": {
+    "keys": ["webKeyOne","webKeyTwo","webKeyThree","webKeyFour"]
+   },
+   "macfilter": {
+    "policy": "off",
+    "allow":[],
+    "deny":[]
    }
   }
- ]
+ ],
+ "vpn": {
+  "pptp": {
+   "server": "pptpvpn.sabaitechnology.com",
+   "username": "sabai",
+   "password": "sabaipass"
+  },
+  "l2tp": {
+   "server": "pptpvpn.sabaitechnology.com",
+   "username": "sabai",
+   "password": "sabaipass",
+   "psk": "1234567890"
+  },
+  "openvpn": {}
+ }
 }

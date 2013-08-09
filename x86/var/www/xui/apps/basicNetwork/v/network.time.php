@@ -1,14 +1,9 @@
 <div class='pageTitle'>Network: Time</div>
 
-<div class='controlBox'><span class='controlBoxTitle'>NTP</span><div class='controlBoxContent'><table>
+<div class='controlBox'><span class='controlBoxTitle'>NTP</span><div class='controlBoxContent'><table class='controlTable'>
 <tbody>
 <tr><td>Server pool</td><td>
- <input id='ntp_servers' name='ntp_servers'>
-
- <!-- ul id='ntp_server_list' class='editableList'></ul>
- <br>
- <input type='button' value='Add' onclick='addLI("ntp_server_list")'>
- -->
+ <ul id='ntp_servers'></ul>
 </td></tr>
 <!-- tr><td>Time Zone</td><td>
  <input type='hidden' id='ntp_zone' name='ntp_zone'>
@@ -64,65 +59,8 @@ function testSub(){
  })
 }
 
-function alTest(UL){
- var LI = document.createElement('li');
- $('#'+UL).append(LI).sortable('refresh').sortable().trigger('create');
- meTest(LI);
- $(LI).trigger('dblclick');
-}
 
-function meTest(item){
- $(item).editable(function(value, settings){
-  if(value==''){ $(this).remove(); };
-  $('#'+ $(this).attr('data-formElement') ).val(value);
-  return value;
- },{ 'onblur': 'submit', 'event': 'dblclick' }
- ).click(function(event,ui){ if(event.ctrlKey) $(this).remove(); });
-}
-
-function meTestList(listArray, listElement, formElement){
-
- $('#'+listElement).html( $.map(listArray,function(v,i){
-   return ''
-   +"<li id='"+ listElement +"_"+ i +"'>"
-   +"<input type='hidden' id='"+ formElement +"_"+ i +"' name='"+ formElement +"["+ i +"]' value='"+ v +"'>"
-   +"<span class='editableListText' data-formElement='"+ formElement +"_"+ i +"'>"+ v +"</span>"
-   +" <a class='deleteX' onclick='$(\"#"+ listElement +"_"+ i +"\").remove();'>X</a>"
-   +"</li>";
-  }).join('') ).sortable({
-
-  forcePlaceholderSize: true,
-  forceHelperSize: true,
-  placeholder: "editableListPlaceholder",
-  items: "li:not(.listBookend)",
-  create: function(event,ui){
-   meTest($(this).find('.editableListText'));
-//   $(formElement).val($(listElement).sortable('toArray'));
-  },
-//  stop: function(event,ui){
-//   $(formElement).val($(listElement).sortable('toArray'));
-//  }
- });
-}
-
-
-// meTestList(dns.servers,'dns_server_list','dns_servers');
-
-$.widget( "jai.editablelist", $.ui.sortable, {
- _create: function(){
-  $('#demo').html(
-   'This: '+what( this.element , true) +'\n\nOptions: '+
-   what( this.options , true)
-  );
-  $(this.element).after("<ul id='"+ this.element.id +"_list' class='editableList'></ul>\n<br>"
-//<input type='button' value='Add' onclick='addLI("ntp_server_list")'>
-
- }
-});
-
-$('#ntp_servers').editablelist({
- list: ntp.servers
-});
+$('#ntp_servers').editablelist({ list: ntp.servers });
 
 function logEvent(event,ui){ $('#demo').append( event.type +'\n' ); }
 /*

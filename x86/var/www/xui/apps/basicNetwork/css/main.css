@@ -76,6 +76,22 @@ ul#superMenu, ul.subMenu {
  color: hsl(209, 77%, 19%); /* #0B3256 */
 }
 
+.controlTable {
+ width: 100%;
+}
+
+.controlTable tr td:first-child {
+ min-width: 20%;
+}
+
+.controlTable tr td {
+ padding: .1em .05em;
+}
+
+.subTable {
+ margin: 0;
+}
+
 .controlBox {
 /*
  outline: 1px solid silver;
@@ -167,7 +183,7 @@ ul#superMenu, ul.subMenu {
  border: 1px solid silver;
  border-radius: 10px;
  padding: 0;
- margin: 1em;
+ margin: 0;
 }
 
 .radioSwitch > li {
@@ -282,6 +298,36 @@ ul#superMenu, ul.subMenu {
 .rangeSlider { margin: 1em 0 0; }
 
 .deleteX { float: right; margin-left: .5em; border: 1px solid silver; line-height: 1em; }
+
+.listTable {
+ vertical-align: middle;
+ border-collapse: collapse;
+}
+
+.listTable td {
+ font-size: .85em;
+ text-align:left;
+ border-width: 1px;
+ padding: 3px;
+ border-style: solid;
+ /*
+  -moz-border-radius: ;
+ */
+}
+
+.listTable th.sorting_asc, th.sorting_desc {
+ text-decoration: underline;
+}
+
+.listTable .odd td {
+ border-color: #CED7E1;
+ background-color: white;
+}
+
+.listTable .even td {
+ border-color: #CED7E1;
+ background-color: #F2F2F2;
+}
 
 ul.editableList {
  display: inline-block;

@@ -9,7 +9,7 @@ $.widget("jai.maskspinner", $.ui.spinner, {
  _format: function(value){ return cidr2mask(value); }
 });
 
-$.widget("jai.macspinner", $.ui.spinner, {
+$.widget("jai.macspinner", $.ui.spinner, {// _create: function(){ $('#demo').html(what( this ,true)); this._super(); },
  _parse: function(value){ return ( (typeof value === "string") ? mac2long(value) : value ); },
  _format: function(value){ return long2mac(value); }
 });
@@ -57,35 +57,34 @@ $.widget( "jai.hidespinner", $.ui.spinner, {
  }
 });
 
-
-/* BEGIN Editable List Widget Junk*/
-
-function addLI(UL){
- var LI = document.createElement('li');
- $('#'+UL).append(LI).sortable('refresh').sortable().trigger('create');
- makeEditable(LI);
- $(LI).trigger('dblclick');
-}
-
-function makeEditable(item){
- $(item).editable(function(value, settings){ if(value==''){ $(this).remove(); }; return value; },
-  { 'onblur': 'submit', 'event': 'dblclick' }
- ).click(function(event,ui){ if(event.ctrlKey) $(this).remove(); });
-}
-
-function makeEditableList(listArray, listElement, formElement){
- $(listElement).html( $.map(listArray,function(v,i){ return "<li id='"+ v +"'>"+v+"</li>"; }).join('') ).sortable({
+$.widget( "jai.editablelist", $.ui.sortable, {
+ _create: function(){
+  this.element.addClass('editableList');
+  this.options.fid = this.element.attr('id');
+  this.addItems(this.options.list);
+  if(!this.options.fixed) $(this.element).after("<br><input type='button' value='Add' onclick='$(\"#"+ this.options.fid +"\").editablelist(\"addItems\")'>");
+  this._super();
+ },
+ addItems: function(a){ if(a==null) a = false;
+  var fid = this.options.fid;
+  var fixed = this.options.fixed;
+  $(this.element).append( $.map( ( a||[''] ),function(v,i){ return "<li><input class='editableFormComplement' type='hidden' name='"+ fid +"[]' value='"+ v +"'><span class='editableListText'>"+ v +"</span>"+(fixed?'':"<a class='deleteX'>X</a>")+"</li>"; }) );
+  if(!fixed) $(this.element).find('.deleteX').click(function(event){ $(event.target).parent().remove(); });
+  $(this.element).find('.editableListText').editable(function(value, settings){
+    if(!fixed) if(value==''){ $(this).parent().remove(); };
+    $(this).siblings('.editableFormComplement').val(value);
+    return value;
+   },{ 'onblur': 'submit', 'event': 'dblclick', placeholder: '(Double click to edit.)' }
+  );
+  if($(this.element).data('sortable')) $(this.element).sortable('refresh');
+  if(!a) $(this.element).last().children().last().children('.editableListText').trigger('dblclick');
+ },
+ options: {
   forcePlaceholderSize: true,
   forceHelperSize: true,
   placeholder: "editableListPlaceholder",
-  create: function(event,ui){
-   makeEditable($(this).children('li'));
-   $(formElement).val($(listElement).sortable('toArray'));
-  },
-  stop: function(event,ui){
-   $(formElement).val($(listElement).sortable('toArray'));
-  }
- });
-}
+  items: "li:not(.listBookend)",
+ }
+});
 
 /* END Editable List Widget Junk*/

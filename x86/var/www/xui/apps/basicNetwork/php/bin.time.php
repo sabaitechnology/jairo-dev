@@ -1,6 +1,6 @@
 <?php
  header('Content-type: text/ecmascript');
-// include('bin.sys.php');
+// include(__DIR__ .'/bin.sys.php');
 
 var_dump( $_REQUEST );
 

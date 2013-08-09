@@ -1,7 +1,7 @@
 <?php
 
  header('Content-type: text/ecmascript');
- include('bin.sys.php');
+ include(__DIR__ .'/bin.sys.php');
 
 $dhcp_info = array(
  'start'=>"/^starts [\d]* (.*)/",
@@ -52,6 +52,8 @@ $arp_list = array(
 );
 
 function parsedhcpLeases(){ global $dl; global $dhcp_info;// $dl = file_get_contents("/var/lib/dhcp/dhcpd.leases");
+
+
  preg_match_all("/^lease ([^ ]*) {([^}]*)/m",$dl, $dg);
  $dhcp_clients = array();
  for($i=0; $i<count($dg[0]); $i++){
@@ -62,6 +64,10 @@ function parsedhcpLeases(){ global $dl; global $dhcp_info;// $dl = file_get_cont
   }
   $dhcp_clients[$i]['mac'] = strtoupper($dhcp_clients[$i]['mac']);
  }
+
+// echo json_($dhcp_clients);
+// exit;
+
  return $dhcp_clients;
 }
 
@@ -76,6 +82,7 @@ function parseArpList(){ global $arp_list; // exec("/usr/sbin/arp -na",$arp_list
 
  $dhcp = parsedhcpLeases();
  $arp = parseArpList();
+
 // TODO: Resolve conflicting lists
 // foreach($dhcp as $di){
 //  foreach($arp as $ak => $ai){
@@ -85,7 +92,7 @@ function parseArpList(){ global $arp_list; // exec("/usr/sbin/arp -na",$arp_list
 
 //echo 'var devicelist = '. json_encode( array_merge(parsedhcpLeases(),parseArpList()), JSON_PRETTY_PRINT );
 
- echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) ,JSON_PRETTY_PRINT );
+ echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) , 'JSON_PRETTY_PRINT' );
 
 // echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) ); //,JSON_PRETTY_PRINT );
 

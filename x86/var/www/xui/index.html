@@ -22,7 +22,10 @@ function addApps(){
  var appList=[];
  for(var i in apps){
   appList.push(""
-+"<div class='app' id='"+ i +"' onclick=\"location.href = 'apps/"+ i +"';\" style=\"background-image: url('apps/"+ i +"/img/"+ apps[i].icon +"')\">"
++"<div class='app' id='"+ i +"' onclick=\"location.href = '"
++ (apps[i].link?apps[i].link:"apps/"+ i)
++"';\" style=\"background-image: url("
++ (apps[i].link?"'img/links/"+ apps[i].icon +"')\">": ("'apps/"+ i +"/img/"+ apps[i].icon +"')\">") )
 +"<span class='appName'>"+ apps[i].name +"</span>"
 +(apps[i].req?"<img class='lockBox' src='img/lock.jpg'>":"")
 +"</div>");

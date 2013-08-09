@@ -8,7 +8,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>Static Devices</span><div class='controlBoxContent'>
 
-<table id='list'></table>
+<table id='list' class='listTable'></table>
 <input type='button' value='test' onclick='composeStaticList();'>
 
 </div></div>

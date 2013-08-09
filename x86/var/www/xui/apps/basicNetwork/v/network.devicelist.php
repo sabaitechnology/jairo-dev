@@ -8,7 +8,7 @@
  Static Addresses?
 -->
 <div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'>
- <table id='list'></table>
+ <table id='list' class='listTable'></table>
 <!-- input type='button' value='test' onclick='sub();' -->
 </div></div>
 

@@ -4,7 +4,7 @@ WAN PPPoE { username, password, options, mode/interval } and IPv6
 DDNS: { ip, interval, services }
 -->
 
-<div class='controlBox'><span class='controlBoxTitle'>WAN</span><div class='controlBoxContent'><table>
+<div class='controlBox'><span class='controlBoxTitle'>WAN</span><div class='controlBoxContent'><table class='controlTable'>
 <tbody>
  <tr><td>WAN Type</td><td>
   <select id='wan_type' name='wan_type' class='radioSwitchElement'>
@@ -26,15 +26,10 @@ DDNS: { ip, interval, services }
 </tbody>
 </table></div></div>
 
-<div class='controlBox'><span class='controlBoxTitle'>DNS</span><div class='controlBoxContent'><table>
+<div class='controlBox'><span class='controlBoxTitle'>DNS</span><div class='controlBoxContent'><table class='controlTable'>
 <tbody>
 <tr><td>DNS Servers</td><td>
- <input type='hidden' id='dns_servers' name='dns_servers'>
- <ul id='dns_server_list' class='editableList'></ul>
- <br>
- <input type='button' value='Add' onclick='addLI("dns_server_list")'>
-
- <!--ul id='dns_list'></ul -->
+ <ul id='dns_servers'></ul>
 </td></tr>
 <tr><td colspan=2>(These are the DNS servers the DHCP server will provide for devices on the LAN also.)</td></tr>
 </tbody>
@@ -66,10 +61,7 @@ $('#wan_type').radioswitch({
  change: function(event,ui){ $('.wan_type').hide(); $('.wan_type-'+ ui.value ).show(); }
 });
 
-//$('#dns_list').html( $.map(dns,function(v,i){ return "<li>"+v +"</li>"; }).join('\n') ).sortable();
-//$('#dns_list li').editable(function(value, settings){ return value; }, { 'onblur':'submit', 'event': 'dblclick' });
-
- makeEditableList(dns.servers,'#dns_server_list','#dns_servers');
+$('#dns_servers').editablelist({ list: dns.servers })
 
 //$(function(){});
 </script>

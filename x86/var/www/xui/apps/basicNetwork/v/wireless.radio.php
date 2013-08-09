@@ -4,7 +4,7 @@
 -->
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span><div class='controlBoxContent'>
 
-<table>
+<table class='controlTable'>
 <tbody>
  <tr><td>Mode</td><td>
   <select id='wl0_type' name='wl0_type' class='radioSwitchElement'>
@@ -32,14 +32,11 @@
  </td></tr>
 
  <tr><td colspan=2>
- <table>
+ <table class='controlTable subTable'>
 
 <tbody class='wl0_security wl0_security-wep'>
  <tr><td>WEP Keys</td><td>
-  <input id='wl0_wep_key_0' name='wl0_wep_key_0' /><input type='radio' name='wl0_wep_keydefault' value='0' />(default)<br>
-  <input id='wl0_wep_key_1' name='wl0_wep_key_1' /><input type='radio' name='wl0_wep_keydefault' value='1' /><br>
-  <input id='wl0_wep_key_2' name='wl0_wep_key_2' /><input type='radio' name='wl0_wep_keydefault' value='2' /><br>
-  <input id='wl0_wep_key_3' name='wl0_wep_key_3' /><input type='radio' name='wl0_wep_keydefault' value='3' />
+  <ul id='wl0_wep_keys'></ul>
  </td></tr>
 </tbody>
 
@@ -91,12 +88,15 @@
 <div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'><pre id='demo'></pre></div></div>
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=wl&n=0'></script>
+<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
 $('#wl0_type').radioswitch({
  value: wl[0].type,
  change: function(event,ui){ $('.wl0_type').hide(); $('.wl0_type-'+ ui.value ).show(); }
 });
+
+$('#wl0_ssid').val(wl[0].ssid);
 
 $('#wl0_security').radioswitch({
  value: wl[0].security,
@@ -110,6 +110,14 @@ $('#wl0_wpa_type').radioswitch({
 $('#wl0_wpa_encryption').radioswitch({
  value: wl[0].wpa.encryption
 });
+
+$('#wl0_wpa_psk').val(wl[0].wpa.psk);
+
+//$('#wl0_wpa_rekey').val(wl[0].wpa.rekey);
+
+$('#wl0_wpa_rekey').spinner({ min: 0, max: 525600 }).spinner('value',wl[0].wpa.rekey);
+
+$('#wl0_wep_keys').editablelist({ list: wl[0].wep.keys, fixed: true });
 
 //$('#wanmtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
 //$('#wanmac').val(wan.mac);
