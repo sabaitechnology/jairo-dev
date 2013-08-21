@@ -9,10 +9,10 @@
 <div class='controlBox'><span class='controlBoxTitle'>Static Devices</span><div class='controlBoxContent'>
 
 <table id='list' class='listTable'></table>
-<input type='button' value='test' onclick='composeStaticList();'>
 
 </div></div>
 
+<input type='button' id='test' value='Test' onclick='composeStaticList();'>
 
 <div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'>
 <pre id='demo'></pre></div>
@@ -34,6 +34,7 @@ function composeStaticList(){
 lt =  $('#list').dataTable({
   'bPaginate': false,
   'bInfo': false,
+  'bFilter': false,
   'sAjaxDataProp': 'staticips',
   'sAjaxSource': 'php/bin.network.staticips.php',
   'aoColumns': [

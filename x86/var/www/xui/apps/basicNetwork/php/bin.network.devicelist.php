@@ -51,7 +51,8 @@ $arp_list = array(
  "? (192.168.134.1) at c0:c1:c0:11:2c:1b [ether] on eth0"
 );
 
-function parsedhcpLeases(){ global $dl; global $dhcp_info;// $dl = file_get_contents("/var/lib/dhcp/dhcpd.leases");
+function parsedhcpLeases(){ global $dl; global $dhcp_info;
+// $dl = file_get_contents("/var/lib/dhcp/dhcpd.leases");
 
 
  preg_match_all("/^lease ([^ ]*) {([^}]*)/m",$dl, $dg);
@@ -71,7 +72,8 @@ function parsedhcpLeases(){ global $dl; global $dhcp_info;// $dl = file_get_cont
  return $dhcp_clients;
 }
 
-function parseArpList(){ global $arp_list; // exec("/usr/sbin/arp -na",$arp_list);
+function parseArpList(){ global $arp_list;
+ // exec("/usr/sbin/arp -na",$arp_list);
  $arp_list = preg_filter("/^\? \(([^)]*)\) at ([^ ]*) \[[^\]]*\] on (.*)/","$1,$2,$3",$arp_list);
  foreach($arp_list as &$arp_entry){
   $arp_entry = explode(',',$arp_entry);
@@ -92,7 +94,7 @@ function parseArpList(){ global $arp_list; // exec("/usr/sbin/arp -na",$arp_list
 
 //echo 'var devicelist = '. json_encode( array_merge(parsedhcpLeases(),parseArpList()), JSON_PRETTY_PRINT );
 
- echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) , 'JSON_PRETTY_PRINT' );
+ echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) , JSON_PRETTY_PRINT );
 
 // echo json_encode( array( 'devicelist'=>array_merge($dhcp,$arp) ) ); //,JSON_PRETTY_PRINT );
 

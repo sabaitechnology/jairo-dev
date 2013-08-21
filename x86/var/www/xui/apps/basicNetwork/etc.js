@@ -8,11 +8,11 @@
   "ip": false,
   "mask": false,
   "gateway": false,
-  "mtu": 1440,
+  "mtu": 1500,
   "mac": "00:07:32:23:0f:25"
  },
  "dns": {
-  "servers": ["4.2.2.2","8.8.8.8","208.67.222.222","208.67.220.220"]
+  "servers": ["4.2.2.2","8.8.8.8","208.67.222.222","208.67.220.220","1.1.1.1"]
  },
  "lan": {
   "if": "br0",
@@ -48,7 +48,7 @@
     "keys": ["webKeyOne","webKeyTwo","webKeyThree","webKeyFour"]
    },
    "macfilter": {
-    "policy": "off",
+    "policy": "Allow",
     "allow":[],
     "deny":[]
    }
@@ -61,11 +61,41 @@
    "password": "sabaipass"
   },
   "l2tp": {
+   "realname": "Default",
    "server": "pptpvpn.sabaitechnology.com",
    "username": "sabai",
    "password": "sabaipass",
    "psk": "1234567890"
   },
   "openvpn": {}
- }
+ },
+ "ping": {
+  "count" : 5,
+  "size" : 56
+ },
+ "trace" : {
+  "hops" : 20,
+  "wait" : 3
+ },
+ "gateways": {
+  "default": "vpn",
+  "rules": [
+   { "mac": "000000000001", "ip": 101, "gateway": 1 },
+   { "mac": "000000000002", "ip": 102, "gateway": 2 },
+   { "mac": "000000000003", "ip": 103, "gateway": 1 }
+
+  ]
+ },
+ "firewall" : {
+  "icmp" : "checked",
+  "multicast": "checked",
+  "cookies": "checked",
+  "wan" : ""
+ },
+ "portforward": [
+  { "on": true, "protocol": 1, "route": 1, "src": "24.240.173.193/8", "external": 22, "internal": 22, "device": "10.0.0.2", "description": "What?" },
+  { "on": true, "protocol": 1, "route": 2, "src": "24.240.173.193/8", "external": 23, "internal": 23, "device": "10.0.0.2", "description": "What?" },
+  { "on": true, "protocol": 3, "route": 1, "src": "24.240.173.193/8", "external": 24, "internal": 24, "device": "10.0.0.2", "description": "What?" }
+ ]
+
 }

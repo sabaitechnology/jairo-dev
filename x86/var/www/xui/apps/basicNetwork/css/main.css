@@ -1,5 +1,5 @@
 html,body { height: 100%; width: 100%; margin: 0; padding: 0; }
-body { background-color: hsl(210,25%,95%); /*#f0f3f6*/ font: 16px Arial,Helvetica,sans-serif; }
+body { background-color: #EFF2F5; font: 16px Arial,Helvetica,sans-serif; }
 #backdrop { position: relative; margin: 0 auto; width: 80%; min-width: 750px; min-height: 100%;
  background-color: hsl(213,42%,91%); /*#dde6f1*/
  border: 1px solid white;
@@ -51,19 +51,28 @@ ul#superMenu, ul.subMenu {
 #superMenu a {
  display: inline-block;
  height: 100%; width: 100%;
- text-indent: 20px;
  text-decoration: none;
  outline: none;
 }
 
 .subMenu {
- width: 90%;
- margin: 0 10% 2px;
+ width: 100%;
+ margin: 0 0 2px;
  border: solid silver;
  border-width: 0 1px 1px;
 }
 
-.superMenuLink { padding: 10px 0; border: 1px solid silver; }
+.subMenu a {
+    font-weight: normal;
+    text-indent: 30px;
+}
+
+.superMenuLink { 
+    padding: 10px 0; 
+    border: 1px solid silver; 
+    font-weight: bold;
+    text-indent: 20px;
+}
 .subMenuLink { padding: 5px 0; }
 
  /* Control Page styles BEGIN */
@@ -78,6 +87,14 @@ ul#superMenu, ul.subMenu {
 
 .controlTable {
  width: 100%;
+}
+
+.smallText{
+    font-size: .85em;
+}
+
+.xsmallText{
+    font-size: .75em;
 }
 
 .controlTable tr td:first-child {
@@ -126,6 +143,11 @@ ul#superMenu, ul.subMenu {
  border: 1px solid transparent;
 }
 
+
+.nobullets {
+    list-style-type: none;
+}
+
  /* Control Page styles END */
 
  /* basic button styles BEGIN */
@@ -169,6 +191,30 @@ ul#superMenu, ul.subMenu {
  background: linear-gradient(top, #4FA5E0, #1B75BB);
 }
 
+.controlBoxContent > input {
+    margin: 5px 0;
+}
+
+input#test {
+    margin: 0 5px;
+}
+
+input {
+    padding-left: 0.3em;
+}
+
+.shortinput {
+    width: 3em;
+    text-align: left;
+    margin-right: .25em;
+}
+
+.longinput {
+    width: 10em;
+}
+
+
+
  /* basic button styles END */
 
  /* radioSwitch BEGIN */
@@ -187,7 +233,18 @@ ul#superMenu, ul.subMenu {
 }
 
 .radioSwitch > li {
- display: inline-block;
+/*    border-color: silver; 
+    border-image: none; 
+    border-style: solid; 
+    border-width: 0 1px 0 0; 
+    display: inline-block; 
+    height: 2em; 
+    line-height: 1em; 
+    text-align: center; 
+    width: 6em; 
+ /*padding: .5em .75em;*/
+
+  display: inline-block;
  border: solid silver;
  border-width: 0 1px 0 0;
  padding: .5em .75em;
@@ -217,25 +274,25 @@ ul#superMenu, ul.subMenu {
 .slideToggleSlider { position: relative; height: 100%; width: 200%; }
 
 .slideToggleViewport {
- position: relative;
- display: block;
- height: 2.5em;
- width: 7.5em;
- border: 1px solid silver;
- border-radius: 2.5em;
- overflow: hidden;
- margin: 1em;
- cursor: pointer;
+    border: 1px solid silver;
+    border-radius: 2em 2em 2em 2em;
+    cursor: pointer;
+    display: block;
+    height: 2em;
+    margin: .5em 0;
+    overflow: hidden;
+    position: relative;
+    width: 5em;
 }
 
 .slideToggleButton {
- display: block;
- position: absolute;
- top: 0;
- height: 2.5em;
- width: 2.5em;
- cursor: pointer;
- border-radius: 50%;
+    border-radius: 50%;
+    cursor: pointer;
+    display: block;
+    height: 2em;
+    position: absolute;
+    top: 0;
+    width: 2em;
 }
 
 .slideToggleButtonBackground {
@@ -267,17 +324,17 @@ ul#superMenu, ul.subMenu {
 }
 
 .slideToggleContent span {
- height: 100%;
- line-height: 2.5em;
- margin: 0 1.5em;
- float: left;
+float: left;
+height: 100%;
+line-height: 2em;
+margin: 0em 1em;
 }
 
 .slideToggleRight span { float: right; }
 .slideToggle + .slideToggleViewport .slideToggleContent { width: 41.75%; }
 
 .slideToggle:checked + .slideToggleViewport > .slideToggleSlider { left: 0; }
-.slideToggle:checked + .slideToggleViewport .slideToggleButton { left: 34%; }
+.slideToggle:checked + .slideToggleViewport .slideToggleButton { left: 30%; }
 .slideToggle:checked + .slideToggleViewport .slideToggleLeft { margin-left: 0; }
 
 .slideToggle + .slideToggleViewport > .slideToggleSlider { left: -100%; }
@@ -297,16 +354,16 @@ ul#superMenu, ul.subMenu {
 
 .rangeSlider { margin: 1em 0 0; }
 
-.deleteX { float: right; margin-left: .5em; border: 1px solid silver; line-height: 1em; }
+.deleteX { float: right; margin-left: .25em; border: 1px solid silver; line-height: 1em; }
 
 .listTable {
  vertical-align: middle;
  border-collapse: collapse;
+ text-align: center;
 }
 
 .listTable td {
  font-size: .85em;
- text-align:left;
  border-width: 1px;
  padding: 3px;
  border-style: solid;
@@ -328,6 +385,7 @@ ul#superMenu, ul.subMenu {
  border-color: #CED7E1;
  background-color: #F2F2F2;
 }
+
 
 ul.editableList {
  display: inline-block;
@@ -364,4 +422,45 @@ ul.editableList > li {
 }
 /* TODO: make image for slider handles. .ui-slider-handle { background: url("images/ui-bg_glass_custom_slider_handle.png") repeat-x scroll 50% 50% #E6E6E6; } */
 
+/*Override jQuery*/
+.ui-widget { 
+font-size: 1em;
+}
 
+.listTable th.sorting_asc, th.sorting_desc, th.sorting {
+    padding: .25em 1em;
+}
+
+
+/*WAN PAGE STYLE*/
+.DNSdescription {
+    width: 55%;
+}
+
+#DNSdescription {
+    text-align:justify;
+    width: 50%;
+}
+
+/*LAN PAGE STYLE*/
+/*#DHCPrange {
+    padding: 3em 0;
+}
+*/
+/*ABOUT PAGE STYLE*/
+#aboutSabai {
+    padding: 0.5em 2.5em 2em;
+}
+
+/*LOGS PAGE*/
+#logstxtarea {
+    -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+}
+
+#txtareadiv {
+    width: 50px;
+    font-size: 20px;
+}

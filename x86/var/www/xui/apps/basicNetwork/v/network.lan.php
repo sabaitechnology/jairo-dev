@@ -1,11 +1,11 @@
-<div class='pageTitle'>Network: Lan</div>
+<div class='pageTitle'>Network: LAN</div>
 <!-- TODO:
 WINS?
 -->
 <div class='controlBox'><span class='controlBoxTitle'>Address</span><div class='controlBoxContent'>
 
 <table class='controlTable'><tbody>
-<tr><td>Lan IP</td><td><input id='lanip' name='lanip' /></td></tr>
+<tr><td>LAN IP</td><td><input id='lanip' name='lanip' /></td></tr>
 <tr><td>Mask</td><td><input id='lanmask' name='lanmaskValue' /></td></tr>
 </tbody></table>
 
@@ -25,15 +25,15 @@ WINS?
 </td></tr>
 <tr><td>Lease</td><td><input id='dhcpLease' name='dhcpLease' /></td></tr>
 
-<tr><td>DHCP Range</td><td>
+<tr><td id='DHCPrange'>DHCP Range</td><td>
  <input id='dhcpLower' name='dhcpLower' /> - <input id='dhcpUpper' name='dhcpUpper' />
- <div id='dhcpSlider' class='rangeSlider'></div>
+<!--  <div id='dhcpSlider' class='rangeSlider'></div> -->
 </td></tr>
 </tbody></table>
 
 </div></div>
 
-<input type='button' value='test' onclick='sub();'>
+<input type='button'  id='test' value='Test' onclick='sub();'>
 
 
 <div class='controlBox'>
@@ -46,6 +46,7 @@ WINS?
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=lan,dhcp'></script>
 <script type='text/ecmascript'>
+ var network = {}
 
  var dhcpRangeMin = ip2long('10.0.0.1');
  var dhcpRangeMax = ip2long('10.0.0.254');
@@ -56,21 +57,19 @@ function spinnerConstraint(spinner){
   else if( curv > $(spinner).ipspinner('option','max') ) $(spinner).ipspinner('value', $(spinner).ipspinner('option','max') );
 }
 
- $('#lanip').ipspinner({
-  min: '10.0.0.1', max: '10.255.255.254',
-  page: Math.pow(2,(32-mask2cidr(lan.mask))),
-  change: function(event,ui){ spinnerConstraint(this);
+$('#lanip').ipspinner({
+ min: '10.0.0.1', max: '10.255.255.254',
+ page: Math.pow(2,(32-mask2cidr(lan.mask))),
+ change: function(event,ui){ spinnerConstraint(this);
 //  var curv = $(this).ipspinner('value');
 //  if( curv < $(this).ipspinner('option','min') ) $(this).ipspinner('value', $(this).ipspinner('option','min') );
 //  else if( curv > $(this).ipspinner('option','max') ) $(this).ipspinner('value', $(this).ipspinner('option','max') );
-  }
- }).ipspinner('value',lan.ip);
+ }
+}).ipspinner('value',lan.ip);
 
- $( '#lanmask' ).maskspinner({
-  spin: function(event,ui){ $('#lanip').ipspinner('option','page', Math.pow(2,(32-ui.value)) ) }
- }).maskspinner('value',lan.mask);
-
- $('#dhcpToggle').prop('checked',dhcp.on);
+$( '#lanmask' ).maskspinner({
+ spin: function(event,ui){ $('#lanip').ipspinner('option','page', Math.pow(2,(32-ui.value)) ) }
+}).maskspinner('value',lan.mask);
 
 /* Slider with Spinners BEGIN */
 

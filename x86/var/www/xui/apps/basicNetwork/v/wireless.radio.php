@@ -2,7 +2,8 @@
 <div class='pageTitle'>Wireless: Radio</div>
 <!--	TODO:
 -->
-<div class='controlBox'><span class='controlBoxTitle'>WL0</span><div class='controlBoxContent'>
+<div class='controlBox'><span class='controlBoxTitle'>WL0</span>
+  <div class='controlBoxContent'>
 
 <table class='controlTable'>
 <tbody>
@@ -83,9 +84,11 @@
 
 </div></div>
 
-<input type='button' value='test' onclick='sub();'>
+<input type='button' id='test' value='test' onclick='sub();'>
 
-<div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'><pre id='demo'></pre></div></div>
+<div class='controlBox'><span class='controlBoxTitle'>Demo</span>
+  <div class='controlBoxContent'>
+  <pre id='demo'></pre></div></div>
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=wl&n=0'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
@@ -122,8 +125,6 @@ $('#wl0_wep_keys').editablelist({ list: wl[0].wep.keys, fixed: true });
 //$('#wanmtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
 //$('#wanmac').val(wan.mac);
 
-$(function(){
 
-});
 </script>
 </form>

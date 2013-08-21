@@ -8,61 +8,60 @@
 .pointy { cursor: pointer; }
 </style -->
 
-<input type='hidden' name='act' value='all'>
-
-<div id='logging'>
-<div class='section-title'>Logs</div>
-<div class='section'>
-
-<table class='tablemenu'><tbody><tr>
-<td>
- <a onclick="getLog('last');" class="pointy">View Last 
- <input onclick='return false;' type="text" name='lines' id='lines' size='5' value='25' />
-  Lines</a>
-</td>
-<td><a onclick="getLog('all');" class="pointy">View All</a></td>
-<td><select id='log' name='log' onchange="getLog('last');"><!-- ?php
- foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
-? --></select></td>
-<td><input type="text" maxsize=32 size=33 id='findText' name='find'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
-</tr></tbody></table>
-
-<textarea id='response' style=""></textarea>
-
-</div>
-
-
+<div class='pageTitle'>Diagnostics: Logs</div>
 
 <div class='controlBox'>
- <span class='controlBoxTitle'>Demo</span>
- <div class='controlBoxContent'>
-  <pre id='demo'>
+    <span class='controlBoxTitle'>Logs</span>
+     <div class='controlBoxContent'>
 
-<?php
+		<input type='hidden' name='act' value='all'>
 
-// $logs = glob('/var/log/*.log');
-// $logs = glob('/var/log/*');
- $logdir = '/var/log/';
- $logs = scandir($logdir);
+		<table class='tablemenu'>
+		<tbody><tr>
+			<td>
+			 <a onclick="getLog('last');" class="pointy" href="#">View Last 
+			 <input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
+			  Lines</a> |
+			</td>
+			<td><a onclick="getLog('all');" class="pointy" href='#'>View All</a> | </td>
+			<td>
 
- foreach($logs as $log){
-  if($log=='.' || $log=='..') continue;
-  if(is_dir($logdir.$log)){
-  }
-  echo $log .": ". is_dir($logdir.$log) ."\n";
- }
+			</select></td>
+			<td><input type="text" id='findText' class='longinput' name='find'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
+			</tr>
+		</tbody>
+		</table>
+		
+		<textarea id='logstxtarea' style="width: 90%; height: 30em" readonly>  
 
-// var_dump($logs);
+			<?php
 
-// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
+			// $logs = glob('/var/log/*.log');
+			// $logs = glob('/var/log/*');
+			 $logdir = '/var/log/';
+			 $logs = scandir($logdir);
 
-?>
+			 foreach($logs as $log){
+			  if($log=='.' || $log=='..') continue;
+			  if(is_dir($logdir.$log)){
+			  }
+			  echo $log .": ". is_dir($logdir.$log) ."\n";
+			 }
 
+			// var_dump($logs);
 
+			// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
 
-  </pre>
- </div>
+			?>
+
+		</textarea>
+
+	</div>
 </div>
+<div><input type='button' id='log' name='log' value='Download Log File' onclick="getLog('all');"></div>
+			<!-- ?php
+			 foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
+			? -->
 
 
 

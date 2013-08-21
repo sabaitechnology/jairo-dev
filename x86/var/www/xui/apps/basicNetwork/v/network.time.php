@@ -2,7 +2,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>NTP</span><div class='controlBoxContent'><table class='controlTable'>
 <tbody>
-<tr><td>Server pool</td><td>
+<tr><td>Server Pool</td><td>
  <ul id='ntp_servers'></ul>
 </td></tr>
 <!-- tr><td>Time Zone</td><td>
@@ -26,7 +26,7 @@
 </tbody>
 </table></div></div>
 
-<input type='button' value='test' onclick='sub();'>
+<input type='button'  id='test' value='Test' onclick='sub();'>
 
 <div class='controlBox'>
  <span class='controlBoxTitle'>Demo</span>

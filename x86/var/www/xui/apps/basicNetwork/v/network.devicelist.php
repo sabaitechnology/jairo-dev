@@ -17,6 +17,7 @@
  $('#list').dataTable({
   'bPaginate': false,
   'bInfo': false,
+  'bFilter': false,
   "sAjaxDataProp": "devicelist",
   "sAjaxSource": "php/bin.network.devicelist.php",
   "aoColumns": [
