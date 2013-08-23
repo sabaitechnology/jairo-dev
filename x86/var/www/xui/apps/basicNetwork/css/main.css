@@ -264,11 +264,11 @@ input {
 .slideToggleButton,
 .slideToggleContent,
 .slideToggleSlider {
- -webkit-transition: all 500ms ease-in-out;
- -moz-transition: all 500ms ease-in-out;
- -ms-transition: all 500ms ease-in-out;
- -o-transition: all 500ms ease-in-out;
- transition: all 500ms ease-in-out;
+ -webkit-transition: all 400ms ease-in-out;
+ -moz-transition: all 400ms ease-in-out;
+ -ms-transition: all 400ms ease-in-out;
+ -o-transition: all 400ms ease-in-out;
+ transition: all 400ms ease-in-out;
 }
 
 .slideToggleSlider { position: relative; height: 100%; width: 200%; }
@@ -442,11 +442,6 @@ font-size: 1em;
     width: 50%;
 }
 
-/*LAN PAGE STYLE*/
-/*#DHCPrange {
-    padding: 3em 0;
-}
-*/
 /*ABOUT PAGE STYLE*/
 #aboutSabai {
     padding: 0.5em 2.5em 2em;
@@ -455,9 +450,9 @@ font-size: 1em;
 /*LOGS PAGE*/
 #logstxtarea {
     -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 #txtareadiv {

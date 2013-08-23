@@ -12,7 +12,7 @@
               <td>Address</td>
               <td>
                 <span class="ui-spinner ui-widget ui-widget-content ui-corner-all"><input name="ping_address" id="ping_address" aria-valuenow="30905929509" class="ui-spinner-input" autocomplete="off" role="spinbutton"><a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-n">▲</span></span></a><a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-s">▼</span></span></a></span>             
-                <input type='button' id='ping' value='Ping' onclick='ping();'></td>
+                <input type='button' id='ping' value='Ping' onClick='pinger()'></td>
           </tr>
           <tr>
               <td>Ping Count</td>
@@ -32,7 +32,7 @@
 <div class='controlBox'><span class='controlBoxTitle'>Results</span>
   <div class='controlBoxContent'>
     <pre id='result'></pre>
-    <table id='list' class='listTable'></table>
+    <table id='list' class='listTable nothere'></table>
   </div>
 </div>
 
@@ -59,8 +59,14 @@
   ]
  });
 
+function pinger(){
+  $('#list').removeClass('nothere');
+}
+
+ $('#ping_address').val(ping.address);
  $('#ping_count').val(ping.count);
  $('#ping_size').val(ping.size);
+
 
 
 </script>

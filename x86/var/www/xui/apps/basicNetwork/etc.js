@@ -70,10 +70,12 @@
   "openvpn": {}
  },
  "ping": {
+  "address" : "10.0.134.90",
   "count" : 5,
   "size" : 56
  },
  "trace" : {
+  "address" : "10.0.134.90",
   "hops" : 20,
   "wait" : 3
  },
