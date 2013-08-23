@@ -71,7 +71,7 @@
  },
  "ping": {
   "address" : "10.0.134.90",
-  "count" : 5,
+  "count" : 3,
   "size" : 56
  },
  "trace" : {

@@ -5,84 +5,95 @@
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span>
   <div class='controlBoxContent'>
 
-<table class='controlTable'>
-<tbody>
- <tr><td>Mode</td><td>
-  <select id='wl0_type' name='wl0_type' class='radioSwitchElement'>
-   <option value='off'>Off</option>
-   <option value='server'>Wireless Server</option>
-   <option value='client'>Wireless Client</option>
-   <!-- <option value='wds'>WDS</option> -->
-  </select>
- </td></tr>
-</tbody>
+    <!-- TOP TABLE -->
+    <table class='controlTable smallwidth'>
+      <tbody>
+        <tr>
+          <td>Mode
+          </td>
+          <td>
+            <select id='wl0_type' name='wl0_type' class='radioSwitchElement'>
+              <option value='off'>Off</option>
+              <option value='server'>Wireless Server</option>
+              <option value='client'>Wireless Client</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>SSID</td>
+          <td><input id='wl0_ssid' name='wl0_ssid' />
+          </td>
+        </tr>
+        <tr>
+          <td>Security</td>
+          <td>
+            <select id='wl0_security' name='wl0_security' class='radioSwitchElement'>
+              <option value='none'>None</option>
+              <option value='wep'>WEP</option>
+              <option value='wpapersonal'>WPA Personal</option>
+            </select>
+          </td>
+        </tr>
+      </tbody> 
+    </table>
 
-<tbody class='wl0_type wl0_type-server wl0_type-client'>
- <tr><td>SSID</td><td><input id='wl0_ssid' name='wl0_ssid' /></td></tr>
- <tr><td>Security</td><td>
-  <select id='wl0_security' name='wl0_security' class='radioSwitchElement'>
-   <option value='none'>None</option>
-   <option value='wep'>WEP</option>
-   <option value='wpapersonal'>WPA Personal</option>
-<!-- 
-   <option value='wpaenterprise'>WPA Enterprise</option>
-   <option value='wpa2enterprise'>WPA2 Enterprise</option>
-   <option value='radius'>Radius</option>
--->
-  </select>
- </td></tr>
+    <!-- LOWER TABLE, DEPENDS ON SECURITY SELECTION -->
+    <table class='controlTable indented'>      
+      <!-- WEP OPTION -->
+      <tbody class='wl0_security wl0_security-wep'>
+        <tr>
+          <td>WEP Keys
+          </td>
+          <td>
+            <ul id='wl0_wep_keys'></ul>
+          </td>
+        </tr>
+      </tbody> 
+      
+      <!-- WPA OPTION -->
+      <tbody class='wl0_security wl0_security-wpapersonal'> 
+        <tr>
+          <td>&nbsp</td>
+          <td>&nbsp</td>
+        </tr>
+        <tr>
+          <td>WPA Type</td>
+          <td>
+            <select id='wl0_wpa_type' name='wl0_wpa_type' class='radioSwitchElement'>
+              <option value='1'>WPA</option>
+              <option value='2'>WPA2</option>
+              <option value='3'>WPA/WPA2</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>WPA Encryption</td>
+          <td>
+            <select id='wl0_wpa_encryption' name='wl0_wpa_encryption' class='radioSwitchElement'>
+              <option value='1'>AES</option>
+              <option value='2'>TKIP</option>
+              <option value='3'>AES/TKIP</option>
+            </select>
+         </td>
+        </tr>
+        <tr>
+          <td>PSK
+          </td>
+          <td><input id='wl0_wpa_psk' name='wl0_wpa_psk' />
+          </td>
+        </tr>
+        <tr>
+          <td>Key Duration</td>
+          <td><input id='wl0_wpa_rekey' name='wl0_wpa_rekey' />
+          </td>
+        </tr>
+      </tbody>
 
- <tr><td colspan=2>
- <table class='controlTable subTable'>
+    </table>
+  
+  </div>
+</div>
 
-<tbody class='wl0_security wl0_security-wep'>
- <tr><td>WEP Keys</td><td>
-  <ul id='wl0_wep_keys'></ul>
- </td></tr>
-</tbody>
-
-<tbody class='wl0_security wl0_security-wpapersonal'>
- <tr><td>WPA Type</td><td>
-<!--	TODO:
-	Add bit flipping switch for and/or options.
--->
-  <select id='wl0_wpa_type' name='wl0_wpa_type' class='radioSwitchElement'>
-   <option value='1'>WPA</option>
-   <option value='2'>WPA2</option>
-   <option value='3'>WPA/WPA2</option>
-  </select>
- </td></tr>
- <tr><td>WPA Encryption</td><td>
-  <select id='wl0_wpa_encryption' name='wl0_wpa_encryption' class='radioSwitchElement'>
-   <option value='1'>AES</option>
-   <option value='2'>TKIP</option>
-   <option value='3'>AES/TKIP</option>
-  </select>
- </td></tr>
- <tr><td>PSK</td><td><input id='wl0_wpa_psk' name='wl0_wpa_psk' /></td></tr>
- <tr><td>Key Duration</td><td><input id='wl0_wpa_rekey' name='wl0_wpa_rekey' /></td></tr>
-</tbody>
-
-<!--
-<tbody class='wl0_security-wpaenterprise noshow'>
- <tr><td>IP</td><td><input id='wanip' name='wanip' /></td></tr>
- <tr><td>Network Mask</td><td><input id='wanmask' name='wanmask' /></td></tr>
- <tr><td>Gateway</td><td><input id='wangateway' name='wangateway' /></td></tr>
-</tbody>
-
-<tbody class='wl0_security-radius noshow'>
- <tr><td>IP</td><td><input id='wanip' name='wanip' /></td></tr>
- <tr><td>Network Mask</td><td><input id='wanmask' name='wanmask' /></td></tr>
- <tr><td>Gateway</td><td><input id='wangateway' name='wangateway' /></td></tr>
-</tbody>
--->
- </table>
- </td></tr>
-</tbody>
-
-</table>
-
-</div></div>
 
 <input type='button' id='test' value='test' onclick='sub();'>
 

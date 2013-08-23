@@ -15,11 +15,11 @@
               </td>
           </tr>
           <tr>
-              <td>Maximum Hops</td>
+              <td>Max Hops</td>
               <td><input id='max_hops' name='max_hops' class='shortinput' /></td>
           </tr>
           <tr>
-              <td>Maximum Wait Time</td>
+              <td>Max Wait Time</td>
               <td><input id='max_wait' name='max_wait' class='shortinput' /><span class='smallText'>(seconds per hop)</span></td>
           </tr>
       </tbody>

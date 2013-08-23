@@ -98,7 +98,7 @@ ul#superMenu, ul.subMenu {
 }
 
 .controlTable tr td:first-child {
- min-width: 20%;
+ width: 15%;
 }
 
 .controlTable tr td {
@@ -458,4 +458,14 @@ font-size: 1em;
 #txtareadiv {
     width: 50px;
     font-size: 20px;
+}
+
+/*RADIO PAGE*/
+
+.indented {
+    margin-left: 10%;
+}
+
+.smallwidth tr td:first-child {
+    width: 10%;
 }
