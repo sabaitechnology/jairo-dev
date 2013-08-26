@@ -230,6 +230,7 @@ input {
  border-radius: 10px;
  padding: 0;
  margin: 0;
+
 }
 
 .radioSwitch > li {
@@ -275,24 +276,24 @@ input {
 
 .slideToggleViewport {
     border: 1px solid silver;
-    border-radius: 2em 2em 2em 2em;
+    border-radius: 1.75em 1.75em 1.75em 1.75em;
     cursor: pointer;
     display: block;
-    height: 2em;
-    margin: .5em 0;
+    height: 1.75em;
+    margin: .75em 0;
     overflow: hidden;
     position: relative;
-    width: 5em;
+    width: 4em;
 }
 
 .slideToggleButton {
     border-radius: 50%;
     cursor: pointer;
     display: block;
-    height: 2em;
+    height: 1.75em;
     position: absolute;
     top: 0;
-    width: 2em;
+    width: 1.75em;
 }
 
 .slideToggleButtonBackground {
@@ -320,13 +321,14 @@ input {
  float: left;
  height: 100%;
  width: 50%;
+/* font-weight: bold*/;
 }
 
 .slideToggleContent span {
 float: left;
 height: 100%;
-line-height: 2em;
-margin: 0em 1em;
+line-height: 1.75em;
+margin: 0em .6em;
 }
 
 .slideToggleRight span { float: right; }
