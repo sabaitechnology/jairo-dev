@@ -2,12 +2,12 @@
 <VirtualHost _default_:443>
 	ServerAdmin jai@localhost
 
-	DocumentRoot /var/www/xui
+	DocumentRoot /var/www/jai
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
-	<Directory /var/www/xui/>
+	<Directory /var/www/jai/>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride None
 		Order allow,deny

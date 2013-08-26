@@ -3,8 +3,8 @@
 
 	ServerName localjai
 
-	DocumentRoot /PATH/x86/x86/var/www/xui
-	<Directory /PATH/x86/x86/var/www/xui/>
+	DocumentRoot /PATH/x86/x86/var/www/jai
+	<Directory /PATH/x86/x86/var/www/jai/>
 		Options Indexes FollowSymLinks MultiViews
 #		AllowOverride None
 		AllowOverride All
