@@ -33,7 +33,7 @@
 		</table>
 		
 		<textarea id='logstxtarea' style="width: 90%; height: 30em" readonly>  
-
+			
 			<?php
 
 			// $logs = glob('/var/log/*.log');
@@ -53,9 +53,8 @@
 			// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
 
 			?>
-
+			
 		</textarea>
-
 	</div>
 </div>
 <div><input type='button' id='log' name='log' value='Download Log File' onclick="getLog('all');"></div>

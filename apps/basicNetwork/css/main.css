@@ -319,7 +319,6 @@ input {
  display: inline-block;
  float: left;
  height: 100%;
- font-weight: bold;
  width: 50%;
 }
 
@@ -340,6 +339,7 @@ margin: 0em 1em;
 .slideToggle + .slideToggleViewport > .slideToggleSlider { left: -100%; }
 .slideToggle + .slideToggleViewport .slideToggleButton { left: 50%; }
 .slideToggle + .slideToggleViewport .slideToggleLeft { margin-left: 16.5%; }
+
 
 /*
 .slideToggle + .slideToggleViewport > .slideToggleSlider { left: 0; }
@@ -424,7 +424,7 @@ ul.editableList > li {
 
 /*Override jQuery*/
 .ui-widget { 
-font-size: 1em;
+font-size: .95em;
 }
 
 .listTable th.sorting_asc, th.sorting_desc, th.sorting {
@@ -433,13 +433,15 @@ font-size: 1em;
 
 
 /*WAN PAGE STYLE*/
-.DNSdescription {
-    width: 55%;
+
+#dns_servers {
+    min-width: 9em;
 }
 
 #DNSdescription {
     text-align:justify;
     width: 50%;
+    padding: 5%;
 }
 
 /*ABOUT PAGE STYLE*/

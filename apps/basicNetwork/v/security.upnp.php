@@ -43,12 +43,12 @@
 			<tr><td><br> </td><td><br> </td></tr>
 			<tr><td><b>Allowed UPnP Ports*</b></td>
 			</tr>
-			<tr><td>Internal Ports</td><td><input class='shortinput'></input>- <input class='shortinput'></input>
+			<tr><td>Internal Ports</td><td><input id='internalLB' name='internalLB' class='shortinput'/>- <input id='internalUB' name='internalUB' class='shortinput'/>
 				<td>
 				<span class='xsmallText'>Valid port ranges are from 2 to 65535</span></td>
 				</td>
 			</tr>
-			<tr><td>External Ports</td><td><input class='shortinput'></input>- <input class='shortinput'></input>
+			<tr><td>External Ports</td><td><input id='externalLB' name='externalLB' class='shortinput'/>- <input id='externalUB' name='externalUB' class='shortinput'/>
 				<td>
 					<span class='xsmallText'>Setting lower bound to less than 1024 may interfere with network services</span>
 				</td>
@@ -72,3 +72,16 @@
 
 	</div>
 </div>
+
+
+<script type='text/ecmascript' src='php/bin.etc.php?q=upnp'></script>
+<script type='text/javascript'>
+
+$(function(){
+$('#internalLB').val(upnp.internalLB);
+$('#internalUB').val(upnp.internalUB);
+$('#externalLB').val(upnp.externalLB);
+$('#externalUB').val(upnp.externalUB);
+});
+
+</script>
