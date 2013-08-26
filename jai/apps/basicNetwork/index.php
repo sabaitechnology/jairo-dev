@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-<title id='mainTitle'>Jai</title>
+<title id='mainTitle'>Sabai Jai Ro</title>
 <link rel='stylesheet' type='text/css' href='/libs/jquery-ui.min.css'>
 <link rel='stylesheet' type='text/css' href='/libs/jquery.ui.menu.css'>
 <link rel='stylesheet' type='text/css' href='css/main.css'>

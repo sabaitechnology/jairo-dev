@@ -11,4 +11,4 @@ Maintainer: david@sabaitechnology.com
 Description: Sabai test package.
 EOF
 #chmod 775 x86/DEBIAN/{pre,post}{rm,inst}
-#dpkg --build x86
+#dpkg --build x86s
