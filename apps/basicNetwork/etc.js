@@ -79,6 +79,9 @@
   "hops" : 20,
   "wait" : 3
  },
+ "nslookup" : {
+  "domain" : "www.google.com"
+ },
  "gateways": {
   "default": "vpn",
   "rules": [

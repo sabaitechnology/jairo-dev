@@ -45,8 +45,9 @@
           <option value="1200">20 minutes</option>
           <option value="1800">30 minutes</option>
         </select>
+        
       </div>
-
+      <br>
     </div> <!--end control box content -->
 </div> <!--end control box  -->
 

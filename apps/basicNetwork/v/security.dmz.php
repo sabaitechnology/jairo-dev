@@ -12,7 +12,7 @@
 		 </label>
 		 <table>
 		 	<tr><td>Destination Address</td> <td><input></input><td></tr>
-		 	<tr><td>Source Address Restrction</td> <td> <input></input> </td></tr>
+		 	<tr><td>Source Address Restriction</td> <td> <input></input> </td></tr>
 		 </table>
 
 	</div>

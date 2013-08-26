@@ -92,8 +92,5 @@ function init(){ hidden = E('hideme'); hide = E('hiddentext');
  $('#findText').on("keydown", catchEnter);
 }
 
-$(function(){
-
-});
 
 </script>
