@@ -9,6 +9,6 @@ debian: built/jairo.deb
 .PHONY : clean debian
 
 clean:
-	rm built/*
+	@rm built/*
 
 
