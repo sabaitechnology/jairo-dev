@@ -98,7 +98,7 @@ ul#superMenu, ul.subMenu {
 }
 
 .controlTable tr td:first-child {
- width: 15%;
+ min-width: 7em;
 }
 
 .controlTable tr td {
@@ -472,7 +472,10 @@ font-size: .95em;
 }
 
 .smallwidth tr td:first-child {
-    width: 10%;
+    min-width: 4em;
 }
+
+
+
 
 

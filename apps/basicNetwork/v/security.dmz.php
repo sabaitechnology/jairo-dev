@@ -2,7 +2,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>DMZ</span>
 	<div class='controlBoxContent'>
-		 <input type="checkbox" id="dmzToggle" name='dmzToggle' class="slideToggle" />
+		 <input type="checkbox" id="dmzToggle" name='dmzToggle' class="slideToggle"/>
 		 <label class="slideToggleViewport" for="dmzToggle">
 		 <div class="slideToggleSlider">
 		   <div class="slideToggleButton slideToggleButtonBackground">&nbsp;</div>
@@ -11,9 +11,32 @@
 		  </div>
 		 </label>
 		 <table>
-		 	<tr><td>Destination Address</td> <td><input></input><td></tr>
-		 	<tr><td>Source Address Restriction</td> <td> <input></input> </td></tr>
+		 	<tr><td>Destination Address</td> <td><input id='destination' name='destination' disabled></input><td></tr>
+		 	<tr><td>Source Address Restriction</td> <td> <input name='restriction' disabled></input> </td></tr>
 		 </table>
+		 <div><span class='xsmallText'>(optional; ex: "1.1.1.1", "1.1.1.0/24", "1.1.1.1 - 2.2.2.2" or "me.example.com")</span></div>
 
 	</div>
 </div>
+
+
+<script type='text/ecmascript' src='php/bin.etc.php?q=dmz'></script>
+<script type='text/ecmascript'>
+
+$(function(){
+ $('#destination').val(dmz.destination);
+});
+
+$("input[name=dmzToggle]").change(function(){
+
+if( $("input[name=dmzToggle]").is(":checked") ) {
+    $("input[name=destination]").attr("disabled", false);
+    $("input[name=restriction]").attr("disabled", false);
+} else {
+$("input[name=destination]").attr("disabled", true);
+$("input[name=restriction]").attr("disabled", true);
+}
+
+});
+
+</script>

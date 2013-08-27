@@ -7,7 +7,7 @@ DDNS: { ip, interval, services }
 <div class='controlBox'><span class='controlBoxTitle'>WAN</span>
 
 	<div class='controlBoxContent'>
-		 <table class='controlTable'>
+	<table class='controlTable'>
 		<tbody>
 		 <tr><td>WAN Type</td><td>
 		  <select id='wan_type' name='wan_type' class='radioSwitchElement'>
@@ -27,7 +27,7 @@ DDNS: { ip, interval, services }
 		 <tr><td>MTU</td><td><input id='wan_mtu' name='wan_mtu' /></td></tr>
 		 <tr><td>MAC</td><td><input id='wan_mac' name='wan_mac' /></td></tr>
 		</tbody>
-		</table>
+	</table>
 	</div>
 </div>
 
