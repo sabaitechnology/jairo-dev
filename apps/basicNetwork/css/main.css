@@ -86,7 +86,7 @@ ul#superMenu, ul.subMenu {
 }
 
 .controlTable {
- width: 100%;
+/* width: 100%;*/
 }
 
 .smallText{
@@ -138,6 +138,7 @@ ul#superMenu, ul.subMenu {
  background: #EFF2F5;
  background: #CED7E1;
 */
+ overflow-x: auto;
  padding: .25em 1em;
  background: #EFF2F5;
  border: 1px solid transparent;
@@ -475,7 +476,3 @@ font-size: .95em;
 }
 
 
-/*table stuff*/
-.controlBoxContent {
-    overflow-x: auto;
-}

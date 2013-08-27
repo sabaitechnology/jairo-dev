@@ -3,7 +3,8 @@
 <div class='controlBox'><span class='controlBoxTitle'>Settings</span>
 	<div class='controlBoxContent'>
 		
-		<table>
+	<table>
+		<tbody>
 			<tr><td>Enable UPnP</td>
 				<td><input type="checkbox" id="dmzToggle" name='dmzToggle' class="slideToggle" />
 					 <label class="slideToggleViewport" for="dmzToggle">
@@ -35,20 +36,27 @@
 					   <div class="slideToggleContent slideToggleRight button"><span>Off</span></div>
 					  </div>
 					 </label>
-					<td>
-						<span class='xsmallText'>When enabled, UPnP clients are allowed to add mappings only to their IP</span>
-					</td>
 				</td>
+			</tr>
+			<tr>
+				<td> </td><td><span class='xsmallText'>When enabled, UPnP clients are allowed to add mappings only to their IP</span></td>
 			</tr>
 			<tr><td><br> </td><td><br> </td></tr>
 			<tr><td><b>Allowed UPnP Ports*</b></td>
 			</tr>
 			<tr><td>Internal Ports</td><td><input id='internalLB' name='internalLB' class='shortinput'/>- <input id='internalUB' name='internalUB' class='shortinput'/>
+			</tr>
+			<tr>
+				<td> </td>
 				<td>
 				<span class='xsmallText'>Valid port ranges are from 2 to 65535</span></td>
 				</td>
 			</tr>
+
 			<tr><td>External Ports</td><td><input id='externalLB' name='externalLB' class='shortinput'/>- <input id='externalUB' name='externalUB' class='shortinput'/>
+			</tr>
+			<tr>
+				<td> </td>
 				<td>
 					<span class='xsmallText'>Setting lower bound to less than 1024 may interfere with network services</span>
 				</td>
@@ -65,8 +73,8 @@
 					
 				</td>
 			</tr>
-
-		</table>
+		</tbody>
+	</table>
 		<br>
 			<span class='xsmallText'> *UPnP clients will only be allowed to map ports in the external range to ports in the internal range</span>
 
