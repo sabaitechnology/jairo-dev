@@ -69,6 +69,15 @@
   },
   "openvpn": {}
  },
+ "gateways": {
+  "default": "vpn",
+  "rules": [
+   { "mac": "000000000001", "ip": 101, "gateway": 1 },
+   { "mac": "000000000002", "ip": 102, "gateway": 2 },
+   { "mac": "000000000003", "ip": 103, "gateway": 1 }
+
+  ]
+ },
  "ping": {
   "address" : "10.0.134.90",
   "count" : 3,
@@ -82,14 +91,8 @@
  "nslookup" : {
   "domain" : "www.google.com"
  },
- "gateways": {
-  "default": "vpn",
-  "rules": [
-   { "mac": "000000000001", "ip": 101, "gateway": 1 },
-   { "mac": "000000000002", "ip": 102, "gateway": 2 },
-   { "mac": "000000000003", "ip": 103, "gateway": 1 }
-
-  ]
+ "logs" : {
+  "viewLast" : 25
  },
  "upnp" : {
   "internalLB" : 2,

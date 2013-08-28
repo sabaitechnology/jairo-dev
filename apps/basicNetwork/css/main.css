@@ -34,7 +34,7 @@ body { background-color: #EFF2F5; font: 16px Arial,Helvetica,sans-serif;}
 .noshow { display: none; }
 .nothere { visibility: hidden; }
 
-#menuHeader { width: 100%; }
+#menuHeader { width: 100%;}
 
 ul#superMenu, ul.subMenu {
  list-style-type: none;

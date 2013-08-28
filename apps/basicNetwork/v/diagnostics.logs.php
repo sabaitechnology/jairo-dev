@@ -14,7 +14,7 @@
     <span class='controlBoxTitle'>Logs</span>
      <div class='controlBoxContent'>
 
-		<input type='hidden' name='act' value='all'>
+		<input type='hidden' name='act' id='act' value='all'>
 
 		<table class='tablemenu'>
 		<tbody><tr>
@@ -23,74 +23,60 @@
 			 <input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
 			  Lines</a> |
 			</td>
-			<td><a onclick="getLog('all');" class="pointy" href='#'>View All</a> | </td>
 			<td>
-
-			</select></td>
-			<td><input type="text" id='findText' class='longinput' name='find'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
-			</tr>
-		</tbody>
-		</table>
-		
-		<textarea id='logstxtarea' style="width: 90%; height: 30em" readonly>  
-			
-			<?php
+				<select id='log' name='log'><?php
 
 			// $logs = glob('/var/log/*.log');
 			// $logs = glob('/var/log/*');
 			 $logdir = '/var/log/';
 			 $logs = scandir($logdir);
+			 $logList = array();
 
 			 foreach($logs as $log){
 			  if($log=='.' || $log=='..') continue;
-			  if(is_dir($logdir.$log)){
-			  }
-			  echo $log .": ". is_dir($logdir.$log) ."\n";
+//			  if(is_dir($logdir.$log)){}
+//			  echo $log .": ". is_dir($logdir.$log) ."\n";
+			  $logList[]=$log;
 			 }
-
+			 foreach($logList as $log){
+			 	echo "<option value='". $log ."'>". $log ."</option>\n";
+			 }
 			// var_dump($logs);
 
 			// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
 
-			?>
-			
-		</textarea>
+				?></select>
+			</td>
+			<td> | <a onclick="getLog('all');" class="pointy" href='#'>View All</a> | </td>
+			<td><input type="text" id='find' name='find' class='longinput'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
+			</tr>
+		</tbody>
+		</table>
+		
+		<textarea id='logContents' style="width: 90%; height: 30em" readonly></textarea>
 	</div>
 </div>
 <div><input type='button' id='log' name='log' value='Download Log File' onclick="getLog('all');"></div>
-			<!-- ?php
-			 foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
-			? -->
 
-
-
-<!-- div id='hideme'><div class='centercolumncontainer'><div class='middlecontainer'>
-<div id='hiddentext'>Please wait...</div><br><center><img src='images/SabaiSpin.gif'></center>
-</div></div></div -->
-
+<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/javascript'>
 
-var logWindow, logForm, logSelect, hidden, hide;
-function setDropdown(res){ eval(res);
- while(i = logs.shift()){ $('#log').append(new Option(i,i)); }
-// Which is faster?
-// $.each(logs, function(key,value){ $('#log').append(new Option( value , value )); });
- logSelect.value="syslog";
+function getLog(n){
+	$("#act").val(n);
+	$.ajax("php/bin.diagnostics.logs.php", {
+		success: function(o){
+			$('#logContents').html(o);
+		},
+		dataType: "text",
+		data: $("#fe").serialize()
+	})
 }
-function getDropdown(){ que.drop("bin/logs.php", setDropdown, 'act=list&log=&lines=&find='); }
-
-function setLog(res){ showUi(); logWindow.value = res; }
-function getLog(n){ hideUi("Fetching log..."); logForm.act.value=n; que.drop("bin/logs.php", setLog, $("#_fom").serialize() ); }
 
 function catchEnter(event){ if(event.keyCode==13) getLog('find'); }
 
-function init(){ hidden = E('hideme'); hide = E('hiddentext'); 
- logWindow = E('response');
- logForm = E('_fom');
- logSelect = E('log');
- getDropdown();
- $('#findText').on("keydown", catchEnter);
-}
+$(function(){ // hidden = $('#hideme'); hide = $('#hiddentext');
+ $('#find').on("keydown", catchEnter);
+})
 
 
 </script>
