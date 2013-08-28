@@ -106,6 +106,30 @@
  "dmz" : {
   "destination": "192.168.199.0"
 },
+"conntrack" : {
+    "maxConnection" : 8192,
+    "hashTableSize" : 2048,
+    "established" : 1800,
+    "synSent" : 30,
+    "synReceived" : 20,
+    "finWait" : 20,
+    "timeWait" : 20,
+    "close" : 10,
+    "closeWait" : 20,
+    "lastAck" : 20,
+    "unreplied" : 30,
+    "assured" : 180,
+    "generic" : 10,
+    "icmp" : 10,
+    "ftp" : "checked",
+    "gre" : "checked",
+    "h" : "checked",
+    "sip" : "checked",
+    "rtsp" : "",
+    "ttlAdjust" : "None",
+    "inboundLayer" : "checked"
+},
+
 
  "portforward": [
   { "on": true, "protocol": 1, "route": 1, "src": "24.240.173.193/8", "external": 22, "internal": 22, "device": "10.0.0.2", "description": "What?" },
