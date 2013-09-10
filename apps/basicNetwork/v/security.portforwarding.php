@@ -44,14 +44,15 @@
     'sAjaxSource': 'php/bin.security.portforwarding.php',
     'aoColumns': [
         { 'sTitle': 'On', 'mData':'On', 'sClass': 'checkbox'},  
-        { 'sTitle': 'Proto',	'mData':'Proto', 'sClass':'drop' },
-        { 'sTitle': 'VPN',		'mData':'VPN', 'sClass':'drop' },
+        { 'sTitle': 'Proto',	'mData':'Proto', 'sClass':'protoDrop' },
+        { 'sTitle': 'VPN',		'mData':'VPN', 'sClass':'vpnDrop' },
         { 'sTitle': 'Src Address', 'mData':'Src Address'  },
         { 'sTitle': 'Ext Port',  'mData':'Ext Port' },
         { 'sTitle': 'Int Port',   'mData':'Int Port' },
         { 'sTitle': 'Int Address', 'mData':'Int Address'  },
         { 'sTitle': 'Description', 'mData':'Description'  }],
     'fnInitComplete': function(){
+        // currently the first "ok" does not submit - when this is fixed can remove cancel & submit buttons
         $('.checkbox').editable(function(value, settings){
             var cPos = lt.fnGetPosition(this)
             lt.fnUpdate(value,cPos[0],cPos[1]);
@@ -70,6 +71,42 @@
           'checkbox': { trueValue: 'Yes', falseValue: 'No'}
           }
         ),
+
+        $('.protoDrop').editable(function(value, settings){
+            var cPos = lt.fnGetPosition(this)
+            lt.fnUpdate(value,cPos[0],cPos[1]);
+            // lt.fnSetColumnVis( 0, false);
+            //$('#demo').html( lt.fnGetPosition(this).join(',') );
+            //$(this).editable()
+            return value;
+          },
+
+          {
+          'data': " {'UDP':'UDP','TCP':'TCP', 'Both':'Both'}",
+          'type':'select',
+          'onblur':'submit',
+          'event': 'dblclick'
+          }
+        ),
+
+        $('.vpnDrop').editable(function(value, settings){
+            var cPos = lt.fnGetPosition(this)
+            lt.fnUpdate(value,cPos[0],cPos[1]);
+            // lt.fnSetColumnVis( 0, false);
+            //$('#demo').html( lt.fnGetPosition(this).join(',') );
+            //$(this).editable()
+            return value;
+          },
+
+          {
+          'data': " {'LAN':'LAN', 'WAN':'WAN',}",
+          'type':'select',
+          'onblur':'submit',
+          'event': 'dblclick'
+          }
+        ),
+
+
         $('td', this.fnGetNodes()).editable(function(value, settings){
             var cPos = lt.fnGetPosition(this)
             lt.fnUpdate(value,cPos[0],cPos[1]);
