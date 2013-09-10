@@ -14,46 +14,55 @@
     <span class='controlBoxTitle'>Logs</span>
      <div class='controlBoxContent'>
 
-		<input type='hidden' name='act' id='act' value='all'>
+			<input type='hidden' name='act' id='act' value='all'>
 
-		<table class='tablemenu'>
-		<tbody><tr>
-			<td>
-			 <a onclick="getLog('last');" class="pointy" href="#">View Last 
-			 <input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
-			  Lines</a> |
-			</td>
-			<td>
-				<select id='log' name='log'><?php
+			<table class='tablemenu'>
+			<tbody>
+				<tr><td>
+				 <a onclick="getLog('last');" class="pointy" href="#">
+				 	View Last 
+				 	<input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
+				  Lines</a> |
+				</td>
+				<td>
+					<select id='log' name='log'><?php
+					// ** Possible strategy for encapsulation?
+					//
+					//include("php/bin.diagnostics.logs.php?act=list");
 
-			// $logs = glob('/var/log/*.log');
-			// $logs = glob('/var/log/*');
-			 $logdir = '/var/log/';
-			 $logs = scandir($logdir);
-			 $logList = array();
+					// $logs = glob('/var/log/*.log');
+					// $logs = glob('/var/log/*');
 
-			 foreach($logs as $log){
-			  if($log=='.' || $log=='..') continue;
-//			  if(is_dir($logdir.$log)){}
-//			  echo $log .": ". is_dir($logdir.$log) ."\n";
-			  $logList[]=$log;
-			 }
-			 foreach($logList as $log){
-			 	echo "<option value='". $log ."'>". $log ."</option>\n";
-			 }
-			// var_dump($logs);
+					 $logdir = '/var/log/';
 
-			// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
+					 $logs = scandir($logdir);
+					 
+					 $logList = array();
 
-				?></select>
-			</td>
-			<td> | <a onclick="getLog('all');" class="pointy" href='#'>View All</a> | </td>
-			<td><input type="text" id='find' name='find' class='longinput'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
-			</tr>
-		</tbody>
-		</table>
-		
-		<textarea id='logContents' style="width: 90%; height: 30em" readonly></textarea>
+					 foreach($logs as $log){
+						// ignore . and ..
+					  if($log=='.' || $log=='..') continue;
+						//if(is_dir($logdir.$log)){}
+						//echo $log .": ". is_dir($logdir.$log) ."\n";
+					 
+					  $logList[]=$log;
+					 }
+					 foreach($logList as $log){
+					 	echo "<option value='". $log ."'>". $log ."</option>\n";
+					 }
+						// var_dump($logs);
+
+						// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
+
+					?></select>
+				</td>
+				<td> | <a onclick="getLog('all');" class="pointy" href='#'>View All</a> | </td>
+				<td><input type="text" id='find' name='find' class='longinput'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
+				</tr>
+			</tbody>
+			</table>
+			
+			<textarea id='logContents' style="width: 90%; height: 30em" readonly></textarea>
 	</div>
 </div>
 <div><input type='button' id='log' name='log' value='Download Log File' onclick="getLog('all');"></div>
@@ -63,6 +72,7 @@
 
 function getLog(n){
 	$("#act").val(n);
+
 	$.ajax("php/bin.diagnostics.logs.php", {
 		success: function(o){
 			$('#logContents').html(o);

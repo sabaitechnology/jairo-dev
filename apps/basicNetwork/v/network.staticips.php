@@ -13,6 +13,8 @@
 </div></div>
 
 <input type='button' id='test' value='Test' onclick='composeStaticList();'>
+<input type='button' value='Save' onclick='saveStaticList();'>
+  <input type='button' value='Cancel' onclick='cancelStaticList();'>
 
 <div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'>
 <pre id='demo'></pre></div>
@@ -41,7 +43,7 @@ lt =  $('#list').dataTable({
    { 'sTitle': 'MAC',		'mData':'mac' },
    { 'sTitle': 'Address',	'mData':'ip' },
    { 'sTitle': 'Name',		'mData':'hostname' }
-  ],
+   ],
   'fnInitComplete': function(){
    $('td', this.fnGetNodes()).editable(function(value, settings){
      var cPos = lt.fnGetPosition(this)
@@ -50,10 +52,12 @@ lt =  $('#list').dataTable({
      //$(this).editable()
      return value;
     }, {
-     'onblur':'submit'
-   });
+     'onblur':'submit',
+     'event': 'dblclick',
+     'placeholder' : '',
+    });
   }
- });
+});
 
 $(function(){
 });

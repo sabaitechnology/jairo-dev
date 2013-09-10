@@ -13,9 +13,7 @@ turn this into a form to get something other than google :)
 		 <!-- <tr><td>IP Address</td><td><input id='ns_address' name='ns_address' /></td></tr> -->
 		</tbody>
 	</table>
-	<textarea id='logstxtarea' style="width: 90%; height: 30em" readonly>  
-			
-			<?php
+	<textarea id='logstxtarea' style="width: 90%; height: 30em" readonly><?php
 
 				$ip = gethostbynamel('www.google.com');
 

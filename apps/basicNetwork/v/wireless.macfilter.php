@@ -3,9 +3,11 @@
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span>
 	<div class='controlBoxContent'>
 		<table id='list' class='listTable'></table>
-
+      <input type='button' value='Save' onclick='saveMACg();'>
+      <input type='button' value='Cancel' onclick='cancelMAC();'>
 	</div>
 </div>
+
 
 
 
@@ -23,8 +25,20 @@
    { 'sTitle': 'MAC Address',		'mData':'mac' },
    { 'sTitle': 'Description',	'mData':'description' },
    { 'sTitle': 'Policy',	'mData':'policy' }
-
-  ]
+  ],
+  'fnInitComplete': function(){
+   $('td', this.fnGetNodes()).editable(function(value, settings){
+     var cPos = lt.fnGetPosition(this)
+     lt.fnUpdate(value,cPos[0],cPos[1]);
+//     $('#demo').html( lt.fnGetPosition(this).join(',') );
+     //$(this).editable()
+     return value;
+    }, {
+     'onblur':'submit',
+     'event': 'dblclick',
+     'placeholder' : '',
+    });
+  }
  });
 
 </script>
