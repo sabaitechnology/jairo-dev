@@ -43,14 +43,14 @@
     'sAjaxDataProp': 'portforwarding',
     'sAjaxSource': 'php/bin.security.portforwarding.php',
     'aoColumns': [
-        { 'sTitle': 'On', 'mData':'On', 'sClass': 'checkbox'},  
-        { 'sTitle': 'Proto',	'mData':'Proto', 'sClass':'protoDrop' },
-        { 'sTitle': 'VPN',		'mData':'VPN', 'sClass':'vpnDrop' },
-        { 'sTitle': 'Src Address', 'mData':'Src Address'  },
-        { 'sTitle': 'Ext Port',  'mData':'Ext Port' },
-        { 'sTitle': 'Int Port',   'mData':'Int Port' },
-        { 'sTitle': 'Int Address', 'mData':'Int Address'  },
-        { 'sTitle': 'Description', 'mData':'Description'  }],
+      { 'sTitle': 'On', 'mData':'On', 'sClass': 'checkbox'},  
+      { 'sTitle': 'Proto',	'mData':'Proto', 'sClass':'protoDrop' },
+      { 'sTitle': 'VPN',		'mData':'VPN', 'sClass':'vpnDrop' },
+      { 'sTitle': 'Src Address', 'mData':'Src Address'  },
+      { 'sTitle': 'Ext Port',  'mData':'Ext Port' },
+      { 'sTitle': 'Int Port',   'mData':'Int Port' },
+      { 'sTitle': 'Int Address', 'mData':'Int Address'  },
+      { 'sTitle': 'Description', 'mData':'Description'  }],
     'fnInitComplete': function(){
         // currently the first "ok" does not submit - when this is fixed can remove cancel & submit buttons
         $('.checkbox').editable(function(value, settings){
@@ -121,10 +121,7 @@
            'event': 'dblclick',
            'placeholder' : '',
           }
-        ),
-        $("input[type='checkbox']").change(function() {
-            console.log("checked")
-        })
+        )
     }
  });
 

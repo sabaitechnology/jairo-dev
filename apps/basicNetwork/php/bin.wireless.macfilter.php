@@ -13,31 +13,19 @@ $sl = <<<EOF
 host abc {
   hardware ethernet 08:00:07:26:c0:a5;
   description router stuff;
-  policy  <select id='wl0_macfilter_policy' name='wl0_macfilter_policy' class='radioSwitchElement'>
-       <option value='off'>Off</option>
-       <option value='allow'>Allow</option>
-       <option value='deny'>Deny</option>
-      </select>;
+  policy Off;
 }
 
 host def {
   hardware ethernet 08:00:07:26:c0:a6;
   description other stuff;
-  policy <select id='wl0_macfilter_policy' name='wl0_macfilter_policy' class='radioSwitchElement'>
-       <option value='off'>Off</option>
-       <option value='allow'>Allow</option>
-       <option value='deny'>Deny</option>
-      </select>;
+  policy Deny;
 }
 
 host ghi {
   hardware ethernet 08:00:07:26:c0:a7;
   description router fun;
-  policy <select id='wl0_macfilter_policy' name='wl0_macfilter_policy' class='radioSwitchElement'>
-       <option value='off'>Off</option>
-       <option value='allow'>Allow</option>
-       <option value='deny'>Deny</option>
-      </select>;
+  policy Allow;
 }
 
 EOF

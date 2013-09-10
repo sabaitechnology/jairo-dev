@@ -61,23 +61,46 @@
    { 'sTitle': 'MAC',		'mData':'mac' },
    { 'sTitle': 'Address',	'mData':'ip' },
    { 'sTitle': 'Name',		'mData':'hostname' },
-   { 'sTitle': 'Gateway', 'mData': 'dlva'   }
-
-  ],
+   { 'sTitle': 'Gateway', 'mData': 'dlva', 'sClass': 'gatewayDrop'}],
   'fnInitComplete': function(){
-   $('td', this.fnGetNodes()).editable(function(value, settings){
-     var cPos = lt.fnGetPosition(this)
-     lt.fnUpdate(value,cPos[0],cPos[1]);
-//     $('#demo').html( lt.fnGetPosition(this).join(',') );
-     //$(this).editable()
-     return value;
-    }, {
-     'onblur':'submit',
-     'event': 'dblclick',
-     'placeholder': '',
-   });
-  }
+       $('.gatewayDrop').editable(function(value, settings){
+        var cPos = lt.fnGetPosition(this)
+        lt.fnUpdate(value,cPos[0],cPos[1]);
+        // lt.fnSetColumnVis( 0, false);
+        //$('#demo').html( lt.fnGetPosition(this).join(',') );
+        //$(this).editable()
+        return value;
+      },
+
+      {
+      'data': " {'Default':'Default', 'Local':'Local', 'VPN':'VPN', 'Accelerator':'Accelerator'}",
+      'type':'select',
+      'onblur':'submit',
+      'event': 'dblclick'
+      }
+    )
+       // ,
+
+
+    // $('td', this.fnGetNodes()).editable(function(value, settings){
+    //     var cPos = lt.fnGetPosition(this)
+    //     lt.fnUpdate(value,cPos[0],cPos[1]);
+    //     // lt.fnSetColumnVis( 0, false);
+    //     //$('#demo').html( lt.fnGetPosition(this).join(',') );
+    //     //$(this).editable()
+    //     return value;
+    //   },
+
+    //   {
+    //    'onblur':'submit',
+    //    'event': 'dblclick',
+    //    'placeholder' : '',
+    //   }
+    // )
+   }
  });
+
+
 
 $('#default_gateway').radioswitch({
  value: gateways.default

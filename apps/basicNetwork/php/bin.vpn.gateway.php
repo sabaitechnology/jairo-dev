@@ -13,34 +13,19 @@ $sl = <<<EOF
 host abc {
   hardware ethernet 08:00:07:26:c0:a5;
   fixed-address 10.0.134.90;
-  dlva <select id='default_gateway' name='default_gateway' class='radioSwitchElement'>
-       <option value='default'>Default</option>
-       <option value='local'>Local</option>
-       <option value='vpn'>VPN</option>
-       <option value='accelerator'>Accelerator</option>
-      </select>;
+  dlva Default
 }
 
 host def {
   hardware ethernet 08:00:07:26:c0:a6;
   fixed-address 10.0.134.91;
-  dlva  <select id='default_gateway' name='default_gateway' class='radioSwitchElement'>
-       <option value='default'>Default</option>
-       <option value='local'>Local</option>
-       <option value='vpn'>VPN</option>
-       <option value='accelerator'>Accelerator</option>
-      </select>
+  dlva Local
 }
 
 host ghi {
   hardware ethernet 08:00:07:26:c0:a7;
   fixed-address 10.0.134.92;
-  dlva  <select id='default_gateway' name='default_gateway' class='radioSwitchElement'>
-       <option value='default'>Default</option>
-       <option value='local'>Local</option>
-       <option value='vpn'>VPN</option>
-       <option value='accelerator'>Accelerator</option>
-      </select>
+  dlva Default
 }
 
 EOF

@@ -22,22 +22,41 @@
   'sAjaxDataProp': 'macfilter',
   'sAjaxSource': 'php/bin.wireless.macfilter.php',
   'aoColumns': [
-   { 'sTitle': 'MAC Address',		'mData':'mac' },
-   { 'sTitle': 'Description',	'mData':'description' },
-   { 'sTitle': 'Policy',	'mData':'policy' }
-  ],
+     { 'sTitle': 'MAC Address',		'mData':'mac' },
+     { 'sTitle': 'Description',	'mData':'description' },
+     { 'sTitle': 'Policy',	'mData':'policy', 'sClass': 'policyDrop' }],
   'fnInitComplete': function(){
-   $('td', this.fnGetNodes()).editable(function(value, settings){
-     var cPos = lt.fnGetPosition(this)
-     lt.fnUpdate(value,cPos[0],cPos[1]);
-//     $('#demo').html( lt.fnGetPosition(this).join(',') );
-     //$(this).editable()
-     return value;
-    }, {
+    $('.policyDrop').editable(function(value, settings){
+      var cPos = lt.fnGetPosition(this)
+      lt.fnUpdate(value,cPos[0],cPos[1]);
+      // lt.fnSetColumnVis( 0, false);
+      //$('#demo').html( lt.fnGetPosition(this).join(',') );
+      //$(this).editable()
+      return value;
+    },
+
+    {
+    'data': " {'Off':'Off','Alow':'Allow', 'Deny':'Deny'}",
+    'type':'select',
+    'onblur':'submit',
+    'event': 'dblclick'
+    }
+  ),
+
+  $('td', this.fnGetNodes()).editable(function(value, settings){
+      var cPos = lt.fnGetPosition(this)
+      lt.fnUpdate(value,cPos[0],cPos[1]);
+      //$('#demo').html( lt.fnGetPosition(this).join(',') );
+      //$(this).editable()
+      return value;
+    }, 
+
+    {
      'onblur':'submit',
      'event': 'dblclick',
      'placeholder' : '',
-    });
+    }
+  )
   }
  });
 
