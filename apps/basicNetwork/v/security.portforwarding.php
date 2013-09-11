@@ -10,7 +10,7 @@
   <br>
   <input type='button' value='Save' onclick='savePortForwarding();'>
   <input type='button' value='Cancel' onclick='cancelPortForwarding();'>
-  <a id="toggleDesc" onclick="toggleExplain();" href="#"><span class='xsmallText'>Show Help</span></a><br>
+  <span class='xsmallText'><a id="toggleDesc" onclick="toggleExplain();" href="#">Show Help</a></span><br>
 
   <ul id='help' class='nobullets noshow'>
   <span class='xsmallText'>

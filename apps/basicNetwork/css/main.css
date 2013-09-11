@@ -95,6 +95,7 @@ ul#superMenu, ul.subMenu {
 
 .xsmallText{
     font-size: .75em;
+    font-weight: normal;
 }
 
 .controlTable tr td:first-child {
@@ -143,7 +144,6 @@ ul#superMenu, ul.subMenu {
  background: #EFF2F5;
  border: 1px solid transparent;
 }
-
 
 .nobullets {
     list-style-type: none;
@@ -422,6 +422,59 @@ ul.editableList > li {
  padding: 0 !important;
  width: 100%;
  height: 2em;
+}
+
+#help {
+    height: 1.5em;
+    float: right;
+}
+
+
+/*Tool Tip Plugin from http://www.menucool.com/tooltip/css-tooltip*/
+a.tooltip {
+    outline:none; 
+}
+a.tooltip:hover {
+    text-decoration:none;
+} 
+a.tooltip span {
+    z-index:10;
+    display:none; 
+    padding:14px 20px;
+    margin-top:-30px; 
+    margin-left:165px;
+    width:252px; 
+    line-height:16px;
+}
+a.tooltip:hover span{
+    display:inline; 
+    position:absolute; 
+    color:#111;
+    border:1px 
+    solid #DCA; 
+    background:#fffAF0;
+}
+.callout {
+    z-index:20;
+    position:absolute;
+    top:30px;
+    border:0;
+    left:292px;
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg); /* IE 9 */
+    -webkit-transform:rotate(180deg); /* Safari and Chrome */   
+}
+
+/*Tool Tip CSS3 extras*/
+a.tooltip span
+{
+    border-radius:4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+        
+    -moz-box-shadow: 5px 5px 8px #CCC;
+    -webkit-box-shadow: 5px 5px 8px #CCC;
+    box-shadow: 5px 5px 8px #CCC;
 }
 /* TODO: make image for slider handles. .ui-slider-handle { background: url("images/ui-bg_glass_custom_slider_handle.png") repeat-x scroll 50% 50% #E6E6E6; } */
 

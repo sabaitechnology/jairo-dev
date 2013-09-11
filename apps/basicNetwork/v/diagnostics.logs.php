@@ -8,7 +8,25 @@
 .pointy { cursor: pointer; }
 </style -->
 
-<div class='pageTitle'>Diagnostics: Logs</div>
+<div class='pageTitle'>Diagnostics: Logs 
+<!-- 	<a href="#" class="tooltip">
+    <span>
+        <img class="callout" src="img/callout.gif" />
+        Most Light-weight Tooltip<br />
+        This is the easy-to-use Tooltip driven purely by CSS.
+    </span>
+	</a> -->
+	<a href="#" class="tooltip">
+	    <img id='help' src="img/help.png" />
+	    <span>
+	        <img class="callout" src="img/callout.gif" />
+	        <p class='xsmallText'> Need Help?<br>
+	        Here's a hint. Routers are cool.<br> (Brought to you by the letter 'R')
+	      	</p>
+	    </span>
+	</a>
+
+</div>
 
 <div class='controlBox'>
     <span class='controlBoxTitle'>Logs</span>
@@ -18,12 +36,7 @@
 
 			<table class='tablemenu'>
 			<tbody>
-				<tr><td>
-				 <a onclick="getLog('last');" class="pointy" href="#">
-				 	View Last 
-				 	<input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
-				  Lines</a> |
-				</td>
+				<tr>
 				<td>
 					<select id='log' name='log'><?php
 					// ** Possible strategy for encapsulation?
@@ -55,6 +68,12 @@
 						// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
 
 					?></select>
+				</td>
+				<td> | 
+				 <a onclick="getLog('last');" class="pointy" href="#">
+				 	View Last 
+				 	<input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
+				  Lines </a>
 				</td>
 				<td> | <a onclick="getLog('all');" class="pointy" href='#'>View All</a> | </td>
 				<td><input type="text" id='find' name='find' class='longinput'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>

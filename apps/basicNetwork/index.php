@@ -18,8 +18,9 @@
  $section = array_key_exists('section',$_REQUEST)?preg_replace('/[^a-z\d]/i', '', $_REQUEST['section']):'wan';
  $page = "v/$panel.$section.php";
  $page = file_exists($page)?$page:'v/lorem.php';
- echo "var panel='$panel'; var section='$section';\n";
+ echo "var panel='$panel'; var section='$section';";
 ?>
+
 </script>
 </head><body>
 

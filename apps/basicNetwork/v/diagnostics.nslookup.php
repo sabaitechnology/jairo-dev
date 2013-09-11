@@ -1,7 +1,7 @@
 <div class='pageTitle'>Diagnostics: NS Lookup</div>
 <!-- 
 TODO:
-turn this into a form to get something other than google :) 
+turn this into a form so we can gethostbyname(USER INPUT) 
  -->
 
 <div class='controlBox'><span class='controlBoxTitle'>NS Lookup</span>

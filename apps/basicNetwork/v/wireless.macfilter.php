@@ -36,7 +36,7 @@
     },
 
     {
-    'data': " {'Off':'Off','Alow':'Allow', 'Deny':'Deny'}",
+    'data': " {'Off':'Off','Allow':'Allow', 'Deny':'Deny'}",
     'type':'select',
     'onblur':'submit',
     'event': 'dblclick'

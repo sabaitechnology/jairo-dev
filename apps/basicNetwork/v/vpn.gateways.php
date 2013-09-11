@@ -79,24 +79,6 @@
       'event': 'dblclick'
       }
     )
-       // ,
-
-
-    // $('td', this.fnGetNodes()).editable(function(value, settings){
-    //     var cPos = lt.fnGetPosition(this)
-    //     lt.fnUpdate(value,cPos[0],cPos[1]);
-    //     // lt.fnSetColumnVis( 0, false);
-    //     //$('#demo').html( lt.fnGetPosition(this).join(',') );
-    //     //$(this).editable()
-    //     return value;
-    //   },
-
-    //   {
-    //    'onblur':'submit',
-    //    'event': 'dblclick',
-    //    'placeholder' : '',
-    //   }
-    // )
    }
  });
 

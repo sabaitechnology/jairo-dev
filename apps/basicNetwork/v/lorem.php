@@ -1,5 +1,5 @@
 <?php
- echo "<div class='pageTitle'>". $panel .': '. $section ."</div>\n\n";
+ echo "<div class='pageTitle'>". $panel .': '. $section ."\n\n";
  echo preg_replace(
   array("/^/m","/\n/m"),
   array(
