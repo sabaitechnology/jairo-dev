@@ -21,7 +21,7 @@
 	    <span>
 	        <img class="callout" src="img/callout.gif" />
 	        <p class='xsmallText'> Need Help?<br>
-	        Here's a hint. Routers are cool.<br> (Brought to you by the letter 'R')
+	        This is a super helpful tooltip. <br> (Brought to you by the letter 'T')
 	      	</p>
 	    </span>
 	</a>

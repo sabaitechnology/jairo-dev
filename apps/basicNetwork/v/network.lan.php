@@ -1,6 +1,7 @@
 <div class='pageTitle'>Network: LAN</div>
 <!-- TODO:
 WINS?
+ADD VALIDATION
 -->
 <div class='controlBox'><span class='controlBoxTitle'>Address</span><div class='controlBoxContent'>
 
@@ -130,5 +131,10 @@ $('#dhcpUpper').ipspinner('value', dhcp.upper );
 $('#dhcpLease').spinner('value',86400);
 
 });
+
+//validation goes here....
+function verifyFields(){
+
+} 
 
 </script>

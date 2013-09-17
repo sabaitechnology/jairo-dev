@@ -252,8 +252,12 @@ input {
  padding: .5em .75em;
 }
 
-.radioSwitch > li:first-child { border-radius: 10px 0 0 10px; }
-.radioSwitch > li:last-child { border-width: 0; border-radius: 0 10px 10px 0; }
+.radioSwitch > li:first-child { 
+    border-radius: 8px 0 0 8px; }
+.radioSwitch > li:last-child { 
+    border-width: 0; 
+    border-radius: 0 8px 8px 0; 
+}
 
  /* radioSwitch END */
 
@@ -336,7 +340,7 @@ margin: 0em .6em;
 .slideToggle + .slideToggleViewport .slideToggleContent { width: 41.75%; }
 
 .slideToggle:checked + .slideToggleViewport > .slideToggleSlider { left: 0; }
-.slideToggle:checked + .slideToggleViewport .slideToggleButton { left: 30%; }
+.slideToggle:checked + .slideToggleViewport .slideToggleButton { left: 28%; }
 .slideToggle:checked + .slideToggleViewport .slideToggleLeft { margin-left: 0; }
 
 .slideToggle + .slideToggleViewport > .slideToggleSlider { left: -100%; }
