@@ -433,35 +433,34 @@ ul.editableList > li {
     float: right;
 }
 
-
-/*Tool Tip Plugin from http://www.menucool.com/tooltip/css-tooltip*/
-a.tooltip {
-    outline:none; 
+#close {
+    height: 1em;
+    float: right;
+    margin-top: .5em;
 }
-a.tooltip:hover {
-    text-decoration:none;
-} 
-a.tooltip span {
+
+.inline {
+    display: inline;
+}
+#tooltip {
     z-index:10;
     display:none; 
     padding:14px 20px;
-    margin-top:-30px; 
-    margin-left:165px;
+    margin-top:-8px; 
+    margin-left:441px;
     width:252px; 
-    line-height:16px;
-}
-a.tooltip:hover span{
-    display:inline; 
-    position:absolute; 
     color:#111;
     border:1px 
     solid #DCA; 
     background:#fffAF0;
+    position:absolute; 
 }
+
+
 .callout {
     z-index:20;
     position:absolute;
-    top:30px;
+    top:15px;
     border:0;
     left:292px;
     transform:rotate(180deg);
@@ -469,16 +468,17 @@ a.tooltip:hover span{
     -webkit-transform:rotate(180deg); /* Safari and Chrome */   
 }
 
-/*Tool Tip CSS3 extras*/
-a.tooltip span
-{
-    border-radius:4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-        
-    -moz-box-shadow: 5px 5px 8px #CCC;
-    -webkit-box-shadow: 5px 5px 8px #CCC;
-    box-shadow: 5px 5px 8px #CCC;
+.inlineHelp {
+    display: none;
+}
+
+.helpbox {
+ color: navy;
+ font-family: courier;
+}
+
+.errorInput {
+    border-bottom: 2px solid red;
 }
 /* TODO: make image for slider handles. .ui-slider-handle { background: url("images/ui-bg_glass_custom_slider_handle.png") repeat-x scroll 50% 50% #E6E6E6; } */
 

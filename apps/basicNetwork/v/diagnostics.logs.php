@@ -8,30 +8,37 @@
 .pointy { cursor: pointer; }
 </style -->
 
-<div class='pageTitle'>Diagnostics: Logs 
-<!-- 	<a href="#" class="tooltip">
-    <span>
-        <img class="callout" src="img/callout.gif" />
-        Most Light-weight Tooltip<br />
-        This is the easy-to-use Tooltip driven purely by CSS.
-    </span>
-	</a> -->
-	<a href="#" class="tooltip">
-	    <img id='help' src="img/help.png" />
-	    <span>
+<!-- Hidden tooltip - click ? to show -->
+<div class='inline'>
+ <div id='tooltip'>
 	        <img class="callout" src="img/callout.gif" />
-	        <p class='xsmallText'> Need Help?<br>
-	        This is a super helpful tooltip. <br> (Brought to you by the letter 'T')
+	      	<a href='#' class='fright xsmallText' onclick='hide();'>Close</a>
+	        <p> 
+	        <b>Display Inline Help: <input id='inlineHelp' type='checkbox' onClick='displayInline();'></input></b> 
+	        <br> 
+	        <b>Manual Page:</b> <a href="?panel=lorem" target="_blank">Logs</a>
+	        <br>
+	        <b>Links:</b> 
+	        <a href="http://www.wikipedia.com" target="_blank">Wiki Page</a>
+	        
 	      	</p>
-	    </span>
+</div>
+</div>
+
+<div class='pageTitle'>Diagnostics: Logs 
+
+	   
+	<a href="#" id="question" onclick='show();'>
+	    <img id='help' src="img/help.png" />
 	</a>
+	
 
 </div>
 
 <div class='controlBox'>
     <span class='controlBoxTitle'>Logs</span>
      <div class='controlBoxContent'>
-
+     	<div id='error'></div>
 			<input type='hidden' name='act' id='act' value='all'>
 
 			<table class='tablemenu'>
@@ -67,22 +74,31 @@
 
 						// foreach(preg_replace(array("|/var/log/|","/\.log$/"),'',glob('/var/log/*.log')) as $lf) echo "<option value='". $lf ."'>". $lf ."</option>\n";
 
-					?></select>
+					?></select> |
 				</td>
-				<td> | 
-				 <a onclick="getLog('last');" class="pointy" href="#">
+				<td id='linesDiv'>  
+				 <a onclick="checkNum()" class="pointy" href="#">
 				 	View Last 
 				 	<input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
 				  Lines </a>
-				</td>
-				<td> | <a onclick="getLog('all');" class="pointy" href='#'>View All</a> | </td>
+				<td> | <a onclick="getLog('all'); ignoreError()" class="pointy" href='#'>View All</a> | </td>
 				<td><input type="text" id='find' name='find' class='longinput'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
 				</tr>
+	<!-- 			<tr class='inlineHelp helpbox'>
+					<td>I am helpful!
+					</td>
+	 -->			</tr>
 			</tbody>
 			</table>
+			<div class='inlineHelp helpbox'>
+				<p>I am helpful!</p>
+			</div>
+
 			
-			<textarea id='logContents' style="width: 90%; height: 30em" readonly></textarea>
-	</div>
+			<textarea id='logContents' style="width: 90%; height: 30em" readonly>
+			</textarea>
+		
+	</div> <!-- end control box content -->
 </div>
 <div><input type='button' id='log' name='log' value='Download Log File' onclick="getLog('all');"></div>
 
@@ -107,5 +123,41 @@ $(function(){ // hidden = $('#hideme'); hide = $('#hiddentext');
  $('#find').on("keydown", catchEnter);
 })
 
+function show(){
+	$('#tooltip').show();
+}
+function hide(){
+	$('#tooltip').hide();
+}
+
+function displayInline(){
+	if($('#inlineHelp').is(':checked')){
+		$('.inlineHelp').show();
+	}else {
+		$('.inlineHelp').hide();
+	}
+
+}
+
+function checkNum(){
+	console.log('blurred');
+	var contents = $('#lines').val();
+	console.log(contents)
+	if($.isNumeric(contents)){
+		console.log('numberic')
+		$('#error').html('');
+		$('#linesDiv').removeClass('errorInput')
+		getLog('last');
+	}else{
+		console.log('not numberic')
+		$('#error').html('<span style="color: red">Oops! Value must be a number</span>')
+		$('#linesDiv').addClass('errorInput')
+	}
+}
+
+function ignoreError(){
+		$('#error').html('');
+		$('#linesDiv').removeClass('errorInput')
+}
 
 </script>
