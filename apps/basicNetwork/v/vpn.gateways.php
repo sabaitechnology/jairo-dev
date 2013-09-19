@@ -6,7 +6,7 @@
   <div class='controlBoxContent'>
      <table class='controlTable'>
     <tbody>
-     <tr><td>Select Default</td><td>
+     <tr><td>Default Gateway: </td><td>
       <select id='default_gateway' name='default_gateway' class='radioSwitchElement'>
        <option value='none'>None</option>
        <option value='local'>Local</option>
@@ -16,7 +16,8 @@
      </td></tr>
     </tbody>
     </table>
-
+    <div><br>*Gateway By Device (optional):<br><br>
+    </div>
     <table id='list' class='listTable'></table>
       <input type='button' value='Save' onclick='saveGateway();'>
       <input type='button' value='Cancel' onclick='cancelGateway();'>
@@ -53,7 +54,7 @@
    { 'sTitle': 'MAC',   'mData':'mac' },
    { 'sTitle': 'Address', 'mData':'ip' },
    { 'sTitle': 'Name',    'mData':'hostname' },
-   { 'sTitle': 'Gateway', 'mData': 'dlva', 'sClass': 'gatewayDrop'}],
+   { 'sTitle': '*Gateway', 'mData': 'dlva', 'sClass': 'gatewayDrop'}],
   'fnInitComplete': function(){
        $('.gatewayDrop').editable(function(value, settings){
         var cPos = lt.fnGetPosition(this)
