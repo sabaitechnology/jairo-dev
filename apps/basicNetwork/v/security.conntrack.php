@@ -20,7 +20,7 @@ onchange make input visible-->
 </div>
 
 <div class='controlBox'><span class='controlBoxTitle'>TCP Timeout</span>
-	<div class='controlBoxContent'>
+	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
 				<tr><td> </td><td><span class='xsmallText'> (seconds)</span></td>
@@ -50,7 +50,7 @@ onchange make input visible-->
 </div>
 
 <div class='controlBox'><span class='controlBoxTitle'>UDP Timeout</span>
-	<div class='controlBoxContent'>
+	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
 				<tr><td> </td><td><span class='xsmallText'> (seconds)</span></td>
@@ -66,7 +66,7 @@ onchange make input visible-->
 </div>
 
 <div class='controlBox'><span class='controlBoxTitle'>Other Timeouts</span>
-	<div class='controlBoxContent'>
+	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
 				<tr><td> </td><td><span class='xsmallText'> (seconds)</span></td>
@@ -83,7 +83,7 @@ onchange make input visible-->
 </div>
 
 <div class='controlBox'><span class='controlBoxTitle'>Tracking/NAT Helpers</span>
-	<div class='controlBoxContent'>
+	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
 				<tr><td>FTP</td><td><input name="ftp" id="ftp" class='shortinput' type='checkbox'></td>
@@ -107,7 +107,7 @@ onchange make input visible-->
 </div>
 
 <div class='controlBox'><span class='controlBoxTitle'>Miscellaneous</span>
-	<div class='controlBoxContent'>
+	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
 				<tr><td>TTL Adjust</td>
@@ -148,6 +148,12 @@ onchange make input visible-->
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
+$(document).ready(
+	$('.controlBox').click(function(){
+		$(this).show();
+		$(this).children('div').toggle();
+		})
+)
 
  $('#maxConnection').val(conntrack.maxConnection);
  $('#hashTableSize').val(conntrack.hashTableSize);

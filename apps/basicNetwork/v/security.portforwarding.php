@@ -36,7 +36,7 @@
     'sAjaxDataProp': 'portforwarding',
     'sAjaxSource': 'php/bin.security.portforwarding.php',
     'aoColumns': [
-      { 'sTitle': 'On', 'mData':'On', 'sClass': 'checkbox'},  
+      { 'sTitle': 'On/Off', 'mData':'On', 'sClass': 'onDrop'},  
       { 'sTitle': 'Proto',  'mData':'Proto', 'sClass':'protoDrop' },
       { 'sTitle': 'VPN',    'mData':'VPN', 'sClass':'vpnDrop' },
       { 'sTitle': 'Src Address', 'mData':'Src Address'  },
@@ -47,7 +47,8 @@
 
     'fnInitComplete': function(){
         // currently the first "ok" does not submit - when this is fixed can remove cancel & submit buttons
-        $('.checkbox').editable(function(value, settings){
+        
+        $('.onDrop').editable(function(value, settings){
             var cPos = lt.fnGetPosition(this)
             lt.fnUpdate(value,cPos[0],cPos[1]);
             // lt.fnSetColumnVis( 0, false);
@@ -57,12 +58,10 @@
           },
 
           {
-          'type':'checkbox',
-          'cancel': 'Cancel',
-          'submit': 'OK',
+          'data': " {'On':'On','Off':'Off'}",
+          'type':'select',
           'onblur':'submit',
-          'event': 'dblclick',
-          'checkbox': { trueValue: 'Yes', falseValue: 'No'}
+          'event': 'dblclick'
           }
         ),
 
@@ -175,10 +174,12 @@ $('#add').click( function (e) {
     "Int Port": "(Click to Enter)", 
     "Int Address": "(Click to Enter)", 
     "Description": "(Click to Enter)" 
-}  
+  }
 );
+
     var oSettings = lt.fnSettings();
     $('td', oSettings.aoData[ aiNew[0] ].nTr).editable(lt)
+    // lt.fnInitComplete()
     var nRow = lt.fnGetNodes( aiNew[0] );
     // editRow( lt, nRow );
     // nEditing = nRow;

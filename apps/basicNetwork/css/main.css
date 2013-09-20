@@ -532,6 +532,11 @@ font-size: .95em;
     min-width: 4em;
 }
 
+/*contrack page accordion*/
+
+.accordion {
+    display: none;
+}
 
 
 

@@ -18,7 +18,7 @@ $fakeFile = <<<EOF
 # I made all this up, duh
 
 host abc {
-On Yes;
+On On;
 Proto UDP;
 VPN WAN;
 Src Address 1.1.1.0/22;
@@ -29,7 +29,7 @@ Description ex:restricted;
 }
 
 host def {
-On No;
+On Off;
 Proto TCP;
 VPN WAN;
 Src Address 1.1.1.0/24;
@@ -40,7 +40,7 @@ Description ex: alt int port;
 }
 
 host ghi {
-On No;
+On Off;
 Proto Both;
 VPN WAN;
 Src Address ;
