@@ -24,12 +24,15 @@ ADD VALIDATION
   </div>
  </label>
 </td></tr>
-<tr><td>Lease</td><td><input id='dhcpLease' name='dhcpLease' /></td></tr>
+<tr><td>Lease</td><td><input id='dhcpLease' name='dhcpLease'  /></td></tr>
 
 <tr><td id='DHCPrange'>DHCP Range</td><td>
- <input id='dhcpLower' name='dhcpLower' /> - <input id='dhcpUpper' name='dhcpUpper' />
+ <input id='dhcpLower' name='dhcpLower'/> - <input id='dhcpUpper' name='dhcpUpper' />
 <!--  <div id='dhcpSlider' class='rangeSlider'></div> -->
 </td></tr>
+<tr><td><div id='editDiv' class='xsmallText'><input id='dhcpEdit' name='dhcpEdit' type='checkbox' >Edit in "off" mode
+</div></td>
+</tr>
 </tbody></table>
 
 </div></div>
@@ -121,6 +124,8 @@ $( '#lanmask' ).maskspinner({
 
 /* Slider with Spinners END */
 
+
+
 $(function(){
 
 $('#dhcpLease').spinner({ min: 0, max: 525600 });
@@ -130,11 +135,40 @@ $('#dhcpUpper').ipspinner('value', dhcp.upper );
 
 $('#dhcpLease').spinner('value',86400);
 
+$('#dhcpLease').spinner('option','disabled', true );
+$('#dhcpUpper').ipspinner('option','disabled', true );
+$('#dhcpLower').ipspinner('option','disabled', true );
 });
 
-//validation goes here....
-function verifyFields(){
 
-} 
+
+$("input[name=dhcpToggle]").change(function(){
+
+if( $("input[name=dhcpToggle]").is(":checked") ) {
+    $("input[name=dhcpLease]").spinner( "option", "disabled", false );
+    $("input[name=dhcpLower]").ipspinner( "option", "disabled", false );
+    $("input[name=dhcpUpper]").ipspinner( "option", "disabled", false );
+    $("#editDiv").hide();
+} else {
+    $("input[name=dhcpLease]").spinner( "option", "disabled", true );
+    $("input[name=dhcpLower]").ipspinner( "option", "disabled", true );
+    $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
+    $("#editDiv").show();
+}
+});
+
+$("input[name=dhcpEdit]").change(function(){
+
+if( $("input[name=dhcpEdit]").is(":checked") ) {
+    $("input[name=dhcpLease]").spinner( "option", "disabled", false );
+    $("input[name=dhcpLower]").ipspinner( "option", "disabled", false );
+    $("input[name=dhcpUpper]").ipspinner( "option", "disabled", false );
+} else {
+    $("input[name=dhcpLease]").spinner( "option", "disabled", true );
+    $("input[name=dhcpLower]").ipspinner( "option", "disabled", true );
+    $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
+}
+
+});
 
 </script>
