@@ -14,7 +14,14 @@ make your own config wizard -->
 		<input type='button' value='Cancel' onclick='javascript:reloadPage();'>
 		<!-- table><tbody><tr><td id='footer' colspan=2><span id='footer-msg'></span></td></tr></tbody></table -->
 		</div>
-		<br><span class='smallText'>Upload File</span>
+		<br><a href="#">Upload Config File</a> -or- 
+		<a href="#" onClick='showWizard()'>Use Wizard</a><br><br>
+		<img id='wizard' class='noshow' src="http://incogman.net/wp-content/uploads/2010/12/MAN-BEHIND-CURTAIN-SMALL.jpg">
+		<p class='noshow'>Pay no attention to that man behind the curtain</p>
+		<input type='button' class='noshow' value='Okay!' id='okay' onclick='ok()'>
+		<input type='button' class='noshow' value='No Way!' id='noWay' onclick='no()'>
+		<p id='message'></p>
+
 	</div>
 </div>
 
@@ -31,4 +38,20 @@ make your own config wizard -->
 
 // function init(){ f=E('_fom'); new vpnStatus(); }
 
+function showWizard() {
+	$('.noshow').show();
+	$('#message').html('')
+}
+
+function no() {
+	$('.noshow').hide();
+	$('#message').append('I am a very good man. I am just a very bad Wizard.')
+}
+
+function ok() {
+	$('.noshow').hide();
+	$('#message').append('I will have to give the matter a little thought! Go home and come back tomorrow.</p>')
+
+
+}
 </script>
