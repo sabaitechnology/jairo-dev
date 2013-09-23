@@ -154,7 +154,7 @@ $(document).ready(
 	$('.controlBoxTitle').click(function(){
 		$(this).show();
 		$(this).parent().children('div').toggle();
-		$('#accordion').toggleClass('rotate')
+		$(this).children($('#accordion')).toggleClass('rotate')
 		
 	})
 
