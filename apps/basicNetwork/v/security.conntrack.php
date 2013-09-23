@@ -112,21 +112,21 @@ onchange make input visible-->
 			<tbody>
 				<tr><td>TTL Adjust</td>
 					<td class="content">
-						<select id="ttlAdjust" onchange="" name="ttlAdjust">
+						<select id="ttlAdjust" onchange="showInput()" name="ttlAdjust">
 							<option value="-5">-5</option>
 							<option value="-4">-4</option>
 							<option value="-3">-3</option>
 							<option value="-2">-2</option>
 							<option value="-1">-1</option>
-							<option selected="" value="0">None</option>
+							<option value="None">None</option>
 							<option value="1">+1</option>
 							<option value="2">+2</option>
 							<option value="3">+3</option>
 							<option value="4">+4</option>
 							<option value="5">+5</option>
-							<option value="">Custom</option>
+							<option value="Custom">Custom</option>
 						</select>
-						<input type="text" id="ttl_custom" onchange="" size="6" maxlength="3" value="" name="ttl_custom" style="display: none;">
+						<input type="text" id="ttl_custom" class='noshow' onchange="" size="6" maxlength="3" name="ttl_custom">
 					</td>
 				</tr>
 				<tr><td>Inbound Layer</td><td><input id="inboundLayer" name="inboundLayer" class='shortinput' type='checkbox'>
@@ -189,6 +189,11 @@ $('#closeWait').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.closeWa
  $('#rtsp').prop({'checked':conntrack.rtsp});
 
  $('#ttlAdjust').val(conntrack.ttlAdjust);
+ $('#ttl_custom').spinner({ min: -255, max: 255 }).spinner('value',conntrack.custom);
  $('#inboundLayer').prop({'checked':conntrack.inboundLayer});
+
+ function showInput() {
+ 	$('#ttl_custom').show();
+ }
 
 </script>

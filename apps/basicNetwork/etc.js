@@ -130,6 +130,7 @@
     "sip" : "checked",
     "rtsp" : "",
     "ttlAdjust" : "None",
+    "custom" : 64,
     "inboundLayer" : "checked"
 },
 

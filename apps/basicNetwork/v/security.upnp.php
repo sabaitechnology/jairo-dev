@@ -44,7 +44,7 @@
 			<tr><td><br> </td><td><br> </td></tr>
 			<tr><td><b>Allowed UPnP Ports*</b></td>
 			</tr>
-			<tr><td>Internal Ports</td><td><input id='internalLB' name='internalLB' class='shortinput'/>- <input id='internalUB' name='internalUB' class='shortinput'/>
+			<tr><td>Internal Ports</td><td><input id='internalLB' name='internalLB' class='shortinput'/> - <input id='internalUB' name='internalUB' class='shortinput'/>
 			</tr>
 			<tr>
 				<td> </td>
@@ -52,8 +52,8 @@
 				<span class='xsmallText'>Valid port ranges are from 2 to 65535</span></td>
 				</td>
 			</tr>
-
-			<tr><td>External Ports</td><td><input id='externalLB' name='externalLB' class='shortinput'/>- <input id='externalUB' name='externalUB' class='shortinput'/>
+			<tr><td><br> </td><td><br> </td></tr>
+			<tr><td>External Ports</td><td><input id='externalLB' name='externalLB' class='shortinput'/> - <input id='externalUB' name='externalUB' class='shortinput'/>
 			</tr>
 			<tr>
 				<td> </td>
@@ -61,6 +61,13 @@
 					<span class='xsmallText'>Setting lower bound to less than 1024 may interfere with network services</span>
 				</td>
 			</tr>
+			<tr>
+				<td> </td>
+				<td>
+					<span class='xsmallText'><input type='checkbox' id='advanced' name='advanced' onChange='changeRange();'>Allow advanced settings</span>
+				</td>
+			</tr>
+			<tr><td><br> </td><td><br> </td></tr>
 			<tr><td>Show In My Network Places</td>
 				<td><input type="checkbox" id="showToggle" name='showToggle' class="slideToggle" /> 
 					<label class="slideToggleViewport" for="showToggle">
@@ -85,11 +92,26 @@
 <script type='text/ecmascript' src='php/bin.etc.php?q=upnp'></script>
 <script type='text/javascript'>
 
-$(function(){
-$('#internalLB').val(upnp.internalLB);
-$('#internalUB').val(upnp.internalUB);
-$('#externalLB').val(upnp.externalLB);
-$('#externalUB').val(upnp.externalUB);
-});
+
+$('#internalLB').spinner({ min: 1024, max: 65534 }).spinner('value',upnp.internalLB);
+		$('#internalUB').spinner({ min: 1025, max: 65535}).spinner('value',upnp.internalUB);
+		$('#externalLB').spinner({ min: 1024, max: 65534 }).spinner('value',upnp.externalLB);
+		$('#externalUB').spinner({ min: 1025, max: 65535 }).spinner('value',upnp.externalUB);
+
+function changeRange(){
+	if($('#advanced').is(':checked')){
+		$('#internalLB').spinner({ min: 2, max: 65534 });
+		$('#internalUB').spinner({ min: 3, max: 65535});
+		$('#externalLB').spinner({ min: 2, max: 65534 });
+		$('#externalUB').spinner({ min: 3, max: 65535 });
+	} else {
+		$('#internalLB').spinner({ min: 1024, max: 65534 });
+		$('#internalUB').spinner({ min: 1025, max: 65535});
+		$('#externalLB').spinner({ min: 1024, max: 65534 });
+		$('#externalUB').spinner({ min: 1025, max: 65535 });
+	}
+
+};
+
 
 </script>

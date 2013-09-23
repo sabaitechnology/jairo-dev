@@ -6,19 +6,18 @@ make your own config wizard -->
 
 <div class='controlBox'><span class='controlBoxTitle'>Open VPN</span>
 	<div class='controlBoxContent'>
-		<span class='smallText'>Upload File</span>
+		<div class='controlButtons'>
+		<input type='button' value='Start' id='Start' onclick='PPTPsave("start")'>
+		<input type='button' value='Stop' onclick='PPTPsave("stop")'>
+		<input type='button' value='Save' onclick='PPTPsave("save")'>
+		<input type='button' value='Erase' onclick='PPTPsave("erase")'>
+		<input type='button' value='Cancel' onclick='javascript:reloadPage();'>
+		<!-- table><tbody><tr><td id='footer' colspan=2><span id='footer-msg'></span></td></tr></tbody></table -->
+		</div>
+		<br><span class='smallText'>Upload File</span>
 	</div>
 </div>
 
-<div class='controlButtons'>
-<input type='button' value='Start' id='Start' onclick='PPTPsave("start")'>
-<input type='button' value='Stop' onclick='PPTPsave("stop")'>
-<input type='button' value='Save' onclick='PPTPsave("save")'>
-<input type='button' value='Erase' onclick='PPTPsave("erase")'>
-<input type='button' value='Cancel' onclick='javascript:reloadPage();'>
-<input type='button' value='Help' onclick='window.open("http://www.sabaitechnology.com/v/sabaiHelp/help.html#pptp","_newtab");'><br>
-<!-- table><tbody><tr><td id='footer' colspan=2><span id='footer-msg'></span></td></tr></tbody></table -->
-</div>
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=vpn'></script>

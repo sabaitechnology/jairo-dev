@@ -12,15 +12,15 @@
 			<input type='button' value='Save' onclick='PPTPsave("save")'>
 			<input type='button' value='Erase' onclick='PPTPsave("erase")'>
 			<input type='button' value='Cancel' onclick='javascript:reloadPage();'>
-			<input type='button' value='Help' onclick='window.open("http://www.sabaitechnology.com/v/sabaiHelp/help.html#pptp","_newtab");'><br>
+			<br>
 		</div>
 		<table class='controlTable'>
 			<tbody>
 			 <tr><td>Name</td><td><input id='l2tp_name' name='pptp_name' /></td></tr> 
 			 <tr><td>Server</td><td><input id='l2tp_server' name='l2tp_server' /></td></tr>
 			 <tr><td>Username</td><td><input id='l2tp_username' name='l2tp_username' /></td></tr>
-			 <tr><td>Password</td><td><input id='l2tp_password' name='l2tp_password' /></td></tr>
-			 <tr><td>Secret Key</td><td><input id='l2tp_secret' name='l2tp_secret' /></td></tr>
+			 <tr><td>Password</td><td><input id='l2tp_password' name='l2tp_password' type="password"/></td></tr>
+			 <tr><td>Secret Key</td><td><input id='l2tp_secret' name='l2tp_secret' type="password"/></td></tr>
 			</tbody>
 		</table>
 		</div>

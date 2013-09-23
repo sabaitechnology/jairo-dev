@@ -6,15 +6,16 @@
  Static Addresses?
 -->
 
-<div class='controlBox'><span class='controlBoxTitle'>Static Devices</span><div class='controlBoxContent'>
+<div class='controlBox'><span class='controlBoxTitle'>Static Devices</span>
+  <div class='controlBoxContent'>
+    <table id='list' class='listTable'></table>
 
-<table id='list' class='listTable'></table>
-
-</div></div>
+    <input type='button' value='Save' onclick='saveStaticList();'>
+    <input type='button' value='Cancel' onclick='cancelStaticList();'>
+  </div>
+</div>
 
 <input type='button' id='test' value='Test' onclick='composeStaticList();'>
-<input type='button' value='Save' onclick='saveStaticList();'>
-  <input type='button' value='Cancel' onclick='cancelStaticList();'>
 
 <div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'>
 <pre id='demo'></pre></div>
