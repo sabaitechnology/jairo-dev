@@ -11,7 +11,7 @@
 		  </div>
 		 </label>
 		 <table>
-		 	<tr><td>Destination Address</td> <td><input id='destination' name='destination' disabled></input><td></tr>
+		 	<tr><td>Destination Address</td> <td><input id='destination' name='destination'></input><td></tr>
 		 	<tr><td>Source Address Restriction</td> <td> <input name='restriction' disabled></input> </td></tr>
 		 </table>
 		 <div><span class='xsmallText'>(optional; ex: "1.1.1.1", "1.1.1.0/24", "1.1.1.1 - 2.2.2.2" or "me.example.com")</span></div>
@@ -23,20 +23,26 @@
 <script type='text/ecmascript' src='php/bin.etc.php?q=dmz'></script>
 <script type='text/ecmascript'>
 
-$(function(){
- $('#destination').val(dmz.destination);
-});
+ $('#destination').ipspinner().ipspinner('value',dmz.destination).spinner({
+      disabled: true
+    });
 
 $("input[name=dmzToggle]").change(function(){
 
 if( $("input[name=dmzToggle]").is(":checked") ) {
-    $("input[name=destination]").attr("disabled", false);
+    $("input[name=destination]").attr("disabled", false).spinner({
+      disabled: false
+    });
     $("input[name=restriction]").attr("disabled", false);
 } else {
-$("input[name=destination]").attr("disabled", true);
+$("input[name=destination]").attr("disabled", true).spinner({
+      disabled: true
+    });
 $("input[name=restriction]").attr("disabled", true);
 }
 
 });
+
+
 
 </script>

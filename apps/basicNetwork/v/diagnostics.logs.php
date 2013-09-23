@@ -160,4 +160,6 @@ function ignoreError(){
 		$('#linesDiv').removeClass('errorInput')
 }
 
+//Uncomment for spinner - functional but does not match drop down
+// $('#lines').spinner({ min: 0, max: 1000 }).spinner('value',25);
 </script>

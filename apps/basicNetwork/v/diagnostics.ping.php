@@ -10,20 +10,19 @@
         <tbody>
           <tr>
               <td>Address</td>
-              <td>
-                <span class="ui-spinner ui-widget ui-widget-content ui-corner-all"><input name="ping_address" id="ping_address" aria-valuenow="30905929509" class="ui-spinner-input" autocomplete="off" role="spinbutton"><a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-n">▲</span></span></a><a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-s">▼</span></span></a></span>             
-                <input type='button' id='ping' value='Ping' onClick='pinger()'></td>
+              <td><input id='ping_address' name='ping_address'></td>           
+              <td><input type='button' id='ping' value='Ping' onClick='pinger()'></td>
           </tr>
           <tr>
               <td>Ping Count</td>
-              <td><input id='ping_count' name='ping_count' class='shortinput'/></td>
+              <td><input id='ping_count' name='ping_count' class='shortinput' /></td>
           </tr>
           <tr>
               <td>Packet Size</td>
-              <td><input id='ping_size' name='ping_size' class='shortinput' /><span class='smallText'>(bytes)</span></td>
+              <td><input id='ping_size' name='ping_size' class='shortinput' /><span class='smallText'> (bytes)</span></td>
           </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
 
     </div> <!--end control box content -->
 </div> <!--end control box  -->
@@ -63,10 +62,9 @@ function pinger(){
   $('#list').removeClass('nothere');
 }
 
- $('#ping_address').val(ping.address);
- $('#ping_count').val(ping.count);
- $('#ping_size').val(ping.size);
-
+$('#ping_address').ipspinner().ipspinner('value',ping.address);
+$('#ping_size').spinner({ min: 0, max: 3600 }).spinner('value',ping.size);
+$('#ping_count').spinner({ min: 0, max: 3600 }).spinner('value',ping.count);
 
 
 </script>

@@ -10,9 +10,8 @@
         <tbody>
           <tr>
               <td>Address</td>
-              <td><span class="ui-spinner ui-widget ui-widget-content ui-corner-all"><input name="ping_address" id="ping_address" aria-valuenow="30905929509" class="ui-spinner-input" autocomplete="off" role="spinbutton"><a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-n">▲</span></span></a><a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-s">▼</span></span></a></span>             
-              <input type='button' id='trace' value='Trace' onclick='tracer();'>
-              </td>
+              <td><input id='trace_address' name='trace_address'></td>           
+              <td><input type='button' id='trace' value='Trace' onClick='tracer()'></td>
           </tr>
           <tr>
               <td>Max Hops</td>
@@ -20,9 +19,9 @@
           </tr>
           <tr>
               <td>Max Wait Time</td>
-              <td><input id='max_wait' name='max_wait' class='shortinput' /><span class='smallText'>(seconds per hop)</span></td>
+              <td><input id='max_wait' name='max_wait' class='shortinput' /><span class='smallText'> (bytes)</span></td>
           </tr>
-      </tbody>
+        </tbody>
     </table>
 
     </div> <!--end control box content -->
@@ -65,9 +64,9 @@ function tracer(){
   $('#list').removeClass('nothere');
 }
 
+ $('#trace_address').ipspinner().ipspinner('value',trace.address);
+$('#max_hops').spinner({ min: 0, max: 3600 }).spinner('value',trace.hops);
+$('#max_wait').spinner({ min: 0, max: 3600 }).spinner('value',trace.wait);
 
- $('#ping_address').val(trace.address);
- $('#max_hops').val(trace.hops);
- $('#max_wait').val(trace.wait);
 
 </script>

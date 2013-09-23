@@ -2,7 +2,7 @@
 <!-- TODO: 
 onchange make input visible-->
 <div class='controlBox'><span class='controlBoxTitle'>Connections</span>
-	<div class='controlBoxContent'>
+	<div class='controlBoxContent noclick'>
 		<table>
 			<tbody>
 				<tr><td>Maximum Connections</td><td><input id="maxConnection" name="maxConnection" class='shortinput'>
@@ -19,7 +19,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'>TCP Timeout</span>
+<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> TCP Timeout</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -49,7 +49,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'>UDP Timeout</span>
+<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> UDP Timeout</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -65,7 +65,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'>Other Timeouts</span>
+<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> Other Timeouts</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -82,7 +82,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'>Tracking/NAT Helpers</span>
+<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> Tracking/NAT Helpers</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -106,7 +106,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'>Miscellaneous</span>
+<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> Miscellaneous</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -148,30 +148,39 @@ onchange make input visible-->
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
+
+
 $(document).ready(
-	$('.controlBox').click(function(){
+	$('.controlBoxTitle').click(function(){
 		$(this).show();
-		$(this).children('div').toggle();
-		})
+		$(this).parent().children('div').toggle();
+		$('#accordion').toggleClass('rotate')
+		
+	})
+
 )
 
- $('#maxConnection').val(conntrack.maxConnection);
- $('#hashTableSize').val(conntrack.hashTableSize);
 
- $('#established').val(conntrack.established);
- $('#synSent').val(conntrack.synSent);
- $('#synReceived').val(conntrack.synReceived);
- $('#finWait').val(conntrack.finWait)
- $('#timeWait').val(conntrack.timeWait);
- $('#close').val(conntrack.close);
- $('#closeWait').val(conntrack.closeWait);
- $('#lastAck').val(conntrack.lastAck);
+ $('#maxConnection').spinner({ min: 0, max: 50000 }).spinner('value',conntrack.maxConnection);
+$('#hashTableSize').spinner({ min: 0, max: 50000 }).spinner('value',conntrack.hashTableSize);
 
- $('#unreplied').val(conntrack.unreplied);
- $('#assured').val(conntrack.assured);
+$('#established').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.established);
+$('#synSent').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.synSent);
+$('#synReceived').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.synReceived);
+$('#finWait').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.finWait);
+$('#timeWait').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.timeWait);
+$('#close').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.close);
+$('#closeWait').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.closeWait);
+$('#lastAck').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.lastAck);
 
- $('#generic').val(conntrack.generic);
- $('#icmp').val(conntrack.icmp);
+$('#unreplied').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.unreplied);
+$('#assured').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.assured);
+
+$('#generic').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.generic);
+$('#icmp').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.icmp);
+
+$('#closeWait').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.closeWait);
+
 
  $('#ftp').prop({'checked': conntrack.ftp});
  $('#gre').prop({'checked': conntrack.gre});
@@ -179,7 +188,7 @@ $(document).ready(
  $('#sip').prop({'checked':conntrack.sip});
  $('#rtsp').prop({'checked':conntrack.rtsp});
 
- $('#ttlAdjust').prop({'checked': conntrack.ttlAdjust});
+ $('#ttlAdjust').val(conntrack.ttlAdjust);
  $('#inboundLayer').prop({'checked':conntrack.inboundLayer});
 
 </script>

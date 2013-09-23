@@ -7,9 +7,13 @@
  ARP List
  Static Addresses?
 -->
-<div class='controlBox'><span class='controlBoxTitle'>Demo</span><div class='controlBoxContent'>
+<div class='controlBox'><span class='controlBoxTitle'>Summary</span><div class='controlBoxContent'>
  <table id='list' class='listTable'></table>
 <!-- input type='button' value='test' onclick='sub();' -->
+<br>
+<span class='smallText'><b>See Also:</b>
+<a href="?panel=network&section=staticips" target="_blank">Static IPs</a>, <a href="?panel=network&section=lan" target="_blank">LAN</a>
+</span>
 </div></div>
 
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>

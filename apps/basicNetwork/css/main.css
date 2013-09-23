@@ -207,7 +207,7 @@ input {
 .shortinput {
     width: 3em;
     text-align: left;
-    margin-right: .25em;
+/*    margin-right: .25em;*/
 }
 
 .longinput {
@@ -537,6 +537,22 @@ font-size: .95em;
 .accordion {
     display: none;
 }
+
+#accordion {
+    margin-bottom: -0.15em;
+}
+
+.underlined {
+    text-decoration: underline;
+}
+
+.rotate {
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg); /* IE 9 */
+    -webkit-transform:rotate(180deg); /* Safari and Chrome */  
+}
+
+
 
 
 
