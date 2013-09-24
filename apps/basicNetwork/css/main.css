@@ -552,7 +552,9 @@ font-size: .95em;
     -webkit-transform:rotate(180deg); /* Safari and Chrome */  
 }
 
-
+.clickable{
+     cursor: pointer;
+}
 
 
 

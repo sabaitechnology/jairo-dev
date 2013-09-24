@@ -1,7 +1,7 @@
 <div class='pageTitle'>Security: Conntrack</div>
 <!-- TODO: 
 onchange make input visible-->
-<div class='controlBox'><span class='controlBoxTitle'>Connections</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'>Connections</span>
 	<div class='controlBoxContent noclick'>
 		<table>
 			<tbody>
@@ -19,7 +19,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> TCP Timeout</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> TCP Timeout</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -49,7 +49,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> UDP Timeout</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> UDP Timeout</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -65,7 +65,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> Other Timeouts</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> Other Timeouts</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -82,7 +82,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> Tracking/NAT Helpers</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> Tracking/NAT Helpers</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
@@ -106,7 +106,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle'><img id='accordion' src="img/accordion.png"> Miscellaneous</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> Miscellaneous</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>

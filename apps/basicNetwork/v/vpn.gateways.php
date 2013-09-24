@@ -18,11 +18,16 @@
     </table>
     <div><br>*Gateway By Device (optional):<br><br>
     </div>
-    <table id='list' class='listTable'></table>
+    <table id='list' class='listTable clickable'></table>
       <input type='button' value='Save' onclick='saveGateway();'>
       <input type='button' value='Cancel' onclick='cancelGateway();'>
       <br><br>
-      <span class='smallText'>Each device connected to the network will be displayed in the device list above. For each device, the user has the option of assigning a gateway; Default, Local, VPN, or Accelerator within the device table. <a id="toggleDesc" onclick="toggleExplain();" href="#">(Show Description)</a> </span>
+      <span class='smallText'>Each device connected to the network will be displayed in the device list above. For each device, the user has the option of assigning a gateway; Default, Local, VPN, or Accelerator within the device table. 
+        <a id="toggleDesc" onclick="toggleExplain();" href="#">(Show Description)</a> 
+        <br><br>
+        See also: <a href="http://localjen/apps/basicNetwork/?panel=wireless&section=macfilter">MAC Filter</a>
+      </span>
+
 
     <ul id="description" class="nobullets smallText noshow">
       <li><b>Default</b>: Any devices not assigned to Local, VPN, or Accelerator in the device list, will use the default as designated in the default assignment function at the top of the page. ('None' automatically assigns traffic to the routers current network state.)</li>

@@ -2,7 +2,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span>
 	<div class='controlBoxContent'>
-		<table id='list' class='listTable'></table>
+		<table id='list' class='listTable clickable'></table>
       <input type='button' value='Save' onclick='saveMACg();'>
       <input type='button' value='Cancel' onclick='cancelMAC();'>
 	</div>

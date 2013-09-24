@@ -5,7 +5,7 @@
 
   <div class='controlBoxContent'> 
 
-      <table id='list' class='listTable'></table>
+      <table id='list' class='listTable clickable'></table>
       <input type='button' value='Add' id='add'>
       <input type='button' value='Save' onclick='saveGateway();'>
       <input type='button' value='Cancel' onclick='cancelGateway();'>
