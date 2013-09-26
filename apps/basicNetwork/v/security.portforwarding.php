@@ -165,17 +165,18 @@ $('#add').click( function (e) {
     e.preventDefault();
      
     var aiNew = lt.fnAddData( 
-    { 
-    "On": '(Click to Enter)', 
-    "Proto": "(Click to Enter)", 
-    "VPN": "(Click to Enter)", 
-    "Src Address": "(Click to Enter)", 
-    "Ext Port": "(Click to Enter)", 
-    "Int Port": "(Click to Enter)", 
-    "Int Address": "(Click to Enter)", 
-    "Description": "(Click to Enter)" 
-  }
-);
+      { 
+      "On": '(Click to Enter)', 
+      "Proto": "(Click to Enter)", 
+      "VPN": "(Click to Enter)", 
+      "Src Address": "(Click to Enter)", 
+      "Ext Port": "(Click to Enter)", 
+      "Int Port": "(Click to Enter)", 
+      "Int Address": "(Click to Enter)", 
+      "Description": "(Click to Enter)" 
+      }
+    );
+
 
     var oSettings = lt.fnSettings();
     $('td', oSettings.aoData[ aiNew[0] ].nTr).editable(lt)

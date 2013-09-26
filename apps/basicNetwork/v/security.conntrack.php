@@ -1,7 +1,7 @@
 <div class='pageTitle'>Security: Conntrack</div>
 <!-- TODO: 
 onchange make input visible-->
-<div class='controlBox'><span class='controlBoxTitle clickable'>Connections</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordionup3.png"> Connections</span>
 	<div class='controlBoxContent noclick'>
 		<table>
 			<tbody>
@@ -19,7 +19,7 @@ onchange make input visible-->
 	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> TCP Timeout</span>
+<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion3.png"> TCP Timeout</span>
 	<div class='controlBoxContent accordion'>
 		<table>
 			<tbody>
