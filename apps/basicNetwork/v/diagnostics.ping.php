@@ -30,79 +30,75 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>Results</span>
   <div class='controlBoxContent'>
-    <!-- <pre id='result'></pre> -->
-    <!-- <table id='list' class='listTable nothere'> -->
-    <table class='listTable dataTable'>
-      <tbody>
-        <?php 
-          $host="www.google.com";
+    <?php 
+    $host="192.168.22.11";
 
-          exec("ping -c 4 " . $host, $output, $result);
-          //Print header
-          echo "<th>ICMP Request</th><th>TTL</th><th>Time</th>";
+    exec("ping -c 3 " . $host, $output, $result);
+    $outputLength = count($output);
 
-          //find out how many elements are in the output
-          $outputLength = count($output);
-          //loop through output 
-          for ($i = 1; $i < $outputLength; $i++){
-            //start a new row
-            echo "<tr>";
-            
-            //store current line as string
-            $string = $output[$i];
-            //make an array by split each string by spaces
-            $arr = preg_split('/[\s]+/', $string);
+    //generate statistics div
+    //find start of statistics data
+    for ($i = 0; $i < $outputLength; $i++){
+      $string = $output[$i];
+      //check each array element for string: "---"
+      if (strpos($string,'---') !==false){
+        //find position of the element containing ---
+        $place = $i;
+      }else{}
+    }
+    //print out each string from that element until the end
+    echo "<div id='stats' class='noshow'>";
+    for ($y= $place; $y < $outputLength; $y++){
+      echo "<p>$output[$y]</p>";
+    }
+    echo "</div>";
 
-            //find out how many elements are in this array
-            $county = count($arr);
-            //for each element
-            for ($x = 0; $x < $county; $x++){
-              
-              if (strpos($arr[$x],'=')){
-                //split by = to make another array
-                $val = explode("=", $arr[$x]);
-                //print the 2nd element of this array
-                echo "<td>$val[1]</td>";
-              }else{
+    echo "<table id='list' class='listTable noshow'><thead></thead><tbody>";
+    
+    if ($result == 0)
 
-              }
-          }
-
-          //close table row
-          echo "</tr>";
-
-          // print_r($output);
-
-          // if ($result == 0) {
-          // echo "Ping successful!";
-          // }else{
-          // echo "Ping unsuccessful!";
-          // }
-
-          }
-          echo "</tbody></table>";
-
-
-           //loop through output array again 
-          for ($i = 0; $i < $outputLength; $i++){
-            $string = $output[$i];
-            //check each array element for string ---
-            if (strpos($string,'---') !==false){
-              //find position of the element with ---
-              $place = $i;
-            }else{}
-          }
-
-          //print out each string from that element until the end
-          for ($y= $place; $y < $outputLength; $y++){
-            echo "<p>$output[$y]</p>";
-          }
+    {
 
 
 
-
-        ?>
+    //find out how many elements are in the output
+    $outputLength = count($output);
+    //loop through output - this 4 needs to be a variable based on user input
+    for ($i = 1; $i < 4; $i++){
+      //start a new row
+      echo "<tr>";
       
+      //store current line as string
+      $string = $output[$i];
+      //make an array by split each string by spaces
+      $arr = preg_split('/[\s]+/', $string);
+
+      //find out how many elements are in this array
+      $county = count($arr);
+      //for each element
+      for ($x = 0; $x < $county; $x++){
+        
+        if (strpos($arr[$x],'=')){
+          //split by = to make another array
+          $val = explode("=", $arr[$x]);
+          //print the 2nd element of this array
+          echo "<td>$val[1]</td>";
+        }else{
+
+        }
+      }
+
+    //close table row
+    echo "</tr>";
+
+    }
+    echo "</tbody></table>";
+    
+
+    }else
+
+    echo "Ping unsuccessful!";
+    ?>     
   </div>
 </div>
 
@@ -112,26 +108,25 @@
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
- var lt =  $('#list').dataTable({
+function pingy() {
+  $('#list').removeClass('noshow');
+  $('#stats').removeClass('noshow');
+
+  $('#list').dataTable({
+  'bAutoWidth': false,
   'bPaginate': false,
   'bInfo': false,
   'bFilter': false,
-  'sAjaxDataProp': 'ping',
-  'sAjaxSource': 'php/bin.diagnostics.ping.php',
+  'bSort': false,
   'aoColumns': [
-   { 'sTitle': 'Seq',		'mData':'Seq' },
-   { 'sTitle': 'Address',	'mData':'Address' },
-   { 'sTitle': 'RX Bytes',		'mData':'RX' },
-   { 'sTitle': 'TTL',   'mData':'TTL' },
-   { 'sTitle': 'RTT (ms)',   'mData':'RTT' },
-   { 'sTitle': '+/- (ms)',   'mData':'+/-' }
+   { 'sTitle': 'ICMP Req' },
+   { 'sTitle': 'TTL' },
+   { 'sTitle': 'Time (ms)' }
+    ]
+  });
+} ;
 
-  ]
- });
 
-function pinger(){
-  $('#list').removeClass('nothere');
-}
 
 $('#ping_address').ipspinner().ipspinner('value',ping.address);
 $('#ping_size').spinner({ min: 0, max: 3600 }).spinner('value',ping.size);
@@ -140,3 +135,4 @@ $('#ping_count').spinner({ min: 0, max: 3600 }).spinner('value',ping.count);
 
 
 </script>
+

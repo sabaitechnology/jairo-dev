@@ -379,6 +379,10 @@ margin: 0em .6em;
  */
 }
 
+.sorting_disabled {
+   padding: .25em 1em;
+}
+
 .listTable th.sorting_asc, th.sorting_desc {
  text-decoration: underline;
 }
