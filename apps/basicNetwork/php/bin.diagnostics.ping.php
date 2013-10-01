@@ -1,77 +1,70 @@
-<?php
-
-// header('Content-type: text/ecmascript');
-
-// $pingLimit = array_key_exists('pingLimit', $_REQUEST) ? $_REQUEST['pingLimit'] : 5;
-
-// $pingTarget = array_key_exists('pingTarget', $_REQUEST) ? $_REQUEST['pingTarget'] : 'localhost';
-
-// exec("/bin/ping -c $pingLimit $pingTarget",$pingResults);
-
-// var_dump($pingResults);
-
+<?php 
  header('Content-type: text/ecmascript');
- include(__DIR__ .'/bin.sys.php');
+    $host="192.168.22.11";
 
-$fake_info = array(
- 'Seq'=>"/^Seq (.*)/",
- 'Address'=>"/^Address (.*)/",
- 'RX'=>"/^RX (.*)/",
- 'TTL'=>"/^TTL (.*)/",
- 'RTT'=>"/^RTT (.*)/",
- '+/-'=>"/^ms (.*)/"
- );
+    exec("ping -c 3 " . $host, $output, $result);
+    $outputLength = count($output);
 
-$fakeFile = <<<EOF
-# I made all this up, duh
-
-host abc {
-Seq 1;
-Address 10.0.134.90;
-RX 1;
-TTL 64;
-RTT 3;
-ms 2;
-}
-
-host def {
-Seq 2;
-Address 10.0.134.90;
-RX 1;
-TTL 64;
-RTT 3;
-ms 2;
-}
-
-host ghi {
-Seq 3;
-Address 10.0.134.90;
-RX 1;
-TTL 64;
-RTT 3;
-ms 2;
-}
-
-EOF
-;
-
-
-function parsefakeinfo(){ global $fakeFile; global $fake_info;
-  preg_match_all("/^host ([^ ]*) {([^}]*)/m",$fakeFile, $sg);
-  $ping_info = array();
-   for($i=0; $i<count($sg[0]); $i++){
-    $sli = explode(';',preg_replace(array("/^[ ]{1,}/m","/\n/"),'',trim($sg[2][$i])));
-    foreach($fake_info as $k => $v){
-     $ping_info[$i][$k] = preg_filter($v,"$1",array_shift(preg_grep($v,$sli)));
+    //generate statistics div
+    //find start of statistics data
+    for ($i = 0; $i < $outputLength; $i++){
+      $string = $output[$i];
+      //check each array element for string: "---"
+      if (strpos($string,'---') !==false){
+        //find position of the element containing ---
+        $place = $i;
+      }else{}
     }
-   }
- return $ping_info;
-}
+    //print out each string from that element until the end
+    echo "<div id='stats'>";
+    for ($y= $place; $y < $outputLength; $y++){
+      echo "<p>$output[$y]</p>";
+    }
+    echo "</div>";
+
+    echo "<table id='list' class='listTable'><thead></thead><tbody>";
+    
+    if ($result == 0)
+
+    {
 
 
 
+    //find out how many elements are in the output
+    $outputLength = count($output);
+    //loop through output - this 4 needs to be a variable based on user input
+    for ($i = 1; $i < 4; $i++){
+      //start a new row
+      echo "<tr>";
+      
+      //store current line as string
+      $string = $output[$i];
+      //make an array by split each string by spaces
+      $arr = preg_split('/[\s]+/', $string);
 
+      //find out how many elements are in this array
+      $county = count($arr);
+      //for each element
+      for ($x = 0; $x < $county; $x++){
+        
+        if (strpos($arr[$x],'=')){
+          //split by = to make another array
+          $val = explode("=", $arr[$x]);
+          //print the 2nd element of this array
+          echo "<td>$val[1]</td>";
+        }else{
 
- echo json_encode( array( 'ping'=>parsefakeinfo() ) , JSON_PRETTY_PRINT );
+        }
+      }
 
-?>
+    //close table row
+    echo "</tr>";
+
+    }
+    echo "</tbody></table>";
+    
+
+    }else
+
+    echo "Ping unsuccessful!";
+    ?>  

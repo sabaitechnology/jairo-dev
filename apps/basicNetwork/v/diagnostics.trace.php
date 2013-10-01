@@ -30,7 +30,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>Results</span>
   <div class='controlBoxContent'>
-    <table id='list' class='listTable noshow'>
+    <table id='list' class='listTable'>
       <thead>
       </thead>
       <tbody id='results'>
@@ -50,7 +50,6 @@
 <script type='text/ecmascript'>
 
 function tracer(){
-  $('#list').removeClass('noshow');
   $('#trace').attr('disabled','disabled');
 
   $.ajax({
