@@ -92,13 +92,12 @@
     echo "</tr>";
 
     }
-    echo "</tbody></table>";
-    
 
     }else
 
     echo "Ping unsuccessful!";
     ?>     
+    </tbody></table>
   </div>
 </div>
 
