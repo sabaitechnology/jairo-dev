@@ -1,70 +1,41 @@
 <?php 
- header('Content-type: text/ecmascript');
-    $host="192.168.22.11";
+   
+header('Content-type: text/ecmascript');
 
-    exec("ping -c 3 " . $host, $output, $result);
-    $outputLength = count($output);
+$pingAddress=$_REQUEST['pingAddress'];
+$pingCount=$_REQUEST['pingCount'];
 
-    //generate statistics div
-    //find start of statistics data
-    for ($i = 0; $i < $outputLength; $i++){
-      $string = $output[$i];
-      //check each array element for string: "---"
-      if (strpos($string,'---') !==false){
-        //find position of the element containing ---
-        $place = $i;
-      }else{}
-    }
-    //print out each string from that element until the end
-    echo "<div id='stats'>";
-    for ($y= $place; $y < $outputLength; $y++){
-      echo "<p>$output[$y]</p>";
-    }
-    echo "</div>";
-
-    echo "<table id='list' class='listTable'><thead></thead><tbody>";
+// Check pingCount since we're going to put it into the command line
     
-    if ($result == 0)
+exec("ping -c $pingCount " . $pingAddress, $output, $result);
 
-    {
+//$output=json_decode('["PING 192.168.22.11 (192.168.22.11) 56(84) bytes of data.","64 bytes from 192.168.22.11: icmp_req=1 ttl=64 time=0.036 ms","64 bytes from 192.168.22.11: icmp_req=2 ttl=64 time=0.031 ms","64 bytes from 192.168.22.11: icmp_req=3 ttl=64 time=0.032 ms","","--- 192.168.22.11 ping statistics ---","3 packets transmitted, 3 received, 0% packet loss, time 1998ms","rtt min\/avg\/max\/mdev = 0.031\/0.033\/0.036\/0.002 ms"]');
 
 
+$datalines = preg_filter("/^([0-9]*).*: icmp_req=([0-9]*) ttl=([0-9]*) time=([0-9]*.[0-9]* ms)/","$1,$2,$3,$4", $output);
 
-    //find out how many elements are in the output
-    $outputLength = count($output);
-    //loop through output - this 4 needs to be a variable based on user input
-    for ($i = 1; $i < 4; $i++){
-      //start a new row
-      echo "<tr>";
-      
-      //store current line as string
-      $string = $output[$i];
-      //make an array by split each string by spaces
-      $arr = preg_split('/[\s]+/', $string);
+$dataResult = array();
 
-      //find out how many elements are in this array
-      $county = count($arr);
-      //for each element
-      for ($x = 0; $x < $county; $x++){
-        
-        if (strpos($arr[$x],'=')){
-          //split by = to make another array
-          $val = explode("=", $arr[$x]);
-          //print the 2nd element of this array
-          echo "<td>$val[1]</td>";
-        }else{
+foreach($datalines as &$dl){
+  $dl = explode(",", $dl);
+  $dataResult[] = array(
+    'bytes' => $dl[0],
+    'count' => $dl[1],
+    'ttl' => $dl[2],
+    'time' => $dl[3]
+  );
+}
 
-        }
-      }
+$info = array_shift(preg_filter("/([0-9]*) packets transmitted, ([0-9]*) received, ([0-9]*)% packet loss, time ([0-9]*)ms/","$1,$2,$3,$4",$output));
 
-    //close table row
-    echo "</tr>";
+$statistics = array_shift(preg_filter("/^rtt min\/avg\/max\/mdev = ([0-9.]*)\/([0-9.]*)\/([0-9.]*)\/([0-9.]*) ms/","$1,$2,$3,$4",$output));
 
-    }
-    echo "</tbody></table>";
-    
+$out = array(
+  'pingResults' => $dataResult,
+  'pingInfo' => $info,
+  'pingStatistics' => $statistics
+);
 
-    }else
+echo json_encode($out,JSON_PRETTY_PRINT);
 
-    echo "Ping unsuccessful!";
-    ?>  
+?>  

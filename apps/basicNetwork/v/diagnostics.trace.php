@@ -10,16 +10,16 @@
         <tbody>
           <tr>
               <td>Address</td>
-              <td><input id='trace_address' name='trace_address'></td>           
-              <td><input type='button' id='trace' value='Trace' onClick='tracer()'></td>
+              <td><input id='traceAddress' name='traceAddress'></td>           
+              <td><input type='button' id='trace' value='Trace' onClick='getResults()'></td>
           </tr>
           <tr>
               <td>Max Hops</td>
-              <td><input id='max_hops' name='max_hops' class='shortinput' /></td>
+              <td><input id='maxHops' name='maxHops' class='shortinput' /></td>
           </tr>
           <tr>
               <td>Max Wait Time</td>
-              <td><input id='max_wait' name='max_wait' class='shortinput' /><span class='smallText'> (bytes)</span></td>
+              <td><input id='maxWait' name='maxWait' class='shortinput' /><span class='smallText'> (bytes)</span></td>
           </tr>
         </tbody>
     </table>
@@ -29,13 +29,12 @@
 
 
 <div class='controlBox'><span class='controlBoxTitle'>Results</span>
+  <div id='results' class='controlBoxContent'>
+    <table id='resultTable' class='listTable'></table>
+  </div>
   <div class='controlBoxContent'>
-    <table id='list' class='listTable'>
-      <thead>
-      </thead>
-      <tbody id='results'>
-        
-    </tbody></table>
+    <pre id='test'>
+    </pre>
   </div>
 </div>
 
@@ -43,47 +42,36 @@
 
 
 
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript' src='php/bin.etc.php?q=trace'></script>
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
+<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 
 <script type='text/ecmascript'>
 
-function tracer(){
-  $('#trace').attr('disabled','disabled');
-
-  $.ajax({
-    type : 'GET',
-    dataType : 'html',
-    url:"php/bin.diagnostics.trace.php", 
-    success: function(data) {
-      $("#results").append(data);
-
-      $('#list').dataTable({
-        'bAutoWidth': false,
-        'bPaginate': false,
-        'bInfo': false,
-        'bFilter': false,
-        'bSort': false,
-        'aoColumns': [
-         { 'sTitle': 'Hop'},
-         { 'sTitle': 'Address' },
-         { 'sTitle': 'Time (ms)' },
-         { 'sTitle': 'Address' },
-         { 'sTitle': 'Time (ms)' },
-         { 'sTitle': 'Address' },
-         { 'sTitle': 'Time (ms)' }
-         ]
-       });
-      alert( "Trace Successful" );
-    }
-  });
-
+function getResults(){
+  $('#resultTable').dataTable({
+    'bAutoWidth': false,
+    'bPaginate': false,
+    'bInfo': false,
+    'bFilter': false,
+    'bSort': false,
+    "sAjaxDataProp": "traceResults",
+    "fnServerParams": function(aoData){ $.merge(aoData,$('#fe').serializeArray()); },
+    "sAjaxSource": "php/bin.diagnostics.trace.php",
+    'aoColumns': [
+     { 'sTitle': 'Hop', "mData":"Hop" },
+     { 'sTitle': 'Address',"mData":"Address" },
+     { 'sTitle': 'Time (ms)', "mData":"Time (ms)"   },
+     { 'sTitle': 'Address' , "mData":"Address2" },
+     { 'sTitle': 'Time (ms)', "mData":"Time2 (ms)" },
+     { 'sTitle': 'Address', "mData":"Address3" },
+     { 'sTitle': 'Time (ms)', "mData":"Time3 (ms)" }
+     ]
+   });
 };
-
- $('#trace_address').ipspinner().ipspinner('value',trace.address);
-$('#max_hops').spinner({ min: 0, max: 3600 }).spinner('value',trace.hops);
-$('#max_wait').spinner({ min: 0, max: 3600 }).spinner('value',trace.wait);
+ $('#traceAddress').ipspinner().ipspinner('value',trace.address);
+$('#maxHops').spinner({ min: 0, max: 3600 }).spinner('value',trace.hops);
+$('#maxWait').spinner({ min: 0, max: 3600 }).spinner('value',trace.wait);
 
 
 </script>

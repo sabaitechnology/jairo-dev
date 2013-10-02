@@ -79,12 +79,12 @@
   ]
  },
  "ping": {
-  "address" : "10.0.134.90",
-  "count" : 3,
+  "address" : "192.168.222.1",
+  "count" : 4,
   "size" : 56
  },
  "trace" : {
-  "address" : "10.0.134.90",
+  "address" : "192.168.222.1",
   "hops" : 20,
   "wait" : 3
  },
