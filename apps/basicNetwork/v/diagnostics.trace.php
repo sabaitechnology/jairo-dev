@@ -48,6 +48,7 @@
 
 <script type='text/ecmascript'>
 
+
 function getResults(){
   $('#resultTable').dataTable({
     "bDestroy":true,
