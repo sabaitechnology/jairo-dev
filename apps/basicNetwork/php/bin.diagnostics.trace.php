@@ -31,8 +31,7 @@
       preg_match($ipttt,$string, $match);
       $line = [$match[1],$match[2],$match[3],($match[2]), $match[4],($match[2]),$match[5] ];
       array_push($datalines, $line);     
-
-    }
+    }    
     elseif(preg_match($ipttipt,$string)){
       preg_match($ipttipt,$string, $match1);
       $line = [$match1[1],$match1[2],$match1[3],($match1[2]),$match1[4],$match1[5],$match1[6]];
@@ -51,8 +50,7 @@
     else{
       preg_match($other,$string, $match4);
       $line = [$match4[1],'*', '*','*','*','*','*'];
-      array_push($datalines, $line);    
-      
+      array_push($datalines, $line);          
     }
 
   }

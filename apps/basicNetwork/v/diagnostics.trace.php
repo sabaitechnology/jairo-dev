@@ -63,9 +63,9 @@ function getResults(){
      { 'sTitle': 'Hop', "mData":"Hop" },
      { 'sTitle': 'Address',"mData":"Address" },
      { 'sTitle': 'Time (ms)', "mData":"Time (ms)"   },
-     { 'sTitle': 'Address' , "mData":"Address2" },
+     { 'sTitle': 'Address 2' , "mData":"Address2" },
      { 'sTitle': 'Time (ms)', "mData":"Time2 (ms)" },
-     { 'sTitle': 'Address', "mData":"Address3" },
+     { 'sTitle': 'Address 3', "mData":"Address3" },
      { 'sTitle': 'Time (ms)', "mData":"Time3 (ms)" }
      ]
    });
