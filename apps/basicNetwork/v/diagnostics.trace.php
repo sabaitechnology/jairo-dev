@@ -50,6 +50,7 @@
 
 function getResults(){
   $('#resultTable').dataTable({
+    "bDestroy":true,
     'bAutoWidth': false,
     'bPaginate': false,
     'bInfo': false,

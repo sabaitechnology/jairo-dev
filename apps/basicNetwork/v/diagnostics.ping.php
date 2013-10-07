@@ -45,6 +45,7 @@
 
 function getResults(){
   $('#resultTable').dataTable({
+    "bDestroy":true,
     'bPaginate': false,
     'bInfo': false,
     'bFilter': false,
@@ -56,8 +57,9 @@ function getResults(){
       { "sTitle": "Bytes",  "mData":"bytes" },
       { "sTitle": "TTL",    "mData":"ttl"   },
       { "sTitle": "Time",   "mData":"time"  }
-    ]
+    ],
   });
+
 }
 
 $('#pingAddress').ipspinner().ipspinner('value',ping.address);
