@@ -2,6 +2,42 @@
    
 header('Content-type: text/ecmascript');
 
+echo <<<EOF
+{
+    "pingResults": [
+        {
+            "bytes": "64",
+            "count": "1",
+            "ttl": "63",
+            "time": "0.700 ms"
+        },
+        {
+            "bytes": "64",
+            "count": "2",
+            "ttl": "63",
+            "time": "0.693 ms"
+        },
+        {
+            "bytes": "64",
+            "count": "3",
+            "ttl": "63",
+            "time": "0.676 ms"
+        },
+        {
+            "bytes": "64",
+            "count": "4",
+            "ttl": "63",
+            "time": "0.814 ms"
+        }
+    ],
+    "pingInfo": "4,4,0,2998",
+    "pingStatistics": "0.676,0.720,0.814,0.063"
+}
+EOF
+;
+
+return;
+
 $pingAddress=$_REQUEST['pingAddress'];
 $pingCount=$_REQUEST['pingCount'];
 
@@ -37,4 +73,5 @@ $out = array(
 );
 
 echo json_encode($out,JSON_PRETTY_PRINT);
+
 ?>  

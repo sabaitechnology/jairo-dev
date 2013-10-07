@@ -32,6 +32,11 @@
     <div id='statistics' class='smallText'></div>
     <table id='resultTable' class='listTable'></table>
   </div>
+
+  <div class='controlBoxContent'>
+    <pre id='testing'></pre>
+  </div>
+
 </div>
 
 
@@ -41,15 +46,22 @@
 <script type='text/ecmascript'>
 
 function getResults(){
-  $('#statistics').html();
-
+$('#statistics').html('');
   $('#resultTable').dataTable({
     "bDestroy":true,
     'bPaginate': false,
     'bInfo': false,
     'bFilter': false,
     "sAjaxDataProp": "pingResults",
-    "fnServerParams": function(aoData){ $.merge(aoData,$('#fe').serializeArray()); },
+    "fnServerParams": function(aoData){ 
+      $.merge(aoData,$('#fe').serializeArray()); 
+    },
+    "fnInitComplete": function(oSettings, json) {
+      var stats=json.pingStatistics.split(',');
+      var info=json.pingInfo.split(',');
+      $('#statistics').append('--Summary--<br>Round-Trip: '+stats[0]+' min, '+stats[1]+' avg, '+stats[2]+' max (ms)<br>');
+      $('#statistics').append('Packets: '+info[0]+' transmitted, '+info[1]+' received, '+info[2]+'% lost<br><br>');
+    },
     "sAjaxSource": "php/bin.diagnostics.ping.php",
     "aoColumns": [
       { "sTitle": "Count",  "mData":"count" },
@@ -60,18 +72,6 @@ function getResults(){
 
   });
 
- $.ajax({ // ajax call starts
-    url: 'php/bin.diagnostics.ping.php', // JQuery loads serverside.php
-    data: $('#fe').serializeArray(), // Send input values
-    dataType: 'json', // Choosing a JSON datatype
-    success: function(data) {
-      console.log(data);
-      var stats=data['pingStatistics'].split(',');
-      var info=data['pingInfo'].split(',');
-      $('#statistics').append('--Summary--<br>Round-Trip: '+stats[0]+' min, '+stats[1]+' avg, '+stats[2]+' max (ms)<br>');
-      $('#statistics').append('Packets: '+info[0]+' transmitted, '+info[1]+' received, '+info[2]+'% lost<br><br>');
-    }
-  })
 }
 
 $('#pingAddress').ipspinner().ipspinner('value',ping.address);

@@ -60,6 +60,4 @@ lt =  $('#list').dataTable({
   }
 });
 
-$(function(){
-});
 </script>
