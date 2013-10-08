@@ -2,11 +2,11 @@
 
 	$lookupAddress=$_REQUEST['ns_domain'];
 	
-	$ip = gethostbynamel($lookupAddress);
+	// $ip = gethostbynamel($lookupAddress);
 
-	$addrs = count($ip) -1;
+	exec("nslookup $lookupAddress", $ip);
 
-	echo("Returned $addrs addresses\n");
+	$addrs = count($ip);
 
 	for ($i = 0 ; $i < $addrs ; $i++)
         echo($ip[$i] . "\n");

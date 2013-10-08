@@ -86,7 +86,7 @@
  "trace" : {
   "address" : "192.168.222.1",
   "hops" : 20,
-  "wait" : 3
+  "wait" : 5
  },
  "nslookup" : {
   "domain" : "www.google.com"

@@ -1,4 +1,6 @@
 <?php 
+// TODO: validate numbers and IP address
+
   header('Content-type: text/ecmascript');
 
   $traceAddress=$_REQUEST['traceAddress'];
@@ -6,10 +8,14 @@
   $maxWait=$_REQUEST['maxWait'];
 
   // //execute a quick traceroute - save result as output
-  exec("traceroute -n $traceAddress", $output); 
+  exec("traceroute -n $traceAddress -m $maxWait", $output); 
 
   //get length of output array
   $outputLength = count($output);
+  if ($outputLength > $maxHops){
+    $outputLength = $maxHops +1;
+  }else{}
+
   $datalines = array();
   $dataResult = array();
 
