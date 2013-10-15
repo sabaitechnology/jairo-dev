@@ -542,8 +542,10 @@ font-size: .95em;
     display: none;
 }
 
-#accordion {
-    margin-bottom: -0.15em;
+#accordionarrow {
+    transform:rotate(-90deg);
+    -ms-transform:rotate(-90deg); /* IE 9 */
+    -webkit-transform:rotate(-90deg);
 }
 
 .underlined {
@@ -551,15 +553,17 @@ font-size: .95em;
 }
 
 .rotate {
-    transform:rotate(180deg);
-    -ms-transform:rotate(180deg); /* IE 9 */
-    -webkit-transform:rotate(180deg); /* Safari and Chrome */  
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg); /* IE 9 */
+    -webkit-transform:rotate(90deg);
 }
 
 .clickable{
      cursor: pointer;
 }
 
-
-
-
+.delete {
+    text-decoration: none;
+    color: #0B3155 ;
+   /* font-weight: bold;*/
+}
