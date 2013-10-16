@@ -567,3 +567,24 @@ font-size: .95em;
     color: #0B3155 ;
    /* font-weight: bold;*/
 }
+
+#accordion > .ui-accordion-header {
+    border-radius: 0px;
+    background: none repeat scroll 0 0 #CED7E1;
+    color: #1B75BB;
+    font-weight: bold;
+    border: none;
+    margin-top: .5em;
+}
+
+#accordion > h3 > .delete {
+    z-index: 10;
+}
+
+#accordion > .ui-accordion-content {
+    border-radius: 0px;
+    background: none repeat scroll 0 0 #EFF2F5;
+    font: 16px Arial,Helvetica,sans-serif;
+    border: none;
+    margin-bottom: .5em;
+}
