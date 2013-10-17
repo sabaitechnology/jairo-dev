@@ -3,6 +3,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>PPTP Server</span>
 	<div class='controlBoxContent'>
+		<img src="img/coding.gif"><img style="height:100px;" src="http://www.iuconsult.com/wp-content/uploads/2013/07/under-construction-logo.gif"><br><br>
 
 		<table>
 			<tbody>

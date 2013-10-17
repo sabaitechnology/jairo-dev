@@ -38,7 +38,8 @@ $('#accordion').on('click', '.save_edit', function(){
     $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table id='"+ id + "' class='controlTable'><tbody> <tr><td>Name</td><td><input class='l2tp_name' name='pptp_name' value='" + inputArr[i].value + "'></td></tr>  <tr><td>Server</td><td><input class='l2tp_server' name='l2tp_server' value="+inputArr[i+1].value +"></td></tr> <tr><td>Username</td><td><input class='l2tp_username' name='l2tp_username' value="+inputArr[i+2].value +" ></td></tr> <tr><td>Password</td><td><input class='l2tp_password' name='l2tp_password' type='password' value="+inputArr[i+3].value +" ></td></tr><tr><td>Secret Key</td><td><input class='l2tp_ssk' name='l2tp_ssk' type='password' value="+inputArr[i+4].value +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
     }
 
-    $('#accordion').accordion("refresh");
+    $('#accordion').accordion("refresh").accordion({ collapsible: true, animate: false, active: -1
+      }); 
 
   })
 
@@ -61,7 +62,8 @@ $('#accordion').on('click', '.delete', function(){
 function addNew() {
   var id = Math.floor(Math.random() * 10000);
       $('#accordion').append("<h3 class='"+ id + "'>(New Entry)<a href='#' class='fright delete'>x</a></h3><div class='ui-accordion-content "+ id + "'><table  class='controlTable'><tbody><tr><td>Name</td><td><input class='l2tp_name' name='pptp_name' value=''></td></tr>  <tr><td>Server</td><td><input class='l2tp_server' name='l2tp_server' value=''></td></tr> <tr><td>Username</td><td><input class='l2tp_username' name='l2tp_username' value='' ></td></tr> <tr><td>Password</td><td><input class='l2tp_password' name='l2tp_password' type='password' value='' ></td></tr><tr><td>Secret Key</td><td><input class='l2tp_ssk' name='l2tp_ssk' type='password' value='' ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-        $('#accordion').accordion("refresh").accordion({active: -1}); 
+        $('#accordion').accordion("refresh").accordion({active: -1,
+          }); 
 }
 
 $( document ).ready(function() {

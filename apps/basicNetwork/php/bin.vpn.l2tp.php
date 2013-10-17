@@ -13,25 +13,25 @@ $dl = <<<EOF
 {
     "l2tp": [
         {
-            "server": "203.54.1.20",
-            "user": "chinacat",
-            "password": "meowmeow",
-            "name": "",
-            "secret": "siamese"
+            "server": "192.32.1.20",
+            "user": "L2-D2",
+            "password": "c3p0droid",
+            "name": "Naboo",
+            "secret": "lukeskywalker"
         },
         {
-            "server": "42.2.2.2",
-            "user": "topofspaghetti",
-            "password": "meatball",
-            "name": "New York",
-            "secret": "parmesan"
+            "server": "76.2.17.2",
+            "user": "marathonjane",
+            "password": "26.2miles",
+            "name": "Boulder",
+            "secret": "luv2run"
         },
         {
-            "server": "200.50.2.7",
-            "user": "noyousir",
-            "password": "password",
-            "name": "Tokyo",
-            "secret": "victoria"
+            "server": "230.80.2.11",
+            "user": "codehackr",
+            "password": "scrambledeggs",
+            "name": "Silicon Valley",
+            "secret": "sneaker"
         }
     ]
 }

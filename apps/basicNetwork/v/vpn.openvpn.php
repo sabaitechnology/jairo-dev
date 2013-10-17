@@ -5,7 +5,7 @@ persistent data
 <link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 
-<div class='pageTitle'>VPN: Open VPN</div>
+<div class='pageTitle'>VPN: OpenVPN</div>
 
 <br>
 <div id="accordion">
@@ -67,7 +67,9 @@ $('#accordion').on('click', '.delete', function(){
 function addNew() {
   var id = Math.floor(Math.random() * 10000);
       $('#accordion').append("<h3 class='"+ id + "'>(New Entry)<a href='#' class='fright delete'>x</a></h3><div class='ui-accordion-content "+ id + "'><table  class='controlTable'><tbody><tr><td>Name</td><td><input class='openvpn_name' name='pptp_name' value=''></td></tr>  <tr><td>Server</td><td><input class='openvpn_server' name='openvpn_server' value=''></td></tr> <tr><td>Username</td><td><input class='openvpn_username' name='openvpn_username' value='' ></td></tr> <tr><td>Password</td><td><input class='openvpn_password' name='openvpn_password' type='password' value='' ></td></tr><tr><td>Secret Key</td><td><input class='openvpn_ssk' name='openvpn_ssk' type='password' value='' ></td></tr><tr><td>Certification</td><td><input class='openvpn_certs' name='openvpn_certs' type='password' value='' ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-        $('#accordion').accordion("refresh").accordion({active: -1}); 
+      $('#accordion').accordion("refresh").accordion({ collapsible: true, animate: false, active: -1
+      }); 
+
 }
 
 $( document ).ready(function() {

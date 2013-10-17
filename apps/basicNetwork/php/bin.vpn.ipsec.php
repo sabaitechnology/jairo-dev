@@ -6,28 +6,28 @@ $dl = <<<EOF
 {
     "ipsec": [
         {
-            "server": "203.54.1.20",
-            "user": "chinacat",
-            "password": "meowmeow",
-            "name": "",
-            "secret": "siamese",
-            "certs" : ""
+            "server": "135.79.1.35",
+            "user": "santaclaws",
+            "password": "kringlekat",
+            "name": "North Pole",
+            "secret": "presents",
+            "certs" : "reindeerelves"
         },
         {
-            "server": "42.2.2.2",
-            "user": "topofspaghetti",
-            "password": "meatball",
-            "name": "New York",
-            "secret": "parmesan",
-            "certs" : ""
-        },
-        {
-            "server": "200.50.2.7",
-            "user": "noyousir",
+            "server": "222.22.2.2",
+            "user": "boringbob",
             "password": "password",
-            "name": "Tokyo",
-            "secret": "victoria",
-            "certs" : ""
+            "name": "Montana",
+            "secret": "none",
+            "certs" : "yawnyawn"
+        },
+        {
+            "server": "192.83.74.65",
+            "user": "weatherman",
+            "password": "sunshine",
+            "name": "Home",
+            "secret": "clouds",
+            "certs" : "hailstorm"
         }
     ]
 }

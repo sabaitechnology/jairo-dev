@@ -58,7 +58,9 @@ $('#accordion').on('click', '.delete', function(){
 function addNew() {
   var id = Math.floor(Math.random() * 10000);
       $('#accordion').append("<h3 class='"+ id + "'>(New Entry)<a href='#' class='fright delete'>x</a></h3><div class='ui-accordion-content "+ id + "'><table  class='controlTable'><tbody><tr><td>Name</td><td><input class='ipsec_name' name='pptp_name' value=''></td></tr>  <tr><td>Server</td><td><input class='ipsec_server' name='ipsec_server' value=''></td></tr> <tr><td>Username</td><td><input class='ipsec_username' name='ipsec_username' value='' ></td></tr> <tr><td>Password</td><td><input class='ipsec_password' name='ipsec_password' type='password' value='' ></td></tr><tr><td>Secret Key</td><td><input class='ipsec_ssk' name='ipsec_ssk' type='password' value='' ></td></tr><tr><td>Certification</td><td><input class='ipsec_certs' name='ipsec_certs' type='password' value='' ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-        $('#accordion').accordion("refresh").accordion({active: -1}); 
+      $('#accordion').accordion("refresh").accordion({ collapsible: true, animate: false, active: -1
+      }); 
+ 
 }
 
 $( document ).ready(function() {

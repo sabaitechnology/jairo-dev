@@ -5,9 +5,11 @@ persistent data
 <link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 
-<div class='pageTitle'>VPN: Open VPN Server</div>
+<div class='pageTitle'>VPN: OpenVPN Server</div>
 
 <br>
+<img src="img/coding.gif"><img style="height:100px;" src="http://www.iuconsult.com/wp-content/uploads/2013/07/under-construction-logo.gif"><br><br>
+
 <div id="accordion">
 	<h3>Tunnel Options</h3>
 	<div>
