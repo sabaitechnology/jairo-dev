@@ -59,16 +59,54 @@
    "server": "pptpvpn.sabaitechnology.com",
    "username": "sabai",
    "password": "sabaipass"
-  },
-  "l2tp": {
-   "realname": "Default",
-   "server": "pptpvpn.sabaitechnology.com",
-   "username": "sabai",
-   "password": "sabaipass",
-   "psk": "1234567890"
-  },
-  "openvpn": {}
+  }
  },
+ "pptp": [
+    {
+        "server": "203.54.1.20",
+        "user": "chinacat",
+        "password": "meowmeow",
+        "name": ""
+    },
+    {
+        "server": "42.2.2.2",
+        "user": "topofspaghetti",
+        "password": "meatball",
+        "name": "New York"
+    },
+    {
+        "server": "200.50.2.7",
+        "user": "noyousir",
+        "password": "password",
+        "name": "Tokyo"
+    }
+],
+ "openvpn": [
+    {
+      "server": "123.45.6.7",
+      "user": "jaiRo",
+      "password": "sabaiii",
+      "name": "Simpsonville",
+      "secret": "technology",
+      "certs" : "accelerouter"
+    },
+    {
+      "server": "98.7.65.43",
+      "user": "tswift",
+      "password": "gettingback2gether",
+      "name": "Nashville",
+      "secret": "goatversion",
+      "certs" : "never"
+    },
+    {
+      "server": "246.8.1.0",
+      "user": "fruitloops",
+      "password": "banana",
+      "name": "Farmville",
+      "secret": "apple",
+      "certs" : "orange"
+    }
+  ],
  "gateways": {
   "default": "vpn",
   "rules": [
@@ -133,8 +171,56 @@
     "custom" : 64,
     "inboundLayer" : "checked"
 },
+"l2tp": [
+  {
+    "server": "192.32.1.20",
+    "user": "L2-D2",
+    "password": "c3p0droid",
+    "name": "Naboo",
+    "secret": "lukeskywalker"
+  },
+  {
+    "server": "76.2.17.2",
+    "user": "marathonjane",
+    "password": "26.2miles",
+    "name": "Boulder",
+    "secret": "luv2run"
+  },
+  {
+    "server": "230.80.2.11",
+    "user": "codehackr",
+    "password": "scrambledeggs",
+    "name": "Silicon Valley",
+    "secret": "sneaker"
+  }
+],
 
-
+"ipsec": [
+  {
+    "server": "135.79.1.35",
+    "user": "santaclaws",
+    "password": "kringlekat",
+    "name": "North Pole",
+    "secret": "presents",
+    "certs" : "reindeerelves"
+  },
+  {
+    "server": "222.22.2.2",
+    "user": "boringbob",
+    "password": "password",
+    "name": "Montana",
+    "secret": "none",
+    "certs" : "yawnyawn"
+  },
+  {
+    "server": "192.83.74.65",
+    "user": "weatherman",
+    "password": "sunshine",
+    "name": "Home",
+    "secret": "clouds",
+    "certs" : "hailstorm"
+  }
+],
  "portforward": [
   { "on": true, "protocol": 1, "route": 1, "src": "24.240.173.193/8", "external": 22, "internal": 22, "device": "10.0.0.2", "description": "What?" },
   { "on": true, "protocol": 1, "route": 2, "src": "24.240.173.193/8", "external": 23, "internal": 23, "device": "10.0.0.2", "description": "What?" },

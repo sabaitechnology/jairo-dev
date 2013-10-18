@@ -1,125 +1,85 @@
+<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
+<script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
+
+<!-- TODO: persistent data
+-->
+
 <div class='pageTitle'>VPN: PPTP</div>
-<!-- TODO: pptp_mppe, pptp_stateful
- persistant data-->
-<div id='container'>
 
-	</div>
-
-	<!-- BEGIN ADD NEW -->
-
-	<input type='button' id='add_pptp' value='Add New' onClick='addNew();'>
-	<div id='addNew' class='controlBoxContent noshow'>
-				<br>
-				<table class='controlTable'>
-					<thead><th>Add New PPTP</th>
-					</thead>
-					<tbody>
-					 <tr><td>Name</td><td><input id='add_name' name='pptp_name' /></td></tr 
-					 <tr><td>Server</td><td><input id='add_server' name='add_server' /></td></tr>
-					 <tr><td>Username</td><td><input id='add_username' name='add_username' /></td></tr>
-					 <tr><td>Password</td><td><input id='add_password' name='add_password' type="password" /></td></tr>
-					</tbody>
-				</table>
-				<br>
-				<input type='checkbox' class='connect' checked='checked' name='connect'> Connect Now?</input>
-				<br>
-				<input type='button' class='fright' id='save_Add' value='Save' onclick='saveAdd();' />
-				<input type='button' class='fright' id='cancel_Add' value='Cancel' onClick='cancelAdd();' />
-	</div>
-
-</div>
+    <br>
+    <div id="accordion">
+    <!-- filled with accordion plugin + ajax request-->
+    </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=vpn'></script>
-<script type='text/javascript'>
+<script type='text/ecmascript' src='js/globalize.js'></script>
+<script type='text/ecmascript' src='php/bin.etc.php?q=pptp'></script>
+<script type='text/ecmascript'>
+//functions for dynamically added buttons
 
-$.ajax("php/bin.network.pptp.php", {
-	type: 'post',
-	dataType: "json",
-	data: $("#fe").serialize(),
-	success: function(o){
-		for(i=0; i<o.pptp.length; i++){
+function makeAccordion(accordionElement,accordionList) {
+  for(i=0; i<accordionList.length; i++){
 
-			if(o.pptp[i].name.length == 0){
+    var id = Math.floor(Math.random() * 10000);
+    
+    if(accordionList[i].name.length == 0){
+    
+      $('#accordion').append("<h3 class='"+ id + "'>" + accordionList[i].server + "</h3>")
+    
+    }else{
 
-				$('#container').append("<div class='controlBox'><span class='controlBoxTitle clickable'><img class='accordionarrow' src='img/accordion3.png'> " + o.pptp[i].server + "</span><a href='#' class='fright delete'><img src='img/delete.gif'></a><div class='controlBoxContent accordion'><div class='popup'><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Edit Info' name='edit_info' class='edit_info'><br><br>	</div><div class='editinfo noshow'><br><input type='button' value='Connect' name='connect' class='connect'><input type='button' value='Disconnect' name='disconnect' class='disconnect'><br><br><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value=''/></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+ o.pptp[i].server + "></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+o.pptp[i].user+" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+o.pptp[i].password+" ></td></tr></tbody></table><br><input type='button' class='fright pptp_save' value='Save'><input type='button' class='fright pptp_cancel' value='Cancel'></div></div>")
-			}else{
+      $('#accordion').append("<h3 class='"+ id + "'>" + accordionList[i].name + "</h3>")
+    }
 
-				$('#container').append("<div class='controlBox'><span class='controlBoxTitle clickable'><img class='accordionarrow' src='img/accordion3.png'> " + o.pptp[i].name + "</span><a href='#' class='fright delete'><img src='img/delete.gif'></a><div class='controlBoxContent accordion'><div class='popup'><br><input type='button' value='Connect' name='connect' class='connect'><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Edit Info' name='edit_info' class='edit_info'><br><br>	</div><div class='editinfo noshow'><br><br><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + o.pptp[i].name + "'></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+o.pptp[i].server +"></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+o.pptp[i].user +" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+o.pptp[i].password +" ></td></tr></tbody></table><br><input type='button' class='fright pptp_save' value='Save'><input type='button' class='fright pptp_cancel' value='Cancel'></div></div>")
-			}
-		}
+    $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + accordionList[i].name + "'></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+accordionList[i].server +"></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+accordionList[i].user +" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+accordionList[i].password +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
+  }
 
-		}
-	})
+  $(accordionElement).accord({static: false});
+}
+
+//do this on document load
+$(function() {
+  makeAccordion("#accordion",pptp);
+});
+
+
+//when you click save
+
+$('#accordion').on('click', '.save_edit', function(){
+  var inputArr = $( ":input" ).serializeArray()
+  $('#accordion').html('');
+
+  //every 4th value starts a new set
+  for(i=0; i<inputArr.length; i=i+4){
+
+    var id = Math.floor(Math.random() * 10000);
+    if(inputArr[i].value.length == 0){
+      $('#accordion').append("<h3 class='"+ id + "'>" + inputArr[i+1].value + "</h3>")
+    }else{
+      $('#accordion').append("<h3>" + inputArr[i].value + "</h3>")
+    }
+    $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table id='"+ id + "' class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + inputArr[i].value + "'></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+inputArr[i+1].value +"></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+inputArr[i+2].value +" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+inputArr[i+3].value +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
+    }
+
+    $('#accordion').accord("refresh").accord({static: false, active: -1}); 
+
+  })
+
+$('#accordion').on('click', '.delete', function(){
+  myid=$(this).parent().attr("class").match(/\d+/)
+  $('.' + myid).remove();
+  $('#accordion').accord("refresh").accord({static: false});
+})
+
 function addNew() {
-	$('#add_pptp').hide();
-	$('#addNew').show();
+  
+  var id = Math.floor(Math.random() * 10000);
+  
+  $('#accordion').append("<h3 class='"+ id + "'>(New Item)</h3><div class='ui-accordion-content "+ id + "'><table  class='controlTable'><tbody><tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value=''></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value=''></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value='' ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value='' ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
+    
+    $('#accordion').accord("refresh").accord("newItem").accord({ active: -1, static: false}); 
 }
 
-function cancelAdd() {
-	$('#add_name').val('');
-	$('#add_server').val('');
-	$('#add_username').val('');
-	$('#add_password').val('');
-	$('#addNew').hide();
-	$('#add_pptp').show();
-}
-
-function saveAdd() {
-	if($('#add_name').length == 0){
-
-				$('#container').append("<div class='controlBox'><span class='controlBoxTitle clickable'><img class='accordionarrow' src='img/accordion3.png'> " + $('#add_server').val() + "</span><a href='#' class='fright delete'><img src='img/delete.gif'></a><div class='controlBoxContent accordion'><div class='popup'><br><input type='button' value='Connect' name='connect' class='connect'><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Edit Info' name='edit_info' class='edit_info'><br><br>	</div><div class='editinfo noshow'><br><input type='button' value='Connect' name='connect' class='connect'><input type='button' value='Disconnect' name='disconnect' class='disconnect'><br><br><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value=''/></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+ $('#add_server').val() + "></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+ $('#add_username').val() +" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+ $('#add_password').val() +" ></td></tr></tbody></table><br><input type='button' class='fright pptp_save' value='Save'><input type='button' class='fright pptp_cancel' value='Cancel'></div></div>")
-			}else{
-
-				$('#container').append("<div class='controlBox'><span class='controlBoxTitle clickable'><img class='accordionarrow' src='img/accordion3.png'> " + $('#add_name').val() + "</span><a href='#' class='fright delete'><img src='img/delete.gif'></a><div class='controlBoxContent accordion'><div class='popup'><br><input type='button' value='Connect' name='connect' class='connect'><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Edit Info' name='edit_info' class='edit_info'><br><br>	</div><div class='editinfo noshow'><br><br><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + $('#add_name').val() + "'></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value=" + $('#add_server').val() + "></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+ $('#add_username').val() + " ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value=" + $('#add_password').val() + " ></td></tr></tbody></table><br><input type='button' class='fright pptp_save' value='Save'><input type='button' class='fright pptp_cancel' value='Cancel'></div></div>")
-			}
-
-	cancelAdd()
-}
-
-$('#container').on('click','.pptp_save',function(){
-	$(this).parent().parent().children($('.popup')).show();
-	$(this).parent().hide();
-})
-
-$('#container').on('click','.controlBoxTitle',function(){
-	$(this).children($('.edit_info')).show();
-	$(this).show();
-	$(this).parent().children('div').toggle();
-	$(this).children($('.accordionarrow')).toggleClass('rotate');
-})
-
-$('#container').on('click', '.edit_info', function(){	
-	$(this).parent().parent().children($('.editinfo')).show();
-	$(this).parent().hide();
-})
-
-$('#container').on('click', '.pptp_cancel', function(){
-		$(this).parent().parent().children($('.popup')).show();
-		$(this).parent().hide();
-})
-
-$('#container').on('click','.delete', function(){
-		alert('Are you sure you want to delete?')
-		$(this).parent().remove();
-})
-
-$('#container').on('click',":input[name^='connect']", function(){
-
-		$(":input[class^='connect']").attr('disabled', false);
-		$(":input[class^='disconnect']").attr('disabled', true);
-		$(this).next(":input[class^='disconnect']").attr('disabled', false);
-		$(this).attr('disabled',true);
-
-})
-
-$('#container').on('click',":input[name^='disconnect']", function(){
-
-		$(":input[class^='connect']").attr('disabled', true);
-		$(":input[class^='disconnect']").attr('disabled', false);
-		$(this).prev(":input[class^='connect']").attr('disabled', false);
-		$(this).attr('disabled',true);
-
-})
 
 </script>
+

@@ -18,13 +18,13 @@ persistent data
 <!--   </div>
 </div> -->
 
+<script type='text/ecmascript' src='php/bin.etc.php?q=l2tp'></script>
 <script type='text/ecmascript'>
 //functions for dynamically added buttons
 
 $('#accordion').on('click', '.save_edit', function(){
   var inputArr = $( ":input" ).serializeArray()
   $('#accordion').html('');
-  console.log(inputArr)
 
   //every 4th value starts a new set
   for(i=0; i<inputArr.length; i=i+5){
@@ -67,31 +67,27 @@ function addNew() {
 }
 
 $( document ).ready(function() {
- 
-  $.ajax("php/bin.vpn.l2tp.php", {
-    type: 'post',
-    dataType: "json",
-    data: $("#fe").serialize(),
-    success: function(o){
      
-      for(i=0; i<o.l2tp.length; i++){
+  for(i=0; i<l2tp.length; i++){
 
-        var id = Math.floor(Math.random() * 10000);
-        if(o.l2tp[i].name.length == 0){
-          $('#accordion').append("<h3 class='"+ id + "'>" + o.l2tp[i].server + "<a href='#' class='fright delete'>x</a></h3>")
-        }else{
-          $('#accordion').append("<h3 class='"+ id + "'>" + o.l2tp[i].name + "<a href='#' class='fright delete'>x</a></h3>")
-        }
-        $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='l2tp_name' name='pptp_name' value='" + o.l2tp[i].name + "'></td></tr>  <tr><td>Server</td><td><input class='l2tp_server' name='l2tp_server' value="+o.l2tp[i].server +"></td></tr> <tr><td>Username</td><td><input class='l2tp_username' name='l2tp_username' value="+o.l2tp[i].user +" ></td></tr> <tr><td>Password</td><td><input class='l2tp_password' name='l2tp_password' type='password' value="+o.l2tp[i].password +" ></td></tr><tr><td>Secret Key</td><td><input class='l2tp_ssk' name='l2tp_ssk' type='password' value="+o.l2tp[i].secret +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-      }
+    var id = Math.floor(Math.random() * 10000);
     
-      $(function makeAccordion() {
-          $( "#accordion" ).accordion({ heightStyle: "content", active: "false",
-          collapsible: "true" });
-      });
+    if(l2tp[i].name.length == 0){
+    
+      $('#accordion').append("<h3 class='"+ id + "'>" + l2tp[i].server + "<a href='#' class='fright delete'>x</a></h3>")
+    
+    }else{
 
+      $('#accordion').append("<h3 class='"+ id + "'>" + l2tp[i].name + "<a href='#' class='fright delete'>x</a></h3>")
     }
-  })
+
+    $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='l2tp_name' name='pptp_name' value='" + l2tp[i].name + "'></td></tr>  <tr><td>Server</td><td><input class='l2tp_server' name='l2tp_server' value="+l2tp[i].server +"></td></tr> <tr><td>Username</td><td><input class='l2tp_username' name='l2tp_username' value="+l2tp[i].user +" ></td></tr> <tr><td>Password</td><td><input class='l2tp_password' name='l2tp_password' type='password' value="+l2tp[i].password +" ></td></tr><tr><td>Secret Key</td><td><input class='l2tp_ssk' name='l2tp_ssk' type='password' value="+l2tp[i].secret +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
+  }
+
+  $(function makeAccordion() {
+      $( "#accordion" ).accordion({ heightStyle: "content", active: "false",
+      collapsible: "true" });
+  });
 
 });
 

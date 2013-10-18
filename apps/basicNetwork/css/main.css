@@ -538,29 +538,29 @@ font-size: .95em;
 
 /*contrack page accordion*/
 
-.accordion {
+/*.accordion {
     display: none;
 }
-
-#accordionarrow {
+*/
+/*#accordionarrow {
     transform:rotate(-90deg);
     -ms-transform:rotate(-90deg); /* IE 9 */
     -webkit-transform:rotate(-90deg);
-}
+}*/
 
 .underlined {
     text-decoration: underline;
 }
 
-.rotate {
+/*.rotate {
     transform:rotate(90deg);
-    -ms-transform:rotate(90deg); /* IE 9 */
+    -ms-transform:rotate(90deg);  IE 9 
     -webkit-transform:rotate(90deg);
 }
 
 .clickable{
      cursor: pointer;
-}
+}*/
 
 .delete {
     text-decoration: none;
