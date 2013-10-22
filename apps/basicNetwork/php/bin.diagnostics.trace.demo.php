@@ -1,7 +1,3 @@
-<?php 
-
-
-$fakeFile = <<<EOF
 {
     "traceResults": [
         {
@@ -51,10 +47,3 @@ $fakeFile = <<<EOF
         }
     ]
 }
-
-EOF
-;
-
-echo $fakeFile;
-
-?>

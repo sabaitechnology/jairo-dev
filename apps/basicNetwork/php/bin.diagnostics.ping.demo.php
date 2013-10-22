@@ -1,7 +1,3 @@
-<?php 
-
-
-$fakeFile = <<<EOF
 {
     "pingResults": [
         {
@@ -32,10 +28,3 @@ $fakeFile = <<<EOF
     "pingInfo": "4,4,0,3004",
     "pingStatistics": "15.666,16.384,16.892,0.509"
 }  
-
-EOF
-;
-
-echo $fakeFile;
-
-?>

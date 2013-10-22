@@ -1,7 +1,3 @@
-<?php 
-
-
-$fakeFile = <<<EOF
 Server:		127.0.0.1
 Address:	127.0.0.1#53
 
@@ -28,11 +24,3 @@ Name:	google.com
 Address: 173.194.37.78
 Name:	google.com
 Address: 173.194.37.68
-
-
-EOF
-;
-
-echo $fakeFile;
-
-?>

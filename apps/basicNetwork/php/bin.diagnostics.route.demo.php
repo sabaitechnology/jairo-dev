@@ -1,7 +1,3 @@
-<?php 
-
-
-$fakeFile = <<<EOF
 {
     "routeResults": [
         {
@@ -37,9 +33,3 @@ $fakeFile = <<<EOF
     ]
 }
 
-EOF
-;
-
-echo $fakeFile;
-
-?>
