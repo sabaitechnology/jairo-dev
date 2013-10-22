@@ -11,4 +11,7 @@ debian: built/jairo.deb
 clean:
 	@rm built/*
 
-
+demo:
+	rm -rf demo
+	cp -r jai demo
+	
