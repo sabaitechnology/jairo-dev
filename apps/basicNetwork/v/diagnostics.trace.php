@@ -19,7 +19,7 @@
           </tr>
           <tr>
               <td>Max Wait Time</td>
-              <td><input id='maxWait' name='maxWait' class='shortinput' /><span class='smallText'> (bytes)</span></td>
+              <td><input id='maxWait' name='maxWait' class='shortinput' /><span class='smallText'></span></td>
           </tr>
         </tbody>
     </table>

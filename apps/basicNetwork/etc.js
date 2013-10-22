@@ -117,12 +117,12 @@
   ]
  },
  "ping": {
-  "address" : "192.168.222.1",
+  "address" : "4.2.2.2",
   "count" : 4,
   "size" : 56
  },
  "trace" : {
-  "address" : "192.168.222.1",
+  "address" : "4.2.2.2",
   "hops" : 20,
   "wait" : 5
  },

@@ -90,34 +90,26 @@ $.widget( "jai.editablelist", $.ui.sortable, {
 
 /* END Editable List Widget Junk*/
 
-
 $.widget( "jai.accord", $.ui.accordion, {
  
   _create: function(){
     var addItems = this.options.static;
     if(addItems==false){
-      $(this.element).after("<br><input type=button name='add_new' class='add_new' value='Add New' onClick='addNew();'/>")
-  
+      $(this.element).after("<br><input type=button name='add_new' class='add_new' value='Add New' onClick='addNew();'/>")  
     }else{}
     this._super();
   },
 
   _refresh: function(){
-     $(this.element).find('.delete').remove();
+    $(this.element).find('.delete').remove();
     $(this.element).find('h3').append("<a href='#' class='fright delete'>x</a>")
-
     this._super();
   },
 
   newItem: function(){
-
-    // var needDelete = this.options.static;
-    // if(needDelete==true){
-     $(this.element).find('.delete').last().remove();
-      $(this.element).children('h3').last().append("<a href='#' class='fright delete'>x</a>")
-    // }
+    $(this.element).find('.delete').last().remove();
+    $(this.element).children('h3').last().append("<a href='#' class='fright delete'>x</a>")
   },
-
 
   options:{
     active:false,
