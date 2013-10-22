@@ -11,8 +11,7 @@ persistent data
 <div id="accordion">
 <!-- filled with accordion plugin + ajax request-->
 </div>
-<br>
-<input type=button name='add_new' class='add_new' value='Add New' onClick='addNew();'/>
+
 
 <!-- wizardry -->
 <br><br><a href="#">Upload Config File</a> -or- 
@@ -25,7 +24,54 @@ persistent data
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=openvpn'></script>
 <script type='text/ecmascript'>
-//functions for dynamically added buttons
+
+function makeAccordion(accordionElement,accordionList) {
+  for(i=0; i<accordionList.length; i++){
+
+    var id = Math.floor(Math.random() * 10000);
+    
+    if(accordionList[i].name.length == 0){
+    
+      $('#accordion').append("<h3 class='"+ id + "'>" + accordionList[i].server + "</h3>")
+    
+    }else{
+
+      $('#accordion').append("<h3 class='"+ id + "'>" + accordionList[i].name + "</h3>")
+    }
+        $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='openvpn_name' name='pptp_name' value='" + accordionList[i].name + "'></td></tr>  <tr><td>Server</td><td><input class='openvpn_server' name='openvpn_server' value="+accordionList[i].server +"></td></tr> <tr><td>Username</td><td><input class='openvpn_username' name='openvpn_username' value="+accordionList[i].user +" ></td></tr> <tr><td>Password</td><td><input class='openvpn_password' name='openvpn_password' type='password' value="+accordionList[i].password +" ></td></tr><tr><td>Secret Key</td><td><input class='openvpn_ssk' name='openvpn_ssk' type='password' value="+accordionList[i].secret +" ></td></tr><tr><td>Certification</td><td><input class='openvpn_certs' name='openvpn_certs' type='password' value="+accordionList[i].certs +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
+      }
+    
+       $(accordionElement).accord({static: false});
+}
+
+//do this on document load
+$(function() {
+  makeAccordion("#accordion",openvpn);
+
+  var KEY_ENTER = 13;
+
+  var inputs = document.querySelectorAll('input[type=password]');
+
+  for(var i = 0; i < inputs.length; i++) (function(i){
+    function hidePassword(){
+    inputs[i].type = 'password';
+    }
+
+    function showPassword(){
+      inputs[i].type = 'text';
+    }
+
+    inputs[i].addEventListener('focus', showPassword, false);
+    inputs[i].addEventListener('blur', hidePassword, false);
+    inputs[i].addEventListener('keydown', function onBeforeSubmit(e){
+      if (e.keyCode === KEY_ENTER) hidePassword();
+    }, false);
+  })(i);
+});
+
+
+
+//when you click save 
 
 $('#accordion').on('click', '.save_edit', function(){
   var inputArr = $( ":input" ).serializeArray()
@@ -44,7 +90,7 @@ $('#accordion').on('click', '.save_edit', function(){
     $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table id='"+ id + "' class='controlTable'><tbody> <tr><td>Name</td><td><input class='openvpn_name' name='pptp_name' value='" + inputArr[i].value + "'></td></tr>  <tr><td>Server</td><td><input class='openvpn_server' name='openvpn_server' value="+inputArr[i+1].value +"></td></tr> <tr><td>Username</td><td><input class='openvpn_username' name='openvpn_username' value="+inputArr[i+2].value +" ></td></tr> <tr><td>Password</td><td><input class='openvpn_password' name='openvpn_password' type='password' value="+inputArr[i+3].value +" ></td></tr><tr><td>Secret Key</td><td><input class='openvpn_ssk' name='openvpn_ssk' type='password' value="+inputArr[i+4].value +" ></td></tr><tr><td>Certification</td><td><input class='openvpn_certs' name='openvpn_certs' type='password' value="+inputArr[i+5].value +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
     }
 
-    $('#accordion').accordion("refresh");
+    $('#accordion').accord("refresh").accord({static: false, active: -1}); 
 
   })
 
@@ -53,13 +99,7 @@ $('#accordion').on('click', '.delete', function(){
   myid=$(this).parent().attr("class").match(/\d+/)
   console.log('clicked delete' +myid)
   $('.' + myid).remove();
-  $('#accordion').accordion("refresh").accordion(
-    { animate: "false", 
-      heightStyle: "content", 
-      active: "false",
-      collapsible: "true"
-
-    });
+  $('#accordion').accord("refresh").accord({static: false});
 })
 
 
@@ -67,31 +107,11 @@ $('#accordion').on('click', '.delete', function(){
 function addNew() {
   var id = Math.floor(Math.random() * 10000);
       $('#accordion').append("<h3 class='"+ id + "'>(New Entry)<a href='#' class='fright delete'>x</a></h3><div class='ui-accordion-content "+ id + "'><table  class='controlTable'><tbody><tr><td>Name</td><td><input class='openvpn_name' name='pptp_name' value=''></td></tr>  <tr><td>Server</td><td><input class='openvpn_server' name='openvpn_server' value=''></td></tr> <tr><td>Username</td><td><input class='openvpn_username' name='openvpn_username' value='' ></td></tr> <tr><td>Password</td><td><input class='openvpn_password' name='openvpn_password' type='password' value='' ></td></tr><tr><td>Secret Key</td><td><input class='openvpn_ssk' name='openvpn_ssk' type='password' value='' ></td></tr><tr><td>Certification</td><td><input class='openvpn_certs' name='openvpn_certs' type='password' value='' ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-      $('#accordion').accordion("refresh").accordion({ collapsible: true, animate: false, active: -1
-      }); 
+      
+      $('#accordion').accord("refresh").accord("newItem").accord({ active: -1, static: false}); 
 }
 
-$(function() {
-     
-      for(i=0; i<openvpn.length; i++){
 
-        var id = Math.floor(Math.random() * 10000);
-        if(openvpn[i].name.length == 0){
-          $('#accordion').append("<h3 class='"+ id + "'>" + openvpn[i].server + "<a href='#' class='fright delete'>x</a></h3>")
-        }else{
-          $('#accordion').append("<h3 class='"+ id + "'>" + openvpn[i].name + "<a href='#' class='fright delete'>x</a></h3>")
-        }
-        $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table class='controlTable'><tbody> <tr><td>Name</td><td><input class='openvpn_name' name='pptp_name' value='" + openvpn[i].name + "'></td></tr>  <tr><td>Server</td><td><input class='openvpn_server' name='openvpn_server' value="+openvpn[i].server +"></td></tr> <tr><td>Username</td><td><input class='openvpn_username' name='openvpn_username' value="+openvpn[i].user +" ></td></tr> <tr><td>Password</td><td><input class='openvpn_password' name='openvpn_password' type='password' value="+openvpn[i].password +" ></td></tr><tr><td>Secret Key</td><td><input class='openvpn_ssk' name='openvpn_ssk' type='password' value="+openvpn[i].secret +" ></td></tr><tr><td>Certification</td><td><input class='openvpn_certs' name='openvpn_certs' type='password' value="+openvpn[i].certs +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-      }
-    
-      $(function makeAccordion() {
-          $( "#accordion" ).accordion({ 
-            heightStyle: "content", 
-            active: "false",
-            collapsible: "true" 
-          });
-      });
-});
 
 //wizardry
 function showWizard() {

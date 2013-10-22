@@ -15,7 +15,7 @@
 <script type='text/ecmascript' src='js/globalize.js'></script>
 <script type='text/ecmascript' src='php/bin.etc.php?q=pptp'></script>
 <script type='text/ecmascript'>
-//functions for dynamically added buttons
+
 
 function makeAccordion(accordionElement,accordionList) {
   for(i=0; i<accordionList.length; i++){
@@ -40,6 +40,26 @@ function makeAccordion(accordionElement,accordionList) {
 //do this on document load
 $(function() {
   makeAccordion("#accordion",pptp);
+
+  var KEY_ENTER = 13;
+
+  var inputs = document.querySelectorAll('input[type=password]');
+
+  for(var i = 0; i < inputs.length; i++) (function(i){
+    function hidePassword(){
+    inputs[i].type = 'password';
+    }
+
+    function showPassword(){
+      inputs[i].type = 'text';
+    }
+
+    inputs[i].addEventListener('focus', showPassword, false);
+    inputs[i].addEventListener('blur', hidePassword, false);
+    inputs[i].addEventListener('keydown', function onBeforeSubmit(e){
+      if (e.keyCode === KEY_ENTER) hidePassword();
+    }, false);
+  })(i);
 });
 
 
