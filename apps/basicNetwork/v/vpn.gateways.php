@@ -4,7 +4,7 @@
   <span class='controlBoxTitle'>Gateway Setup</span>
 
   <div class='controlBoxContent'>
-     <table class='controlTable'>
+    <table class='controlTable'>
     <tbody>
      <tr><td>Default Gateway: </td><td>
       <select id='default_gateway' name='default_gateway' class='radioSwitchElement'>
@@ -64,9 +64,6 @@
        $('.gatewayDrop').editable(function(value, settings){
         var cPos = lt.fnGetPosition(this)
         lt.fnUpdate(value,cPos[0],cPos[1]);
-        // lt.fnSetColumnVis( 0, false);
-        //$('#demo').html( lt.fnGetPosition(this).join(',') );
-        //$(this).editable()
         return value;
       },
 

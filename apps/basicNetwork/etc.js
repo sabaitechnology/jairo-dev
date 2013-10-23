@@ -54,6 +54,9 @@
    }
   }
  ],
+ "macfilter": {
+  "default" : "Deny"
+ },
  "vpn": {
   "pptp": {
    "server": "pptpvpn.sabaitechnology.com",

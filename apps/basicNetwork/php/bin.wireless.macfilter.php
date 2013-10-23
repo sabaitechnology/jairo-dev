@@ -13,7 +13,7 @@ $sl = <<<EOF
 host abc {
   hardware ethernet 08:00:07:26:c0:a5;
   description router stuff;
-  policy Off;
+  policy Deny;
 }
 
 host def {
@@ -25,7 +25,7 @@ host def {
 host ghi {
   hardware ethernet 08:00:07:26:c0:a7;
   description router fun;
-  policy Allow;
+  policy Deny;
 }
 
 EOF
