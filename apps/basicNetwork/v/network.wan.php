@@ -51,14 +51,7 @@ DDNS: { ip, interval, services }
 		</table>
 	</div>
 </div>
-<input type='button' id='test' value='Test' onclick='sub();'>
 
-<div class='controlBox'>
- <span class='controlBoxTitle'>Demo</span>
- <div class='controlBoxContent'>
-  <pre id='demo'>Demo!</pre>
- </div>
-</div>
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=wan,dns'></script>
 <script type='text/ecmascript' src='js/globalize.js'></script>
