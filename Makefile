@@ -12,6 +12,9 @@ clean:
 	@rm built/*
 
 demo:
-	rm -rf demo
+	@rm -rf demo
 	cp -r jai demo
-	
+	rm demo/apps
+	cp -r apps demo/
+	rm -rf demo/apps/basicNetwork/php
+	mv demo/apps/basicNetwork/demo demo/apps/basicNetwork/php
