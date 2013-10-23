@@ -5,12 +5,11 @@
 function getLogs($path = '/var/log/'){
  $logs = scandir($path);
  $logList = array();
- sort($logs, SORT_NATURAL);
+ sort($logs, SORT_NATURAL | SORT_FLAG_CASE);
  foreach($logs as $log){
   if($log=='.' || $log=='..') continue; // ignore . and ..
   if(is_dir($path.$log)){
-//   $logList[]=array( $log => getLogs($path.$log) );
-   $logList[]=$log;
+   $logList[]=array( $log => getLogs($path.$log) );
   }else{
    $logList[]=$log;
   }
