@@ -5,15 +5,17 @@
 function getLogs($path = '/var/log/'){
  $logs = scandir($path);
  $logList = array();
-
+ sort($logs, SORT_NATURAL);
  foreach($logs as $log){
   if($log=='.' || $log=='..') continue; // ignore . and ..
   if(is_dir($path.$log)){
-   $logList[]=array( $log => getLogs($path.$log) );
+//   $logList[]=array( $log => getLogs($path.$log) );
+   $logList[]=$log;
   }else{
    $logList[]=$log;
   }
  }
+// sort($logList, SORT_NATURAL);
  return $logList;
 }
 
@@ -29,7 +31,6 @@ return;
  $lines=array_key_exists('lines', $_REQUEST) ? $_REQUEST['lines'] : null;
  $find=array_key_exists('find', $_REQUEST) ? $_REQUEST['find'] : null;
 
-
  $validPath = realpath($logPath . $log);
 
  if( (!empty($log)) && (strncmp($validPath, $logPath, 9) != 0) ){
@@ -37,23 +38,30 @@ return;
  	return;
  }
 
+$isZipped = ( pathinfo($path, PATHINFO_EXTENSION) == 'gz' );
+
 switch ($act) {
 	case 'all':
-		readfile($validPath);
+		if ($isZipped){
+			exec("gunzip -c $validPath", $out);
+			echo implode("\n",$out);
+		}else{
+			readfile($validPath);	
+		}
 	break;
 
 	case 'first':
-		exec("head -n $lines $validPath", $out);
+		exec( ( $isZipped ? "gunzip -c $validPath | head -n $lines" : "head -n $lines $validPath" ), $out);
 		echo implode("\n",$out);
 	break;
 
 	case 'last':
-		exec("tail -n $lines $validPath", $out);
+		exec( ( $isZipped ? "gunzip -c $validPath | tail -n $lines" : "tail -n $lines $validPath" ), $out);
 		echo implode("\n",$out);
 	break;
 
 	case 'find':
-		exec("grep '$find' $validPath", $out);
+		exec( ( $isZipped ? "gunzip -c $validPath | grep '$find'" : "grep '$find' $validPath" ), $out);
 		echo implode("\n",$out);
 	break;
 
