@@ -37,16 +37,6 @@ ADD VALIDATION
 
 </div></div>
 
-<input type='button'  id='test' value='Test' onclick='sub();'>
-
-
-<div class='controlBox'>
- <span class='controlBoxTitle'>Demo</span>
- <div class='controlBoxContent'>
-<pre id='demov'></pre>
-<pre id='demo'></pre>
- </div>
-</div>
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=lan,dhcp'></script>
 <script type='text/ecmascript'>

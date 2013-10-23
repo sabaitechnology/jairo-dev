@@ -95,12 +95,6 @@
 </div>
 
 
-<input type='button' id='test' value='test' onclick='sub();'>
-
-<div class='controlBox'><span class='controlBoxTitle'>Demo</span>
-  <div class='controlBoxContent'>
-  <pre id='demo'></pre></div></div>
-
 <script type='text/ecmascript' src='php/bin.etc.php?q=wl&n=0'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>

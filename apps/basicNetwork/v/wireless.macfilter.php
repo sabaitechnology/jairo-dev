@@ -3,12 +3,11 @@
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span>
 	<div class='controlBoxContent'>
 		<table id='list' class='listTable clickable'></table>
+      <input type='button' value='Add' id='add'>
       <input type='button' value='Save' onclick='saveMACg();'>
       <input type='button' value='Cancel' onclick='cancelMAC();'>
 	</div>
 </div>
-
-
 
 
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
@@ -29,9 +28,6 @@
     $('.policyDrop').editable(function(value, settings){
       var cPos = lt.fnGetPosition(this)
       lt.fnUpdate(value,cPos[0],cPos[1]);
-      // lt.fnSetColumnVis( 0, false);
-      //$('#demo').html( lt.fnGetPosition(this).join(',') );
-      //$(this).editable()
       return value;
     },
 
@@ -59,5 +55,25 @@
   )
   }
  });
+
+$('#add').click( function (e) {
+    e.preventDefault();
+     
+    var aiNew = lt.fnAddData( 
+      { 
+      "MAC Address": '(Click to Enter)', 
+      "Description": "(Click to Enter)", 
+      "Policy": "(Click to Enter)"
+      }
+    );
+
+    var oSettings = lt.fnSettings();
+    $('td', oSettings.aoData[ aiNew[0] ].nTr).editable(lt)
+    // lt.fnInitComplete()
+    var nRow = lt.fnGetNodes( aiNew[0] );
+    // editRow( lt, nRow );
+    // nEditing = nRow;
+} );
+
 
 </script>
