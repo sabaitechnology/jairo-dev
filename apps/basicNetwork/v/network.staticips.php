@@ -10,13 +10,14 @@
 	<div class='controlBoxContent'>
 		<table id='list' class='listTable'></table>
 		<input type='button' value='Add' id='add'>
-		<input type='button' value='Save' onclick='saveStaticList();'>
-		<input type='button' value='Cancel' onclick='cancelStaticList();'>
+		<input type='button' value='Save' id='save'>
+		<input type='button' value='Cancel' id='cancel'>
 	</div>
 </div>
 
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
+
 <script type='text/ecmascript'>
 
  var lt =  $('#list').dataTable({
@@ -52,6 +53,11 @@ $('#add').click( function (e) {
 			"hostname": null
 		}
 	);
+});
+
+
+$('#save').click( function() {
+	noty({text: 'Saved'});
 });
 
 

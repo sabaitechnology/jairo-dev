@@ -8,11 +8,47 @@
 <script type='text/ecmascript' src='/libs/jquery-1.9.1.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script src="/libs/jquery.mousewheel.js"></script>
+
+<!-- noty stuff  -->
+<script type="text/javascript" src="/libs/jquery.noty.js"></script>
+<script type="text/javascript" src="/libs/top.js"></script>
+<script type="text/javascript" src="/libs/bottomRight.js"></script>
+<script type="text/javascript" src="/libs/default.js"></script>
+
 <!-- script type='text/ecmascript' src='/libs/jai.js'></script -->
 <script type='text/ecmascript' src='js/math.js'></script>
 <script type='text/ecmascript' src='js/widgets.js'></script>
 <script type='text/ecmascript' src='js/main.js'></script>
 <script type='text/ecmascript'>
+
+//noty settings 
+$.noty.defaults = {
+    layout: 'bottomRight',
+    theme: 'defaultTheme',
+    type: 'alert',
+    text: '',
+    dismissQueue: true, // If you want to use queue feature set this true
+    template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+    animation: {
+        open: {height: 'toggle'},
+        close: {height: 'toggle'},
+        easing: 'swing',
+        speed: 500 // opening & closing animation speed
+    },
+    timeout: 1000, // delay for closing event. Set false for sticky notifications
+    force: false, // adds notification to the beginning of queue when set to true
+    modal: false,
+    maxVisible: 5, // you can set max visible notification for dismissQueue true option
+    closeWith: ['click'], // ['click', 'button', 'hover']
+    callback: {
+        onShow: function() {},
+        afterShow: function() {},
+        onClose: function() {},
+        afterClose: function() {}
+    },
+    buttons: false // an array of buttons
+};
+
 <?php
  $panel = array_key_exists('panel',$_REQUEST)?preg_replace('/[^a-z\d]/i', '', $_REQUEST['panel']):'network';
  $section = array_key_exists('section',$_REQUEST)?preg_replace('/[^a-z\d]/i', '', $_REQUEST['section']):'wan';
