@@ -1,8 +1,12 @@
+<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <div class='pageTitle'>Security: Conntrack</div>
 <!-- TODO: 
 onchange make input visible-->
-<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordionup3.png"> Connections</span>
-	<div class='controlBoxContent noclick'>
+
+<div id='accordion'>
+
+<h3>Connections</h3>
+<div>
 		<table>
 			<tbody>
 				<tr><td>Maximum Connections</td><td><input id="maxConnection" name="maxConnection" class='shortinput'>
@@ -16,11 +20,10 @@ onchange make input visible-->
 		</table>
 
 		<input type='button' name='drop_idle' value='Drop Idle'>
-	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion3.png"> TCP Timeout</span>
-	<div class='controlBoxContent accordion'>
+<h3>TCP Timeout</h3>
+<div>
 		<table>
 			<tbody>
 				<tr><td> </td><td><span class='xsmallText'> (seconds)</span></td>
@@ -43,14 +46,10 @@ onchange make input visible-->
 				</tr>
 			</tbody>
 		</table>
-			
-				
-
-	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> UDP Timeout</span>
-	<div class='controlBoxContent accordion'>
+<h3>UDP Timeout</h3>
+<div>
 		<table>
 			<tbody>
 				<tr><td> </td><td><span class='xsmallText'> (seconds)</span></td>
@@ -61,12 +60,10 @@ onchange make input visible-->
 				</tr>
 			</tbody>
 		</table>
-			
-	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> Other Timeouts</span>
-	<div class='controlBoxContent accordion'>
+<h3>Other Timeouts</h3>
+<div>
 		<table>
 			<tbody>
 				<tr><td> </td><td><span class='xsmallText'> (seconds)</span></td>
@@ -77,13 +74,10 @@ onchange make input visible-->
 				</tr>
 			</tbody>
 		</table>
-			
-		
-	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> Tracking/NAT Helpers</span>
-	<div class='controlBoxContent accordion'>
+<h3>Tracking/NAT Helpers</h3>
+<div>
 		<table>
 			<tbody>
 				<tr><td>FTP</td><td><input name="ftp" id="ftp" class='shortinput' type='checkbox'></td>
@@ -98,16 +92,10 @@ onchange make input visible-->
 				</tr>
 			</tbody>
 		</table>
-			 
-		
-			
-			
-		
-	</div>
 </div>
 
-<div class='controlBox'><span class='controlBoxTitle clickable'><img id='accordion' src="img/accordion.png"> Miscellaneous</span>
-	<div class='controlBoxContent accordion'>
+<h3>Miscellaneous</h3>
+	<div>
 		<table>
 			<tbody>
 				<tr><td>TTL Adjust</td>
@@ -134,14 +122,9 @@ onchange make input visible-->
 				</tr>
 			</tbody>
 		</table>
-	
-
-
-
-	
 	</div>
-</div>
 
+</div>
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=conntrack'></script>
@@ -150,15 +133,14 @@ onchange make input visible-->
 
 
 
-$(document).ready(
-	$('.controlBoxTitle').click(function(){
-		$(this).show();
-		$(this).parent().children('div').toggle();
-		$(this).children($('#accordion')).toggleClass('rotate')
-		
-	})
 
-)
+	$(accordion).accordion({
+    active:false,
+    animate: false,
+    collapsible:true,
+    heightStyle:"content",
+  });
+
 
 
  $('#maxConnection').spinner({ min: 0, max: 50000 }).spinner('value',conntrack.maxConnection);
