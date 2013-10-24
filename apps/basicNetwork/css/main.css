@@ -98,6 +98,10 @@ ul#superMenu, ul.subMenu {
     font-weight: normal;
 }
 
+.inline {
+    display: inline-block;
+}
+
 .controlTable tr td:first-child {
  min-width: 7em;
 }
@@ -432,32 +436,9 @@ ul.editableList > li {
  height: 2em;
 }
 
-#help {
-    height: 1.5em;
-    float: right;
-}
-
-#close {
-    height: 1em;
-    float: right;
-    margin-top: .5em;
-}
 
 .inline {
     display: inline;
-}
-#tooltip {
-    z-index:10;
-    display:none; 
-    padding:14px 20px;
-    margin-top:-8px; 
-    margin-left:441px;
-    width:252px; 
-    color:#111;
-    border:1px 
-    solid #DCA; 
-    background:#fffAF0;
-    position:absolute; 
 }
 
 
@@ -474,11 +455,6 @@ ul.editableList > li {
 
 .inlineHelp {
     display: none;
-}
-
-.helpbox {
- color: navy;
- font-family: courier;
 }
 
 .errorInput {
@@ -587,4 +563,36 @@ font-size: .95em;
     font: 16px Arial,Helvetica,sans-serif;
     border: none;
     margin-bottom: .5em;
+}
+
+
+/*Help Section - can delete old stuff above*/
+
+ #helpButton {
+padding: .25em .25em;
+text-decoration: none;
+float:right;
+height: 1.75em;
+}
+
+.toggler {
+float:right;
+width: 0px;
+height: 0px;
+margin-right: 16em;
+}
+
+#effect {
+position: absolute;
+display: none;
+width: 240px;
+height: auto;
+padding: 0.5em;
+margin-right: 0px;
+}
+
+#effect h3 {
+margin: 0;
+padding: 0.4em;
+text-align: center;
 }

@@ -49,11 +49,97 @@ $.noty.defaults = {
     buttons: false // an array of buttons
 };
 
+//help function
+ $(function() {
+
+  // run the currently selected effect
+  function runEffect() {
+    var selectedEffect = "blind";
+    var options = {};
+    // run the effect
+    $( "#helpButton" ).hide('slow');
+    $( "#effect" ).toggle( selectedEffect, options, 500 );
+  };
+
+  // set effect from select menu value
+  $( "#helpButton" ).click(function() {
+    runEffect();
+    return false;
+    });
+
+   $( "#closeHelp" ).click(function() {
+    runEffect();
+    $( "#helpButton").show('slow');
+    return false;
+    });
+
+});
+
 <?php
  $panel = array_key_exists('panel',$_REQUEST)?preg_replace('/[^a-z\d]/i', '', $_REQUEST['panel']):'network';
  $section = array_key_exists('section',$_REQUEST)?preg_replace('/[^a-z\d]/i', '', $_REQUEST['section']):'wan';
  $page = "v/$panel.$section.php";
  $page = file_exists($page)?$page:'v/lorem.php';
+ $titleInfo = array (
+  'wan' => 'WAN Help',
+  'lan' => 'LAN Help',
+  'time' => 'Time Help',
+  'devicelist' => 'Device List Help',
+  'staticips' => 'Static IP Help',
+  'radio' => 'Radio Help',
+  'survey' => 'Survey Help',
+  'macfilter' => 'MAC Filter Help',
+  'pptp' => 'PPTP Help',
+  'openvpn' => 'OpenVPN Help',
+  'l2tp' => 'L2TP Help',
+  'ipsec' => 'IPSEC Help',
+  'pptpserver' => 'PPTP Server Help',
+  'openvpnserver' => 'OpenVPN Server Help',
+  'gateways' => 'Gateways Help',
+  'ping' => 'Ping Help',
+  'trace' => 'Trace Help',
+  'nslookup' => 'NS Lookup Help',
+  'route' => 'Route Help',
+  'firewall' => 'Firewall Help',
+  'portforwarding' => 'Port Forwarding Help',
+  'dmz' => 'DMZ Help',
+  'conntrack' => 'Conntrack Help',
+  'upnp' => 'UPNP Help',
+  'about' => 'About Help'
+  );
+
+$title= $titleInfo[$section];
+
+ $helpInfo = array (
+  'wan' => 'WAN Help',
+  'lan' => 'LAN Help',
+  'time' => 'Time Help',
+  'devicelist' => 'Device List Help',
+  'staticips' => 'Static IP Help',
+  'radio' => 'Radio Help',
+  'survey' => 'Survey Help',
+  'macfilter' => 'MAC Filter Help',
+  'pptp' => 'PPTP Help',
+  'openvpn' => 'OpenVPN Help',
+  'l2tp' => 'L2TP Help',
+  'ipsec' => 'IPSEC Help',
+  'pptpserver' => 'PPTP Server Help',
+  'openvpnserver' => 'OpenVPN Server Help',
+  'gateways' => 'Gateways Help',
+  'ping' => 'Ping Help',
+  'trace' => 'Trace Help',
+  'nslookup' => 'NS Lookup Help',
+  'route' => 'Route Help',
+  'firewall' => 'Firewall Help',
+  'portforwarding' => 'Port Forwarding Help',
+  'dmz' => 'DMZ Help',
+  'conntrack' => 'Conntrack Help',
+  'upnp' => 'UPNP Help',
+  'about' => 'About Help'
+  );
+
+ $help = $helpInfo[$section];
+
  echo "var panel='$panel'; var section='$section';";
 ?>
 
@@ -131,12 +217,12 @@ $.noty.defaults = {
 
  <div id='panelContainer'>
   <div id='panel'>
+    <form id='fe'>
 
-<form id='fe'>
 
-<?php include($page); ?>
+    <?php echo "<img id='helpButton' src='img/help.png'><div class='toggler'><div id='effect' class='ui-widget-content ui-corner-al'><a href='#' id='closeHelp' class='xsmallText fright'>Close</a><h3 class='ui-widget-header i-corner-all'>".$title."</h3><p>".$help."</p></div></div>"; include($page); ?>
 
-</form>
+    </form>
 
   </div>
  </div>
