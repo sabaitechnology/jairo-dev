@@ -3,7 +3,7 @@
 <!-- TODO: 
 onchange make input visible-->
 
-<div id='accordion'>
+<div id='accordion' class='noshow'>
 
 <h3>Connections</h3>
 <div>
@@ -131,19 +131,18 @@ onchange make input visible-->
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
-
-
-
-	$(accordion).accordion({
+$(function() {
+	$('#accordion').accordion({
     active:false,
     animate: false,
     collapsible:true,
     heightStyle:"content",
   });
+  $('#accordion').show();
+ })
 
 
-
- $('#maxConnection').spinner({ min: 0, max: 50000 }).spinner('value',conntrack.maxConnection);
+$('#maxConnection').spinner({ min: 0, max: 50000 }).spinner('value',conntrack.maxConnection);
 $('#hashTableSize').spinner({ min: 0, max: 50000 }).spinner('value',conntrack.hashTableSize);
 
 $('#established').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.established);
@@ -162,7 +161,6 @@ $('#generic').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.generic);
 $('#icmp').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.icmp);
 
 $('#closeWait').spinner({ min: 0, max: 3600 }).spinner('value',conntrack.closeWait);
-
 
  $('#ftp').prop({'checked': conntrack.ftp});
  $('#gre').prop({'checked': conntrack.gre});

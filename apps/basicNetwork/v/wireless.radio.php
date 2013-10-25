@@ -4,7 +4,6 @@
 -->
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span>
   <div class='controlBoxContent'>
-
     <!-- TOP TABLE -->
     <table class='controlTable smallwidth'>
       <tbody>
@@ -88,9 +87,7 @@
           </td>
         </tr>
       </tbody>
-
     </table>
-  
   </div>
 </div>
 

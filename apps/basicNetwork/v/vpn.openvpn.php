@@ -18,9 +18,6 @@ persistent data
 <a href="#" onClick='showWizard()'>Use Wizard</a><br><br>
 <img id='wizard' class='noshow' src="http://incogman.net/wp-content/uploads/2010/12/MAN-BEHIND-CURTAIN-SMALL.jpg">
 <p class='noshow'>Pay no attention to that man behind the curtain</p>
-<input type='button' class='noshow' value='Okay!' id='okay' onclick='ok()'>
-<input type='button' class='noshow' value='No Way!' id='noWay' onclick='no()'>
-<p id='message'></p>
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=openvpn'></script>
 <script type='text/ecmascript'>
@@ -116,18 +113,8 @@ function addNew() {
 //wizardry
 function showWizard() {
 	$('.noshow').show();
-	$('#message').html('')
 }
 
-function no() {
-	$('.noshow').hide();
-	$('#message').append('I am a very good man. I am just a very bad Wizard.')
-}
-
-function ok() {
-	$('.noshow').hide();
-	$('#message').append('I will have to give the matter a little thought! Go home and come back tomorrow.</p>')
-}
 
 </script>
 

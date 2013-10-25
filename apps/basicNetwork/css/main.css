@@ -85,10 +85,6 @@ ul#superMenu, ul.subMenu {
  color: hsl(209, 77%, 19%); /* #0B3256 */
 }
 
-.controlTable {
-/* width: 100%;*/
-}
-
 .smallText{
     font-size: .85em;
 }
@@ -144,7 +140,7 @@ ul#superMenu, ul.subMenu {
  background: #CED7E1;
 */
  overflow-x: auto;
- padding: .25em 1em;
+ padding: 1em;
  background: #EFF2F5;
  border: 1px solid transparent;
 }
@@ -283,13 +279,16 @@ input {
 
 .slideToggleSlider { position: relative; height: 100%; width: 200%; }
 
+tr .slideToggleViewport {
+    margin: .35em;
+}
+
 .slideToggleViewport {
     border: 1px solid silver;
     border-radius: 1.75em 1.75em 1.75em 1.75em;
     cursor: pointer;
     display: block;
     height: 1.75em;
-    margin: .5em 0;
     overflow: hidden;
     position: relative;
     width:3.8em;
@@ -589,6 +588,7 @@ width: 240px;
 height: auto;
 padding: 0.5em;
 margin-right: 0px;
+z-index: 10;
 }
 
 #effect h3 {

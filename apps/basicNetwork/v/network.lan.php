@@ -3,39 +3,40 @@
 WINS?
 ADD VALIDATION
 -->
-<div class='controlBox'><span class='controlBoxTitle'>Address</span><div class='controlBoxContent'>
-
-<table class='controlTable'><tbody>
-<tr><td>LAN IP</td><td><input id='lanip' name='lanip' /></td></tr>
-<tr><td>Mask</td><td><input id='lanmask' name='lanmaskValue' /></td></tr>
-</tbody></table>
-
-</div></div>
-
-<div class='controlBox'><span class='controlBoxTitle'>DHCP Server</span><div class='controlBoxContent'>
-<table  class='controlTable'><tbody>
-<tr><td colspan=2>
- <input type="checkbox" id="dhcpToggle" name='dhcpToggle' class="slideToggle" />
- <label class="slideToggleViewport" for="dhcpToggle">
- <div class="slideToggleSlider">
-   <div class="slideToggleButton slideToggleButtonBackground">&nbsp;</div>
-   <div class="slideToggleContent slideToggleLeft button buttonSelected"><span>On</span></div>
-   <div class="slideToggleContent slideToggleRight button"><span>Off</span></div>
+<div class='controlBox'><span class='controlBoxTitle'>Address</span>
+  <div class='controlBoxContent'>
+    <table class='controlTable'><tbody>
+    <tr><td>LAN IP</td><td><input id='lanip' name='lanip' /></td></tr>
+    <tr><td>Mask</td><td><input id='lanmask' name='lanmaskValue' /></td></tr>
+    </tbody></table>
   </div>
- </label>
-</td></tr>
-<tr><td>Lease</td><td><input id='dhcpLease' name='dhcpLease'  /></td></tr>
+</div>
 
-<tr><td id='DHCPrange'>DHCP Range</td><td>
- <input id='dhcpLower' name='dhcpLower'/> - <input id='dhcpUpper' name='dhcpUpper' />
-<!--  <div id='dhcpSlider' class='rangeSlider'></div> -->
-</td></tr>
-<tr><td><div id='editDiv' class='xsmallText'><input id='dhcpEdit' name='dhcpEdit' type='checkbox' >Edit in "off" mode
-</div></td>
-</tr>
-</tbody></table>
+<div class='controlBox'><span class='controlBoxTitle'>DHCP Server</span>
+  <div class='controlBoxContent'>
+    <table  class='controlTable'><tbody>
+    <tr><td colspan=2>
+     <input type="checkbox" id="dhcpToggle" name='dhcpToggle' class="slideToggle" />
+     <label class="slideToggleViewport" for="dhcpToggle">
+     <div class="slideToggleSlider">
+       <div class="slideToggleButton slideToggleButtonBackground">&nbsp;</div>
+       <div class="slideToggleContent slideToggleLeft button buttonSelected"><span>On</span></div>
+       <div class="slideToggleContent slideToggleRight button"><span>Off</span></div>
+      </div>
+     </label>
+    </td></tr>
+    <tr><td>Lease</td><td><input id='dhcpLease' name='dhcpLease'  /></td></tr>
 
-</div></div>
+    <tr><td id='DHCPrange'>DHCP Range</td><td>
+     <input id='dhcpLower' name='dhcpLower'/> - <input id='dhcpUpper' name='dhcpUpper' />
+    <!--  <div id='dhcpSlider' class='rangeSlider'></div> -->
+    </td></tr>
+    <tr><td><div id='editDiv' class='xsmallText'><input id='dhcpEdit' name='dhcpEdit' type='checkbox' >Edit in "off" mode
+    </div></td>
+    </tr>
+    </tbody></table>
+  </div>
+</div>
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=lan,dhcp'></script>

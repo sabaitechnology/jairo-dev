@@ -2,6 +2,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span>
 	<div class='controlBoxContent'>
+		
 		<table class='controlTable'>
     <tbody>
      <tr><td>Set Policy: </td><td>
@@ -12,11 +13,15 @@
      </td></tr>
     </tbody>
     </table>
+    
     <br>
+
 		<table id='list' class='listTable clickable'></table>
-			<input type='button' value='Add' id='add'>
-			<input type='button' value='Save' onclick='saveMACg();'>
-			<input type='button' value='Cancel' onclick='cancelMAC();'>
+		
+		<input type='button' value='Add' id='add'>
+		<input type='button' value='Save' onclick='saveMACg();'>
+		<input type='button' value='Cancel' onclick='cancelMAC();'>
+
 	</div>
 </div>
 

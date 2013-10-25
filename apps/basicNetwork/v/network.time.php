@@ -1,30 +1,33 @@
 <div class='pageTitle'>Network: Time</div>
 
-<div class='controlBox'><span class='controlBoxTitle'>NTP</span><div class='controlBoxContent'><table class='controlTable'>
-<tbody>
-<tr><td>Server Pool</td><td>
- <ul id='ntp_servers'></ul>
-</td></tr>
-<!-- tr><td>Time Zone</td><td>
- <input type='hidden' id='ntp_zone' name='ntp_zone'>
- <span id='ntp_zone_text'></span>
- <div id='ntp_zone_menu' class='noshow'>< !- ?php include('php/bin.timezones.php'); ? -></div>
- <br>Automatic DST <input id='ntp_autodst' name='ntp_autodst' type='checkbox'>
-</td></tr>
-<tr><td>Update Interval</td><td>
+<div class='controlBox'><span class='controlBoxTitle'>NTP</span>
+  <div class='controlBoxContent'><table class='controlTable'>
+    <tbody>
+    <tr><td>Server Pool</td><td>
+     <ul id='ntp_servers'></ul>
+    </td></tr>
+    <!-- tr><td>Time Zone</td><td>
+     <input type='hidden' id='ntp_zone' name='ntp_zone'>
+     <span id='ntp_zone_text'></span>
+     <div id='ntp_zone_menu' class='noshow'>< !- ?php include('php/bin.timezones.php'); ? -></div>
+     <br>Automatic DST <input id='ntp_autodst' name='ntp_autodst' type='checkbox'>
+    </td></tr>
+    <tr><td>Update Interval</td><td>
 
- <input id='ntpLower' name='ntpLower' /> - <input id='ntpUpper' name='ntpUpper' />
- <div id='ntpSlider' class='rangeSlider'></div>
+     <input id='ntpLower' name='ntpLower' /> - <input id='ntpUpper' name='ntpUpper' />
+     <div id='ntpSlider' class='rangeSlider'></div>
 
-</td></tr>
-<tr><td>Current Time</td><td>
- <input id='ntp_time' name='ntp_time' />
-</td></tr>
-<tr><td>Current Date</td><td>
- <input id='ntp_date' name='ntp_date' />
-</td></tr -->
-</tbody>
-</table></div></div>
+    </td></tr>
+    <tr><td>Current Time</td><td>
+     <input id='ntp_time' name='ntp_time' />
+    </td></tr>
+    <tr><td>Current Date</td><td>
+     <input id='ntp_date' name='ntp_date' />
+    </td></tr -->
+    </tbody>
+    </table>
+  </div>
+</div>
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=ntp&time=current'></script>

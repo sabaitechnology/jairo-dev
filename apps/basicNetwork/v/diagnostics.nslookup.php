@@ -5,22 +5,20 @@ TODO:
 
 <div class='controlBox'><span class='controlBoxTitle'>NS Lookup</span>
 	<div class='controlBoxContent'>
-	<br>
-	<table class='controlTable smallwidth'>
-		<tbody>
-		 <tr>
-		 	<td>Domain</td>
-		 	<td>
-		 		<input id='ns_domain' name='ns_domain' />
-		 		<input type='button' value='Lookup' id='Lookup' onclick='lookup()'>
-		 	</td>
-		 </tr>
-		</tbody>
-	</table><br>
-	<textarea id='logstxtarea' class='noshow' style="width: 90%; height: 30em" readonly
+		<table class='controlTable smallwidth'>
+			<tbody>
+			 <tr>
+			 	<td>Domain</td>
+			 	<td>
+			 		<input id='ns_domain' name='ns_domain' />
+			 		<input type='button' value='Lookup' id='Lookup' onclick='lookup()'>
+			 	</td>
+			 </tr>
+			</tbody>
+		</table><br>
+		<textarea id='logstxtarea' style="width: 90%; height: 30em" readonly
 >			
 	</textarea>
-
 
 </div>
 
@@ -34,7 +32,7 @@ function lookup(){
 	$.ajax("php/bin.diagnostics.nslookup.php", {
 			success: function(o){
 				$('#logstxtarea').html('');
-				$('#logstxtarea').show().html(o);
+				$('#logstxtarea').html(o);
 			},
 			dataType: "text",
 			data: $("#fe").serialize()
