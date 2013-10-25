@@ -1,6 +1,6 @@
 <div class='pageTitle'>Wireless: MAC Filter</div>
 
-<div class='controlBox'><span class='controlBoxTitle'>WL0</span>
+<div class='controlBox'><span class='controlBoxTitle'>Filter Settings</span>
 	<div class='controlBoxContent'>
 		
 		<table class='controlTable'>
@@ -19,7 +19,7 @@
 		<table id='list' class='listTable clickable'></table>
 		
 		<input type='button' value='Add' id='add'>
-		<input type='button' value='Save' onclick='saveMACg();'>
+		<input type='button' value='Save'>
 		<input type='button' value='Cancel' onclick='cancelMAC();'>
 
 	</div>
@@ -30,6 +30,9 @@
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
+$('#save').click( function() {
+	noty({text: 'Saved'});
+});
 
 $('#default_policy').radioswitch({
  value: macfilter.default
@@ -70,6 +73,8 @@ $('#add').click( function (e) {
 		}
 	);
 });
+
+
 
 
 </script>

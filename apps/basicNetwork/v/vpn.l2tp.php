@@ -70,7 +70,7 @@ $(function() {
 
 
 $('#accordion').on('click', '.save_edit', function(){
-  var inputArr = $( ":input" ).serializeArray()
+  var inputArr = $("#accordion :input" ).serializeArray();
   $('#accordion').html('');
 
   //every 4th value starts a new set

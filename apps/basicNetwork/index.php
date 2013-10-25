@@ -49,6 +49,7 @@ $.noty.defaults = {
     buttons: false // an array of buttons
 };
 
+
 //help function
  $(function() {
 

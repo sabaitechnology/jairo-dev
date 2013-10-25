@@ -64,7 +64,7 @@ $(function() {
 //when you click save 
 
 $('#accordion').on('click', '.save_edit', function(){
-  var inputArr = $( ":input" ).serializeArray()
+  var inputArr = $("#accordion :input" ).serializeArray();
   $('#accordion').html('');
   console.log(inputArr)
 
