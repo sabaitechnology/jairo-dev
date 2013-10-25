@@ -574,6 +574,15 @@ float:right;
 height: 1.75em;
 }
 
+h4 {
+    margin: .5em 0;
+}
+
+#goToHelp {
+text-decoration: none;
+color: blue;
+}
+
 .toggler {
 float:right;
 width: 0px;

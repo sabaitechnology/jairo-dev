@@ -54,10 +54,10 @@ $.noty.defaults = {
 
   // run the currently selected effect
   function runEffect() {
-    var selectedEffect = "blind";
-    var options = {};
+    var selectedEffect = "slide";
+    var options = {direction:'right'};
     // run the effect
-    $( "#helpButton" ).hide('slow');
+    $( "#helpButton" ).hide();
     $( "#effect" ).toggle( selectedEffect, options, 500 );
   };
 
@@ -211,6 +211,10 @@ $title= $titleInfo[$section];
     <a id='about' href='?panel=about' class='superMenuLink button'>About</a>
    </li>
 
+   <li>
+    <a id='help' href='?panel=help' class='superMenuLink button'>Help</a>
+   </li>
+
 
   </ul>
  </div>
@@ -220,7 +224,7 @@ $title= $titleInfo[$section];
     <form id='fe'>
 
 
-    <?php echo "<img id='helpButton' src='img/help.png'><div class='toggler'><div id='effect' class='ui-widget-content ui-corner-al'><a href='#' id='closeHelp' class='xsmallText fright'>Close</a><h3 class='ui-widget-header i-corner-all'>".$title."</h3><p>".$help."</p></div></div>"; include($page); ?>
+    <?php echo "<img id='helpButton' src='img/help.png'><div class='toggler'><div id='effect' class='ui-widget-content ui-corner-al'><a href='#' id='closeHelp' class='xsmallText fright'>Close</a><h4>".$help."</h4>Display Inline Help <input name='inlineHelp' id='inlineHelp' type='checkbox' checked='checked'><br><br><span style='text-decoration: underline'>Links:</span><br><a id='goToHelp' href='http://localjen/apps/basicNetwork/?panel=help&section=wan#".$section."'>Manual Page</a><br><a id='goToHelp' href='#'>Wiki Page</a></div></div>"; include($page); ?>
 
     </form>
 
