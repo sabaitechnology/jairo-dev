@@ -19,7 +19,7 @@
 		<table id='list' class='listTable clickable'></table>
 		
 		<input type='button' value='Add' id='add'>
-		<input type='button' value='Save'>
+		<input type='button' value='Save' id='save'>
 		<input type='button' value='Cancel' onclick='cancelMAC();'>
 
 	</div>
