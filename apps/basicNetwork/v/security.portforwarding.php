@@ -120,6 +120,13 @@ $('#add').click( function (e) {
   );
 });
 
+function saveGateway(){
+
+  noty({text: 'Saved'});
+  
+};
+
+
 
 function toggleExplain(){
 

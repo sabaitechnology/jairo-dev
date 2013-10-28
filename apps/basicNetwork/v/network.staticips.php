@@ -10,8 +10,8 @@
 	<div class='controlBoxContent'>
 		<table id='list' class='listTable'></table>
 		<input type='button' value='Add' id='add'>
-		<input type='button' value='Save' id='save'>
-		<input type='button' value='Cancel' id='cancel'>
+      <input type='button' value='Save' onclick='saveStatic();'>
+      <input type='button' value='Cancel' onclick='cancelStatic();'>
 	</div>
 </div>
 
@@ -55,10 +55,12 @@ $('#add').click( function (e) {
 	);
 });
 
+function saveStatic(){
 
-$('#save').click( function() {
-	noty({text: 'Saved'});
-});
+  noty({text: 'Saved'});
+  
+};
+
 
 
 </script>

@@ -113,8 +113,6 @@ function addNew() {
       $('#accordion').accord("refresh").accord("newItem").accord({ active: -1, static: false}); 
 }
 
-
-
 //wizardry
 function showWizard() {
 	$('.noshow').show();
