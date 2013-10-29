@@ -96,13 +96,12 @@ $('#accordion').on('click', '.save_edit', function(){
 
   })
 
-
 $('#accordion').on('click', '.delete', function(){
   myid=$(this).parent().attr("class").match(/\d+/)
-  console.log('clicked delete' +myid)
   $('.' + myid).remove();
   $('#accordion').accord("refresh").accord({static: false});
 })
+
 
 
 //Add functions

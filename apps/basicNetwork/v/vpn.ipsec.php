@@ -64,6 +64,8 @@ $(function() {
 //when you click save 
 
 $('#accordion').on('click', '.save_edit', function(){
+  //get active record
+  n = $("#accordion h3").index($("#accordion h3.ui-state-active"));
   var inputArr = $("#accordion :input" ).serializeArray();
   $('#accordion').html('');
   console.log(inputArr)
@@ -82,17 +84,17 @@ $('#accordion').on('click', '.save_edit', function(){
   }
 
   noty({text: 'Saved'});
-  $('#accordion').accord("refresh").accord({static: false, active: -1}); 
+  $('#accordion').accord("refresh").accord({active: n, static: false}); 
 
 })
 
 
 $('#accordion').on('click', '.delete', function(){
   myid=$(this).parent().attr("class").match(/\d+/)
-  console.log('clicked delete' +myid)
   $('.' + myid).remove();
   $('#accordion').accord("refresh").accord({static: false});
 })
+
 
 
 //Add functions

@@ -95,6 +95,7 @@ $('#accordion').on('click', '.delete', function(){
   $('#accordion').accord("refresh").accord({static: false});
 })
 
+
 function addNew() {
   
   var id = Math.floor(Math.random() * 10000);
