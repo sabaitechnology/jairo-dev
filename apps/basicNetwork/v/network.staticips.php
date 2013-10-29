@@ -1,17 +1,20 @@
 <div class='pageTitle'>Network: Static IPs</div>
 
 <!--
+ TODO: 
  DHCP Leases
  ARP List
  Static Addresses?
+ Determine Cancel/Save functionality
+ Use packet size
 -->
 
 <div class='controlBox'><span class='controlBoxTitle'>Static Devices</span>
 	<div class='controlBoxContent'>
 		<table id='list' class='listTable'></table>
-			<input type='button' value='Add' id='add'>
-      <input type='button' value='Save' onclick='saveStatic();'>
-      <input type='button' value='Cancel' onclick='cancelStatic();'>
+		<input type='button' value='Add' id='add'>
+    <input type='button' value='Save' onclick='saveStatic();'>
+    <input type='button' value='Cancel' onclick='cancelStatic();'>
 	</div>
 </div>
 

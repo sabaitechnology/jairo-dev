@@ -19,16 +19,15 @@
         <td><input id='maxWait' name='maxWait' class='shortinput' /><span class='smallText'></span></td>
       </tr>
     </tbody></table>
+    
+    <br>
+    
+    <div id='results' class='controlBoxContent noshow'>
+      <table id='resultTable' class='listTable'></table>
+    </div>
+
   </div> <!--end control box content -->
 </div> <!--end control box  -->
-
-
-<!-- results go here: -->
-<div class='controlBox'><span class='controlBoxTitle'>Results</span>
-  <div id='results' class='controlBoxContent'>
-    <table id='resultTable' class='listTable'></table>
-  </div>
-</div>
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=trace'></script>
@@ -37,7 +36,7 @@
 <script type='text/ecmascript'>
 
   function getResults(){
-
+    $('#results').show();
     $('#resultTable').dataTable({
       "bDestroy":true,
       'bAutoWidth': false,

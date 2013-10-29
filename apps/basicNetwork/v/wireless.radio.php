@@ -1,7 +1,7 @@
 <form id='fe'>
 
 <div class='pageTitle'>Wireless: Radio</div>
-<!--	TODO: -->
+<!--	TODO: align td widths-->
 
 <div class='controlBox'><span class='controlBoxTitle'>WL0</span>
   <div class='controlBoxContent'>

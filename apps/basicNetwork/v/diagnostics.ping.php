@@ -19,16 +19,14 @@
         <td><input id='pingSize' name='pingSize' class='shortinput' /><span class='smallText'> (bytes)</span></td>
       </tr>
     </tbody></table>
+    <br>
+    <div id='results' class='controlBoxContent noshow'>
+      <div id='statistics' class='smallText'></div>
+      <table id='resultTable' class='listTable'></table>
+    </div>
   </div> <!--end control box content -->
 </div> <!--end control box  -->
 
-
-<div class='controlBox'><span class='controlBoxTitle'>Results</span>
-  <div id='results' class='controlBoxContent'>
-    <div id='statistics' class='smallText'></div>
-    <table id='resultTable' class='listTable'></table>
-  </div>
-</div>
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=ping'></script>
@@ -37,7 +35,7 @@
 <script type='text/ecmascript'>
 
 function getResults(){
-
+  $('#results').show();
   $('#statistics').html('');
     $('#resultTable').dataTable({
       "bDestroy":true,
@@ -45,6 +43,7 @@ function getResults(){
       'bInfo': false,
       'bFilter': false,
       "sAjaxDataProp": "pingResults",
+      
       "fnServerParams": function(aoData){ 
         $.merge(aoData,$('#fe').serializeArray()); 
       },

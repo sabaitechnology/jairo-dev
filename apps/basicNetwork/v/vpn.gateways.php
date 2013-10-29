@@ -1,5 +1,7 @@
 <div class='pageTitle'>VPN: Gateways</div>
 
+<!-- TODO: SHow dropdown always-->
+
 <div class='controlBox'><span class='controlBoxTitle'>Gateway Setup</span>
   <div class='controlBoxContent'>
     <table class='controlTable'><tbody>

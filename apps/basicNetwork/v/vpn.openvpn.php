@@ -86,7 +86,7 @@
   $('#accordion').on('click', '.delete', function(){
     myid=$(this).parent().attr("class").match(/\d+/)
     $('.' + myid).remove();
-    $('#accordion').accord("refresh").accord({static: false});
+    $('#accordion').accord("refresh").accord({active:false, static: false});
   })
 
 
