@@ -1,104 +1,186 @@
-<!-- style type='text/css'>
-.tablemenu { width: 100%; border: 1px transparent double !important; border-collapse: collapse; }
-.tablemenu td { border: 1px black solid; text-align: center; }
-#log { width:200px; margin-left:5px; background:#FFF; }
-#lines { background:#FFF; }
-#findText { position: relative; top: -1px; }
-#response { width: 100%; height: 480px; margin-top:2px; box-shadow: .3px .3px .3px .3px inset; background:#FFF; }
-.pointy { cursor: pointer; }
-</style -->
+<style type='text/css'>
 
-<!-- Hidden tooltip - click ? to show -->
-<!--
-	Note: commented out for now; can be added back later - David T.
--->
-<!-- div class='inline'>
- <div id='tooltip'>
-    <img class="callout" src="img/callout.gif" />
-  	<a href='#' class='fright xsmallText' onclick='hide();'>Close</a>
-    <p> 
-    <b>Display Inline Help: <input id='inlineHelp' type='checkbox' onClick='displayInline();'></input></b> 
-    <br> 
-    <b>Manual Page:</b> <a href="?panel=lorem" target="_blank">Logs</a>
-    <br>
-    <b>Links:</b> 
-    <a href="http://www.wikipedia.com" target="_blank">Wiki Page</a>
- </div>
-</div -->
-<!-- a href="#" id="question" onclick='show();'>
-    <img id='help' src="img/help.png" />
-</a -->
+.shortInput { width: 2.5em; }
+.longInput { width: 50%; }
+#act { margin-top: 5px; }
+
+#logContents { width: 99%; height: 40em; }
+
+
+#listContainer {
+ position: relative;
+ display: inline-block;
+ border: 1px solid transparent;
+ width: 25%;
+ margin: .25em .5em 0 0;
+}
+
+#currentLog {
+ display: inline-block;
+ padding: .1em .5em;
+/* cursor: pointer;*/
+}
+
+#currentLog, .dirlist > li, .dir { cursor: pointer; }
+
+#listRoot {
+ width: 100%;
+ display: none;
+ background: white;
+ border: 1px solid black;
+ float: left;
+/* margin: 0 0 0 -1px;*/
+ margin: 0;
+/* cursor: pointer;*/
+ text-indent: 0;
+ padding: .1em 0;
+ list-style-type: none;
+ z-index: 2;
+ position: absolute;
+}
+.dirlist > li { padding: 0 .5em; }
+.dirlist > li:hover { background-color: yellow; }
+.dirlist > li.sublist:hover { background-color: silver; }
+
+.dir {
+	display: inline-block;
+	width: 100%;
+}
+
+.directory {
+ display: none;
+ text-indent: 0;
+ margin: 0;
+ padding-left: 0;
+ list-style-type: none;
+}
+.directory > li {
+ padding-left: 1em;
+}
+
+.closed:before { content: "+ "; }
+.open:before { content: "- "; }
+
+#goButton { float: right; }
+
+</style>
 
 <div class='pageTitle'>Diagnostics: Logs</div>
 
 <div class='controlBox'>
 	<span class='controlBoxTitle'>Logs</span>
 	<div class='controlBoxContent'>
-		<div id='error'></div>
-		<input type='hidden' name='act' id='act' value='all'>
-		<table class='tablemenu'>
-		<tbody>
-			<tr>
-				<td>
-					<select id='log' name='log'><?php include("php/bin.diagnostics.logs.php"); ?></select> |
-				</td>
-				<td id='linesDiv'>  
-					<a onclick="checkNum()" class="pointy" href="#">
-					 	View Last 
-						<input onclick='return false;' class='shortinput' type="text" name='lines' id='lines' size='5' value='25' />
-						Lines 
-					</a>
-				<td> | <a onclick="getLog('all'); ignoreError()" class="pointy" href='#'>View All</a> | </td>
-				<td><input type="text" id='find' name='find' class='longinput'><input type="button" value="Find" onclick="getLog('find');" id='finder'></td>
-			</tr>
-		</tbody>
-		</table>
+		<input id="log" name="log" type="hidden">
+<!-- ?php include("php/bin.diagnostics.logs.php"); ? -->
 
-			
-		<textarea id='logContents' style="width: 90%; height: 30em" readonly></textarea>
-	</div> <!-- end control box content -->
+<div id="listContainer">
+
+<span id="currentLog" onclick='showLogSelect();'></span>
+
+<ul id="listRoot" class='dirlist'>
+	<li>alternatives.log</li>
+	<li>alternatives.log.1</li>
+	<li class='sublist'>
+	<span class='dir closed' id='title-var-log-apache2' rel='var-log-apache2'>/apache2/</span><ul class='dirlist directory' id='var-log-apache2'>
+		<li>access.log</li>
+		<li>error.log</li>
+		<li>error.log.1</li>
+	</ul>
+	</li>
+	<li>apport.log</li>
+	<li>auth.log</li>
+	<li>dmesg</li>
+	<li>dmesg.0</li>
+	<li>dpkg.log</li>
+	<li>jockey.log</li>
+	<li>kern.log</li>
+	<li>syslog</li>
+</ul>
+
+</div>
+	 	<select id='act' name='act' onchange="toggleDetail();">
+	 		<option value='all'>View all</option>
+	 		<option value='head'>View first</option>
+	 		<option value='tail'>View last</option>
+	 		<option value='grep' selected>Search for</option>
+	 		<option value='download'>Download file</option>
+	 	</select>
+		<input type="text" name='detail' id='detail'><span id='detailSuffix'></span>
+		<input id='goButton' type="button" value="Go" onclick="goLog();">
+
+		<textarea id='logContents' readonly></textarea>
+	</div>
 </div>
 <div>
-	<input type='button' id='log' name='log' value='Download Log File' onclick="getLog('all');">
+
 </div>
 
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/javascript'>
 
-function getLog(n){
-	$("#act").val(n);
-
-	$.ajax("php/bin.diagnostics.logs.php", {
-		success: function(o){
-			$('#logContents').html(o);
-		},
-		dataType: "text",
-		data: $("#fe").serialize()
-	})
-}
-
-function catchEnter(event){ if(event.keyCode==13) getLog('find'); }
-
-$(function(){ // hidden = $('#hideme'); hide = $('#hiddentext');
- $('#find').on("keydown", catchEnter);
-})
-
-function show(){
-	$('#tooltip').show();
-}
-function hide(){
-	$('#tooltip').hide();
-}
-
-function displayInline(){
-	if($('#inlineHelp').is(':checked')){
-		$('.inlineHelp').show();
-	}else {
-		$('.inlineHelp').hide();
+function goLog(n){
+	if($("#act").val() == "download"){
+		alert("DOWNLOAD FILE");
+	}else{
+		$.ajax("php/bin.diagnostics.logs.php", {
+			success: function(o){ $('#logContents').html(o); },
+			dataType: "text",
+			data: $("#fe").serialize()
+		});
 	}
-
 }
 
+function catchEnter(event){ if(event.keyCode==13) goLog(); }
+function toggleDetail(){
+	$('#detailSuffix').html('');
+	switch($('#act').val()){
+		case 'all':
+		case 'download':
+			$('#detail').hide();
+		break;
+		case 'head':
+		case 'tail':
+			$('#detail').show().removeClass('longInput').addClass('shortInput').val('25');
+			$('#detailSuffix').html(' lines');
+		break;
+		case 'grep':
+			$('#detail').show().removeClass('shortInput').addClass('longInput').val('');
+			break;
+	}
+}
+
+function toggleContentList(event){
+	$(this).toggleClass("closed open")
+	$('#'+ $(this).attr('rel') ).slideToggle();
+}
+
+function setLogValue(logName){
+	$('#log').val(logName);
+	$('#currentLog').html(logName);
+}
+
+function getLogSelected(e){ var ep = $(e).parent(); var epi = $(ep).attr('id');
+	return ( ( $(ep).attr('id') == 'listRoot' ) ? '' : ( getLogSelected( $(ep).parent() ) + $( '#title-' + $(ep).attr('id') ).html() ) ) + ($(e).hasClass('sublist') ? '' : $(e).html());
+}
+
+function showLogSelect(){ $('#listRoot').slideDown('fast'); }
+
+function hideLogSelect(){
+	setLogValue( getLogSelected( this ) );
+	$('#listRoot').slideUp('fast');
+}
+
+$(function(){
+ $('#detail').on("keydown", catchEnter);
+ $('.dir').on("click", toggleContentList);
+ $('#listRoot li').not('.sublist').on("click", hideLogSelect);
+ setLogValue('syslog');
+ toggleDetail();
+});
+
+/*
+function show(){ $('#tooltip').show(); }
+function hide(){ $('#tooltip').hide(); }
+function displayInline(){ if($('#inlineHelp').is(':checked')){ $('.inlineHelp').show(); }else { $('.inlineHelp').hide(); } }
 function checkNum(){
 	console.log('blurred');
 	var contents = $('#lines').val();
@@ -119,6 +201,9 @@ function ignoreError(){
 		$('#error').html('');
 		$('#linesDiv').removeClass('errorInput')
 }
+*/
+
+
 
 //Uncomment for spinner - functional but does not match drop down
 // $('#lines').spinner({ min: 0, max: 1000 }).spinner('value',25);
