@@ -3,16 +3,14 @@
 <div class='controlBox'><span class='controlBoxTitle'>Filter Settings</span>
 	<div class='controlBoxContent'>
 		
-		<table class='controlTable'>
-    <tbody>
+		<table class='controlTable'><tbody>
      <tr><td>Set Policy: </td><td>
       <select id='default_policy' name='default_policy' class='radioSwitchElement'>
        <option value='Allow'>Allow</option>
        <option value='Deny'>Deny</option>
       </select>
      </td></tr>
-    </tbody>
-    </table>
+    </tbody></table>
     
     <br>
 
@@ -30,51 +28,50 @@
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
-$('#save').click( function() {
-	noty({text: 'Saved'});
-});
+	$('#save').click( function() {
+		noty({text: 'Saved'});
+	});
 
-$('#default_policy').radioswitch({
- value: macfilter.default
-});
+	$('#default_policy').radioswitch({
+	 value: macfilter.default
+	});
 
-policy = $('#default_policy').val();
+	policy = $('#default_policy').val();
 
-var lt =  $('#list').dataTable({
-	'bPaginate': false,
-	'bInfo': false,
-	'bFilter': false,
-	'sAjaxDataProp': 'macfilter',
-	'sAjaxSource': 'php/bin.wireless.macfilter.php',
-	'aoColumns': [
-		{ 'sTitle': 'MAC Address',	'mData':'mac',					'sClass': 'plainText'		},
-		{ 'sTitle': 'Description',	'mData':'description',	'sClass': 'plainText'		}
-		// { 'sTitle': 'Policy',				'mData':'policy',				'sClass': 'policy'}
-	],
-	'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
-		$(nRow).find('.plainText').editable(
-			function(value, settings){ return value; },
+	var lt =  $('#list').dataTable({
+		'bPaginate': false,
+		'bInfo': false,
+		'bFilter': false,
+		'sAjaxDataProp': 'macfilter',
+		'sAjaxSource': 'php/bin.wireless.macfilter.php',
+		'aoColumns': [
+			{ 'sTitle': 'MAC Address',	'mData':'mac',					'sClass': 'plainText'		},
+			{ 'sTitle': 'Description',	'mData':'description',	'sClass': 'plainText'		}
+			// { 'sTitle': 'Policy',				'mData':'policy',				'sClass': 'policy'}
+		],
+
+		'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
+			$(nRow).find('.plainText').editable(
+				function(value, settings){ return value; },
+				{
+					'onblur':'submit',
+					'event': 'dblclick',
+					'placeholder' : '(Click to edit)',
+				}
+			);
+		}
+	});
+
+	$('#add').click( function (e) {
+		e.preventDefault();
+		lt.fnAddData(
 			{
-				'onblur':'submit',
-				'event': 'dblclick',
-				'placeholder' : '(Click to edit)',
+				"mac": null, 
+				"description": null 
+				// "policy": policy
 			}
 		);
-	}
-});
-
-$('#add').click( function (e) {
-	e.preventDefault();
-	lt.fnAddData(
-		{
-			"mac": null, 
-			"description": null 
-			// "policy": policy
-		}
-	);
-});
-
-
+	});
 
 
 </script>

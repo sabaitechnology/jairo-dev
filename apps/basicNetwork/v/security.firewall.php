@@ -45,15 +45,11 @@
 					   <div class="slideToggleContent slideToggleRight button"><span>Off</span></div>
 					  </div>
 					 </label>
-					
 				</td>
 			</tr>
-
-
 		</table>
 	</div>
 </div>
-
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=firewall'></script>
@@ -61,11 +57,9 @@
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
-
- $('#respondToggle').prop({'checked': firewall.icmp});
- $('#multicastToggle').prop({'checked': firewall.multicast});
- $('#synToggle').prop({'checked': firewall.cookies});
- $('#wanToggle').prop({'checked':firewall.wan});
-
+	$('#respondToggle').prop({'checked': firewall.icmp});
+	$('#multicastToggle').prop({'checked': firewall.multicast});
+	$('#synToggle').prop({'checked': firewall.cookies});
+	$('#wanToggle').prop({'checked':firewall.wan});
 
 </script>
