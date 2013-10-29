@@ -2,7 +2,7 @@
 
 <!-- TODO: -->
 
-<div class='controlBox'><span class='controlBoxTitle'>Test</span>
+<div class='controlBox'><span class='controlBoxTitle'>Ping</span>
   <div class='controlBoxContent'>
     <table class='controlTable'><tbody>
       <tr>
@@ -26,7 +26,6 @@
     </div>
   </div> <!--end control box content -->
 </div> <!--end control box  -->
-
 
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=ping'></script>
