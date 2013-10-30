@@ -1,58 +1,3 @@
-<?php
- if (!headers_sent()){ header('Content-type: text/ecmascript'); }
-/* BEGIN jai.php */
-//class jaiPage {
-//	private $moi = null;
-	function jaiPage($json){
-		$moi = json_decode($json);
-//		echo json_encode($moi, JSON_PRETTY_PRINT) ."\n";
-
-	}
-//}
-/* END jai.php */
-/* BEGIN jai WAN spec */
-/*
-$jaiWanSpec = <<<JAIWANSPEC
-{
-	"wan": {
-		"if": { "type": "select", "values": [ "eth0", "eth1", "eth2", "eth3", "eth4" ] },
-		"type": { "type": "select", "values": {
-			"dhcp": null,
-			"static": { "isSet": [ "ip", "mask", "gateway" ] }
-		} },
-		"ip": { "type": "ipAddress" },
-		"mask": { "type": "ipMask" },
-		"gateway": { "type": "ipAddress" },
-		"mtu": { "type": "integerRange", "range": [ 0, 1500 ], "default": 1500 },
-		"mac": { "type": "macAddress" }
-	}
-}
-JAIWANSPEC;
-*/
-/* END jai WAN spec */
-//new jaiPage(<<<JSONIN
-jaiPage(<<<JSONIN
-{
-	"title": "Network: WAN",
-	"sections": [
-		{
-			"heading": "WAN",
-			"rows": [
-				{
-					"value": "wan.type",
-					"label": "WAN Type",
-					"type": "radioSwitchElement"
-				}
-			]
-		}
-	]
-}
-JSONIN
-);
-
-//return;
-
-?>
 <div class='pageTitle'>Network: WAN</div>
 <!--	TODO:
 WAN PPPoE { username, password, options, mode/interval } and IPv6
@@ -114,17 +59,18 @@ DDNS: { ip, interval, services }
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
+$('#wan_mtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
+$('#wan_mac').macspinner().macspinner('value',wan.mac);
+$('#wan_ip').ipspinner().ipspinner('value',wan.ip);
+$('#wan_mask').maskspinner().maskspinner('value',wan.mask);
+$('#wan_gateway').ipspinner().ipspinner('value',wan.gateway);
 
-$(function(){
-
-	$('#wan_mac').macspinner().macspinner('value',wan.mac);
-	$('#wan_mtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
-	$('#wan_gateway').ipspinner().ipspinner('value',wan.gateway);
-	$('#wan_mask').maskspinner().maskspinner('value',wan.mask);
-	$('#wan_ip').ipspinner().ipspinner('value',wan.ip);
-	$('#wan_type').radioswitch({ value: wan.type, hasChildren: true });
-
-	$('#dns_servers').editablelist({ list: dns.servers })
-
+$('#wan_type').radioswitch({
+ value: wan.type,
+ change: function(event,ui){ $('.wan_type').hide(); $('.wan_type-'+ ui.value ).show(); }
 });
+
+$('#dns_servers').editablelist({ list: dns.servers })
+
+//$(function(){});
 </script>
