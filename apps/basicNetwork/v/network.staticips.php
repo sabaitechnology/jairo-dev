@@ -59,7 +59,7 @@
 	});
 
 	function saveStatic(){
-	  noty({text: 'Saved'});
+	  toServer('Save this.');
 	};
 
 </script>

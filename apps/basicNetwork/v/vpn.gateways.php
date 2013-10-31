@@ -80,7 +80,7 @@
   });
 
   function saveGateway(){
-    noty({text: 'Saved'}); 
+    toServer('Save this.'); 
   };
 
   $('#default_gateway').radioswitch({

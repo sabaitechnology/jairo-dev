@@ -29,7 +29,7 @@
 <script type='text/ecmascript'>
 
 	$('#save').click( function() {
-		noty({text: 'Saved'});
+		toServer('Save this.');
 	});
 
 	$('#default_policy').radioswitch({

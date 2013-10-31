@@ -114,7 +114,7 @@
   });
 
   function saveGateway(){
-    noty({text: 'Saved'});
+    toServer('Save this.');
   };
 
   function toggleExplain(){
