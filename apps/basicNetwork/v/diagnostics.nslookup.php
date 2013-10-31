@@ -5,8 +5,8 @@ TODO:
 
 <div class='controlBox'><span class='controlBoxTitle'>NS Lookup</span>
 	<div class='controlBoxContent'>
-		<table class='controlTable smallwidth'>
-			<tbody>
+		
+		<table class='controlTable smallwidth'><tbody>
 			 <tr>
 			 	<td>Domain</td>
 			 	<td>
@@ -14,41 +14,40 @@ TODO:
 			 		<input type='button' value='Lookup' id='Lookup' onclick='lookup()'>
 			 	</td>
 			 </tr>
-			</tbody>
-		</table><br>
-		<textarea id='logstxtarea' style="width: 90%; height: 30em" readonly
->			
-	</textarea>
+		</tbody></table>
+		
+		<br>
+		<textarea id='dnstxtarea' style="width: 90%; height: 30em" readonly
+></textarea>
+	
+	</div> <!-- End Control box content -->
+</div> <!-- end control box -->
 
-</div>
 
 <script type='text/ecmascript' src='php/bin.etc.php?q=nslookup'></script>
 <script type='text/ecmascript'>
 
-$('#ns_domain').val(nslookup.domain);
+	$('#ns_domain').val(nslookup.domain);
 
-function lookup(){
-
-	$.ajax("php/bin.diagnostics.nslookup.php", {
+	function lookup(){
+		$.ajax("php/bin.diagnostics.nslookup.php", {
 			success: function(o){
-				$('#logstxtarea').html('');
-				$('#logstxtarea').html(o);
+				$('#dnstxtarea').html('');
+				$('#dnstxtarea').html(o);
 			},
 			dataType: "text",
 			data: $("#fe").serialize()
 		})
+	};
 
-};
-
-$(document).ready(function() {
-
-	$('#ns_domain').keypress(function(event) {
-		if (event.keyCode == 13) {
-		event.preventDefault();
-		lookup();
-		}
+	// lookup input if user presses 'enter'
+	$(document).ready(function() {
+		$('#ns_domain').keypress(function(event) {
+			if (event.keyCode == 13) {
+			event.preventDefault();
+			lookup();
+			}
+		});
 	});
-
-});
 
 </script>

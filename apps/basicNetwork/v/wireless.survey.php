@@ -1,4 +1,5 @@
 <div class='pageTitle'>Wireless: Survey</div>
+<!-- TODO: bigger space between search and table -->
 
 <div class='controlBox'>
   <span class='controlBoxTitle'>Wireless Site Survey</span>

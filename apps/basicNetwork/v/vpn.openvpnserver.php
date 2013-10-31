@@ -1,6 +1,4 @@
-<!-- 
-persistent data
--->
+<!-- TODO: -->
 
 <link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
@@ -8,7 +6,8 @@ persistent data
 <div class='pageTitle'>VPN: OpenVPN Server</div>
 
 <br>
-<img src="img/coding.gif"><img style="height:100px;" src="http://www.iuconsult.com/wp-content/uploads/2013/07/under-construction-logo.gif"><br><br>
+<img src="img/coding.gif">
+<img style="height:100px;" src="http://www.iuconsult.com/wp-content/uploads/2013/07/under-construction-logo.gif"><br><br>
 
 <div id="accordion">
 	<h3>Tunnel Options</h3>
@@ -31,15 +30,14 @@ persistent data
 
 <script type='text/ecmascript'>
 
-$( document ).ready(function() {
-	
-	$( "#accordion" ).accordion({ heightStyle: "content", active: "false",
-          collapsible: "true" 
-  });
-});
-
+	$( document ).ready(function() {
+		
+		$( "#accordion" ).accordion({ 
+			heightStyle: "content", 
+			active: "false",
+	    collapsible: "true" 
+	  });
+	});
    
-
-
 </script>
 
