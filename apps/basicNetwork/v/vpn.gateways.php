@@ -6,7 +6,7 @@
   <div class='controlBoxContent'>
     <table class='controlTable'><tbody>
      <tr><td>Default Gateway: </td><td>
-      <select id='default_gateway' name='default_gateway' class='radioSwitchElement'>
+      <select id='defaultGateway' name='defaultGateway' class='radioSwitchElement'>
        <option value='none'>None</option>
        <option value='local'>Local</option>
        <option value='vpn'>VPN</option>
@@ -56,12 +56,12 @@
     'bInfo': false,
     'bFilter': false,
     'sAjaxDataProp': 'gateway',
-    'sAjaxSource': 'php/bin.vpn.gateway.php',
+    'aaData': gateways.rules,
     'aoColumns': [
     { 'sTitle': 'MAC',      'mData':'mac' },
     { 'sTitle': 'Address',  'mData':'ip' },
     { 'sTitle': 'Name',     'mData':'hostname' },
-    { 'sTitle': '*Gateway', 'mData': 'dlva', 'sClass': 'gatewayDrop'}],
+    { 'sTitle': '*Gateway', 'mData':'gateway', 'sClass': 'gatewayDrop'}],
     
     'fnInitComplete': function(){
       $('.gatewayDrop').editable(function(value, settings){
@@ -83,9 +83,7 @@
     toServer('Save this.'); 
   };
 
-  $('#default_gateway').radioswitch({
-    value: gateways.default
-  });
+  $('#defaultGateway').radioswitch({ value: gateways.default });
 
   function toggleExplain(){
     if( $("#toggleDesc").text()=="(Show Description)" ) {

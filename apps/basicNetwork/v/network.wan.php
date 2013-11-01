@@ -1,5 +1,10 @@
 <?php
  if (!headers_sent()){ header('Content-type: text/ecmascript'); }
+
+
+
+return;
+
 /* BEGIN jai.php */
 //class jaiPage {
 //	private $moi = null;
