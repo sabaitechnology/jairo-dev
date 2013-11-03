@@ -1,7 +1,6 @@
 <?php
 
  header('Content-type: text/ecmascript');
- include(__DIR__ .'/bin.sys.php');
 
 /*
   Allow and deny lists are stored as flat files of MACs, one per line.

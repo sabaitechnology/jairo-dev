@@ -148,7 +148,7 @@
 </div> <!-- end accordion -->
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=conntrack'></script>
+<script type='text/ecmascript' src='php/etc.php?q=conntrack'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 

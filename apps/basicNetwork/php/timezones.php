@@ -1,6 +1,5 @@
 <?php
  header('Content-type: text/ecmascript');
-// include(__DIR__ .'/bin.sys.php');
 
  function getZones($d){ $a = array();
   foreach(scandir($d) as $i){ if( $i[0]=='.' ) continue; $a[] = ( is_dir($d.$i) ? array( $i => getZones($d.$i.'/') ) : $i ); }

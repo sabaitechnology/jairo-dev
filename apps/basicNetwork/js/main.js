@@ -10,10 +10,6 @@ function what(obj,ownonly,pre){
  return txt.join('\n');
 }
 
-function A(type){ return document.createElement(type); }
-function T(text){ return document.createTextNode(text); }
-function F(){ return document.createDocumentFragment(); }
-
 function showSubMenu(){ $('#'+ $(this).attr('id') +'SubMenu').slideToggle(500); }
 function shortSwitchSelect(){
  $(this).siblings().removeClass('buttonSelected');
@@ -21,13 +17,13 @@ function shortSwitchSelect(){
  $('#'+$(this).parent().attr('for') ).val( $(this).attr('value') );
 }
 
-$(function(){ if(panel==''){ panel = 'network'; }; if(section==''){ section = 'wan'; }
- $('#mainTitle').append(' - '+$('.pageTitle').html());
- $('.subMenu').hide(); $('.superMenuLink').click(showSubMenu); $('#'+ panel +'SubMenu' ).show();
- $('#'+ panel +'_'+ section ).addClass('buttonSelected');
-});
-
 function sub(){
  $('#demo').html( ($('#fe').serialize()).replace(/&/g,'&\n') );
 }
 
+$(function(){
+ if(panel==''){ panel = 'network'; section = 'wan'; };
+ $('#mainTitle').append(' - '+$('.pageTitle').html());
+ $('.subMenu').hide(); $('.superMenuLink').click(showSubMenu); $('#'+ panel +'SubMenu' ).show();
+ $('#'+ panel +((section)?('_'+ section):'') ).addClass('buttonSelected');
+});

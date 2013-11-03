@@ -61,7 +61,7 @@ var lt =  $('#list').dataTable({
   'bPaginate': false,
   'bInfo': false,
   'sAjaxDataProp': 'survey',
-  'sAjaxSource': 'php/bin.wireless.survey.php',
+  'sAjaxSource': 'php/wireless.survey.php',
   'aoColumns': [
    { 'sTitle': 'Last Seen',		'mData':'Last Seen' },
    { 'sTitle': 'SSID',	'mData':'SSID' },

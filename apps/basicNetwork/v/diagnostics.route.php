@@ -28,7 +28,7 @@ function route(){
     'bFilter': false,
     'bSort': false,
     'sAjaxDataProp': 'routeResults',
-    'sAjaxSource': 'php/bin.diagnostics.route.php',
+    'sAjaxSource': 'php/diagnostics.route.php',
     'aoColumns': [
      { 'sTitle': 'Destination',   'mData':'destination' },
      { 'sTitle': 'Gateway ',  'mData':'gateway' },

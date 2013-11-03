@@ -57,7 +57,7 @@ ADD VALIDATION
 </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=lan,dhcp'></script>
+<script type='text/ecmascript' src='php/etc.php?q=lan,dhcp'></script>
 <script type='text/ecmascript'>
   var network = {}
 

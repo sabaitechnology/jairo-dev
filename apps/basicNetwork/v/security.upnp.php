@@ -91,7 +91,7 @@
 </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=upnp'></script>
+<script type='text/ecmascript' src='php/etc.php?q=upnp'></script>
 <script type='text/javascript'>
 
 	$('#internalLB').spinner({ min: 1024, max: 65534 }).spinner('value',upnp.internalLB);

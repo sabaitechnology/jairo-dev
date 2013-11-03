@@ -1,6 +1,5 @@
 <?php
  header('Content-type: text/ecmascript');
- include(__DIR__ .'/bin.sys.php');
 
  $wanType = $_REQUEST['wanType'];
  switch($wanType){

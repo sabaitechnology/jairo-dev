@@ -1,7 +1,6 @@
 <?php
 
  header('Content-type: text/ecmascript');
- include(__DIR__ .'/bin.sys.php');
 
 $fake_info = array(
  'Last Seen'=>"/^Last Seen (.*)/",

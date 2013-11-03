@@ -28,7 +28,7 @@
 		'bInfo': false,
 		'bFilter': false,
 		'sAjaxDataProp': 'staticips',
-		'sAjaxSource': 'php/bin.network.staticips.php',
+		'sAjaxSource': 'php/network.staticips.php',
 		'aoColumns': [
 			{ 'sTitle': 'MAC',      'mData':'mac',          'sClass': 'plainText'   },
 			{ 'sTitle': 'Address',  'mData':'ip',  					'sClass': 'plainText'   },

@@ -24,7 +24,7 @@
 </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=dmz'></script>
+<script type='text/ecmascript' src='php/etc.php?q=dmz'></script>
 <script type='text/ecmascript'>
 
 	$('#destination').ipspinner().ipspinner('value',dmz.destination).spinner({

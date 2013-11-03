@@ -71,7 +71,7 @@
 	<span class='controlBoxTitle'>Logs</span>
 	<div class='controlBoxContent'>
 		<input id="log" name="log" type="hidden">
-<!-- ?php include("php/bin.diagnostics.logs.php"); ? -->
+<!-- ?php include("php/diagnostics.logs.php"); ? -->
 
 <div id="listContainer">
 
@@ -121,7 +121,7 @@ function goLog(n){
 	if($("#act").val() == "download"){
 		alert("DOWNLOAD FILE");
 	}else{
-		$.ajax("php/bin.diagnostics.logs.php", {
+		$.ajax("php/diagnostics.logs.php", {
 			success: function(o){ $('#logContents').html(o); },
 			dataType: "text",
 			data: $("#fe").serialize()

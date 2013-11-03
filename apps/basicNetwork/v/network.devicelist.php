@@ -1,5 +1,5 @@
 <?php
-// include('../php/bin.sys.php');
+// include('../php/sys.php');
 ?>
 
 <div class='pageTitle'>Network: Device List</div>
@@ -29,7 +29,7 @@
 		'bInfo': false,
 		'bFilter': false,
 		"sAjaxDataProp": "devicelist",
-		"sAjaxSource": "php/bin.network.devicelist.php",
+		"sAjaxSource": "php/network.devicelist.php",
 		"aoColumns": [
 		 { "sTitle": "Type",		"mData":"src" },
 		 { "sTitle": "Address",	"mData":"ip" },

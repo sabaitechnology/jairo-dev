@@ -1,7 +1,6 @@
 <?php
 
  header('Content-type: text/ecmascript');
- include(__DIR__ .'/bin.sys.php');
 
 $dhcp_info = array(
  'start'=>"/^starts [\d]* (.*)/",

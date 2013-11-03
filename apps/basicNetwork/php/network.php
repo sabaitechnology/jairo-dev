@@ -1,8 +1,5 @@
 <?php
  header('Content-type: text/ecmascript');
- include(__DIR__ .'/bin.sys.php');
-
-
 
 function writeConfig(){
  $wanType = $_REQUEST['wanType'];

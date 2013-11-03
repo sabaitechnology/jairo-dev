@@ -75,99 +75,22 @@ $.noty.defaults = {
 	buttons: false // an array of buttons
 };
 
-
-//help function
- $(function() {
-
-	// run the currently selected effect
-	function runEffect() {
-	var selectedEffect = "slide";
-	var options = {direction:'right'};
-	// run the effect
-	$( "#helpButton" ).hide();
-	$( "#effect" ).toggle( selectedEffect, options, 500 );
-	};
-
-	// set effect from select menu value
-	$( "#helpButton" ).click(function() {
-	runEffect();
+function toggleHelpSection() {
+	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 500 );
 	return false;
-	});
+};
 
-	 $( "#closeHelp" ).click(function() {
-	runEffect();
-	$( "#helpButton").show('slow');
-	return false;
-	});
-
+$(function(){
+	$( "#helpButton" ).click(toggleHelpSection);
 });
 
 <?php
- $panel = array_key_exists('panel',$_REQUEST)?preg_replace('/[^a-z\d]/i', '', $_REQUEST['panel']):'network';
- $section = array_key_exists('section',$_REQUEST)?preg_replace('/[^a-z\d]/i', '', $_REQUEST['section']):'wan';
- $page = "v/$panel.$section.php";
- $page = file_exists($page)?$page:'v/lorem.php';
- $titleInfo = array (
-	'wan' => 'WAN Help',
-	'lan' => 'LAN Help',
-	'time' => 'Time Help',
-	'devicelist' => 'Device List Help',
-	'staticips' => 'Static IP Help',
-	'radio' => 'Radio Help',
-	'survey' => 'Survey Help',
-	'macfilter' => 'MAC Filter Help',
-	'pptp' => 'PPTP Help',
-	'openvpn' => 'OpenVPN Help',
-	'l2tp' => 'L2TP Help',
-	'ipsec' => 'IPSEC Help',
-	'pptpserver' => 'PPTP Server Help',
-	'openvpnserver' => 'OpenVPN Server Help',
-	'gateways' => 'Gateways Help',
-	'ping' => 'Ping Help',
-	'trace' => 'Trace Help',
-	'nslookup' => 'NS Lookup Help',
-	'route' => 'Route Help',
-	'firewall' => 'Firewall Help',
-	'portforwarding' => 'Port Forwarding Help',
-	'dmz' => 'DMZ Help',
-	'conntrack' => 'Conntrack Help',
-	'upnp' => 'UPNP Help',
-	'about' => 'About Help'
-	);
-
-$title= $titleInfo[$section];
-
- $helpInfo = array (
-	'wan' => 'WAN Help',
-	'lan' => 'LAN Help',
-	'time' => 'Time Help',
-	'devicelist' => 'Device List Help',
-	'staticips' => 'Static IP Help',
-	'radio' => 'Radio Help',
-	'survey' => 'Survey Help',
-	'macfilter' => 'MAC Filter Help',
-	'pptp' => 'PPTP Help',
-	'openvpn' => 'OpenVPN Help',
-	'l2tp' => 'L2TP Help',
-	'ipsec' => 'IPSEC Help',
-	'pptpserver' => 'PPTP Server Help',
-	'openvpnserver' => 'OpenVPN Server Help',
-	'gateways' => 'Gateways Help',
-	'ping' => 'Ping Help',
-	'trace' => 'Trace Help',
-	'nslookup' => 'NS Lookup Help',
-	'route' => 'Route Help',
-	'firewall' => 'Firewall Help',
-	'portforwarding' => 'Port Forwarding Help',
-	'dmz' => 'DMZ Help',
-	'conntrack' => 'Conntrack Help',
-	'upnp' => 'UPNP Help',
-	'about' => 'About Help'
-	);
-
- $help = $helpInfo[$section];
-
- echo "var panel='$panel'; var section='$section';";
+ $panel = ( array_key_exists('panel',$_REQUEST) ? preg_replace('/[^a-z\d]/i', '', $_REQUEST['panel']) : null );
+ $section = ( array_key_exists('section',$_REQUEST) ? preg_replace('/[^a-z\d]/i', '', $_REQUEST['section']) : null );
+ if( empty($panel) ){ $panel = 'network'; $section = 'wan'; }
+ $page = "v/$panel". ( empty($section) ? '' : ".$section") .".php";
+ if(!file_exists($page)) $page = 'v/lorem.php';
+ echo "var panel = '$panel'; var section = '$section';\n";
 ?>
 
 </script>
@@ -247,11 +170,23 @@ $title= $titleInfo[$section];
  </div>
 
  <div id='panelContainer'>
+
+<div id='helpArea'>
+	<img id='helpButton' src='img/help.png'>
+	<div id='helpSection' class='ui-widget-content ui-corner-al'>
+<!-- 		<a href='#' id='closeHelp' class='xsmallText fright'>Close</a> -->
+		Display Inline Help
+		<input name='inlineHelp' id='inlineHelp' type='checkbox' checked='checked'><br><br>
+		<span style='text-decoration: underline'>Links:</span><br>
+		<a id='goToHelp' href='#' onclick='doHelp();'>Manual Page</a><br>
+		<a id='goToHelp' href='#' onclick='doWiki();'>Wiki Page</a>
+	</div>
+</div>
+
 	<div id='panel'>
 	<form id='fe'>
 
-
-	<?php echo "<img id='helpButton' src='img/help.png'><div class='toggler'><div id='effect' class='ui-widget-content ui-corner-al'><a href='#' id='closeHelp' class='xsmallText fright'>Close</a><h4>".$help."</h4>Display Inline Help <input name='inlineHelp' id='inlineHelp' type='checkbox' checked='checked'><br><br><span style='text-decoration: underline'>Links:</span><br><a id='goToHelp' href='http://localjen/apps/basicNetwork/?panel=help&section=wan#".$section."'>Manual Page</a><br><a id='goToHelp' href='#'>Wiki Page</a></div></div>"; include($page); ?>
+<?php include($page); ?>
 
 	</form>
 

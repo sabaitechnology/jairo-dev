@@ -11,7 +11,7 @@
       <!-- tr><td>Time Zone</td><td>
        <input type='hidden' id='ntp_zone' name='ntp_zone'>
        <span id='ntp_zone_text'></span>
-       <div id='ntp_zone_menu' class='noshow'>< !- ?php include('php/bin.timezones.php'); ? -></div>
+       <div id='ntp_zone_menu' class='noshow'>< !- ?php include('php/timezones.php'); ? -></div>
        <br>Automatic DST <input id='ntp_autodst' name='ntp_autodst' type='checkbox'>
       </td></tr>
       <tr><td>Update Interval</td><td>
@@ -31,7 +31,7 @@
 </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=ntp&time=current'></script>
+<script type='text/ecmascript' src='php/etc.php?q=ntp&time=current'></script>
 <script type='text/ecmascript' src='js/globalize.js'></script>
 <script type='text/ecmascript' src='js/time.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
@@ -42,7 +42,7 @@
 
   function testSub(){
     $('#demo').html('Sent: '+$('#fe').serialize() +'\n');
-    $.ajax("php/bin.test.php",{
+    $.ajax("php/test.php",{
       type: "POST",
       dataType: "text",
       data: $('#fe').serialize(),

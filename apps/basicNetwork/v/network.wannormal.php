@@ -53,24 +53,20 @@ DDNS: { ip, interval, services }
 </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=wan,dns'></script>
+<script type='text/ecmascript' src='php/etc.php?q=wan,dns'></script>
 <script type='text/ecmascript' src='js/globalize.js'></script>
 <script type='text/ecmascript' src='js/time.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
-$('#wan_mtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
-$('#wan_mac').macspinner().macspinner('value',wan.mac);
-$('#wan_ip').ipspinner().ipspinner('value',wan.ip);
-$('#wan_mask').maskspinner().maskspinner('value',wan.mask);
-$('#wan_gateway').ipspinner().ipspinner('value',wan.gateway);
+	$('#wan_mac').macspinner().macspinner('value',wan.mac);
+	$('#wan_mtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
+	$('#wan_gateway').ipspinner().ipspinner('value',wan.gateway);
+	$('#wan_mask').maskspinner().maskspinner('value',wan.mask);
+	$('#wan_ip').ipspinner().ipspinner('value',wan.ip);
+	$('#wan_type').radioswitch({ value: wan.type, hasChildren: true });
 
-$('#wan_type').radioswitch({
- value: wan.type,
- change: function(event,ui){ $('.wan_type').hide(); $('.wan_type-'+ ui.value ).show(); }
-});
-
-$('#dns_servers').editablelist({ list: dns.servers })
+	$('#dns_servers').editablelist({ list: dns.servers })
 
 //$(function(){});
 </script>
