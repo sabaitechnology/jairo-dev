@@ -26,7 +26,7 @@
 	<a id='vpn' class='superMenuLink button'>VPN</a>
 	<ul id='vpnSubMenu' class='subMenu'>
 	 <li><a id='vpn_pptp' href='?panel=vpn&section=pptp' class='subMenuLink button'>PPTP</a></li>
-	 <li><a id='vpn_openvpn' href='?panel=vpn&section=openvpn' class=http://battle-dog.tumblr.com/page/35'subMenuLink button'>OpenVPN</a></li>
+	 <li><a id='vpn_openvpn' href='?panel=vpn&section=openvpn' class='subMenuLink button'>OpenVPN</a></li>
 	 <li><a id='vpn_l2tp' href='?panel=vpn&section=l2tp' class='subMenuLink button'>L2TP</a></li>
 	 <li><a id='vpn_ipsec' href='?panel=vpn&section=ipsec' class='subMenuLink button'>IPSEC</a></li>
 	 <li><a id='vpn_pptpserver' href='?panel=vpn&section=pptpserver' class='subMenuLink button'>PPTP Server</a></li>

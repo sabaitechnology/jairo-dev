@@ -556,6 +556,16 @@ color: blue;
 	z-index: 20;
 }
 
+#helpClose {
+ 	position: absolute;
+ 	top: 0;
+ 	right: 0;
+	margin: 0;
+	padding: .25em .25em;
+	text-decoration: none;
+	height: 1.75em;
+	z-index: 20;
+}
 #helpSection {
  	position: absolute;
  	top: 0;

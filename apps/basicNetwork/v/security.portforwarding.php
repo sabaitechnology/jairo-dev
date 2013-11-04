@@ -23,41 +23,41 @@
 </div>
 
 
-<script type='text/ecmaascript'src='/libs/jquery.jeditable.checkbox.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
+<script type='text/ecmascript' src='/libs/jquery.jeditable.checkbox.js'></script>
+<script type='text/ecmascript' src='php/etc.php?q=portforwarding'></script>
 <script type='text/ecmascript'>
 
   var lt =  $('#list').dataTable({
     'bPaginate': false,
     'bInfo': false,
     "bProcessing": true,
-    'sAjaxDataProp': 'portforwarding',
-    'sAjaxSource': 'php/security.portforwarding.php',
+    'aaData': portforwarding,
     'aoColumns': [
-      { 'sTitle': 'On/Off',       'mData':'On',         'sClass': 'onDrop'},  
-      { 'sTitle': 'Proto',        'mData':'Proto',      'sClass':'protoDrop' },
-      { 'sTitle': 'VPN',          'mData':'VPN',        'sClass':'vpnDrop' },
-      { 'sTitle': 'Src Address',  'mData':'Src Address','sClass':'plainText'  },
-      { 'sTitle': 'Ext Port',     'mData':'Ext Port',   'sClass':'plainText'   }, 
-      { 'sTitle': 'Int Port',     'mData':'Int Port',   'sClass':'plainText' },
-      { 'sTitle': 'Int Address',  'mData':'Int Address','sClass':'plainText'  },
-      { 'sTitle': 'Description',  'mData':'Description','sClass':'plainText'  }],
-
+      { 'sTitle': 'On/Off',       'mData':'on',         'sClass': 'onDrop'},  
+      { 'sTitle': 'Proto',        'mData':'protocol',      'sClass':'protoDrop' },
+      { 'sTitle': 'VPN',          'mData':'gateway',        'sClass':'vpnDrop' },
+      { 'sTitle': 'Src Address',  'mData':'src','sClass':'plainText'  },
+      { 'sTitle': 'Ext Port',     'mData':'ext',   'sClass':'plainText'   }, 
+      { 'sTitle': 'Int Port',     'mData':'int',   'sClass':'plainText' },
+      { 'sTitle': 'Int Address',  'mData':'address','sClass':'plainText'  },
+      { 'sTitle': 'Description',  'mData':'description','sClass':'plainText'  }
+    ],
     'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
       $(nRow).find('.plainText').editable(
         function(value, settings){ return value; },
         {
           'onblur':'submit',
           'event': 'dblclick',
-          'placeholder' : 'Click to edit',
+          'placeholder' : 'Click to edit'
         }
       );
 
       $(nRow).find('.onDrop').editable(
         function(value, settings){ return value; },
         {
-        'data': " {'On':'On','Off':'Off'}",
+        'data': " {'on':'On','off':'Off'}",
         'type':'select',
         'onblur':'submit',
         'event': 'dblclick'
@@ -89,7 +89,7 @@
         {
          'onblur':'submit',
          'event': 'dblclick',
-         'placeholder' : '',
+         'placeholder' : ''
         }
       );
 

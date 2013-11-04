@@ -211,6 +211,18 @@
 		"cookies": "checked",
 		"wan": ""
 	},
+	"portforwarding": [
+		{
+			"on": "on",
+      "protocol": 1,
+      "gateway": 3,
+      "src": "24.240.173.194",
+      "ext": 31480,
+      "int": 80,
+      "address": "10.0.0.2",
+      "description": "This thing what needs ports forwarded."
+		}
+	],
 	"dmz": {
 		"destination": "10.0.0.2"
 	},

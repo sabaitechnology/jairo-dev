@@ -39,6 +39,7 @@ if(typeof(io) != 'undefined'){
 		noty({ text: sdata.smsg });
 	});
 }else{
+	alert('We have no nodes!');
 //	We may want a Jainode indicator somewhere on page, though mostly we just want to know when we're connected for our own sakes.
 //	IE, do we send the information via jn.emit, or do we perform an ajax call, or do we post it?
 //	$(function(){ noty({ text: "Jainode service unavailable." }); });
@@ -76,9 +77,18 @@ $.noty.defaults = {
 };
 
 function toggleHelpSection() {
-	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 500 );
+	$( "#helpClose").show();
+	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 50 );
+	$( "#helpButton" ).hide();
 	return false;
 };
+
+function closeHelpSection() {
+	$( "#helpClose").hide();
+	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 50 );
+	$( "#helpButton" ).show();
+	return false;
+}
 
 <?php
  $template = array_key_exists('t',$_REQUEST);
@@ -94,6 +104,7 @@ $(function(){
 	$('#goToHelp').attr('href', 'http://wiki.jairoproject.com' + location.search);
 	$('#goToWiki').attr('href', 'help.php' + location.search);
 	$( "#helpButton" ).click(toggleHelpSection);
+	$( '#helpClose').click(closeHelpSection)
 });
 
 </script>
@@ -106,6 +117,7 @@ $(function(){
 
 		<div id='helpArea'>
 			<img id='helpButton' src='img/help.png'>
+			<a id='helpClose' class='noshow xsmallText' href='#'>Close</a>
 			<div id='helpSection' class='ui-widget-content ui-corner-al'>
 		<!-- 		<a href='#' id='closeHelp' class='xsmallText fright'>Close</a> -->
 				Display Inline Help
