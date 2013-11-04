@@ -116,11 +116,6 @@ ul#superMenu, ul.subMenu {
 */
  margin: 10px 5px;
  background: #CED7E1;
-/*
- background: #EFF2F5;
- background: #DEE7F1;
- background: #EFF2F5;
-*/
 }
 
 .controlBoxTitle {
@@ -133,12 +128,6 @@ ul#superMenu, ul.subMenu {
 }
 
 .controlBoxContent {
-/*
- background: #DEE7F1;
- background: #CED7E1;
- background: #EFF2F5;
- background: #CED7E1;
-*/
  overflow-x: auto;
  padding: 1em;
  background: #EFF2F5;
@@ -377,9 +366,6 @@ margin: 0em .6em;
  border-width: 1px;
  padding: 3px;
  border-style: solid;
- /*
-  -moz-border-radius: ;
- */
 }
 
 .sorting_disabled {
@@ -435,11 +421,9 @@ ul.editableList > li {
  height: 2em;
 }
 
-
 .inline {
     display: inline;
 }
-
 
 .callout {
     z-index:20;
@@ -513,34 +497,13 @@ font-size: .95em;
 
 /*contrack page accordion*/
 
-/*.accordion {
-    display: none;
-}
-*/
-/*#accordionarrow {
-    transform:rotate(-90deg);
-    -ms-transform:rotate(-90deg); /* IE 9 */
-    -webkit-transform:rotate(-90deg);
-}*/
-
 .underlined {
     text-decoration: underline;
 }
 
-/*.rotate {
-    transform:rotate(90deg);
-    -ms-transform:rotate(90deg);  IE 9 
-    -webkit-transform:rotate(90deg);
-}
-
-.clickable{
-     cursor: pointer;
-}*/
-
 .delete {
     text-decoration: none;
     color: #0B3155 ;
-   /* font-weight: bold;*/
 }
 
 #accordion > .ui-accordion-header {
@@ -565,7 +528,7 @@ font-size: .95em;
 }
 
 
-/*Help Section - can delete old stuff above*/
+/*Help Section */
 
  #helpButton {
 padding: .25em .25em;
