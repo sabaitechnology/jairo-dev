@@ -28,7 +28,7 @@
 </div> <!--end control box  -->
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=ping'></script>
+<script type='text/ecmascript' src='php/etc.php?q=ping'></script>
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
@@ -54,7 +54,7 @@ function getResults(){
         $('#statistics').append('Packets: '+info[0]+' transmitted, '+info[1]+' received, '+info[2]+'% lost<br><br>');
       },
       
-      "sAjaxSource": "php/bin.diagnostics.ping.php",
+      "sAjaxSource": "php/diagnostics.ping.php",
       "aoColumns": [
         { "sTitle": "Count",  "mData":"count" },
         { "sTitle": "Bytes",  "mData":"bytes" },

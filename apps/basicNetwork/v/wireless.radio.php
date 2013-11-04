@@ -91,7 +91,7 @@
 </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=wl&n=0'></script>
+<script type='text/ecmascript' src='php/etc.php?q=wl&n=0'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 

@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
-<script type='text/ecmascript' src='php/bin.etc.php?q=ipsec'></script>
+<script type='text/ecmascript' src='php/etc.php?q=ipsec'></script>
 <script type='text/ecmascript'>
 
 function makeAccordion(accordionElement,accordionList) {
@@ -72,7 +72,7 @@ function makeAccordion(accordionElement,accordionList) {
       $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table id='"+ id + "' class='controlTable'><tbody> <tr><td>Name</td><td><input class='openvpn_name' name='pptp_name' value='" + inputArr[i].value + "'></td></tr>  <tr><td>Server</td><td><input class='openvpn_server' name='openvpn_server' value="+inputArr[i+1].value +"></td></tr> <tr><td>Username</td><td><input class='openvpn_username' name='openvpn_username' value="+inputArr[i+2].value +" ></td></tr> <tr><td>Password</td><td><input class='openvpn_password' name='openvpn_password' type='password' value="+inputArr[i+3].value +" ></td></tr><tr><td>Secret Key</td><td><input class='openvpn_ssk' name='openvpn_ssk' type='password' value="+inputArr[i+4].value +" ></td></tr><tr><td>Certification</td><td><input class='openvpn_certs' name='openvpn_certs' type='password' value="+inputArr[i+5].value +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
     }
 
-    noty({text: 'Saved'});
+    toServer('Save this.');
     $('#accordion').accord("refresh").accord({active: n, static: false}); 
 
   })

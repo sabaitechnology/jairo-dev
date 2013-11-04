@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script type='text/ecmascript' src='js/globalize.js'></script>
-<script type='text/ecmascript' src='php/bin.etc.php?q=pptp'></script>
+<script type='text/ecmascript' src='php/etc.php?q=pptp'></script>
 <script type='text/ecmascript'>
 
   function makeAccordion(accordionElement,accordionList) {
@@ -71,7 +71,7 @@
     $('#accordion').append("<div class='ui-accordion-content "+ id + "'><table id='"+ id + "' class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + inputArr[i].value + "'></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+inputArr[i+1].value +"></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+inputArr[i+2].value +" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+inputArr[i+3].value +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
     }
 
-    noty({text: 'Saved'});
+    toServer('Save this.');
     $('#accordion').accord("refresh").accord({active: n, static: false}); 
 
   })

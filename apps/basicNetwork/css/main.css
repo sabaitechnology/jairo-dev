@@ -63,15 +63,15 @@ ul#superMenu, ul.subMenu {
 }
 
 .subMenu a {
-    font-weight: normal;
-    text-indent: 30px;
+	font-weight: normal;
+	text-indent: 30px;
 }
 
 .superMenuLink { 
-    padding: 10px 0; 
-    border: 1px solid silver; 
-    font-weight: bold;
-    text-indent: 20px;
+	padding: 10px 0; 
+	border: 1px solid silver; 
+	font-weight: bold;
+	text-indent: 20px;
 }
 .subMenuLink { padding: 5px 0; }
 
@@ -86,16 +86,16 @@ ul#superMenu, ul.subMenu {
 }
 
 .smallText{
-    font-size: .85em;
+	font-size: .85em;
 }
 
 .xsmallText{
-    font-size: .75em;
-    font-weight: normal;
+	font-size: .75em;
+	font-weight: normal;
 }
 
 .inline {
-    display: inline-block;
+	display: inline-block;
 }
 
 .controlTable tr td:first-child {
@@ -135,7 +135,7 @@ ul#superMenu, ul.subMenu {
 }
 
 .nobullets {
-    list-style-type: none;
+	list-style-type: none;
 }
 
  /* Control Page styles END */
@@ -182,25 +182,25 @@ ul#superMenu, ul.subMenu {
 }
 
 .controlBoxContent > input {
-    margin: 5px 0;
+	margin: 5px 0;
 }
 
 input#test {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 
 input {
-    padding-left: 0.3em;
+	padding-left: 0.3em;
 }
 
 .shortinput {
-    width: 3em;
-    text-align: left;
+	width: 3em;
+	text-align: left;
 /*    margin-right: .25em;*/
 }
 
 .longinput {
-    width: 10em;
+	width: 10em;
 }
 
 
@@ -225,14 +225,14 @@ input {
 
 .radioSwitch > li {
 /*    border-color: silver; 
-    border-image: none; 
-    border-style: solid; 
-    border-width: 0 1px 0 0; 
-    display: inline-block; 
-    height: 2em; 
-    line-height: 1em; 
-    text-align: center; 
-    width: 6em; 
+	border-image: none; 
+	border-style: solid; 
+	border-width: 0 1px 0 0; 
+	display: inline-block; 
+	height: 2em; 
+	line-height: 1em; 
+	text-align: center; 
+	width: 6em; 
  /*padding: .5em .75em;*/
 
   display: inline-block;
@@ -242,10 +242,10 @@ input {
 }
 
 .radioSwitch > li:first-child { 
-    border-radius: 8px 0 0 8px; }
+	border-radius: 8px 0 0 8px; }
 .radioSwitch > li:last-child { 
-    border-width: 0; 
-    border-radius: 0 8px 8px 0; 
+	border-width: 0; 
+	border-radius: 0 8px 8px 0; 
 }
 
  /* radioSwitch END */
@@ -269,28 +269,28 @@ input {
 .slideToggleSlider { position: relative; height: 100%; width: 200%; }
 
 tr .slideToggleViewport {
-    margin: .35em;
+	margin: .35em;
 }
 
 .slideToggleViewport {
-    border: 1px solid silver;
-    border-radius: 1.75em 1.75em 1.75em 1.75em;
-    cursor: pointer;
-    display: block;
-    height: 1.75em;
-    overflow: hidden;
-    position: relative;
-    width:3.8em;
+	border: 1px solid silver;
+	border-radius: 1.75em 1.75em 1.75em 1.75em;
+	cursor: pointer;
+	display: block;
+	height: 1.75em;
+	overflow: hidden;
+	position: relative;
+	width:3.8em;
 }
 
 .slideToggleButton {
-    border-radius: 50%;
-    cursor: pointer;
-    display: block;
-    height: 1.75em;
-    position: absolute;
-    top: 0;
-    width: 1.75em;
+	border-radius: 50%;
+	cursor: pointer;
+	display: block;
+	height: 1.75em;
+	position: absolute;
+	top: 0;
+	width: 1.75em;
 }
 
 .slideToggleButtonBackground {
@@ -422,26 +422,26 @@ ul.editableList > li {
 }
 
 .inline {
-    display: inline;
+	display: inline;
 }
 
 .callout {
-    z-index:20;
-    position:absolute;
-    top:15px;
-    border:0;
-    left:292px;
-    transform:rotate(180deg);
-    -ms-transform:rotate(180deg); /* IE 9 */
-    -webkit-transform:rotate(180deg); /* Safari and Chrome */   
+	z-index:20;
+	position:absolute;
+	top:15px;
+	border:0;
+	left:292px;
+	transform:rotate(180deg);
+	-ms-transform:rotate(180deg); /* IE 9 */
+	-webkit-transform:rotate(180deg); /* Safari and Chrome */   
 }
 
 .inlineHelp {
-    display: none;
+	display: none;
 }
 
 .errorInput {
-    border-bottom: 2px solid red;
+	border-bottom: 2px solid red;
 }
 /* TODO: make image for slider handles. .ui-slider-handle { background: url("images/ui-bg_glass_custom_slider_handle.png") repeat-x scroll 50% 50% #E6E6E6; } */
 
@@ -451,54 +451,54 @@ font-size: .95em;
 }
 
 .listTable th.sorting_asc, th.sorting_desc, th.sorting {
-    padding: .25em 1em;
+	padding: .25em 1em;
 }
 
 
 /*WAN PAGE STYLE*/
 
 #dns_servers {
-    min-width: 9em;
+	min-width: 9em;
 }
 
 #DNSdescription {
-    text-align:justify;
-    width: 50%;
-    padding: 5%;
+	text-align:justify;
+	width: 50%;
+	padding: 5%;
 }
 
 /*ABOUT PAGE STYLE*/
 #aboutSabai {
-    padding: 0.5em 2.5em 2em;
+	padding: 0.5em 2.5em 2em;
 }
 
 /*LOGS PAGE*/
 #logstxtarea {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
 }
 
 #txtareadiv {
-    width: 50px;
-    font-size: 20px;
+	width: 50px;
+	font-size: 20px;
 }
 
 /*RADIO PAGE*/
 
 .indented {
-    margin-left: 10%;
+	margin-left: 10%;
 }
 
 .smallwidth tr td:first-child {
-    min-width: 4em;
+	min-width: 4em;
 }
 
 /*contrack page accordion*/
 
 .underlined {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .delete {
@@ -507,38 +507,31 @@ font-size: .95em;
 }
 
 #accordion > .ui-accordion-header {
-    border-radius: 0px;
-    background: none repeat scroll 0 0 #CED7E1;
-    color: #1B75BB;
-    font-weight: bold;
-    border: none;
-    margin-top: .5em;
+	border-radius: 0px;
+	background: none repeat scroll 0 0 #CED7E1;
+	color: #1B75BB;
+	font-weight: bold;
+	border: none;
+	margin-top: .5em;
 }
 
 #accordion > h3 > .delete {
-    z-index: 10;
+	z-index: 10;
 }
 
 #accordion > .ui-accordion-content {
-    border-radius: 0px;
-    background: none repeat scroll 0 0 #EFF2F5;
-    font: 16px Arial,Helvetica,sans-serif;
-    border: none;
-    margin-bottom: .5em;
+	border-radius: 0px;
+	background: none repeat scroll 0 0 #EFF2F5;
+	font: 16px Arial,Helvetica,sans-serif;
+	border: none;
+	margin-bottom: .5em;
 }
 
 
 /*Help Section */
 
- #helpButton {
-padding: .25em .25em;
-text-decoration: none;
-float:right;
-height: 1.75em;
-}
-
 h4 {
-    margin: .5em 0;
+	margin: .5em 0;
 }
 
 #goToHelp {
@@ -546,25 +539,37 @@ text-decoration: none;
 color: blue;
 }
 
-.toggler {
-float:right;
-width: 0px;
-height: 0px;
-margin-right: 16em;
+#helpArea {
+ 	position: relative;
+	float:right;
+	z-index: 10;
 }
 
-#effect {
-position: absolute;
-display: none;
-width: 240px;
-height: auto;
-padding: 0.5em;
-margin-right: 0px;
-z-index: 10;
+ #helpButton {
+ 	position: absolute;
+ 	top: 0;
+ 	right: 0;
+	margin: 0;
+	padding: .25em .25em;
+	text-decoration: none;
+	height: 1.75em;
+	z-index: 20;
 }
 
-#effect h3 {
-margin: 0;
-padding: 0.4em;
-text-align: center;
+#helpSection {
+ 	position: absolute;
+ 	top: 0;
+ 	right: 0;
+	display: none;
+	width: 240px;
+	height: auto;
+	padding: 0.5em;
+	margin: 0;
+	z-index: 10;
+}
+
+#helpSection h3 {
+	margin: 0;
+	padding: 0.4em;
+	text-align: center;
 }

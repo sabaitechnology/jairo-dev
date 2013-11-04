@@ -24,13 +24,13 @@ TODO:
 </div> <!-- end control box -->
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=nslookup'></script>
+<script type='text/ecmascript' src='php/etc.php?q=nslookup'></script>
 <script type='text/ecmascript'>
 
 	$('#ns_domain').val(nslookup.domain);
 
 	function lookup(){
-		$.ajax("php/bin.diagnostics.nslookup.php", {
+		$.ajax("php/diagnostics.nslookup.php", {
 			success: function(o){
 				$('#dnstxtarea').html('');
 				$('#dnstxtarea').html(o);

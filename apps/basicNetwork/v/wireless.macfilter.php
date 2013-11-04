@@ -6,72 +6,87 @@
 		<table class='controlTable'><tbody>
      <tr><td>Set Policy: </td><td>
       <select id='default_policy' name='default_policy' class='radioSwitchElement'>
-       <option value='Allow'>Allow</option>
-       <option value='Deny'>Deny</option>
+       <option value='allow'>Allow</option>
+       <option value='deny'>Deny</option>
       </select>
      </td></tr>
     </tbody></table>
     
     <br>
 
-		<table id='list' class='listTable clickable'></table>
-		
-		<input type='button' value='Add' id='add'>
+
+<h3>Allow</h3>
+		<table id='allowList' class='listTable clickable'></table>
+		<input type='button' value='Add' id='allowAdd'>
+
+<h3>Deny</h3>
+		<table id='denyList' class='listTable clickable'></table>
+		<input type='button' value='Add' id='denyAdd'>
+
+<br>
+
 		<input type='button' value='Save' id='save'>
 		<input type='button' value='Cancel' onclick='cancelMAC();'>
 
 	</div>
 </div>
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=macfilter'></script>
+<script type='text/ecmascript' src='php/etc.php?q=macfilter'></script>
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
 	$('#save').click( function() {
-		noty({text: 'Saved'});
+		toServer('Save this.');
 	});
 
-	$('#default_policy').radioswitch({
-	 value: macfilter.default
-	});
+	$('#default_policy').radioswitch({ value: macfilter.policy });
 
-	policy = $('#default_policy').val();
+//	policy = $('#default_policy').val();
 
-	var lt =  $('#list').dataTable({
+function customRowCallBack(nRow, aData, iDisplayIndex, iDisplayIndexFull){
+	$(nRow).find('.plainText').editable(
+		function(value, settings){ return value; },
+		{
+			'onblur':'submit',
+			'event': 'dblclick',
+			'placeholder' : '(Click to edit)',
+		}
+	);
+}
+
+	var addTable =  $('#allowList').dataTable({
 		'bPaginate': false,
 		'bInfo': false,
 		'bFilter': false,
-		'sAjaxDataProp': 'macfilter',
-		'sAjaxSource': 'php/bin.wireless.macfilter.php',
+		'aaData': macfilter.allow,
 		'aoColumns': [
-			{ 'sTitle': 'MAC Address',	'mData':'mac',					'sClass': 'plainText'		},
+			{ 'sTitle': 'MAC Address',	'mData':'mac',			'sClass': 'plainText'		},
 			{ 'sTitle': 'Description',	'mData':'description',	'sClass': 'plainText'		}
-			// { 'sTitle': 'Policy',				'mData':'policy',				'sClass': 'policy'}
 		],
-
-		'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
-			$(nRow).find('.plainText').editable(
-				function(value, settings){ return value; },
-				{
-					'onblur':'submit',
-					'event': 'dblclick',
-					'placeholder' : '(Click to edit)',
-				}
-			);
-		}
+		'fnRowCallback': customRowCallBack
 	});
 
-	$('#add').click( function (e) {
+	var denyTable =  $('#denyList').dataTable({
+		'bPaginate': false,
+		'bInfo': false,
+		'bFilter': false,
+		'aaData': macfilter.deny,
+		'aoColumns': [
+			{ 'sTitle': 'MAC Address',	'mData':'mac',			'sClass': 'plainText'		},
+			{ 'sTitle': 'Description',	'mData':'description',	'sClass': 'plainText'		}
+		],
+		'fnRowCallback': customRowCallBack
+	});
+
+
+	$('#denyAdd').click(function(e){
 		e.preventDefault();
-		lt.fnAddData(
-			{
-				"mac": null, 
-				"description": null 
-				// "policy": policy
-			}
-		);
+		denyTable.fnAddData({ "mac": null, "description": null });
 	});
-
+	$('#allowAdd').click(function(e){
+		e.preventDefault();
+		addTable.fnAddData({ "mac": null, "description": null });
+	});
 
 </script>

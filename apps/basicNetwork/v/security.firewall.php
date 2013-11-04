@@ -52,7 +52,7 @@
 </div>
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=firewall'></script>
+<script type='text/ecmascript' src='php/etc.php?q=firewall'></script>
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>

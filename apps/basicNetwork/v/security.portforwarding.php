@@ -33,7 +33,7 @@
     'bInfo': false,
     "bProcessing": true,
     'sAjaxDataProp': 'portforwarding',
-    'sAjaxSource': 'php/bin.security.portforwarding.php',
+    'sAjaxSource': 'php/security.portforwarding.php',
     'aoColumns': [
       { 'sTitle': 'On/Off',       'mData':'On',         'sClass': 'onDrop'},  
       { 'sTitle': 'Proto',        'mData':'Proto',      'sClass':'protoDrop' },
@@ -114,7 +114,7 @@
   });
 
   function saveGateway(){
-    noty({text: 'Saved'});
+    toServer('Save this.');
   };
 
   function toggleExplain(){

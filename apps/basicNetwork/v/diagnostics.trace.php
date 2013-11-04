@@ -30,7 +30,7 @@
 </div> <!--end control box  -->
 
 
-<script type='text/ecmascript' src='php/bin.etc.php?q=trace'></script>
+<script type='text/ecmascript' src='php/etc.php?q=trace'></script>
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
@@ -46,7 +46,7 @@
       'bSort': false,
       "sAjaxDataProp": "traceResults",
       "fnServerParams": function(aoData){ $.merge(aoData,$('#fe').serializeArray()); },
-      "sAjaxSource": "php/bin.diagnostics.trace.php",
+      "sAjaxSource": "php/diagnostics.trace.php",
       'aoColumns': [
         { 'sTitle': 'Hop', "mData":"Hop" },
         { 'sTitle': 'Address',"mData":"Address" },
