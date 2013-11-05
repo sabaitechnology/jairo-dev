@@ -78,14 +78,14 @@ $.noty.defaults = {
 
 function toggleHelpSection() {
 	$( "#helpClose").show();
-	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 50 );
+	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 500 );
 	$( "#helpButton" ).hide();
 	return false;
 };
 
 function closeHelpSection() {
 	$( "#helpClose").hide();
-	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 50 );
+	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 500 );
 	$( "#helpButton" ).show();
 	return false;
 }
@@ -117,10 +117,10 @@ $(function(){
 
 		<div id='helpArea'>
 			<img id='helpButton' src='img/help.png'>
-			<a id='helpClose' class='noshow xsmallText' href='#'>Close</a>
 			<div id='helpSection' class='ui-widget-content ui-corner-al'>
 		<!-- 		<a href='#' id='closeHelp' class='xsmallText fright'>Close</a> -->
 				Display Inline Help
+				<a id='helpClose' class='noshow xsmallText' href='#'>Close</a>
 				<input name='inlineHelp' id='inlineHelp' type='checkbox' checked='checked'><br><br>
 				<span style='text-decoration: underline'>Links:</span><br>
 				<a id='goToHelp' href='#'>Help Page</a><br>

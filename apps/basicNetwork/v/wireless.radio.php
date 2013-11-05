@@ -95,16 +95,26 @@
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
+// $(function() {
+
+  $('#wl0_security').change(function(){
+    console.log('you clicked security')
+    $('.wl0_security').hide(); 
+    $('.wl0_security-'+ $('#wl0_security').val() ).show(); 
+  })
+
   $('#wl0_type').radioswitch({
-   value: wl[0].type,
-   change: function(event,ui){ $('.wl0_type').hide(); $('.wl0_type-'+ ui.value ).show(); }
+    value: wl[0].type,
+    change: function(event,ui){ 
+      $('.wl0_type').hide(); 
+      $('.wl0_type-'+ wl[0].security ).show(); 
+    }
   });
 
   $('#wl0_ssid').val(wl[0].ssid);
 
   $('#wl0_security').radioswitch({
-   value: wl[0].security,
-   change: function(event,ui){ $('.wl0_security').hide(); $('.wl0_security-'+ ui.value ).show(); }
+    value: wl[0].security
   });
 
   $('#wl0_wpa_type').radioswitch({
@@ -125,7 +135,6 @@
 
   //$('#wanmtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
   //$('#wanmac').val(wan.mac);
-
-
+// })
 </script>
 </form>

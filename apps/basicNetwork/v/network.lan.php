@@ -48,7 +48,7 @@ ADD VALIDATION
       <tr>
         <td>
           <div id='editDiv' class='xsmallText'>
-            <input id='dhcpEdit' name='dhcpEdit' type='checkbox' >Edit in "off" mode
+            <input id='dhcpEdit' name='dhcpEdit' type='checkbox' checked=false>Edit in "off" mode
           </div>
         </td>
       </tr>
@@ -134,8 +134,8 @@ ADD VALIDATION
 
   /* Slider with Spinners END */
 
-
-
+  $("input[name=dhcpEdit]").attr("checked", false)
+  //set initial valies for lease/range inputs
   $(function(){
     $('#dhcpLease').spinner({ min: 0, max: 525600 });
     $('#dhcpLower').ipspinner('value', dhcp.lower );
@@ -146,20 +146,35 @@ ADD VALIDATION
     $('#dhcpLower').ipspinner('option','disabled', true );
   });
 
+  //when the on/off toggle changes
   $("input[name=dhcpToggle]").change(function(){
+    //if the toggle is set to on
     if( $("input[name=dhcpToggle]").is(":checked") ) {
+      //enable input, hide the edit in off mode
       $("input[name=dhcpLease]").spinner( "option", "disabled", false );
       $("input[name=dhcpLower]").ipspinner( "option", "disabled", false );
       $("input[name=dhcpUpper]").ipspinner( "option", "disabled", false );
       $("#editDiv").hide();
     } else {
+      //otherwise disable inputs and show edit in off mode div
       $("input[name=dhcpLease]").spinner( "option", "disabled", true );
       $("input[name=dhcpLower]").ipspinner( "option", "disabled", true );
       $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
       $("#editDiv").show();
+
+    if( $("input[name=dhcpEdit]").is(":checked") ) {
+        $("input[name=dhcpLease]").spinner( "option", "disabled", false );
+        $("input[name=dhcpLower]").ipspinner( "option", "disabled", false );
+        $("input[name=dhcpUpper]").ipspinner( "option", "disabled", false );
+    } else {
+        $("input[name=dhcpLease]").spinner( "option", "disabled", true );
+        $("input[name=dhcpLower]").ipspinner( "option", "disabled", true );
+        $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
+      }
     }
   });
 
+  //of you check enable in off mode
   $("input[name=dhcpEdit]").change(function(){
     if( $("input[name=dhcpEdit]").is(":checked") ) {
       $("input[name=dhcpLease]").spinner( "option", "disabled", false );

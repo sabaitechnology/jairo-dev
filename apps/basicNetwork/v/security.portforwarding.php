@@ -36,12 +36,12 @@
     'aaData': portforwarding,
     'aoColumns': [
       { 'sTitle': 'On/Off',       'mData':'on',         'sClass': 'onDrop'},  
-      { 'sTitle': 'Proto',        'mData':'protocol',      'sClass':'protoDrop' },
-      { 'sTitle': 'VPN',          'mData':'gateway',        'sClass':'vpnDrop' },
-      { 'sTitle': 'Src Address',  'mData':'src','sClass':'plainText'  },
-      { 'sTitle': 'Ext Port',     'mData':'ext',   'sClass':'plainText'   }, 
-      { 'sTitle': 'Int Port',     'mData':'int',   'sClass':'plainText' },
-      { 'sTitle': 'Int Address',  'mData':'address','sClass':'plainText'  },
+      { 'sTitle': 'Proto',        'mData':'protocol',   'sClass':'protoDrop' },
+      { 'sTitle': 'VPN',          'mData':'gateway',    'sClass':'vpnDrop' },
+      { 'sTitle': 'Src Address',  'mData':'src',        'sClass':'plainText'  },
+      { 'sTitle': 'Ext Port',     'mData':'ext',        'sClass':'plainText'   }, 
+      { 'sTitle': 'Int Port',     'mData':'int',        'sClass':'plainText' },
+      { 'sTitle': 'Int Address',  'mData':'address',    'sClass':'plainText'  },
       { 'sTitle': 'Description',  'mData':'description','sClass':'plainText'  }
     ],
     'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
@@ -77,19 +77,10 @@
       $(nRow).find('.vpnDrop').editable(
         function(value, settings){ return value; },
         {
-        'data': " {'LAN':'LAN', 'WAN':'WAN',}",
+        'data': " {'LAN':'LAN', 'WAN':'WAN'}",
         'type':'select',
         'onblur':'submit',
         'event': 'dblclick'
-        }
-      );
-
-      $('td', this.fnGetNodes()).editable(
-        function(value, settings){ return value; },
-        {
-         'onblur':'submit',
-         'event': 'dblclick',
-         'placeholder' : ''
         }
       );
 
@@ -101,14 +92,14 @@
     e.preventDefault();
     lt.fnAddData(
       { 
-      "On": null, 
-      "Proto": null,
-      "VPN": null,
-      "Src Address": null,
-      "Ext Port": null,
-      "Int Port": null,
-      "Int Address": null,
-      "Description": null 
+      "on": null, 
+      "protocol": null,
+      "gateway": null,
+      "src": null,
+      "ext": null,
+      "int": null,
+      "address": null,
+      "description": null 
       }
     );
   });
@@ -117,15 +108,16 @@
     toServer('Save this.');
   };
 
-  function toggleExplain(){
+  // function toggleExplain(){
 
-    if( $("#toggleDesc").text()=="Show Description") {
-      $("#description").show();
-      $("#toggleDesc").text("Hide Description");
-    } else {
-      $("#description").hide();
-      $("#toggleDesc").text("Show Description");
-    }
-  }
+  //   $("#description").toggle();
+  //   if( $("#toggleDesc").text()=="Show Description") {
+  //     $("#description").show();
+  //     $("#toggleDesc").text("Hide Description");
+  //   } else {
+  //     $("#description").hide();
+  //     $("#toggleDesc").text("Show Description");
+  //   }
+  // }
 
 </script>

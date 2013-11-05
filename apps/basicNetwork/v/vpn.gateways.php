@@ -22,7 +22,8 @@
     <table id='list' class='listTable clickable'></table>
     <input type='button' value='Save' onclick='saveGateway();'>
     <input type='button' value='Cancel' onclick='cancelGateway();'>
-    
+    <span class='xsmallText'>(Double-Click Gateway Fields to Edit)</span>
+
     <br><br>
     <span class='smallText'>Each device connected to the network will be displayed in the device list above. For each device, the user has the option of assigning a gateway; Default, Local, VPN, or Accelerator within the device table. 
       <a id="toggleDesc" onclick="toggleExplain();" href="#">(Show Description)</a> 

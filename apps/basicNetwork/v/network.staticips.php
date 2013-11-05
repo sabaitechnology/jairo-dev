@@ -15,6 +15,7 @@
 		<input type='button' value='Add' id='add'>
     <input type='button' value='Save' onclick='saveStatic();'>
     <input type='button' value='Cancel' onclick='cancelStatic();'>
+		<span class='xsmallText'>(Double-Click Fields to Edit)</span>
 	</div>
 </div>
 
