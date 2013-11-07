@@ -6,7 +6,8 @@ $output = array();
 $datalines = array();
 $dataResult = array();
 
-exec( 'netstat -r', $output);
+//the -n here keeps it from trying to resolve the *'s
+exec( 'netstat -r -n', $output);
 
 $outputLength = count($output);
 
