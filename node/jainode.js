@@ -1,5 +1,7 @@
 /*
-	TODO: Add firewall rule to block jainode service through wan port (unless enabled)
+	TODO:
+		Add firewall rule to block jainode service through wan port (unless enabled)
+		Restrict origins if possible
 */
 var fs = require('fs');
 
