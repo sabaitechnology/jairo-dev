@@ -8,8 +8,10 @@
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script src="/libs/jquery.mousewheel.js"></script>
 
-<!-- socket.io -->
-<script src="http://jainode:31400/socket.io/socket.io.js"></script>
+<!-- socket.io
+	We're making PHP give us a valid address for our server since this address will actually refer to the machine we're running on, which is different everywhere.
+-->
+<script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
 
 <!-- noty stuff  -->
 <script type="text/javascript" src="/libs/jquery.noty.js"></script>
@@ -25,7 +27,7 @@
 
 /* BEGIN Jai node service */
 if(typeof(io) != 'undefined'){
-	var jn = io.connect('http://jainode:31400'); //, { secure: true });
+	var jn = io.connect('http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400'); //, { secure: true });
 
 //	Some examples
 //  jn.on('connect_failed', function(){});

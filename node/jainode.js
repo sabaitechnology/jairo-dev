@@ -1,9 +1,11 @@
-
+/*
+	TODO: Add firewall rule to block jainode service through wan port (unless enabled)
+*/
 var fs = require('fs');
 
 var io = require('socket.io').listen(31400, {
 	"log level": 1,
-	"origins": "localjai:80"
+	"origins": "*:80"
 });
 
 io.sockets.on('connection', function(socket){
