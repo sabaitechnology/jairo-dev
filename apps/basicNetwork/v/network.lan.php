@@ -55,12 +55,17 @@ ADD VALIDATION
     </tbody></table>
   </div>
 </div>
+<input type='button' value='Save' id='save'>
 
 
 <script type='text/ecmascript' src='php/etc.php?q=lan,dhcp'></script>
 <script type='text/ecmascript'>
-  var network = {}
+  
+  $('#save').click( function() {
+    toServer(JSON.stringify($('#fe').serialize()), 'lan');
+  });  
 
+  var network = {}
   var dhcpRangeMin = ip2long('10.0.0.1');
   var dhcpRangeMax = ip2long('10.0.0.254');
 
@@ -186,5 +191,7 @@ ADD VALIDATION
       $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
     }
   });
+
+
 
 </script>

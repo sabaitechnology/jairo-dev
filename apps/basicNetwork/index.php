@@ -8,8 +8,10 @@
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script src="/libs/jquery.mousewheel.js"></script>
 
-<!-- socket.io -->
-<script src="http://jainode:31400/socket.io/socket.io.js"></script>
+<!-- socket.io
+	We're making PHP give us a valid address for our server since this address will actually refer to the machine we're running on, which is different everywhere.
+-->
+<script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
 
 <!-- noty stuff  -->
 <script type="text/javascript" src="/libs/jquery.noty.js"></script>
@@ -25,7 +27,7 @@
 
 /* BEGIN Jai node service */
 if(typeof(io) != 'undefined'){
-	var jn = io.connect('http://jainode:31400'); //, { secure: true });
+	var jn = io.connect('http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400'); //, { secure: true });
 
 //	Some examples
 //  jn.on('connect_failed', function(){});
@@ -33,7 +35,7 @@ if(typeof(io) != 'undefined'){
 //	jn.on('reconnect', function(){ noty({ text: "Reconnected to jainode service." }); });
 //	jn.on('connect', function(){ noty({ text: "Connected to jainode service." }); });
 
-	// Bind a handler to show information from the server.
+	// Bind a handler to show information from the server (server sends sdata)
 	jn.on('sdata', function (sdata) {
 	// handle data in sdata.smsg
 		noty({ text: sdata.smsg });
@@ -45,7 +47,13 @@ if(typeof(io) != 'undefined'){
 //	$(function(){ noty({ text: "Jainode service unavailable." }); });
 }
 
-function toServer(msg){ if(!jn){ /* show an error or fallback on ajax/post */ return; }; jn.emit('cdata', { cmsg: msg }); }
+function toServer(msg, pg){ 
+	if(!jn){ 
+		/* show an error or fallback on ajax/post */ 
+		return; 
+	}; jn.emit('cdata', 
+		{ cmsg: msg, cpg: pg }); 
+}
 /* END Jai node service */
 
 //noty settings 

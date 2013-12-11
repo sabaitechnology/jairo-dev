@@ -20,7 +20,7 @@
       var id = Math.floor(Math.random() * 10000);
       
       if(accordionList[i].name.length == 0){
-        $('#accordion').append("<h3 class='"+ id + "'>" + accordionList[i].server + accordionList[i].connected + "</h3>")
+        $('#accordion').append("<h3 class='"+ id + "'>" + accordionList[i].server + "</h3>")
       }else{
         $('#accordion').append("<h3 class='"+ id + "'>" + accordionList[i].name + "</h3>")
       }

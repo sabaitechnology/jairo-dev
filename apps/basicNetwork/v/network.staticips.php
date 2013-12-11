@@ -60,7 +60,14 @@
 	});
 
 	function saveStatic(){
-	  toServer('Save this.');
+		var oTable = $('#list').dataTable();
+		var data = $('input', oTable.fnGetData())
+		var string = JSON.stringify(data)
+		var parsed = JSON.parse(string)
+		console.log(parsed["prevObject"])
+    // toServer(JSON.stringify($("form").serialize()), 'staticips');
+    toServer(parsed["prevObject"], 'staticips');
+
 	};
 
 </script>
