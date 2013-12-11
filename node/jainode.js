@@ -12,8 +12,65 @@ var io = require('socket.io').listen(31400, {
 	"origins": "*:80"
 });
 
+function error(socket, msg){
+	if(socket){
+		socket.emit('sdata', {
+			smsg: 'Error: '+ msg +'.'
+		});
+	}else{
+		console.log(msg);
+	}
+}
+
+function loadConfig(){
+	var etc = false;
+	try{
+		etc = JSON.parse(fs.readFileSync("../apps/basicNetwork/etc.js"))
+	}
+	catch(e){
+		console.log(util.inspect(e, {depth:null}))
+		/*
+			To throw or not to throw?
+			Throwing this crashes our node.js instance.
+		*/
+//		throw(e);
+	}
+	return etc;
+}
+
 // include my module: 
 // var Do_sed = require('./sed.js');
+
+function save(socket, cdata){
+	var stuffIsaved = [];
+	var msgContent = JSON.parse(cdata.cmsg);
+//	console.log(JSON.stringify(msgContent, null, 2));
+	for(var i in msgContent){
+		stuffIsaved.push( i.replace("_",".") )
+	}
+	if( stuffIsaved.length < 1 ){
+		socket.emit('sdata', {
+			smsg: 'Nothing to save.'
+		});
+		return;
+	}
+	var etc = loadConfig()
+	if(etc!==false){
+		error(socket, "Config file failed to load.")
+		return;
+	}
+
+// Set config object values
+// Save config to file
+// Call/queue config section callbacks
+
+
+// Send appropriate messages
+	socket.emit('sdata', {
+		smsg: 'Saved configuration messages for "'+ stuffIsaved.join(',') +'".'
+	});
+
+}
 
 
 io.sockets.on('connection', function(socket){
@@ -22,14 +79,16 @@ io.sockets.on('connection', function(socket){
 	socket.on('cdata', function(cdata){		// Binds handler for receiving client messages
 
 		// When a message from the client arrives, send a receipt message; this is really for debugging - uses noty!
-		socket.emit('sdata', { smsg: 'I received your message: "'+ cdata.cmsg +'".'});
+//		socket.emit('sdata', { smsg: 'I received your message: "'+ cdata.cmsg +'".'});
 		
 		// This switch figures out what section has been modified, then modifies appropriate files
 
-		console.log(cdata.cmsg)
-		switch (cdata.cpg) {
-		 
-		  case 'staticips':
+console.log(JSON.stringify(cdata, null, 2));
+
+		switch (cdata.cmsgType) {
+			case 'save':{ save(socket, cdata); break; }
+
+			case 'staticips':
 		  	//this is how you get information from interface
 				console.log((cdata.cmsg)[0].mac);
 

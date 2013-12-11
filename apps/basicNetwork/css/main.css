@@ -386,6 +386,11 @@ margin: 0em .6em;
  background-color: #F2F2F2;
 }
 
+.editableListDescription {
+	text-align:justify;
+	width: 50%;
+	padding: 5%;
+}
 
 ul.editableList {
  display: inline-block;
@@ -393,6 +398,7 @@ ul.editableList {
  list-style-type: none;
  cursor: pointer;
  border: 1px solid silver;
+ min-width: 9em;
 }
 
 ul.editableList > li {
@@ -454,18 +460,6 @@ font-size: .95em;
 	padding: .25em 1em;
 }
 
-
-/*WAN PAGE STYLE*/
-
-#dns_servers {
-	min-width: 9em;
-}
-
-#DNSdescription {
-	text-align:justify;
-	width: 50%;
-	padding: 5%;
-}
 
 /*ABOUT PAGE STYLE*/
 #aboutSabai {
