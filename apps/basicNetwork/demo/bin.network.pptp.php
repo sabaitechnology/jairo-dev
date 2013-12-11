@@ -37,8 +37,5 @@ $dl = <<<EOF
 EOF
 ;
 
-//find length of pptp array
-//loop through array
-//make a new control box, CBtitle span, CBcontent div, and hidden details div for each pptp
 echo $dl;
  ?>
