@@ -35,7 +35,7 @@ if(typeof(io) != 'undefined'){
 //	jn.on('reconnect', function(){ noty({ text: "Reconnected to jainode service." }); });
 //	jn.on('connect', function(){ noty({ text: "Connected to jainode service." }); });
 
-	// Bind a handler to show information from the server.
+	// Bind a handler to show information from the server (server sends sdata)
 	jn.on('sdata', function (sdata) {
 	// handle data in sdata.smsg
 		noty({ text: sdata.smsg });
@@ -47,7 +47,13 @@ if(typeof(io) != 'undefined'){
 //	$(function(){ noty({ text: "Jainode service unavailable." }); });
 }
 
-function toServer(msg){ if(!jn){ /* show an error or fallback on ajax/post */ return; }; jn.emit('cdata', { cmsg: msg }); }
+function toServer(msg, pg){ 
+	if(!jn){ 
+		/* show an error or fallback on ajax/post */ 
+		return; 
+	}; jn.emit('cdata', 
+		{ cmsg: msg, cpg: pg }); 
+}
 /* END Jai node service */
 
 //noty settings 

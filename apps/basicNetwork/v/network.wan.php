@@ -51,6 +51,7 @@ DDNS: { ip, interval, services }
 		</table>
 	</div>
 </div>
+<input type='button' value='Save' id='save'>
 
 
 <script type='text/ecmascript' src='php/etc.php?q=wan,dns'></script>
@@ -67,6 +68,10 @@ DDNS: { ip, interval, services }
 	$('#wan_type').radioswitch({ value: wan.type, hasChildren: true });
 
 	$('#dns_servers').editablelist({ list: dns.servers })
+
+	$('#save').click( function() {
+    toServer(JSON.stringify($('#fe').serialize()), 'wan');
+  }); 
 
 //$(function(){});
 </script>
