@@ -119,7 +119,7 @@
 			"server": "203.54.1.20",
 			"user": "chinacat",
 			"password": "meowmeow",
-			"name": ""
+			"name": "kitty"
 		},
 		{
 			"server": "42.2.2.2",
