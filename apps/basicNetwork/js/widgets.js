@@ -74,6 +74,7 @@ $.widget( "jai.editablelist", $.ui.sortable, {
  addItems: function(a){ if(a==null) a = false;
   var fid = this.options.fid;
   var fixed = this.options.fixed;
+  $(this.element).addClass("editableList");
   $(this.element).append( $.map( ( a||[''] ),function(v,i){ return "<li><input class='editableFormComplement' type='hidden' name='"+ fid +"[]' value='"+ v +"'><span class='editableListText'>"+ v +"</span>"+(fixed?'':"<a class='deleteX'>X</a>")+"</li>"; }) );
   if(!fixed) $(this.element).find('.deleteX').click(function(event){ $(event.target).parent().remove(); });
   $(this.element).find('.editableListText').editable(function(value, settings){

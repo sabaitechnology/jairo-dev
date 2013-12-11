@@ -1,5 +1,5 @@
 {
-	"sys": {
+	'sys': {
 		"wuid": "CADEIC"
 	},
 	"wan": {

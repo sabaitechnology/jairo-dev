@@ -1,9 +1,11 @@
 <!DOCTYPE html><html><head>
 <title id='mainTitle'>Sabai Jai Ro</title>
+<!-- <link rel='stylesheet' type='text/css' href='/libs/jai.js'> -->
 <link rel='stylesheet' type='text/css' href='/libs/jquery-ui.min.css'>
 <link rel='stylesheet' type='text/css' href='/libs/jquery.ui.menu.css'>
 <link rel='stylesheet' type='text/css' href='css/main.css'>
 
+<script type='text/ecmascript' src='/libs/jai.js'></script>
 <script type='text/ecmascript' src='/libs/jquery-1.9.1.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script src="/libs/jquery.mousewheel.js"></script>
@@ -24,37 +26,6 @@
 <script type='text/ecmascript' src='js/widgets.js'></script>
 <script type='text/ecmascript' src='js/main.js'></script>
 <script type='text/ecmascript'>
-
-/* BEGIN Jai node service */
-if(typeof(io) != 'undefined'){
-	var jn = io.connect('http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400'); //, { secure: true });
-
-//	Some examples
-//  jn.on('connect_failed', function(){});
-//  jn.on('error', function(){});
-//	jn.on('reconnect', function(){ noty({ text: "Reconnected to jainode service." }); });
-//	jn.on('connect', function(){ noty({ text: "Connected to jainode service." }); });
-
-	// Bind a handler to show information from the server (server sends sdata)
-	jn.on('sdata', function (sdata) {
-	// handle data in sdata.smsg
-		noty({ text: sdata.smsg });
-	});
-}else{
-	alert('We have no nodes!');
-//	We may want a Jainode indicator somewhere on page, though mostly we just want to know when we're connected for our own sakes.
-//	IE, do we send the information via jn.emit, or do we perform an ajax call, or do we post it?
-//	$(function(){ noty({ text: "Jainode service unavailable." }); });
-}
-
-function toServer(msg, pg){ 
-	if(!jn){ 
-		/* show an error or fallback on ajax/post */ 
-		return; 
-	}; jn.emit('cdata', 
-		{ cmsg: msg, cpg: pg }); 
-}
-/* END Jai node service */
 
 //noty settings 
 $.noty.defaults = {
@@ -83,6 +54,41 @@ $.noty.defaults = {
 	},
 	buttons: false // an array of buttons
 };
+
+/* BEGIN Jai node service */
+if(typeof(io) != 'undefined'){
+	var jn = io.connect('http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400'); //, { secure: true });
+
+//	Some examples
+//  jn.on('connect_failed', function(){});
+//  jn.on('error', function(){});
+//	jn.on('reconnect', function(){ noty({ text: "Reconnected to jainode service." }); });
+//	jn.on('connect', function(){ noty({ text: "Connected to jainode service." }); });
+
+	// Bind a handler to show information from the server (server sends sdata)
+	jn.on('sdata', function (sdata) {
+	// handle data in sdata.smsg
+		noty({ text: sdata.smsg });
+	});
+}else{
+	$(function(){
+		noty({ text: "We are nodeless!" });
+//	alert('We have no nodes!');
+	})
+//	We may want a Jainode indicator somewhere on page, though mostly we just want to know when we're connected for our own sakes.
+//	IE, do we send the information via jn.emit, or do we perform an ajax call, or do we post it?
+//	$(function(){ noty({ text: "Jainode service unavailable." }); });
+}
+
+function toServer(msg, msgType){ 
+	if(!jn){ 
+		/* show an error or fallback on ajax/post */ 
+		return; 
+	};
+	if(typeof(msg)!='string') msg = JSON.stringify(msg);
+	jn.emit('cdata',{ cmsg: msg, cmsgType: msgType }); 
+}
+/* END Jai node service */
 
 function toggleHelpSection() {
 	$( "#helpClose").show();

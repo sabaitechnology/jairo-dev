@@ -37,11 +37,10 @@ DDNS: { ip, interval, services }
 		<table class='controlTable'>
 			<tbody>
 			<tr>
-				<td class="DNSheading">DNS Servers
-				</td>
+				<td>DNS Servers</td>
 				<td><div><ul id='dns_servers'></ul></div></td>
 				<td class="description">
-					<div  id='DNSdescription'>
+					<div id='editableListDescription'>
 						<span class ='xsmallText'>(These are the DNS servers the DHCP server will provide for devices also on the LAN)
 						</span>
 					</div>
