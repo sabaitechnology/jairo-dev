@@ -8,10 +8,10 @@ ADD VALIDATION
   <div class='controlBoxContent'>
     <table class='controlTable'><tbody>
       <tr>
-        <td>LAN IP</td><td><input id='lanip' name='lanip' /></td>
+        <td>LAN IP</td><td><input id='lan_ip' name='lan_ip' /></td>
       </tr>
       <tr>
-        <td>Mask</td><td><input id='lanmask' name='lanmaskValue' /></td>
+        <td>Mask</td><td><input id='lan_mask' name='lan_mask' /></td>
       </tr>
     </tbody></table>
   </div>
@@ -21,8 +21,8 @@ ADD VALIDATION
   <div class='controlBoxContent'>
     <table  class='controlTable'><tbody>
       <tr><td colspan=2>
-        <input type="checkbox" id="dhcpToggle" name='dhcpToggle' class="slideToggle"/>
-        <label class="slideToggleViewport" for="dhcpToggle">
+        <input type="checkbox" id="dhcp_on" name='dhcp_on' class="slideToggle"/>
+        <label class="slideToggleViewport" for="dhcp_on">
           <div class="slideToggleSlider">
             <div class="slideToggleButton slideToggleButtonBackground">&nbsp;</div>
             <div class="slideToggleContent slideToggleLeft button buttonSelected">
@@ -36,25 +36,29 @@ ADD VALIDATION
       </td></tr>
       <tr>
         <td>Lease</td>
-        <td><input id='dhcpLease' name='dhcpLease'/></td>
+        <td><input id='dhcp_lease' name='dhcp_lease'/></td>
       </tr>
       <tr>
         <td id='DHCPrange'>DHCP Range</td>
         <td>
-          <input id='dhcpLower' name='dhcpLower'/> - <input id='dhcpUpper' name='dhcpUpper' />
+          <input id='dhcp_lower' name='dhcp_lower'/> - <input id='dhcp_upper' name='dhcp_upper' />
           <!--  <div id='dhcpSlider' class='rangeSlider'></div> -->
         </td>
       </tr>
-      <tr>
+<!--       <tr>
         <td>
           <div id='editDiv' class='xsmallText'>
             <input id='dhcpEdit' name='dhcpEdit' type='checkbox' checked=false>Edit in "off" mode
           </div>
         </td>
-      </tr>
+      </tr> -->
     </tbody></table>
   </div>
 </div>
+
+<pre id='testing'>
+</pre>
+
 <input type='button' value='Save' id='save'>
 
 
@@ -62,7 +66,14 @@ ADD VALIDATION
 <script type='text/ecmascript'>
   
   $('#save').click( function() {
-    toServer(JSON.stringify($('#fe').serialize()), 'lan');
+    var rawForm = $('#fe').serializeArray()
+    var pForm = {}
+    for(var i in rawForm){
+      pForm[ rawForm[i].name ] = rawForm[i].value;
+    }
+    if(!pForm['dhcp_on']) pForm['dhcp_on'] = 'off'
+//    $('#testing').html( JSON.stringify(pForm) )
+    toServer(pForm, 'save');
   });  
 
   var network = {}
@@ -77,7 +88,7 @@ ADD VALIDATION
       $(spinner).ipspinner('value', $(spinner).ipspinner('option','max') );
   }
 
-  $('#lanip').ipspinner({
+  $('#lan_ip').ipspinner({
     min: '10.0.0.1', max: '10.255.255.254',
     page: Math.pow(2,(32-mask2cidr(lan.mask))),
     change: function(event,ui){ spinnerConstraint(this);
@@ -87,16 +98,16 @@ ADD VALIDATION
     }
   }).ipspinner('value',lan.ip);
 
-  $( '#lanmask' ).maskspinner({
-    spin: function(event,ui){ $('#lanip').ipspinner('option','page', Math.pow(2,(32-ui.value)) ) }
+  $( '#lan_mask' ).maskspinner({
+    spin: function(event,ui){ $('#lan_ip').ipspinner('option','page', Math.pow(2,(32-ui.value)) ) }
   }).maskspinner('value',lan.mask);
 
   /* Slider with Spinners BEGIN */
-  $('#dhcpLower').ipspinner({
+  $('#dhcp_lower').ipspinner({
     min: dhcpRangeMin, max: dhcp.upper,
     spin: function(event, ui){
       // $('#dhcpSlider').slider('values', '0', ui.value);
-      $('#dhcpUpper').ipspinner('option','min', ui.value );
+      $('#dhcp_upper').ipspinner('option','min', ui.value );
     },
     change: function(event,ui){ spinnerConstraint(this);
       //var curv = $(this).ipspinner('value');
@@ -104,15 +115,15 @@ ADD VALIDATION
       //else if( curv > $(this).ipspinner('option','max') ) $(this).ipspinner('value', $(this).ipspinner('option','max') );
       var curv = $(this).ipspinner('value');
       //$('#dhcpSlider').slider('values', '0', curv );
-      $('#dhcpUpper').ipspinner('option','min', curv );
+      $('#dhcp_upper').ipspinner('option','min', curv );
     }
   })
 
-  $('#dhcpUpper').ipspinner({
+  $('#dhcp_upper').ipspinner({
     min: dhcp.lower, max: dhcpRangeMax,
     spin: function(event, ui){
       // $('#dhcpSlider').slider('values', '1', ui.value);
-      $('#dhcpLower').ipspinner('option','max', ui.value );
+      $('#dhcp_lower').ipspinner('option','max', ui.value );
     },
     change: function(event,ui){ spinnerConstraint(this);
       //var curv = $(this).ipspinner('value');
@@ -120,7 +131,7 @@ ADD VALIDATION
       //else if( curv > $(this).ipspinner('option','max') ) $(this).ipspinner('value', $(this).ipspinner('option','max') );
       var curv = $(this).ipspinner('value');
       $('#dhcpSlider').slider('values', '1', curv );
-      $('#dhcpLower').ipspinner('option','max', curv );
+      $('#dhcp_lower').ipspinner('option','max', curv );
     }
    })
 
@@ -130,68 +141,75 @@ ADD VALIDATION
    //  max: dhcpRangeMax,
    //  values: [ip2long(dhcp.lower),ip2long(dhcp.upper)],
    //  slide: function(event, ui){
-   //   $('#dhcpLower').ipspinner('value',ui.values[0]);
-   //   $('#dhcpUpper').ipspinner('value',ui.values[1]);
-   //   $('#dhcpLower').ipspinner('option','max', ui.values[1] );
-   //   $('#dhcpUpper').ipspinner('option','min', ui.values[0] );
+   //   $('#dhcp_lower').ipspinner('value',ui.values[0]);
+   //   $('#dhcp_upper').ipspinner('value',ui.values[1]);
+   //   $('#dhcp_lower').ipspinner('option','max', ui.values[1] );
+   //   $('#dhcp_upper').ipspinner('option','min', ui.values[0] );
    //  }
    // });
 
   /* Slider with Spinners END */
 
-  $("input[name=dhcpEdit]").attr("checked", false)
+  // TODO: Surely there's a better way! (insert infomercial here)
+//  $("#dhcpEdit").attr("checked", false)
   //set initial valies for lease/range inputs
   $(function(){
-    $('#dhcpLease').spinner({ min: 0, max: 525600 });
-    $('#dhcpLower').ipspinner('value', dhcp.lower );
-    $('#dhcpUpper').ipspinner('value', dhcp.upper );
-    $('#dhcpLease').spinner('value',86400);
-    $('#dhcpLease').spinner('option','disabled', true );
-    $('#dhcpUpper').ipspinner('option','disabled', true );
-    $('#dhcpLower').ipspinner('option','disabled', true );
+    $('#dhcp_lease').spinner({ min: 0, max: 525600 });
+    $('#dhcp_lower').ipspinner('value', dhcp.lower );
+    $('#dhcp_upper').ipspinner('value', dhcp.upper );
+    $('#dhcp_lease').spinner('value',86400);
+
+    $('#dhcp_lease').spinner();
+    $('#dhcp_upper').ipspinner();
+    $('#dhcp_lower').ipspinner();
+
+    // $('#dhcp_lease').spinner('option','disabled', true );
+    // $('#dhcp_upper').ipspinner('option','disabled', true );
+    // $('#dhcp_lower').ipspinner('option','disabled', true );
   });
 
+/*
   //when the on/off toggle changes
-  $("input[name=dhcpToggle]").change(function(){
+  $("#dhcp_on").change(function(){
     //if the toggle is set to on
-    if( $("input[name=dhcpToggle]").is(":checked") ) {
+    if( $("#dhcp_on").is(":checked") ) {
       //enable input, hide the edit in off mode
-      $("input[name=dhcpLease]").spinner( "option", "disabled", false );
-      $("input[name=dhcpLower]").ipspinner( "option", "disabled", false );
-      $("input[name=dhcpUpper]").ipspinner( "option", "disabled", false );
+      $("#dhcp_lease").spinner( "option", "disabled", false );
+      $("#dhcp_lower").ipspinner( "option", "disabled", false );
+      $("#dhcp_upper").ipspinner( "option", "disabled", false );
       $("#editDiv").hide();
     } else {
       //otherwise disable inputs and show edit in off mode div
-      $("input[name=dhcpLease]").spinner( "option", "disabled", true );
-      $("input[name=dhcpLower]").ipspinner( "option", "disabled", true );
-      $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
+      $("#dhcp_lease").spinner( "option", "disabled", true );
+      $("#dhcp_lower").ipspinner( "option", "disabled", true );
+      $("#dhcp_upper").ipspinner( "option", "disabled", true );
       $("#editDiv").show();
 
-    if( $("input[name=dhcpEdit]").is(":checked") ) {
-        $("input[name=dhcpLease]").spinner( "option", "disabled", false );
-        $("input[name=dhcpLower]").ipspinner( "option", "disabled", false );
-        $("input[name=dhcpUpper]").ipspinner( "option", "disabled", false );
+    if( $("#dhcpEdit").is(":checked") ) {
+        $("#dhcp_lease").spinner( "option", "disabled", false );
+        $("#dhcp_lower").ipspinner( "option", "disabled", false );
+        $("#dhcp_upper").ipspinner( "option", "disabled", false );
     } else {
-        $("input[name=dhcpLease]").spinner( "option", "disabled", true );
-        $("input[name=dhcpLower]").ipspinner( "option", "disabled", true );
-        $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
+        $("#dhcp_lease").spinner( "option", "disabled", true );
+        $("#dhcp_lower").ipspinner( "option", "disabled", true );
+        $("#dhcp_upper").ipspinner( "option", "disabled", true );
       }
     }
   });
 
   //of you check enable in off mode
-  $("input[name=dhcpEdit]").change(function(){
-    if( $("input[name=dhcpEdit]").is(":checked") ) {
-      $("input[name=dhcpLease]").spinner( "option", "disabled", false );
-      $("input[name=dhcpLower]").ipspinner( "option", "disabled", false );
-      $("input[name=dhcpUpper]").ipspinner( "option", "disabled", false );
+  $("#dhcpEdit").change(function(){
+    if( $("#dhcpEdit").is(":checked") ) {
+      $("#dhcp_lease").spinner( "option", "disabled", false );
+      $("#dhcp_lower").ipspinner( "option", "disabled", false );
+      $("#dhcp_upper").ipspinner( "option", "disabled", false );
     } else {
-      $("input[name=dhcpLease]").spinner( "option", "disabled", true );
-      $("input[name=dhcpLower]").ipspinner( "option", "disabled", true );
-      $("input[name=dhcpUpper]").ipspinner( "option", "disabled", true );
+      $("#dhcp_lease").spinner( "option", "disabled", true );
+      $("#dhcp_lower").ipspinner( "option", "disabled", true );
+      $("#dhcp_upper").ipspinner( "option", "disabled", true );
     }
   });
-
+*/
 
 
 </script>

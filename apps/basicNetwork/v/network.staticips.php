@@ -11,7 +11,7 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>Static Devices</span>
 	<div class='controlBoxContent'>
-		<table id='list' class='listTable'></table>
+		<table id='dhcp_static' class='listTable'></table>
 		<input type='button' value='Add' id='add'>
     <input type='button' value='Save' onclick='saveStatic();'>
     <input type='button' value='Cancel' onclick='cancelStatic();'>
@@ -19,12 +19,14 @@
 	</div>
 </div>
 
+<pre id='testing'>
+</pre>
 
 <script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
-	var lt =  $('#list').dataTable({
+	var lt =  $('#dhcp_static').dataTable({
 		'bPaginate': false,
 		'bInfo': false,
 		'bFilter': false,
@@ -60,14 +62,10 @@
 	});
 
 	function saveStatic(){
-		var oTable = $('#list').dataTable();
-		var data = $('input', oTable.fnGetData())
-		var string = JSON.stringify(data)
-		var parsed = JSON.parse(string)
-		console.log(parsed["prevObject"])
-    // toServer(JSON.stringify($("form").serialize()), 'staticips');
-    toServer(parsed["prevObject"], 'staticips');
-
+		var oTable = $('#dhcp_static').dataTable();
+		var data = oTable.fnGetData()
+		$('#testing').html("~"+data+"~")
+		toServer({ dhcp_static: data }, 'save');
 	};
 
 </script>
