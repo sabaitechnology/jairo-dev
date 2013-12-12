@@ -33,9 +33,17 @@
 	font-weight: bold;
 
 }
+
+.slideListRowInfo {
+	display: inline-block;
+	margin-left: 20%;
+}
+
 .inlineButton {
 	margin-left: .3em;
 }
+
+
 
 </style>
 <script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
@@ -44,12 +52,26 @@
 <script type='text/ecmascript'>
 
 function makeSlideListRowHere(e){
-	return '<div class="slideListRow"><div class="slideListContent">'
-	+'<span class="slideListRowTitle">'+ e.name +'</span>'
-	+'<span class="fright"><input type="button" class="inlineButton" value="Connect">'
-	+'<input type="button" class="inlineButton" value="Edit"></span>'
-//	+ e.server +' | '+ e.user +' | '+ e.password
-	+'</div></div>'
+	return $(document.createElement('div')).addClass('slideListRow')
+		.append( $(document.createElement('div')).addClass('slideListContent')
+			.append( $(document.createElement('span')).addClass('slideListRowTitle').html(e.name) )
+			.append( $(document.createElement('span')).addClass('slideListRowInfo').html('State').prop("id",e.name+"_info") )
+			.append( $(document.createElement('span')).addClass('fright')
+				.append( $(document.createElement('input')).addClass('inlineButton').prop("type","button").val("Connect") )
+				.append( $(document.createElement('input')).addClass('inlineButton').prop("type","button").val("Edit") )
+			)
+		)
+
+// 	return 
+//'<div class="slideListRow"><div class="slideListContent">'
+// 	+'<span class="slideListRowTitle">'+ e.name +'</span>'
+// 	+'<span class="slideListRowInfo" id="'+ e.name +'_info">State</span>'
+// 	+'<span class="fright">'
+// 	+'	<input type="button" class="inlineButton" value="Connect">'
+// 	+'	<input type="button" class="inlineButton" value="Edit">
+//	</span>'
+// //	+ e.server +' | '+ e.user +' | '+ e.password
+// 	+'</div></div>'
 }
 
 function makeSlideList(slideListElement, slideList, makeSlideListRow){
