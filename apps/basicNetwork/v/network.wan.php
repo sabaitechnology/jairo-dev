@@ -66,7 +66,7 @@ DDNS: { ip, interval, services }
 	$('#wan_ip').ipspinner().ipspinner('value',wan.ip);
 	$('#wan_type').radioswitch({ value: wan.type, hasChildren: true });
 
-	$('#dns_servers').editablelist({ list: dns.servers })
+	$('#dns_servers').editablelist({ list: dns.servers, fixed: true })
 
 	$('#save').click( function() {
     toServer(JSON.stringify($('#fe').serialize()), 'wan');

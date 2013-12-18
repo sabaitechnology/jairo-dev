@@ -51,7 +51,44 @@
 <script type='text/ecmascript' src='php/etc.php?q=pptp'></script>
 <script type='text/ecmascript'>
 
-function makeSlideListRowHere(e){
+$.widget( "jai.editablelist", $.ui.sortable, {
+ _create: function(){
+  this.element.addClass('editableList');
+  this.options.fid = this.element.attr('id');
+  this.addItems(this.options.list);
+  if(!this.options.fixed) $(this.element).after("<br><input type='button' value='Add' onclick='$(\"#"+ this.options.fid +"\").editablelist(\"addItems\")'>");
+  this._super();
+ },
+ addItems: function(a){ if(a==null) a = false;
+  var fid = this.options.fid;
+  var fixed = this.options.fixed;
+  $(this.element).addClass("editableList");
+  $(this.element).append( $.map( ( a||[''] ),function(v,i){
+    return $(document.createElement('li'))
+    .append( $(document.createElement('input')).addClass("editableFormComplement").prop("type","hidden").prop("name",fid+"[]").val(v) )
+    .append( $(document.createElement('span')).addClass("editableListText").html(v) )
+    .append( (fixed ? null : $(document.createElement('a').addClass("deleteX").html("X")) ) )
+  }));
+  if(!fixed) $(this.element).find('.deleteX').click(function(event){ $(event.target).parent().remove(); });
+  $(this.element).find('.editableListText').editable(function(value, settings){
+    if(!fixed) if(value==''){ $(this).parent().remove(); };
+    $(this).siblings('.editableFormComplement').val(value);
+    return value;
+   },{ 'onblur': 'submit', 'event': 'dblclick', placeholder: '(Double click to edit.)' }
+  );
+  if($(this.element).data('sortable')) $(this.element).sortable('refresh');
+  if(!a) $(this.element).last().children().last().children('.editableListText').trigger('dblclick');
+ },
+ options: {
+  forcePlaceholderSize: true,
+  forceHelperSize: true,
+  placeholder: "editableListPlaceholder",
+  items: "li:not(.listBookend)",
+ }
+});
+
+
+function makeSlideListRowHere(e,i){
 	return $(document.createElement('div')).addClass('slideListRow')
 		.append( $(document.createElement('div')).addClass('slideListContent')
 			.append( $(document.createElement('span')).addClass('slideListRowTitle').html(e.name) )
@@ -62,64 +99,21 @@ function makeSlideListRowHere(e){
 			)
 		)
 
-// 	return 
-//'<div class="slideListRow"><div class="slideListContent">'
-// 	+'<span class="slideListRowTitle">'+ e.name +'</span>'
-// 	+'<span class="slideListRowInfo" id="'+ e.name +'_info">State</span>'
-// 	+'<span class="fright">'
-// 	+'	<input type="button" class="inlineButton" value="Connect">'
-// 	+'	<input type="button" class="inlineButton" value="Edit">
-//	</span>'
-// //	+ e.server +' | '+ e.user +' | '+ e.password
-// 	+'</div></div>'
 }
 
 function makeSlideList(slideListElement, slideList, makeSlideListRow){
-//	$(slideListElement).append("<div class='slideList'>\n")
 	$(slideListElement).addClass("slideList")
-	$.each(slideList, function(index, slideListMember){ $(slideListElement).append(makeSlideListRow(slideListMember)) });
-//$(slideListElement).append();
+	$(slideListElement).append( $.map( (slideList||['']), makeSlideListRow ));
+	// $(this.element).append( $.map( slideList, function(e,i){
+	// 	return $(document.createElement('div')).html('Text!')
+	// } ));
+//	$.each(slideList, function(index, slideListMember){ $(slideListElement).append(makeSlideListRow(slideListMember)) });
 
-//	$(slideListElement).append("</div>")
 }
 
-// 	function makeAccordion(accordionElement,accordionList) {
-// 		for(i=0; i<accordionList.length; i++){
-// 			$('#vpn_clients').append("<h3 class='vpn_client_"+ accordionList[i].name + "'>" + accordionList[i].name + "</h3>"
-// +"<div class='ui-accordion-content vpn_client_"+ accordionList[i].name + "'>"
-// +"<table class='controlTable'><tbody>"
-// +"<tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + accordionList[i].name + "'></td></tr>"
-// +"<tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+accordionList[i].server +"></td></tr>"
-// +"<tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+accordionList[i].user +" ></td></tr>"
-// +"<tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+accordionList[i].password +" ></td></tr>"
-// +"</tbody></table><br>"
-// +"<input type='button' value='Connect' name='connect' class='connect' >"
-// +"<input type='button' value='Disconnect' name='disconnect' class='disconnect'>"
-// +"<input type='button' value='Save' name='save_edit' class='save_edit'></div>"
-// 			)
-// 		}
-
-// //		$(accordionElement).accordion({ collapsible: true });
-// 	}
-
 	//do this on document load
-	$(function() {
-//		makeAccordion("#vpn_clients",pptp);
+	$(function(){
 		makeSlideList("#vpn_clients", pptp, makeSlideListRowHere);
-// 		makeSlideList("#vpn_clients", pptp, function(e){
-// return "<h3 class='vpn_client_"+ e.name + "'>" + e.name + "</h3>"
-// +"<div class='ui-accordion-content vpn_client_"+ e.name + "'>"
-// +"<table class='controlTable'><tbody>"
-// +"<tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + e.name + "'></td></tr>"
-// +"<tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+e.server +"></td></tr>"
-// +"<tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+ e.user +" ></td></tr>"
-// +"<tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+ e.password +" ></td></tr>"
-// +"</tbody></table><br>"
-// +"<input type='button' value='Connect' name='connect' class='connect' >"
-// +"<input type='button' value='Disconnect' name='disconnect' class='disconnect'>"
-// +"<input type='button' value='Save' name='save_edit' class='save_edit'></div>"
-
-// 		});
 
 		$('input[type=password]').each(function(i, e){
 			$(e).focus(function(){ $(this).prop('type', 'text'); })
@@ -129,41 +123,41 @@ function makeSlideList(slideListElement, slideList, makeSlideListRow){
 
 	});
 
-	$('#vpn_clients').on('click', '.save_edit', function(){
-		//get active record
-		n = $("#vpn_clients h3").index($("#vpn_clients h3.ui-state-active"));
-		var inputArr = $("#vpn_clients :input" ).serializeArray()
-		$('#vpn_clients').html('');
-		//every 4th value starts a new set
-		for(i=0; i<inputArr.length; i=i+4){
+// 	$('#vpn_clients').on('click', '.save_edit', function(){
+// 		//get active record
+// 		n = $("#vpn_clients h3").index($("#vpn_clients h3.ui-state-active"));
+// 		var inputArr = $("#vpn_clients :input" ).serializeArray()
+// 		$('#vpn_clients').html('');
+// 		//every 4th value starts a new set
+// 		for(i=0; i<inputArr.length; i=i+4){
 
-			var id = Math.floor(Math.random() * 10000);
-			if(inputArr[i].value.length == 0){
-				$('#vpn_clients').append("<h3 class='"+ id + "'>" + inputArr[i+1].value + "</h3>")
-			}else{
-				$('#vpn_clients').append("<h3>" + inputArr[i].value + "</h3>")
-			}
-		$('#vpn_clients').append("<div class='ui-vpn_clients-content "+ id + "'><table id='"+ id + "' class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + inputArr[i].value + "'></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+inputArr[i+1].value +"></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+inputArr[i+2].value +" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+inputArr[i+3].value +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-		}
+// 			var id = Math.floor(Math.random() * 10000);
+// 			if(inputArr[i].value.length == 0){
+// 				$('#vpn_clients').append("<h3 class='"+ id + "'>" + inputArr[i+1].value + "</h3>")
+// 			}else{
+// 				$('#vpn_clients').append("<h3>" + inputArr[i].value + "</h3>")
+// 			}
+// 		$('#vpn_clients').append("<div class='ui-vpn_clients-content "+ id + "'><table id='"+ id + "' class='controlTable'><tbody> <tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value='" + inputArr[i].value + "'></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value="+inputArr[i+1].value +"></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value="+inputArr[i+2].value +" ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value="+inputArr[i+3].value +" ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
+// 		}
 
-//		toServer('Save this.');
-		$('#vpn_clients').accord("refresh").accord({active: n, static: false}); 
+// //		toServer('Save this.');
+// 		$('#vpn_clients').accord("refresh").accord({active: n, static: false}); 
 
-	})
-
-
-	$('#vpn_clients').on('click', '.delete', function(){
-		myid=$(this).parent().attr("class").match(/\d+/)
-		$('.' + myid).remove();
-		$('#vpn_clients').accord("refresh").accord({active:false, static: false});
-	})
+// 	})
 
 
-	function addNew() {
-		var id = Math.floor(Math.random() * 10000);
-		$('#vpn_clients').append("<h3 class='"+ id + "'>(New Item)</h3><div class='ui-accordion-content "+ id + "'><table  class='controlTable'><tbody><tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value=''></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value=''></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value='' ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value='' ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
-		$('#vpn_clients').accord("refresh").accord("newItem").accord({ active: -1, static: false}); 
-	}
+// 	$('#vpn_clients').on('click', '.delete', function(){
+// 		myid=$(this).parent().attr("class").match(/\d+/)
+// 		$('.' + myid).remove();
+// 		$('#vpn_clients').accord("refresh").accord({active:false, static: false});
+// 	})
+
+
+// 	function addNew() {
+// 		var id = Math.floor(Math.random() * 10000);
+// 		$('#vpn_clients').append("<h3 class='"+ id + "'>(New Item)</h3><div class='ui-accordion-content "+ id + "'><table  class='controlTable'><tbody><tr><td>Name</td><td><input class='pptp_name' name='pptp_name' value=''></td></tr>  <tr><td>Server</td><td><input class='pptp_server' name='pptp_server' value=''></td></tr> <tr><td>Username</td><td><input class='pptp_username' name='pptp_username' value='' ></td></tr> <tr><td>Password</td><td><input class='pptp_password' name='pptp_password' type='password' value='' ></td></tr></tbody></table><br><input type='button' value='Connect' name='connect' class='connect' ><input type='button' value='Disconnect' name='disconnect' class='disconnect'><input type='button' value='Save' name='save_edit' class='save_edit'></div>")
+// 		$('#vpn_clients').accord("refresh").accord("newItem").accord({ active: -1, static: false}); 
+// 	}
 
 
 </script>
