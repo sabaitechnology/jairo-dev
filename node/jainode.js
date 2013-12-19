@@ -58,14 +58,16 @@ function loadConfig(){
 //USE THIS LATER TO UPDATE CONFIG FILE
 function save(socket, cdata) {
 	var stuffIsaved = [];
-	var msgContent 	= JSON.parse(cdata.cmsg);
-
+	// Turn cmsg into JSON object
+	var msgContent = JSON.parse(cdata.cmsg);
+//	console.log(JSON.stringify(msgContent, null, 2));
+	// Marshall elements to be saved and count them
 	for (var i in msgContent) {
 		//Turn section_prop => section.prop so we can drill into etc.js json object
 		stuffIsaved.push( i.replace("_",".") )
 	}
-
 	//if the client hasn't sent anything
+	// Do nothing if there are no elements to save
 	if (stuffIsaved.length < 1) {
 		socket.emit('sdata', {
 			smsg: 'Nothing to save.'
@@ -73,6 +75,7 @@ function save(socket, cdata) {
 		return;
 	}
 
+	// Load config and check if it loaded correctly.
 	//(loadConfig returns etc as status report)
 	var etc = loadConfig();
 	// if the server can't read the config file
