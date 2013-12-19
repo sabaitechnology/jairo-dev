@@ -4,68 +4,89 @@
 		Restrict origins if possible
 */
 
-//include some built-in modules:
-var fs = require('fs');
-var util = require('util');
-var io = require('socket.io').listen(31400, {
-	"log level": 1,
-	"origins": "*:80"
+
+//INCLUDE BUILT IN MODULES:
+var fs 		= require('fs');
+var util 	= require('util');
+var io 		= require('socket.io').listen(31400, {
+		"log level": 1,
+		"origins": "*:80"
 });
 
-function error(socket, msg){
-	if(socket){
+// FTR, HERE'S HOW TO INCLUDE MY OWN MODULE
+// var Do_sed = require('./sed.js');
+// TO USE IT
+// Do-sed.function()
+
+
+
+//USE THIS LATER TO CHECK FOR ERRORS
+//(including socket allows us to use socket.emit, etc.)
+function error(socket, msg) {
+	if(socket) {
 		socket.emit('sdata', {
 			smsg: 'Error: '+ msg +'.'
 		});
-	}else{
+	}else {
 		console.log(msg);
 	}
 }
 
+
+
+//USE THIS LATER TO READ ETC FILE
 function loadConfig(){
 	var etc = false;
-	try{
-		etc = JSON.parse(fs.readFileSync("../apps/basicNetwork/etc.js"))
+	//attempt to parse etc.js into an editable object
+	try {
+			etc = JSON.parse(fs.readFileSync("../apps/basicNetwork/etc.js"))
 	}
-	catch(e){
-		console.log(util.inspect(e, {depth:null}))
-		/*
-			To throw or not to throw?
-			Throwing this crashes our node.js instance.
-		*/
-//		throw(e);
+	//if no luck, tell me why it can't be parsed
+	catch(e) {
+			console.log(util.inspect(e, {depth:null}))
+			/*
+				To throw or not to throw?
+				Throwing this crashes our node.js instance.
+			*/
+			//throw(e);
 	}
 	return etc;
 }
 
-// include my module: 
-// var Do_sed = require('./sed.js');
 
-function save(socket, cdata){
+
+//USE THIS LATER TO UPDATE CONFIG FILE
+function save(socket, cdata) {
 	var stuffIsaved = [];
-	var msgContent = JSON.parse(cdata.cmsg);
-//	console.log(JSON.stringify(msgContent, null, 2));
-	for(var i in msgContent){
+	var msgContent 	= JSON.parse(cdata.cmsg);
+
+	for (var i in msgContent) {
+		//Turn section_prop => section.prop so we can drill into etc.js json object
 		stuffIsaved.push( i.replace("_",".") )
 	}
-	if( stuffIsaved.length < 1 ){
+
+	//if the client hasn't sent anything
+	if (stuffIsaved.length < 1) {
 		socket.emit('sdata', {
 			smsg: 'Nothing to save.'
 		});
 		return;
 	}
-	var etc = loadConfig()
-	if(etc!==false){
+
+	//(loadConfig returns etc as status report)
+	var etc = loadConfig();
+	// if the server can't read the config file
+	if (etc==false) {
 		error(socket, "Config file failed to load.")
 		return;
 	}
 
-// Set config object values
-// Save config to file
-// Call/queue config section callbacks
+// Set config object values (this should call a predefined function: setEtc() { for each item in stuffIsaved, etc.[i]=i.val()})
+// Save config to file (this should call a predefined function: writeEtc() {fs.writefileSync}
+// Call/queue config section callbacks (this updates config files)
 
 
-// Send appropriate messages
+// let client know we're done
 	socket.emit('sdata', {
 		smsg: 'Saved configuration messages for "'+ stuffIsaved.join(',') +'".'
 	});
@@ -74,19 +95,25 @@ function save(socket, cdata){
 
 
 io.sockets.on('connection', function(socket){
-//	socket.emit('sdata', { smsg: 'Connected.' }); // sends message to client signaling connection established
+// send message to client signaling connection established
+//	socket.emit('sdata', { smsg: 'Connected.' }); 
 
-	socket.on('cdata', function(cdata){		// Binds handler for receiving client messages
+	// handler for receiving client messages
+	socket.on('cdata', function(cdata){		
 
 		// When a message from the client arrives, send a receipt message; this is really for debugging - uses noty!
 //		socket.emit('sdata', { smsg: 'I received your message: "'+ cdata.cmsg +'".'});
 		
+
+		console.log(JSON.stringify(cdata, null, 2));
+
 		// This switch figures out what section has been modified, then modifies appropriate files
-
-console.log(JSON.stringify(cdata, null, 2));
-
 		switch (cdata.cmsgType) {
-			case 'save':{ save(socket, cdata); break; }
+			case 'save':
+				{ 
+					save(socket, cdata); 
+					break; 
+				}
 
 			case 'staticips':
 		  	//this is how you get information from interface
