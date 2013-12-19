@@ -43,17 +43,21 @@ function loadConfig(){
 
 function save(socket, cdata){
 	var stuffIsaved = [];
+	// Turn cmsg into JSON object
 	var msgContent = JSON.parse(cdata.cmsg);
 //	console.log(JSON.stringify(msgContent, null, 2));
+	// Marshall elements to be saved and count them
 	for(var i in msgContent){
 		stuffIsaved.push( i.replace("_",".") )
 	}
+	// Do nothing if there are no elements to save
 	if( stuffIsaved.length < 1 ){
 		socket.emit('sdata', {
 			smsg: 'Nothing to save.'
 		});
 		return;
 	}
+	// Load config and check if it loaded correctly.
 	var etc = loadConfig()
 	if(etc!==false){
 		error(socket, "Config file failed to load.")
