@@ -75,7 +75,12 @@ $.widget( "jai.editablelist", $.ui.sortable, {
   var fid = this.options.fid;
   var fixed = this.options.fixed;
   $(this.element).addClass("editableList");
-  $(this.element).append( $.map( ( a||[''] ),function(v,i){ return "<li><input class='editableFormComplement' type='hidden' name='"+ fid +"[]' value='"+ v +"'><span class='editableListText'>"+ v +"</span>"+(fixed?'':"<a class='deleteX'>X</a>")+"</li>"; }) );
+  $(this.element).append( $.map( ( a||[''] ),function(v,i){
+    return $(document.createElement('li'))
+    .append( $(document.createElement('input')).addClass("editableFormComplement").prop("type","hidden").prop("name",fid+"[]").val(v) )
+    .append( $(document.createElement('span')).addClass("editableListText").html(v) )
+    .append( (fixed ? null : $(document.createElement('a').addClass("deleteX").html("X")) ) )
+  }));
   if(!fixed) $(this.element).find('.deleteX').click(function(event){ $(event.target).parent().remove(); });
   $(this.element).find('.editableListText').editable(function(value, settings){
     if(!fixed) if(value==''){ $(this).parent().remove(); };
