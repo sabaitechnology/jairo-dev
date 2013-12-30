@@ -2,10 +2,12 @@
 <div class='pageTitle'>VPN: Clients</div>
 
 <br>
-<div id="vpn_clients">
-<!-- filled with accordion plugin + ajax request-->
-</div>
 
+<div>BEGIN</div>
+<div id="vpn_clients"></div>
+
+<pre id="testing"></pre>
+<div>END</div>
 
 <link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <style type='text/css'>
@@ -53,26 +55,59 @@
 
 // To create a jQuery Widget we invoke the widget constructor $.widget
 // It takes three arguments:
-//		the widget we're creating ("jai.widgetlist" in this case)
-//		the base widget it inherits from (can be "jQuery.Widget", the generic widget)
-//		the prototype, which is the object those properties override the base
+//		- the widget we're creating ("jai.widgetlist" in this case)
+//		- the base widget it inherits from (can be "jQuery.Widget", the generic widget)
+//		- the prototype, which is the object those properties override the base
 
 $.widget("jai.widgetlist", $.ui.sortable, {
 
 // _create should minimally:
-//		) set any necessary CSS on existing HTML elements
-//		) create or prepare the base HTML element: for instance, if the base is a table and the element
+//		- set any necessary CSS classes on existing HTML elements
+//			(all css that can be written in an external file should be;
+//			 only dynamic properties like display should be directly set)
+//		- create or prepare the base HTML element: for instance, if the base is a table and the element
 //			on which the constructor is called is a div, the constructor should create a table inside the div
 //			and set that table as the widget's element; but if called on a table, it should treat that table
 //			as the widget's element, not create a table inside of it
-//		) fully construct the internal HTML of the widget
-//		) attach any event listeners for HTML elements
-//		) attach and initialize any data for the widget using jQuery's $(element).data() function (http://api.jquery.com/data/)
+//		- fully construct the internal HTML of the widget
+//		- attach any event listeners for HTML elements
+//		- attach and initialize any data for the widget using jQuery's $(element).data() function (http://api.jquery.com/data/)
 	_create: function(){
-//	the base element for our list is a ul, so if we are passed another type of element we first create a ul in it then
-// set that as our widget's base element
+//	the base element for our list is a ul, so if we are passed another type of element we
+//		- create a ul in it
+//		- reassign the element's id and rename the element with a new id
+//		- call our widget's constructor on that
+		if(!$(this.element).is("ul")){
+			var baseElementID = $(this.element).attr('id');
+			var baseElement = document.createElement('ul');
+			$(this.element).append(baseElement).attr('id', baseElementID +'-base');
+			$(baseElement).attr('id', baseElementID).widgetlist(this.options);
+		}else{
+//	apply the widgetlist style
+			this.element.addClass('jai-widgetlist');
+//	store a local copy of the element's id for later use (this will come in handy later)
+//			this.options.fid = this.element.attr('id');
+			if(this.options.makeItem){
+				this.makeItem = this.options.makeItem;
+			}
+//	now we call our function for adding list items in bulk on the list we supplied
+		$(this.element).append(
+			$.map(this.options.list,this.makeItem)
+			);
 
 
+//			$.map(this.options.list,this.addItem);
+//	this widget inherits from ui.sortable, so we need to call its constructor to finish up
+//			this._super();
+		}
+	},
+//	the default function for adding an item
+//	this function builds an item for the list; we will modify it for most lists
+	makeItem: function(item){
+		return $(document.createElement('li')).html(item);
+	},
+	addItem: function(item){
+		$(this.element).append( this.makeItem(item) );
 	}
 
 });
@@ -81,7 +116,7 @@ $.widget( "jai.neweditablelist", $.ui.sortable, {
  _create: function(){
   this.element.addClass('editableList');
   this.options.fid = this.element.attr('id');
-  this.makeItem = this.options.
+//  this.makeItem = this.options.
   
   this.addItems(this.options.list);
 
@@ -120,7 +155,7 @@ $.widget( "jai.neweditablelist", $.ui.sortable, {
 });
 
 
-function makeSlideListRowHere(e,i){
+function vpnInfoRow(e,i){
 	return $(document.createElement('div')).addClass('slideListRow')
 		.append( $(document.createElement('div')).addClass('slideListContent')
 			.append( $(document.createElement('span')).addClass('slideListRowTitle').html(e.name) )
@@ -133,22 +168,9 @@ function makeSlideListRowHere(e,i){
 
 }
 
-function makeSlideList(slideListElement, slideList, makeSlideListRow){
-	$(slideListElement).addClass("slideList")
-	$(slideListElement).append( $.map( (slideList||['']), makeSlideListRow ));
-}
-
 	//do this on document load
 	$(function(){
-		$('#vpn_clients').widgetlist({ list: pptp,  })
-
-//		makeSlideList("#vpn_clients", pptp, makeSlideListRowHere);
-
-		$('input[type=password]').each(function(i, e){
-			$(e).focus(function(){ $(this).prop('type', 'text'); })
-			$(e).blur(function(){ $(this).prop('type', 'password'); })
-//			$(e).keydown(function(event){ if(event.keyCode == 13){ $(this).prop('type', 'password'); } })
-		});
+		$('#vpn_clients').widgetlist({ list: pptp, makeItem: vpnInfoRow })
 
 	});
 
