@@ -69,7 +69,14 @@ DDNS: { ip, interval, services }
 	$('#dns_servers').oldeditablelist({ list: dns.servers, fixed: true })
 
 	$('#save').click( function() {
-    toServer(JSON.stringify($('#fe').serialize()), 'wan');
+    // toServer(JSON.stringify($('#fe').serialize()), 'wan');
+    var rawForm = $('#fe').serializeArray()
+    var pForm = {}
+    for(var i in rawForm){
+      pForm[ rawForm[i].name ] = rawForm[i].value;
+    }
+    //$('#testing').html( JSON.stringify(pForm) )
+    toServer(pForm, 'save');
   }); 
 
 //$(function(){});

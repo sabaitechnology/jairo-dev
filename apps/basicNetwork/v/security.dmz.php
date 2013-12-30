@@ -13,8 +13,8 @@
 			</div>
 		</label>
 		<table>
-		 	<tr><td>Destination Address</td> <td><input id='destination' name='destination'></input><td></tr>
-		 	<tr><td>Source Address Restriction</td> <td> <input name='restriction' disabled></input> </td></tr>
+		 	<tr><td>Destination Address</td> <td><input id='dmz_destination' name='dmz_destination'></input><td></tr>
+		 	<tr><td>Source Address Restriction</td> <td> <input name='dmz_drestriction' disabled></input> </td></tr>
 		</table>
 		<div><span class='xsmallText'>
 			(optional; ex: "1.1.1.1", "1.1.1.0/24", "1.1.1.1 - 2.2.2.2" or "me.example.com")

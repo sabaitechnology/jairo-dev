@@ -89,12 +89,24 @@
     </table>
   </div>
 </div>
+<input type='button' id='save' value='Save'>
 
 
 <script type='text/ecmascript' src='php/etc.php?q=wl&n=0'></script>
 <script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
+  $('#save').click( function() {
+    var rawForm = $('#fe').serializeArray()
+    var pForm = {}
+    for(var i in rawForm){
+      pForm[ rawForm[i].name ] = rawForm[i].value;
+    }
+    // if(!pForm['dhcp_on']) pForm['dhcp_on'] = 'off'
+//    $('#testing').html( JSON.stringify(pForm) )
+    toServer(pForm, 'save');
+  }); 
+  
 // $(function() {
 
   $('#wl0_security').change(function(){
