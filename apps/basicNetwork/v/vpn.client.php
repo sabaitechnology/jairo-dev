@@ -51,15 +51,46 @@
 <script type='text/ecmascript' src='php/etc.php?q=pptp'></script>
 <script type='text/ecmascript'>
 
-$.widget( "jai.editablelist", $.ui.sortable, {
+// To create a jQuery Widget we invoke the widget constructor $.widget
+// It takes three arguments:
+//		the widget we're creating ("jai.widgetlist" in this case)
+//		the base widget it inherits from (can be "jQuery.Widget", the generic widget)
+//		the prototype, which is the object those properties override the base
+
+$.widget("jai.widgetlist", $.ui.sortable, {
+
+// _create should minimally:
+//		) set any necessary CSS on existing HTML elements
+//		) create or prepare the base HTML element: for instance, if the base is a table and the element
+//			on which the constructor is called is a div, the constructor should create a table inside the div
+//			and set that table as the widget's element; but if called on a table, it should treat that table
+//			as the widget's element, not create a table inside of it
+//		) fully construct the internal HTML of the widget
+//		) attach any event listeners for HTML elements
+//		) attach and initialize any data for the widget using jQuery's $(element).data() function (http://api.jquery.com/data/)
+	_create: function(){
+//	the base element for our list is a ul, so if we are passed another type of element we first create a ul in it then
+// set that as our widget's base element
+
+
+	}
+
+});
+
+$.widget( "jai.neweditablelist", $.ui.sortable, {
  _create: function(){
   this.element.addClass('editableList');
   this.options.fid = this.element.attr('id');
+  this.makeItem = this.options.
+  
   this.addItems(this.options.list);
+
   if(!this.options.fixed) $(this.element).after("<br><input type='button' value='Add' onclick='$(\"#"+ this.options.fid +"\").editablelist(\"addItems\")'>");
   this._super();
  },
- addItems: function(a){ if(a==null) a = false;
+ addItems: function(a){
+
+  if(a==null) a = false;
   var fid = this.options.fid;
   var fixed = this.options.fixed;
   $(this.element).addClass("editableList");
@@ -78,6 +109,7 @@ $.widget( "jai.editablelist", $.ui.sortable, {
   );
   if($(this.element).data('sortable')) $(this.element).sortable('refresh');
   if(!a) $(this.element).last().children().last().children('.editableListText').trigger('dblclick');
+ 
  },
  options: {
   forcePlaceholderSize: true,
@@ -104,16 +136,13 @@ function makeSlideListRowHere(e,i){
 function makeSlideList(slideListElement, slideList, makeSlideListRow){
 	$(slideListElement).addClass("slideList")
 	$(slideListElement).append( $.map( (slideList||['']), makeSlideListRow ));
-	// $(this.element).append( $.map( slideList, function(e,i){
-	// 	return $(document.createElement('div')).html('Text!')
-	// } ));
-//	$.each(slideList, function(index, slideListMember){ $(slideListElement).append(makeSlideListRow(slideListMember)) });
-
 }
 
 	//do this on document load
 	$(function(){
-		makeSlideList("#vpn_clients", pptp, makeSlideListRowHere);
+		$('#vpn_clients').widgetlist({ list: pptp,  })
+
+//		makeSlideList("#vpn_clients", pptp, makeSlideListRowHere);
 
 		$('input[type=password]').each(function(i, e){
 			$(e).focus(function(){ $(this).prop('type', 'text'); })

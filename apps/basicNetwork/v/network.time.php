@@ -52,7 +52,7 @@
     })
   }
 
-  $('#ntp_servers').editablelist({ list: ntp.servers });
+  $('#ntp_servers').oldeditablelist({ list: ntp.servers });
 
   function logEvent(event,ui){ 
     $('#demo').append( event.type +'\n' ); 

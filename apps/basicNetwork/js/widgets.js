@@ -63,7 +63,7 @@ $.widget( "jai.hidespinner", $.ui.spinner, {
  }
 });
 
-$.widget( "jai.editablelist", $.ui.sortable, {
+$.widget( "jai.oldeditablelist", $.ui.sortable, {
  _create: function(){
   this.element.addClass('editableList');
   this.options.fid = this.element.attr('id');

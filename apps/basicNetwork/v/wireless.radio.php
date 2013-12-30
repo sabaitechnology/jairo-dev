@@ -131,7 +131,7 @@
 
   $('#wl0_wpa_rekey').spinner({ min: 0, max: 525600 }).spinner('value',wl[0].wpa.rekey);
 
-  $('#wl0_wep_keys').editablelist({ list: wl[0].wep.keys, fixed: true });
+  $('#wl0_wep_keys').oldeditablelist({ list: wl[0].wep.keys, fixed: true });
 
   //$('#wanmtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
   //$('#wanmac').val(wan.mac);
