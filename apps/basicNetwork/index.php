@@ -73,7 +73,6 @@ if(typeof(io) != 'undefined'){
 }else{
 	$(function(){
 		noty({ text: "We are nodeless!" });
-//	alert('We have no nodes!');
 	})
 //	We may want a Jainode indicator somewhere on page, though mostly we just want to know when we're connected for our own sakes.
 //	IE, do we send the information via jn.emit, or do we perform an ajax call, or do we post it?

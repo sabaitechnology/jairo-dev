@@ -146,6 +146,8 @@
 	</tbody></table></div>
 
 </div> <!-- end accordion -->
+<br>
+<input type='button' value='Save' id='save'>
 
 
 <script type='text/ecmascript' src='php/etc.php?q=conntrack'></script>

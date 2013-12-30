@@ -27,7 +27,9 @@
       "eth3",
       "eth4",
       "eth5"
-    ]
+    ],
+    "ip": "10.0.0.1",
+    "mask": "255.255.255.0"
   },
   "ntp": {
     "servers": [
@@ -45,7 +47,24 @@
     "on": false,
     "lower": "10.0.0.100",
     "upper": "10.0.0.199",
-    "lease": 86400
+    "lease": 86400,
+    "static": [
+      {
+        "hostname": "abc",
+        "mac": "08:00:07:26:C0:A5",
+        "ip": "10.0.134.90"
+      },
+      {
+        "hostname": "def",
+        "mac": "08:00:07:26:C0:A6",
+        "ip": "10.0.134.91"
+      },
+      {
+        "hostname": "ghi",
+        "mac": "08:00:07:26:C0:A7",
+        "ip": "10.0.134.92"
+      }
+    ]
   },
   "wl": [
     {
@@ -117,7 +136,7 @@
       "server": "203.54.1.20",
       "user": "chinacat",
       "password": "meowmeow",
-      "name": ""
+      "name": "kitty"
     },
     {
       "server": "42.2.2.2",

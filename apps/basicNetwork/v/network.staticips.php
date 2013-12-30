@@ -13,7 +13,7 @@
 	<div class='controlBoxContent'>
 		<table id='dhcp_static' class='listTable'></table>
 		<input type='button' value='Add' id='add'>
-    <input type='button' value='Save' onclick='saveStatic();'>
+   	<input type='button' value='Save' onclick='saveStatic();'>
     <input type='button' value='Cancel' onclick='cancelStatic();'>
 		<span class='xsmallText'>(Double-Click Fields to Edit)</span>
 	</div>
@@ -64,8 +64,20 @@
 	function saveStatic(){
 		var oTable = $('#dhcp_static').dataTable();
 		var data = oTable.fnGetData()
-		$('#testing').html("~"+data+"~")
-		toServer({ dhcp_static: data }, 'save');
-	};
+	// 	console.log(data)
+	// 	$('#testing').html("~"+data[0].hostname+"~")
+	// 	toServer({ dhcp_static: data }, 'save');
+	// };
+
+    // var pForm = {}
+    // for(var i in data){
+    //   pForm[ rawForm[i].name ] = rawForm[i].value;
+    // }
+    // if(!pForm['dhcp_on']) pForm['dhcp_on'] = 'off'
+//    $('#testing').html( JSON.stringify(pForm) )
+    toServer(data, 'save');
+}
+
+
 
 </script>
