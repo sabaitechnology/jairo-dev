@@ -13,9 +13,6 @@
 <img id='wizard' class='noshow' src="http://incogman.net/wp-content/uploads/2010/12/MAN-BEHIND-CURTAIN-SMALL.jpg">
 <p class='noshow'>Pay no attention to that man behind the curtain</p>
 
-
-<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
-<script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script type='text/ecmascript' src='php/etc.php?q=openvpn'></script>
 <script type='text/ecmascript'>
 

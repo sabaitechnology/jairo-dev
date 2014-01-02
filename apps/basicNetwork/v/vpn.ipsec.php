@@ -6,9 +6,6 @@
 <!-- filled with accordion plugin + ajax request-->
 </div>
 
-
-<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
-<script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script type='text/ecmascript' src='php/etc.php?q=ipsec'></script>
 <script type='text/ecmascript'>
 

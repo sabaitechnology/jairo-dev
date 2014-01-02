@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <div class='pageTitle'>Security: Conntrack</div>
 <!-- TODO: onchange make input visible-->
 
