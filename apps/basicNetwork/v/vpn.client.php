@@ -6,6 +6,7 @@
 <div>BEGIN</div>
 <div id="vpn_clients"></div>
 
+<pre id="testingData"></pre>
 <pre id="testing"></pre>
 <div>END</div>
 
@@ -53,7 +54,6 @@
 
 
 </style>
-<script type='text/ecmascript' src='js/globalize.js'></script>
 <script type='text/ecmascript' src='php/etc.php?q=pptp'></script>
 <script type='text/ecmascript'>
 
@@ -90,10 +90,6 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 //	apply the widgetlist style
 			this.element.addClass("jai-widgetlist");
 			if(!this.options.fixed){
-// 				$(this.element).after("<br>"
-// +"<input type='button' value='Add' "
-// +"onclick='$(\"#"+ this.options.fid +"\").editablelist(\"addItems\")'>"
-// 				);
 				var fid = this.element.attr("id");
  				$(this.element).after(
  					$(document.createElement("input"))
@@ -104,7 +100,6 @@ $.widget("jai.widgetlist", $.ui.sortable, {
  							$("#"+ $(this).data("widgetListID")).widgetlist("addItem");
  						})
  				);
-
 			}
 // //	store a local copy of the element's id for later use (this will come in handy later)
 //			this.options.fid = this.element.attr('id');
@@ -112,14 +107,15 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 				this.makeItem = this.options.makeItem;
 			}
 //	now we add an item for each element of the list
-			$.map(this.options.list, this.makeItem, this );
-
-
+			$.map(this.options.list, this.makeItem, this);
 //	this widget inherits from ui.sortable, so we need to call its constructor to finish up
 			this._super();
+
+//			this.MARGIN = "ABDCEGF";
+//			$("#testingData").html( "WidgetList: "+ JSON.stringify( $(this.element) ) );
+//			$("#testing").html( "ParentWidgetData: "+ JSON.stringify( $(this.element).data("widgetlist") ) );
 		}
 	},
-//	the default function for adding an item
 //	 this function builds an item for the list; we will modify it for most lists
 //	 by default it creates a widget for each element of the list,
 //	  treating each element as the options for the widget
@@ -139,26 +135,33 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 				.appendTo(parentWidget.element)
 				[parentWidget.options.widgetType](
 					$.extend({
-//						parentWidget: parentWidget,
-						parentRefresh: parentWidget.refresh,
+						parentWidgetID: $(parentWidget.element).attr("id"),
 						parentFixed: parentWidget.options.fixed,
 					}, item)
 				);
 		}
 	},
+//	the default function for adding an item
  	addItem: function(){
 //		$(this.makeItem({ editing: true },-1,this))[this.options.widgetType]("editing")
 		this.makeItem({ editing: true },-1,this);
 		this.refresh();
  	},
+ 	dumbTest: function(){
+ 		$("#testing").html( "Updated!" + (new Date()) )
+ 	},
+ 	dumbVar: "10101",
  	options: {
  		fixed: false,
  	}
 });
 
-$.widget("jai.vpnclient", {
+$.widget("jai.vpnclient", jQuery.Widget,{
 	_create: function(){
 		this.options.idString = this.options.name.replace(" ","_");
+
+		$("#testingData").append("PWID: "+ this.options.parentWidgetID +", THISID: " +this.options.idString +"\n");
+
 		if(this.options.parentWidget !== "Undefined") this.options.deletable = this.options.deletable && (!this.options.parentFixed);
 		if(this.options.editing && !this.options.name) this.options.name = "New Client";
 		this.element
@@ -178,13 +181,25 @@ $.widget("jai.vpnclient", {
 		$('#testing').html( "Editing!" + (new Date()) );
 	},
 	removeMe: function(){
+//		$('#testing').html( $(this.element).attr("id") );
 		var removeID = $(this).data("widgetID");
-//		var removeParent = $(removeID).vpnclient("option","parentWidget");
-		$(removeID).remove();
+//		var postRefresh = $(removeID).vpnclient("option","parentRefresh");
+		$('#testing').html( "ID: "+ removeID +"\n"+ JSON.stringify( $(removeID).vpnclient("options") ) );
+//		postRefresh();
+//		$('#testing').html( ""+ JSON.stringify( $(removeID).vpnclient("option", "parentWidget") ) );
+
+		// $('#testing').html(
+		//  "WidgetListItem: "+ JSON.stringify( $('#'+ removeID) ) +"\n"
+		//  +"D: "+ JSON.stringify( $(removeParent) ) +"\n"
+		//  +"WidgetListItemParent: ("+ removeParent +")"
+		//  // + JSON.stringify( $('#'+ removeParent) )
+		// );
+//		$('#'+ removeID).remove();
+//		$('#'+ removeID)
 //		$(removeID).option.parentRefresh();
 //		$(removeID).
 //		$(this).remove()
-		// $('#testing').html( $(this).data("widgetID") );
+//		$('#testing').html( "ParentWidgetID: "+ $(removeParent).option("fixed") );
 		// $('#testing').html( JSON.stringify(  );
 //		$('#testing').html( JSON.stringify( $("#"+ $(this).data("widget").attr("id") ) ) );
 //		var parentWidget = $( $(this).data("widget") ).option("parentWidget");

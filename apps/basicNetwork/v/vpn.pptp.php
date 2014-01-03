@@ -7,7 +7,6 @@
 <!-- filled with accordion plugin + ajax request-->
 </div>
 
-<script type='text/ecmascript' src='js/globalize.js'></script>
 <script type='text/ecmascript' src='php/etc.php?q=pptp'></script>
 <script type='text/ecmascript'>
 

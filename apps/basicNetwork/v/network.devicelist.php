@@ -20,8 +20,6 @@
 	</div>
 </div>
 
-
-<script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
 <script type='text/ecmascript'>
 	
 	$('#list').dataTable({

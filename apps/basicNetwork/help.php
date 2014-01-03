@@ -158,7 +158,7 @@
 </div>
 
 
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
+<script type='text/ecmascript' src='/libs/jeditable.js'></script>
 <script type='text/ecmascript'>
 
 // $(function() {
