@@ -51,6 +51,9 @@ DDNS: { ip, interval, services }
 	</div>
 </div>
 <input type='button' value='Save' id='save'>
+<pre id='testing'>
+</pre>
+
 
 
 <script type='text/ecmascript' src='php/etc.php?q=wan,dns'></script>
@@ -69,13 +72,12 @@ DDNS: { ip, interval, services }
 	$('#dns_servers').editablelist({ list: dns.servers, fixed: true })
 
 	$('#save').click( function() {
-    // toServer(JSON.stringify($('#fe').serialize()), 'wan');
     var rawForm = $('#fe').serializeArray()
     var pForm = {}
     for(var i in rawForm){
       pForm[ rawForm[i].name ] = rawForm[i].value;
     }
-    //$('#testing').html( JSON.stringify(pForm) )
+    $('#testing').html( $('#fe').serializeArray()[0] )
     toServer(pForm, 'save');
   }); 
 
