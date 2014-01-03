@@ -93,7 +93,6 @@
 
 
 <script type='text/ecmascript' src='php/etc.php?q=wl&n=0'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
   $('#save').click( function() {
@@ -143,7 +142,7 @@
 
   $('#wl0_wpa_rekey').spinner({ min: 0, max: 525600 }).spinner('value',wl[0].wpa.rekey);
 
-  $('#wl0_wep_keys').editablelist({ list: wl[0].wep.keys, fixed: true });
+  $('#wl0_wep_keys').oldeditablelist({ list: wl[0].wep.keys, fixed: true });
 
   //$('#wanmtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
   //$('#wanmac').val(wan.mac);

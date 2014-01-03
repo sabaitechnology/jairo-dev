@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
 <div class='pageTitle'>Security: Conntrack</div>
 <!-- TODO: onchange make input visible-->
 
@@ -151,7 +150,6 @@
 
 
 <script type='text/ecmascript' src='php/etc.php?q=conntrack'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
 $(function() {

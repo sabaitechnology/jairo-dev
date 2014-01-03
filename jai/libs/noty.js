@@ -1,0 +1,1 @@
+current/jquery.noty-2.2.0.min.js

@@ -113,7 +113,7 @@ DDNS: { ip, interval, services }
 <script type='text/ecmascript' src='php/etc.php?q=wan,dns'></script>
 <script type='text/ecmascript' src='js/globalize.js'></script>
 <script type='text/ecmascript' src='js/time.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
+<script type='text/ecmascript' src='/libs/jeditable.js'></script>
 <script type='text/ecmascript'>
 
 $(function(){

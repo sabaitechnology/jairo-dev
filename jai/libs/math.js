@@ -35,6 +35,3 @@ function padString(pad, length){ var padstr = ''; while(length-->0){ padstr += p
 
 function mac2long(value){ return ( (typeof value === "string") ? parseInt(value.replace(/:/g,''),16) : value ); }
 function long2mac(value){ var v = value.toString(16); return (padString('0',12-v.length) + v).match(/.{0,2}/g).slice(0,-1).join(':'); }
-
-
-

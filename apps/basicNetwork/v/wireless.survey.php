@@ -53,8 +53,6 @@
   </div> <!--end control box content -->
 </div> <!--end control box  -->
 
-<script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
 var lt =  $('#list').dataTable({

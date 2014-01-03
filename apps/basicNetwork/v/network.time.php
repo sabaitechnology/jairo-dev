@@ -32,9 +32,7 @@
 
 
 <script type='text/ecmascript' src='php/etc.php?q=ntp&time=current'></script>
-<script type='text/ecmascript' src='js/globalize.js'></script>
-<script type='text/ecmascript' src='js/time.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
+<script type='text/ecmascript' src='/libs/globalize.js'></script>
 <script type='text/ecmascript'>
 
   //function showZones(){ $('#ntp_zone_text').hide(); $('#ntp_zone_menu').show(); }
@@ -52,7 +50,7 @@
     })
   }
 
-  $('#ntp_servers').editablelist({ list: ntp.servers });
+  $('#ntp_servers').oldeditablelist({ list: ntp.servers });
 
   function logEvent(event,ui){ 
     $('#demo').append( event.type +'\n' ); 

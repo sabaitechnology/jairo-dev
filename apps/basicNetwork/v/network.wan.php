@@ -57,9 +57,6 @@ DDNS: { ip, interval, services }
 
 
 <script type='text/ecmascript' src='php/etc.php?q=wan,dns'></script>
-<script type='text/ecmascript' src='js/globalize.js'></script>
-<script type='text/ecmascript' src='js/time.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
 	$('#wan_mac').macspinner().macspinner('value',wan.mac);
@@ -69,7 +66,7 @@ DDNS: { ip, interval, services }
 	$('#wan_ip').ipspinner().ipspinner('value',wan.ip);
 	$('#wan_type').radioswitch({ value: wan.type, hasChildren: true });
 
-	$('#dns_servers').editablelist({ list: dns.servers, fixed: true })
+	$('#dns_servers').oldeditablelist({ list: dns.servers, fixed: true })
 
 	$('#save').click( function() {
     var rawForm = $('#fe').serializeArray()

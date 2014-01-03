@@ -22,10 +22,6 @@
   <div>
 </div>
 
-
-<script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.checkbox.js'></script>
 <script type='text/ecmascript' src='php/etc.php?q=portforwarding'></script>
 <script type='text/ecmascript'>
 

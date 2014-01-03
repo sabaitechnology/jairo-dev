@@ -1,5 +1,76 @@
 ;(function($) {
 
+	$.noty.layouts.top = {
+		name: 'top',
+		options: {},
+		container: {
+			object: '<ul id="noty_top_layout_container" />',
+			selector: 'ul#noty_top_layout_container',
+			style: function() {
+				$(this).css({
+					top: 0,
+					left: '5%',
+					position: 'fixed',
+					width: '90%',
+					height: 'auto',
+					margin: 0,
+					padding: 0,
+					listStyleType: 'none',
+					zIndex: 9999999
+				});
+			}
+		},
+		parent: {
+			object: '<li />',
+			selector: 'li',
+			css: {}
+		},
+		css: {
+			display: 'none'
+		},
+		addClass: ''
+	};
+
+	$.noty.layouts.bottomRight = {
+		name: 'bottomRight',
+		options: { // overrides options
+			
+		},
+		container: {
+			object: '<ul id="noty_bottomRight_layout_container" />',
+			selector: 'ul#noty_bottomRight_layout_container',
+			style: function() {
+				$(this).css({
+					bottom: 20,
+					right: 20,
+					position: 'fixed',
+					width: '310px',
+					height: 'auto',
+					margin: 0,
+					padding: 0,
+					listStyleType: 'none',
+					zIndex: 10000000
+				});
+
+				if (window.innerWidth < 600) {
+					$(this).css({
+						right: 5
+					});
+				}
+			}
+		},
+		parent: {
+			object: '<li />',
+			selector: 'li',
+			css: {}
+		},
+		css: {
+			display: 'none',
+			width: '310px'
+		},
+		addClass: ''
+	};
+
 	$.noty.themes.defaultTheme = {
 		name: 'defaultTheme',
 		helpers: {
@@ -154,3 +225,30 @@
 	};
 
 })(jQuery);
+
+$.noty.defaults = {
+	layout: 'bottomRight',
+	theme: 'defaultTheme',
+	type: 'alert',
+	text: '',
+	dismissQueue: true, // If you want to use queue feature set this true
+	template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+	animation: {
+		open: {height: 'toggle'},
+		close: {height: 'toggle'},
+		easing: 'swing',
+		speed: 500 // opening & closing animation speed
+	},
+	timeout: 1000, // delay for closing event. Set false for sticky notifications
+	force: false, // adds notification to the beginning of queue when set to true
+	modal: false,
+	maxVisible: 5, // you can set max visible notification for dismissQueue true option
+	closeWith: ['click'], // ['click', 'button', 'hover']
+	callback: {
+		onShow: function() {},
+		afterShow: function() {},
+		onClose: function() {},
+		afterClose: function() {}
+	},
+	buttons: false // an array of buttons
+};

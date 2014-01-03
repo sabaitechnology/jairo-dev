@@ -7,9 +7,6 @@
 <!-- filled with accordion plugin + ajax request-->
 </div>
 
-
-<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
-<script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
 <script type='text/ecmascript' src='php/etc.php?q=l2tp'></script>
 <script type='text/ecmascript'>
 //functions for dynamically added buttons

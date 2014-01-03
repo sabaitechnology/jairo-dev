@@ -1,8 +1,5 @@
 <!-- TODO: -->
 
-<link rel="stylesheet" href="/libs/jquery-ui.min.css" />
-<script type='text/ecmascript' src='/libs/jquery-ui.min.js'></script>
-
 <div class='pageTitle'>VPN: OpenVPN Server</div>
 
 <br>
