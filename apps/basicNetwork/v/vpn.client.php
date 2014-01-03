@@ -82,20 +82,38 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 //		- reassign the element's id and rename the element with a new id
 //		- call our widget's constructor on that
 		if(!$(this.element).is("ul")){
-			var baseElementID = $(this.element).attr('id');
-			var baseElement = document.createElement('ul');
-			$(this.element).append(baseElement).attr('id', baseElementID +'-base');
-			$(baseElement).attr('id', baseElementID).widgetlist(this.options);
+			var baseElementID = $(this.element).attr("id");
+			var baseElement = document.createElement("ul");
+			$(this.element).append(baseElement).attr("id", baseElementID +"-base");
+			$(baseElement).attr("id", baseElementID).widgetlist(this.options);
 		}else{
 //	apply the widgetlist style
-			this.element.addClass('jai-widgetlist');
+			this.element.addClass("jai-widgetlist");
+			if(!this.options.fixed){
+// 				$(this.element).after("<br>"
+// +"<input type='button' value='Add' "
+// +"onclick='$(\"#"+ this.options.fid +"\").editablelist(\"addItems\")'>"
+// 				);
+				var fid = this.element.attr("id");
+ 				$(this.element).after(
+ 					$(document.createElement("input"))
+ 						.prop("type","button")
+ 						.val("Add")
+ 						.data("widgetListID",this.element.attr("id"))
+ 						.click(function(){
+ 							$("#"+ $(this).data("widgetListID")).widgetlist("addItem");
+ 						})
+ 				);
+
+			}
 // //	store a local copy of the element's id for later use (this will come in handy later)
 //			this.options.fid = this.element.attr('id');
 			if(this.options.makeItem){
 				this.makeItem = this.options.makeItem;
 			}
 //	now we add an item for each element of the list
-			$.map(this.options.list, this.makeItem, this )
+			$.map(this.options.list, this.makeItem, this );
+
 
 //	this widget inherits from ui.sortable, so we need to call its constructor to finish up
 			this._super();
@@ -105,47 +123,85 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 //	 this function builds an item for the list; we will modify it for most lists
 //	 by default it creates a widget for each element of the list,
 //	  treating each element as the options for the widget
+//	Note: (important) All dependence between the widgetlist and the widgets in it
+//	 should be contained in this function (ie, delete buttons and such)
+//	 and the addItem function; this keeps the widgetlist widget definition clean
+//	 and allows individual widgets in the list to manage their own deletion/editing
 	makeItem: function(item, index, parentWidget){
 		if(!parentWidget.options.widgetType){
 			$(document.createElement('li'))
 				.appendTo(parentWidget.element)
 				.append(JSON.stringify(item))
 		}else{
-			$(document.createElement('li'))
+//	We're passing the fixed option and parent element to the widget constructor
+//	 so that it can add appropriate delete buttons and call the parent's update function
+			return $(document.createElement('li'))
 				.appendTo(parentWidget.element)
-				[parentWidget.options.widgetType](item);			
+				[parentWidget.options.widgetType](
+					$.extend({
+//						parentWidget: parentWidget,
+						parentRefresh: parentWidget.refresh,
+						parentFixed: parentWidget.options.fixed,
+					}, item)
+				);
 		}
-	}
-// 	addItem: function(item,index,parentWidget){
-// 		var listItem = $(document.createElement('li')).appendTo(parentWidget);
-
-// 		// $(parentWidget.element).append(
-// 		// 	$(document.createElement('li')).append(parentWidget.makeItem(item, index, ))
-// 		// );
-
-// //		$(this.element).append( this.makeItem(item) );
-// 	}
-
+	},
+ 	addItem: function(){
+//		$(this.makeItem({ editing: true },-1,this))[this.options.widgetType]("editing")
+		this.makeItem({ editing: true },-1,this);
+		this.refresh();
+ 	},
+ 	options: {
+ 		fixed: false,
+ 	}
 });
 
 $.widget("jai.vpnclient", {
 	_create: function(){
+		this.options.idString = this.options.name.replace(" ","_");
+		if(this.options.parentWidget !== "Undefined") this.options.deletable = this.options.deletable && (!this.options.parentFixed);
+		if(this.options.editing && !this.options.name) this.options.name = "New Client";
 		this.element
-		.append( $(document.createElement('div')).addClass('jai-vpnclient')
-			.append( $(document.createElement('span')).addClass('jai-vpnclient-name').html(this.options.name) )
-			.append( $(document.createElement('span')).addClass('jai-vpnclient-state').html('State').prop("id",this.options.name+"_info") )
-			.append( $(document.createElement('span')).addClass('fright')
-				.append( $(document.createElement('input')).addClass('inlineButton').prop("type","button").val("Connect") )
-				.append( $(document.createElement('input')).addClass('inlineButton').prop("type","button").val("Edit") )
+			.prop("id",this.options.idString)
+			.append( $(document.createElement('div')).addClass('jai-vpnclient')
+				.append( $(document.createElement('span')).addClass('jai-vpnclient-name').html(this.options.name) )
+				.append( $(document.createElement('span')).addClass('jai-vpnclient-state').html('State').prop("id",this.options.idString+"_info") )
+				.append( $(document.createElement('span')).addClass('fright')
+					.append( $(document.createElement('input')).addClass('inlineButton').prop("type","button").val("Connect") )
+					.append( ( this.options.editable ? $(document.createElement('input')).addClass('inlineButton').prop("type","button").val("Edit").data("widgetID",this.options.idString).click(this.editMe) : null ) )
+					.append( ( this.options.deletable ? $(document.createElement('input')).addClass('inlineButton').prop("type","button").val("Remove").data("widgetID",this.options.idString).click(this.removeMe) : null ) )
+				)
 			)
-		)
+		if(this.options.editing) this.editMe();
+	},
+	editMe: function(){
+		$('#testing').html( "Editing!" + (new Date()) );
+	},
+	removeMe: function(){
+		var removeID = $(this).data("widgetID");
+//		var removeParent = $(removeID).vpnclient("option","parentWidget");
+		$(removeID).remove();
+//		$(removeID).option.parentRefresh();
+//		$(removeID).
+//		$(this).remove()
+		// $('#testing').html( $(this).data("widgetID") );
+		// $('#testing').html( JSON.stringify(  );
+//		$('#testing').html( JSON.stringify( $("#"+ $(this).data("widget").attr("id") ) ) );
+//		var parentWidget = $( $(this).data("widget") ).option("parentWidget");
+//		var parentWidget = $(this).vpnclient("option","parentWidget");
+//		$(this.element).destroy();
+//		$('#testing').html( parentWidget );
+	},
+	options: {
+		deletable: true,
+		editable: true
 	}
-})
+});
 
 	//do this on document load
 	$(function(){
-		$('#vpn_clients').widgetlist({ list: pptp, widgetType: "vpnclient"
-		});
+//		$('#testing').html( JSON.stringify( $.jai.vpnclient.prototype.options ) );
+		$('#vpn_clients').widgetlist({ list: pptp, widgetType: "vpnclient" });
 	});
 
 // 	$('#vpn_clients').on('click', '.save_edit', function(){
