@@ -22,8 +22,6 @@
 <pre id='testing'>
 </pre>
 
-<script type='text/ecmascript' src='/libs/jquery.dataTables.min.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
 	var lt =  $('#dhcp_static').dataTable({

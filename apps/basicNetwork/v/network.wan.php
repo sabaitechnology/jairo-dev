@@ -54,9 +54,6 @@ DDNS: { ip, interval, services }
 
 
 <script type='text/ecmascript' src='php/etc.php?q=wan,dns'></script>
-<script type='text/ecmascript' src='js/globalize.js'></script>
-<script type='text/ecmascript' src='js/time.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.jeditable.min.js'></script>
 <script type='text/ecmascript'>
 
 	$('#wan_mac').macspinner().macspinner('value',wan.mac);

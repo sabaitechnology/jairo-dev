@@ -1,65 +1,38 @@
 <!DOCTYPE html><html><head>
 <title id='mainTitle'>Sabai Jai Ro</title>
-<!-- <link rel='stylesheet' type='text/css' href='/libs/jai.js'> -->
 
 <link rel='stylesheet' type='text/css' href='/libs/jqueryui.css'>
-<link rel='stylesheet' type='text/css' href='/libs/jquery.ui.menu.css'>
 <link rel='stylesheet' type='text/css' href='css/main.css'>
 
-<script type='text/ecmascript' src='/libs/jai.js'></script>
+<!-- <script type='text/ecmascript' src='/libs/jai.js'></script>
 <script type='text/ecmascript' src='/libs/jquery.js'></script>
 <script type='text/ecmascript' src='/libs/jqueryui.js'></script>
-<script src="/libs/jquery.mousewheel.js"></script>
+<script type='text/ecmascript' src="/libs/jquery.mousewheel.js"></script>
+
+<script type='text/ecmascript' src='/libs/datatables.js'></script>
+<script type='text/ecmascript' src='/libs/jeditable.js'></script>
+
+<script type="text/javascript" src="/libs/noty.js"></script>
+<script type="text/javascript" src="/libs/jquery.noty.jai.js"></script>
+<script type="text/javascript" src="/libs/math.js"></script>
+<script type="text/javascript" src="/libs/widgets.js"></script>
+ -->
+<script type="text/javascript" src="/libs.php"></script>
+
+<script type='text/ecmascript' src='js/main.js'></script>
 
 <!-- socket.io
-	We're making PHP give us a valid address for our server since this address will actually refer to the machine we're running on, which is different everywhere.
+	We're making PHP give us a valid address for our server since this address will actually refer
+	 to the machine we're running on, which is different everywhere.
 -->
 <script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
 
-<!-- noty stuff  -->
-<script type="text/javascript" src="/libs/jquery.noty.js"></script>
-<script type="text/javascript" src="/libs/top.js"></script>
-<script type="text/javascript" src="/libs/bottomRight.js"></script>
-<script type="text/javascript" src="/libs/default.js"></script>
-
-<!-- script type='text/ecmascript' src='/libs/jai.js'></script -->
-<script type='text/ecmascript' src='js/math.js'></script>
-<script type='text/ecmascript' src='js/widgets.js'></script>
-<script type='text/ecmascript' src='js/main.js'></script>
 <script type='text/ecmascript'>
-
-//noty settings 
-$.noty.defaults = {
-	layout: 'bottomRight',
-	theme: 'defaultTheme',
-	type: 'alert',
-	text: '',
-	dismissQueue: true, // If you want to use queue feature set this true
-	template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
-	animation: {
-		open: {height: 'toggle'},
-		close: {height: 'toggle'},
-		easing: 'swing',
-		speed: 500 // opening & closing animation speed
-	},
-	timeout: 1000, // delay for closing event. Set false for sticky notifications
-	force: false, // adds notification to the beginning of queue when set to true
-	modal: false,
-	maxVisible: 5, // you can set max visible notification for dismissQueue true option
-	closeWith: ['click'], // ['click', 'button', 'hover']
-	callback: {
-		onShow: function() {},
-		afterShow: function() {},
-		onClose: function() {},
-		afterClose: function() {}
-	},
-	buttons: false // an array of buttons
-};
+// noty settings -- moved to /libs/jquery.noty.jai.js
 
 /* BEGIN Jai node service */
 if(typeof(io) != 'undefined'){
 	var jn = io.connect('http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400'); //, { secure: true });
-
 //	Some examples
 //  jn.on('connect_failed', function(){});
 //  jn.on('error', function(){});
@@ -72,13 +45,20 @@ if(typeof(io) != 'undefined'){
 		noty({ text: sdata.smsg });
 	});
 }else{
-	$(function(){
-		noty({ text: "We are nodeless!" });
-	})
-//	We may want a Jainode indicator somewhere on page, though mostly we just want to know when we're connected for our own sakes.
+//	We may want a Jainode indicator somewhere on page, though mostly devs want to know when we're connected.
 //	IE, do we send the information via jn.emit, or do we perform an ajax call, or do we post it?
 //	$(function(){ noty({ text: "Jainode service unavailable." }); });
 }
+
+// Simple notification so we know we're connected or not.
+$(function(){
+	noty({ text: ( jn ? "We have nodes!" : "We are nodeless!" ) });
+})
+
+/*
+ Depending on whether the node service is available or not, we will want to define the toServer
+function differently; ie, if we can't send with sockets, can we sent via ajax? If not, can we send via post?
+*/
 
 function toServer(msg, msgType){ 
 	if(!jn){ 
