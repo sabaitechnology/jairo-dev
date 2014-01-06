@@ -2,10 +2,10 @@
 <title id='mainTitle'>Sabai Jai Ro</title>
 
 <link rel='stylesheet' type='text/css' href='/libs/jqueryui.css'>
+<link rel='stylesheet' type='text/css' href='/libs/jai-widgets.css'>
 <link rel='stylesheet' type='text/css' href='css/main.css'>
 
 <script type="text/javascript" src="/libs.php"></script>
-
 <script type='text/ecmascript' src='js/main.js'></script>
 
 <!-- socket.io
