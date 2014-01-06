@@ -4,19 +4,6 @@
 <link rel='stylesheet' type='text/css' href='/libs/jqueryui.css'>
 <link rel='stylesheet' type='text/css' href='css/main.css'>
 
-<!-- <script type='text/ecmascript' src='/libs/jai.js'></script>
-<script type='text/ecmascript' src='/libs/jquery.js'></script>
-<script type='text/ecmascript' src='/libs/jqueryui.js'></script>
-<script type='text/ecmascript' src="/libs/jquery.mousewheel.js"></script>
-
-<script type='text/ecmascript' src='/libs/datatables.js'></script>
-<script type='text/ecmascript' src='/libs/jeditable.js'></script>
-
-<script type="text/javascript" src="/libs/noty.js"></script>
-<script type="text/javascript" src="/libs/jquery.noty.jai.js"></script>
-<script type="text/javascript" src="/libs/math.js"></script>
-<script type="text/javascript" src="/libs/widgets.js"></script>
- -->
 <script type="text/javascript" src="/libs.php"></script>
 
 <script type='text/ecmascript' src='js/main.js'></script>

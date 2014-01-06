@@ -15,14 +15,14 @@ $files = array(
 
 header("Content-Type: text/ecmascript");
 
-//echo implode("\n\n", array_map("file_get_contents", $files) );
+echo implode("\n\n", array_map("file_get_contents", $files) );
 
-$newAccess=implode("", array_map("filemtime", $files));
-if( (!file_exists("libs/jaiCache.js")) || (!file_exists("libs/jaiCache.date")) || ($newAccess!=file_get_contents("libs/jaiCache.date")) ){
-	file_put_contents("libs/jaiCache.date", $newAccess);
-	file_put_contents("libs/jaiCache.js", implode("\n\n", array_map("file_get_contents", $files) ) );
-}
+// $newAccess=implode("", array_map("filemtime", $files));
+// if( (!file_exists("libs/jaiCache.js")) || (!file_exists("libs/jaiCache.date")) || ($newAccess!=file_get_contents("libs/jaiCache.date")) ){
+// 	file_put_contents("libs/jaiCache.date", $newAccess);
+// 	file_put_contents("libs/jaiCache.js", implode("\n\n", array_map("file_get_contents", $files) ) );
+// }
 
-readfile("libs/jaiCache.js");
+//readfile("libs/jaiCache.js");
 
 ?>
