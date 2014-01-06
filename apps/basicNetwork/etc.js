@@ -107,58 +107,31 @@
 			}
 		]
 	},
-	"vpn": {
-		"pptp": {
-			"server": "pptpvpn.sabaitechnology.com",
-			"username": "sabai",
-			"password": "sabaipass"
-		}
-	},
-	"pptp": [
+	"vpnclients": [
 		{
+			"type": "pptp",
 			"server": "203.54.1.20",
 			"user": "chinacat",
 			"password": "meowmeow",
 			"name": "kitty"
 		},
 		{
+			"type": "l2tp",
+			"server": "200.50.2.7",
+			"user": "someguy",
+			"password": "password",
+			"psk": "presharedkey",
+			"name": "Tokyo"
+		},
+		{
+			"type": "openvpn",
 			"server": "42.2.2.2",
 			"user": "topofspaghetti",
 			"password": "meatball",
 			"name": "New York"
-		},
-		{
-			"server": "200.50.2.7",
-			"user": "noyousir",
-			"password": "password",
-			"name": "Tokyo"
 		}
 	],
-	"openvpn": [
-		{
-			"server": "123.45.6.7",
-			"user": "jaiRo",
-			"password": "sabaiii",
-			"name": "Simpsonville",
-			"secret": "technology",
-			"certs": "accelerouter"
-		},
-		{
-			"server": "98.7.65.43",
-			"user": "tswift",
-			"password": "gettingback2gether",
-			"name": "Nashville",
-			"secret": "goatversion",
-			"certs": "never"
-		},
-		{
-			"server": "246.8.1.0",
-			"user": "fruitloops",
-			"password": "banana",
-			"name": "Farmville",
-			"secret": "apple",
-			"certs": "orange"
-		}
+	"vpnservers": [
 	],
 	"gateways": {
 		"default": "vpn",
