@@ -64,7 +64,7 @@ function loadConfig(){
 				To throw or not to throw?
 				Throwing this crashes our node.js instance.
 			*/
-			//throw(e);
+			// throw(e);
 	}
 	return etc;
 }

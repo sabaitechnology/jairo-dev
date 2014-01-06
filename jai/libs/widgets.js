@@ -131,3 +131,8 @@ $.widget( "jai.accord", $.ui.accordion, {
   }
 });
 
+//LAN PAGE WIDGETS
+
+// (currently on lan page)
+
+//END LAN PAGE WIDGETS
