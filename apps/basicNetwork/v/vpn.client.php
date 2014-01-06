@@ -3,16 +3,13 @@
 
 <br>
 
-<div>BEGIN</div>
 <div id="vpn_clients"></div>
 
-<pre id="testingData"></pre>
 <pre id="testing"></pre>
-<div>END</div>
 
 <style type='text/css'>
 .jai-widgetlist {
-	width: 90%;
+	width: 95%;
 	border: 1px solid black;
 	border-radius: 4px;
 	padding: 0;
@@ -20,10 +17,6 @@
 .jai-widgetlist > li {
 	display: inline-block;
 	width: 100%;
-	/*margin: 0px 1em;*/
-/*	padding: 0;
-	margin: 0;
-*/
 	list-style-type: none;
 }
 
@@ -39,7 +32,6 @@
 	font-size: 1.25em;
 	color: slategray;
 	font-weight: bold;
-
 }
 
 .jai-vpnclient-state {
@@ -57,8 +49,6 @@
 .inlineButton {
 	margin: 0 .15em;
 }
-
-
 
 </style>
 <script type='text/ecmascript' src='php/etc.php?q=vpnclients'></script>
@@ -205,6 +195,7 @@ $.widget("jai.vpnclient", jQuery.Widget,{
 		$(controls)
 			.append(
 				$(document.createElement('input'))
+					.attr("id", this.options.idString +"-connect")
 					.addClass('inlineButton')
 					.prop("type","button")
 					.val("Connect")
@@ -212,7 +203,7 @@ $.widget("jai.vpnclient", jQuery.Widget,{
 		if( this.options.editable ){
 			$(document.createElement('input'))
 				.appendTo(controls)
-				.attr("id", this.options.idString +"-editButton")
+				.attr("id", this.options.idString +"-edit")
 				.addClass('inlineButton')
 				.prop("type","button")
 				.val("Edit")
@@ -221,7 +212,7 @@ $.widget("jai.vpnclient", jQuery.Widget,{
 				.click(function(){ $("#"+ widgetElementID).vpnclient("edit"); })
 			$(document.createElement('input'))
 				.appendTo(controls)
-				.attr("id", this.options.idString +"-saveButton")
+				.attr("id", this.options.idString +"-save")
 				.addClass('inlineButton')
 				.prop("type","button")
 				.val("Save")
@@ -239,12 +230,12 @@ $.widget("jai.vpnclient", jQuery.Widget,{
 				.data("widgetID",this.options.idString)
 				.click(this.removeFromList)
 		}
-		if(this.options.editing) this.editMe();
+		if(this.options.editing) this.edit();
 	},
 	edit: function(){
-//		var mid = $(this).data("widgetID");
-		$("#"+ this.options.idString +"-editButton").hide();
-		$("#"+ this.options.idString +"-saveButton").show();
+		$("#"+ this.options.idString +"-connect").hide();
+		$("#"+ this.options.idString +"-edit").hide();
+		$("#"+ this.options.idString +"-save").show();
 //	if we have no yet constructed the editor, do it now
 		if( !this.editor ){
 			this.editor = $(document.createElement('div'))
@@ -255,8 +246,9 @@ $.widget("jai.vpnclient", jQuery.Widget,{
 
 	},
 	save: function(){
-		$("#"+ this.options.idString +"-editButton").show();
-		$("#"+ this.options.idString +"-saveButton").hide();
+		$("#"+ this.options.idString +"-connect").show();
+		$("#"+ this.options.idString +"-edit").show();
+		$("#"+ this.options.idString +"-save").hide();
 		$(this.editor).slideUp();
 		this.saveData();
 	},
@@ -264,9 +256,12 @@ $.widget("jai.vpnclient", jQuery.Widget,{
 	},
 	removeFromList: function(){
 		var mid = "#"+ $(this).data("widgetID");
-		var postRefresh = $("#"+ mid).vpnclient("option","parentRefresh");
-		$("#"+ mid).remove();
+		var postRefresh = $(mid).vpnclient("option","parentRefresh");
+		$(mid).remove();
 		postRefresh();
+
+// TODO: needs to also delete this connection in the configuration file.
+
 	},
 	options: {
 		parent: null,
@@ -277,10 +272,9 @@ $.widget("jai.vpnclient", jQuery.Widget,{
 
 // END VPN Client Widget
 
-	//do this on document load
-	$(function(){
-		$('#vpn_clients').widgetlist({ list: vpnclients, widgetType: "vpnclient" });
-	});
+$(function(){
+	$('#vpn_clients').widgetlist({ list: vpnclients, widgetType: "vpnclient" });
+});
 
 </script>
 
