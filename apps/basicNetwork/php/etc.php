@@ -16,7 +16,5 @@
    echo 'now = '. json_encode(explode(',',date("Y,n,j,g,i,A"))) .";\n";
  }
  if(array_key_exists('q',$_REQUEST)) getConf($_REQUEST['q'], $debug);
- if(array_key_exists('w',$_REQUEST)) setConf($_REQUEST['w']);
-
 
 ?>
