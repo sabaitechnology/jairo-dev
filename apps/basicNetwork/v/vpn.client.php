@@ -37,8 +37,12 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 			var me = this.element.attr("id");
 	//	apply the widgetlist style
 			this.element.addClass("jai-widgetlist");
+	//	the default method for making a list item can be overridden if necessary
+			if(this.options.makeItem) this.makeItem = this.options.makeItem;
+	//	now we add an item for each element of the list
+			$.map(this.options.list, this.makeItem, this);
 			if(!this.options.fixed){
- 				$(this.element).after(
+				$(this.element).after(
  					$(document.createElement("input"))
  						.prop("type","button")
  						.val("Add")
@@ -48,10 +52,6 @@ $.widget("jai.widgetlist", $.ui.sortable, {
  						})
  				);
 			}
-	//	the default method for making a list item can be overridden if necessary
-			if(this.options.makeItem) this.makeItem = this.options.makeItem;
-	//	now we add an item for each element of the list
-			$.map(this.options.list, this.makeItem, this);
 	//	this widget inherits from ui.sortable, so we need to call its constructor to finish up
 			this._super();
 		}
@@ -78,31 +78,23 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 	//	the object element named in brackets here is the constructor for the widgets that make up the list
 				[parentWidget.options.widgetType](
 	//	We merge the item object passed into makeItem with properties that allow us to interface with the parent widgetlist.
-					$.extend(
-						{
+					{
 	//	here we pass a refresh function for the parent widget as an anonymous function
 	//	this decouples the parent and child widgets
-							parent: {
-								refresh: function(){ $(parentWidget.element).widgetlist("refresh"); },
-								fixed: parentWidget.options.fixed,
-								type: "widgetlist",
-								element: $(parentWidget.element).attr("id")
-							},
-							parentRefresh: function(){ $(parentWidget.element).widgetlist("refresh"); },
-							parentFixed: parentWidget.options.fixed,
-	//	The only widget making use of widgetlist so far, vpnclient, doesn't use the following two properties
-	//	They are here for future use, and could be removed if not used
-							parentType: "widgetlist",
-							parentElementID: $(parentWidget.element).attr("id")
+						parent: {
+							refresh: function(){ $(parentWidget.element).widgetlist("refresh"); },
+							fixed: parentWidget.options.fixed,
+							type: "widgetlist",
+							element: $(parentWidget.element).attr("id")
 						},
-						item
-					)
+						vpnclient: item
+					}
 				);
 		}
 	},
 	//	the default function for adding an item
  	addItem: function(){
-		this.makeItem({ name: "New", editing: true },-1,this);
+		this.makeItem(null,-1,this);
 		this.refresh();
  	},
  	options: {
@@ -113,122 +105,207 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 
 // BEGIN VPN Client Widget
 
-$.widget("jai.vpnclient", jQuery.Widget,{
+$.widget("jai.vpnclient", $.Widget,{
 	_create: function(){
-		this.options.idString = this.options.name.replace(" ","_");
-		var widgetElementID = this.options.idString;
-
 		if(this.options.parent !== "undefined") this.options.deletable = this.options.deletable && (!this.options.parent.fixed);
-		if(this.options.editing && !this.options.name) this.options.name = "New Client";
-		this.element
-			.addClass('jai-vpnclient')
-			.prop("id",this.options.idString)
-			.append(
-				$(document.createElement('div'))
-					.addClass('jai-vpnclient-container')
-					.append(
-						$(document.createElement('span'))
-							.addClass('jai-vpnclient-name')
-							.html(this.options.name)
-					)
-					.append(
-						$(document.createElement('span'))
-							.addClass('jai-vpnclient-state')
-							.html('State')
-							.prop("id",this.options.idString+"_info")
-					)
-					.append(
-						controls = $(document.createElement('span'))
-							.addClass('fright')
-					)
-			);
-		$(controls)
-			.append(
-				$(document.createElement('input'))
-					.attr("id", this.options.idString +"-connect")
-					.addClass('inlineButton')
-					.prop("type","button")
-					.val("Connect")
-			);
-		if( this.options.editable ){
-			$(document.createElement('input'))
-				.appendTo(controls)
-				.attr("id", this.options.idString +"-edit")
-				.addClass('inlineButton')
-				.prop("type","button")
-				.val("Edit")
-				.data("widgetID",this.options.idString)
-				.click(function(){ $("#"+ widgetElementID).vpnclient("edit"); })
-			$(document.createElement('input'))
-				.appendTo(controls)
-				.attr("id", this.options.idString +"-save")
-				.addClass('inlineButton')
-				.prop("type","button")
-				.val("Save")
-				.data("widgetID",this.options.idString)
-				.click(function(){ $("#"+ widgetElementID).vpnclient("save"); })
-				.hide()
-		}
-		if( this.options.deletable ){
-			$(document.createElement("input"))
-				.appendTo(controls)
-				.addClass("inlineButton")
-				.prop("type","button")
-				.val("Remove")
-				.data("widgetID",this.options.idString)
-				.click(this.removeFromList)
+		this.makeRow();
+		if(!this.options.vpnclient){
+			this.title.html(this.options.nameplaceholder);
+			this.options.editing = true;
+		}else{
+			this.updateName();
 		}
 		if(this.options.editing) this.edit();
 	},
-	edit: function(){
-		$("#"+ this.options.idString +"-connect").hide();
-		$("#"+ this.options.idString +"-edit").hide();
-		$("#"+ this.options.idString +"-save").show();
-//	if we have no yet constructed the editor, do it now
-		if( !this.editor ){
-			this.editor = $(document.createElement('div'))
-				.appendTo( this.element )
-				.addClass("jai-vpnclient-editor")
+	makeRow: function(){
+		$(document.createElement('div'))
+			.addClass('jai-vpnclient-container')
+			.append(
+				this.title = $(document.createElement('span'))
+					.addClass('jai-vpnclient-name')
+				,this.state = $(document.createElement('span'))
+					.addClass('jai-vpnclient-state')
+					.html('State')
+				,this.controls = $(document.createElement('span'))
+					.addClass('fright')
+			)
+			.appendTo(
+				this.element
+					.addClass('jai-vpnclient')
+			);
+		this.buttons = {};
+		this.buttons.act = $(document.createElement('input'))
+			.appendTo(this.controls)
+			.addClass("inlineButton actButton")
+			.prop("type","button")
+			.val("Act")
+			.data("parentWidget", this)
+			.click(function(){ $(this).data("parentWidget").act(); })
+		if( this.options.editable ){
+			this.buttons.edit = $(document.createElement('input'))
+				.appendTo(this.controls)
+				.addClass("inlineButton editButton")
+				.prop("type","button")
+				.val("Edit")
+				.data("parentWidget", this)
+				.click(function(){ $(this).data("parentWidget").edit(); })
+			this.buttons.save = $(document.createElement('input'))
+				.appendTo(this.controls)
+				.addClass("inlineButton saveButton")
+				.prop("type","button")
+				.val("Save")
+				.data("parentWidget", this)
+				.click(function(){ $(this).data("parentWidget").save(); })
+				.hide()
 		}
-		$(this.editor).slideDown();
+		if( this.options.deletable ){
+			this.buttons.remove = $(document.createElement("input"))
+				.appendTo(this.controls)
+				.addClass("inlineButton removeButton")
+				.prop("type","button")
+				.val("Remove")
+				.data("parentWidget", this)
+				.click(function(){ $(this).data("parentWidget").removeFromList(); })
+		}
+	},
+	updateName: function(){
+		this.options.idString = this.options.vpnclient.name.replace(" ","_");
+		this.element.attr("id",this.options.idString);
+		this.title.html(this.options.vpnclient.name);
+		this.state.attr("id",this.options.idString+"_info")
+		$.map(this.buttons, function(v,i, widgetID){
+			$(v).data("widgetID", widgetID);
+		}, this.options.idString);
+	},
+	selectType: function(){
+		if(!this.options.vpnclient) this.options.vpnclient = {};
+		this.options.vpnclient.type = $("#vpnclienteditor-typeselector").val();
+		$("#vpnclienteditor-typeselector-section").remove();
+		this.edit();
+	},
+	edit: function(){
+		this.buttons.act.hide();
+		this.buttons.edit.hide();
+// REMOVE AFTER CONSTRUCTION
+		this.options.vpnclient = { type :"pptp" };
 
+// make sure we have a type
+		if(!this.options.vpnclient || !this.options.vpnclient.type){
+			$(document.createElement("div"))
+				.attr("id", "vpnclienteditor-typeselector-section")
+				.append(
+					$(document.createElement("select"))
+						.attr("id", "vpnclienteditor-typeselector")
+						.append(
+							$.map(this.options.supportedTypes, function(v,i){
+								return $(document.createElement("option")).html(v)
+							})
+						)
+					,$(document.createElement("input"))
+						.attr("type", "button")
+						.val("Select")
+						.data("parentWidget", this)
+						.click(function(){
+							$(this).data("parentWidget").selectType();
+						})
+				)
+				.appendTo(this.element)
+		}else{
+			this.buttons.save.show();
+//	if we have not yet constructed the editor, do it now
+			if( !this.editor ){
+				this.editorID = "vpnclienteditor_"+ this.options.vpnclient.type;
+				this.editor = $(document.createElement('div'))
+					.appendTo( this.element )
+					[this.editorID]({ vpnclient: this.options.vpnclient });
+			}
+			this.editor.slideDown();
+		}
 	},
 	save: function(){
-		$("#"+ this.options.idString +"-connect").show();
-		$("#"+ this.options.idString +"-edit").show();
-		$("#"+ this.options.idString +"-save").hide();
-		$(this.editor).slideUp();
+		this.buttons.act.show();
+		this.buttons.edit.show();
+		this.buttons.save.hide();
 		this.saveData();
+//		$(this.editor).slideUp();
 	},
 	saveData: function(){
+		// save this.getData()
+		// $("#testing").html( "Data: "+ JSON.stringify(this.data) );
 	},
 	getData: function(){
-		return this.options.idString;
+		return $(this.editor)[this.editorID]("getData");
 	},
 	removeFromList: function(){
-		var mid = "#"+ $(this).data("widgetID");
-		var postRefresh = $(mid).vpnclient("option","parentRefresh");
-		$(mid).remove();
-		postRefresh();
-
+		var parentRefresh = this.options.parent.refresh;
+		$(this.element).remove();
+		parentRefresh();
 // TODO: needs to also delete this connection in the configuration file.
 
 	},
 	options: {
 		parent: null,
 		deletable: true,
-		editable: true
+		editable: true,
+		nameplaceholder: "New Client",
+		supportedTypes: [
+			"pptp",
+			"l2tp",
+			"openpvn"
+		]
 	}
 });
 
 // END VPN Client Widget
 
+$.widget("jai.vpnclienteditor", $.Widget,{
+	_create: function(){
+		this.element.addClass("jai-vpnclient-editor");
+		this.data = this.options.vpnclient;
+		this._super();
+	},
+	getData: function(){
+		return this.data;
+	}
+});
+
+$.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
+	_create: function(){
+
+		this.pieces = {};
+		this.pieces.name = $(document.createElement("input"))
+			.appendTo(this.element)
+			.attr("type", "text")
+			.attr("placeholder", "New PPTP Client")
+			.addClass("jai-vpnclienteditor-pptp")
+			.data("parentWidget", this)
+			.val( this.options.vpnclient.name )
+			.change(function(){ $(this).data("parentWidget").update(); })
+
+		this._super();
+	},
+	update: function(){
+		$.map(this.pieces, function(v,i,info){
+			info[i] = $(v).val();
+		}, this.data);
+		$("#testing").append( JSON.stringify( this.data ) )
+	}
+});
+
+// $.widget("jai.vpnclienteditor-l2tp", "jai.vpnclienteditor" ,{
+// 	_create: function(){
+// 	}
+// });
+
+// $.widget("jai.vpnclienteditor-openvpn", "jai.vpnclienteditor",{
+// 	_create: function(){
+// 	}
+// });
+
+
 $(function(){
 	$("#vpn_clients").widgetlist({ list: vpnclients, widgetType: "vpnclient" });
-	$("#testing").html("Saving:\n");
-	$(".jai-vpnclient").map(function(i,e){
-		$("#testing").append( $(e).vpnclient("getData") );
-	});
+	$("#vpn_clients").widgetlist("addItem");
 });
 
 </script>
