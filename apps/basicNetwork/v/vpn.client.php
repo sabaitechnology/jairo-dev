@@ -187,7 +187,8 @@ $.widget("jai.vpnclient", $.Widget,{
 		this.buttons.act.hide();
 		this.buttons.edit.hide();
 // REMOVE AFTER CONSTRUCTION
-		this.options.vpnclient = { type :"pptp" };
+//		$("#testing").append( "i: "+ JSON.stringify( this.options.vpnclient ) +"\n" )
+		if(!this.options.vpnclient) this.options.vpnclient = { type :"pptp" };
 
 // make sure we have a type
 		if(!this.options.vpnclient || !this.options.vpnclient.type){
@@ -214,10 +215,15 @@ $.widget("jai.vpnclient", $.Widget,{
 			this.buttons.save.show();
 //	if we have not yet constructed the editor, do it now
 			if( !this.editor ){
+				// $("#testing").append( "1: "+ JSON.stringify( this.options.vpnclient ) +"\n" )
 				this.editorID = "vpnclienteditor_"+ this.options.vpnclient.type;
-				this.editor = $(document.createElement('div'))
-					.appendTo( this.element )
-					[this.editorID]({ vpnclient: this.options.vpnclient });
+				if($.jai[this.editorID]){
+					this.editor = $(document.createElement('div'))
+						.appendTo( this.element )
+						[this.editorID]({ vpnclient: this.options.vpnclient });
+				}else{
+					$("#testing").append("\n!!! There is currently no editor for this type. Please fix this.\nRaw data: "+ JSON.stringify(this.options.vpnclient) +"\n")
+				}
 			}
 			this.editor.slideDown();
 		}
@@ -272,6 +278,10 @@ $.widget("jai.vpnclienteditor", $.Widget,{
 $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 	_create: function(){
 
+		$("#testing").append(
+			"2: "+ JSON.stringify( this.options , undefined, 2) +"\n"
+		);
+
 		this.pieces = {};
 		this.pieces.name = $(document.createElement("input"))
 			.appendTo(this.element)
@@ -281,6 +291,7 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 			.data("parentWidget", this)
 			.val( this.options.vpnclient.name )
 			.change(function(){ $(this).data("parentWidget").update(); })
+//		this.pieces.
 
 		this._super();
 	},
@@ -288,7 +299,7 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 		$.map(this.pieces, function(v,i,info){
 			info[i] = $(v).val();
 		}, this.data);
-		$("#testing").append( JSON.stringify( this.data ) )
+//		$("#testing").append( JSON.stringify( this.data ) )
 	}
 });
 
@@ -305,7 +316,8 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 
 $(function(){
 	$("#vpn_clients").widgetlist({ list: vpnclients, widgetType: "vpnclient" });
-	$("#vpn_clients").widgetlist("addItem");
+	$("#kitty").vpnclient("edit");
+//	$("#vpn_clients").widgetlist("addItem");
 });
 
 </script>
