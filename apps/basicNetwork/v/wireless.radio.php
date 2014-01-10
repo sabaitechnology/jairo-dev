@@ -11,7 +11,7 @@
         <td>Mode
         </td>
         <td>
-          <select id='wl0_type' name='wl0_type' class='radioSwitchElement'>
+          <select id='wl_type' name='wl_type' class='radioSwitchElement'>
             <option value='off'>Off</option>
             <option value='server'>Wireless Server</option>
             <option value='client'>Wireless Client</option>
@@ -20,13 +20,13 @@
       </tr>
       <tr>
         <td>SSID</td>
-        <td><input id='wl0_ssid' name='wl0_ssid' />
+        <td><input id='wl_ssid' name='wl_ssid' />
         </td>
       </tr>
       <tr>
         <td>Security</td>
         <td>
-          <select id='wl0_security' name='wl0_security' class='radioSwitchElement'>
+          <select id='wl_security' name='wl_security' class='radioSwitchElement'>
             <option value='none'>None</option>
             <option value='wep'>WEP</option>
             <option value='wpapersonal'>WPA Personal</option>
@@ -38,18 +38,18 @@
     <!-- LOWER TABLE, DEPENDS ON SECURITY SELECTION -->
     <table class='controlTable indented'>      
       <!-- WEP OPTION -->
-      <tbody class='wl0_security wl0_security-wep'>
+      <tbody class='wl_security wl_security-wep'>
         <tr>
           <td>WEP Keys
           </td>
           <td>
-            <ul id='wl0_wep_keys'></ul>
+            <ul id='wl_wep_keys'></ul>
           </td>
         </tr>
       </tbody> 
       
       <!-- WPA OPTION -->
-      <tbody class='wl0_security wl0_security-wpapersonal'> 
+      <tbody class='wl_security wl_security-wpapersonal'> 
         <tr>
           <td>&nbsp</td>
           <td>&nbsp</td>
@@ -57,7 +57,7 @@
         <tr>
           <td>WPA Type</td>
           <td>
-            <select id='wl0_wpa_type' name='wl0_wpa_type' class='radioSwitchElement'>
+            <select id='wl_wpa_type' name='wl_wpa_type' class='radioSwitchElement'>
               <option value='1'>WPA</option>
               <option value='2'>WPA2</option>
               <option value='3'>WPA/WPA2</option>
@@ -67,7 +67,7 @@
         <tr>
           <td>WPA Encryption</td>
           <td>
-            <select id='wl0_wpa_encryption' name='wl0_wpa_encryption' class='radioSwitchElement'>
+            <select id='wl_wpa_encryption' name='wl_wpa_encryption' class='radioSwitchElement'>
               <option value='1'>AES</option>
               <option value='2'>TKIP</option>
               <option value='3'>AES/TKIP</option>
@@ -77,12 +77,12 @@
         <tr>
           <td>PSK
           </td>
-          <td><input id='wl0_wpa_psk' name='wl0_wpa_psk' />
+          <td><input id='wl_wpa_psk' name='wl_wpa_psk' />
           </td>
         </tr>
         <tr>
           <td>Key Duration</td>
-          <td><input id='wl0_wpa_rekey' name='wl0_wpa_rekey' />
+          <td><input id='wl_wpa_rekey' name='wl_wpa_rekey' />
           </td>
         </tr>
       </tbody>
@@ -108,41 +108,41 @@
   
 // $(function() {
 
-  $('#wl0_security').change(function(){
+  $('#wl_security').change(function(){
     console.log('you clicked security')
-    $('.wl0_security').hide(); 
-    $('.wl0_security-'+ $('#wl0_security').val() ).show(); 
+    $('.wl_security').hide(); 
+    $('.wl_security-'+ $('#wl_security').val() ).show(); 
   })
 
-  $('#wl0_type').radioswitch({
+  $('#wl_type').radioswitch({
     value: wl[0].type,
     change: function(event,ui){ 
-      $('.wl0_type').hide(); 
-      $('.wl0_type-'+ wl[0].security ).show(); 
+      $('.wl_type').hide(); 
+      $('.wl_type-'+ wl[0].security ).show(); 
     }
   });
 
-  $('#wl0_ssid').val(wl[0].ssid);
+  $('#wl_ssid').val(wl[0].ssid);
 
-  $('#wl0_security').radioswitch({
+  $('#wl_security').radioswitch({
     value: wl[0].security
   });
 
-  $('#wl0_wpa_type').radioswitch({
+  $('#wl_wpa_type').radioswitch({
    value: wl[0].wpa.type
   });
 
-  $('#wl0_wpa_encryption').radioswitch({
+  $('#wl_wpa_encryption').radioswitch({
    value: wl[0].wpa.encryption
   });
 
-  $('#wl0_wpa_psk').val(wl[0].wpa.psk);
+  $('#wl_wpa_psk').val(wl[0].wpa.psk);
 
-  //$('#wl0_wpa_rekey').val(wl[0].wpa.rekey);
+  //$('#wl_wpa_rekey').val(wl[0].wpa.rekey);
 
-  $('#wl0_wpa_rekey').spinner({ min: 0, max: 525600 }).spinner('value',wl[0].wpa.rekey);
+  $('#wl_wpa_rekey').spinner({ min: 0, max: 525600 }).spinner('value',wl[0].wpa.rekey);
 
-  $('#wl0_wep_keys').oldeditablelist({ list: wl[0].wep.keys, fixed: true });
+  $('#wl_wep_keys').oldeditablelist({ list: wl[0].wep.keys, fixed: true });
 
   //$('#wanmtu').spinner({ min: 0, max: 1500 }).spinner('value',wan.mtu);
   //$('#wanmac').val(wan.mac);
