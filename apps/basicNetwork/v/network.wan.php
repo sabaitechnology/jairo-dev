@@ -18,7 +18,6 @@ WAN PPPoE { username, password, options, mode/interval } and IPv6
 DDNS: { ip, interval, services }
 -->
 <div class='controlBox'><span class='controlBoxTitle'>WAN</span>
-
 	<div class='controlBoxContent' id='wansetup'>
 	</div>
 </div>
