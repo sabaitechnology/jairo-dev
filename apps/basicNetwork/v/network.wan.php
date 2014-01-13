@@ -1,17 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class='pageTitle'>Network: WAN</div>
 <!--	TODO:
 WAN PPPoE { username, password, options, mode/interval } and IPv6
