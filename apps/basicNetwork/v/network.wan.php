@@ -18,7 +18,7 @@ DDNS: { ip, interval, services }
 		 </td></tr>
 		</tbody>
 		<tbody class='wan_type wan_type-static'>
-		 <tr<>td>IP</td><td><input id='wan_ip' name='wan_ip' /></td></tr>
+		 <tr><td>IP</td><td><input id='wan_ip' name='wan_ip' /></td></tr>
 		 <tr><td>Network Mask</td><td><input id='wan_mask' name='wan_mask' /></td></tr>
 		 <tr><td>Gateway</td><td><input id='wan_gateway' name='wan_gateway' /></td></tr>
 		</tbody>

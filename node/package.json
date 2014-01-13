@@ -1,0 +1,24 @@
+{
+  "name": "jairo",
+  "version": "0.0.1",
+  "description": "Jairo modular networking platform",
+  "main": "jainode.js",
+  "dependencies": {
+    "socket.io": "~0.9.16"
+  },
+  "engines": { "node":  "*"},
+  "devDependencies": {},
+  "scripts": {
+    "test": "nodejs test.js",
+    "start": "nodejs jainode.js"
+  },
+  "keywords": [
+    "networking",
+    "routing",
+    "Sabai",
+    "VPN"
+  ],
+  "author": "Sabai Technology",
+  "homepage": "http://www.jairoproject.com",
+  "license": "MPL"
+}
