@@ -233,11 +233,13 @@ $.widget("jai.vpnclient", $.Widget,{
 		this.buttons.edit.show();
 		this.buttons.save.hide();
 		this.saveData();
-//		$(this.editor).slideUp();
+		$(this.editor).slideUp();
 	},
 	saveData: function(){
 		// save this.getData()
-		// $("#testing").html( "Data: "+ JSON.stringify(this.data) );
+// Called when you hit the save button
+// Should probably use toServer to send changed information
+//		$("#testing").html( "Data: "+ JSON.stringify(this.getData()) );
 	},
 	getData: function(){
 		return $(this.editor)[this.editorID]("getData");
@@ -267,57 +269,94 @@ $.widget("jai.vpnclient", $.Widget,{
 $.widget("jai.vpnclienteditor", $.Widget,{
 	_create: function(){
 		this.element.addClass("jai-vpnclient-editor");
+		this.pieces = {};
 		this.data = this.options.vpnclient;
+		this.displaytable = $(document.createElement("table"))
+			.addClass("jai-vpnclienteditor-pptp-table") // ? May be unnecessary
+			.appendTo(this.element);
+
 		this._super();
 	},
 	getData: function(){
 		return this.data;
-	}
-});
-
-$.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
-	_create: function(){
-
-		$("#testing").append(
-			"2: "+ JSON.stringify( this.options , undefined, 2) +"\n"
-		);
-
-		this.pieces = {};
-		this.pieces.name = $(document.createElement("input"))
-			.appendTo(this.element)
-			.attr("type", "text")
-			.attr("placeholder", "New PPTP Client")
-			.addClass("jai-vpnclienteditor-pptp")
-			.data("parentWidget", this)
-			.val( this.options.vpnclient.name )
-			.change(function(){ $(this).data("parentWidget").update(); })
-//		this.pieces.
-
-		this._super();
 	},
 	update: function(){
 		$.map(this.pieces, function(v,i,info){
 			info[i] = $(v).val();
 		}, this.data);
-//		$("#testing").append( JSON.stringify( this.data ) )
+//		$("#testing").append( "a: "+ JSON.stringify( this.data, null, 2 ) +"\n" )
+	}
+
+});
+
+$.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
+	_create: function(){
+		this._super(); // We call the parent constructor first so we can get things like displaytable and data prepared.
+		$.map(
+			[
+				{
+					value: this.options.vpnclient.name,
+					displayname: "Name",
+					name: "name",
+					placeholder: "New PPTP Client"
+				},
+				{
+					value: this.options.vpnclient.server,
+					displayname: "Server",
+					name: "server",
+					placeholder: "Server Address"
+				},
+				{
+					value: this.options.vpnclient.username,
+					displayname: "Username",
+					name: "username",
+					placeholder: "PPTP Username"
+				},
+				{
+					value: this.options.vpnclient.password,
+					displayname: "Password",
+					name: "password",
+					placeholder: "PPTP Password"
+				}
+			],
+			function(v,i, parentWidget){
+				parentWidget.displaytable.append(
+					$(document.createElement("tr")).append(
+						$(document.createElement("td")).html(v.displayname)
+					,	$(document.createElement("td")).append(
+							parentWidget.pieces[v.name] = $(document.createElement("input"))
+								.attr("type", "text")	// Extend to use v.type
+								.attr("placeholder", v.placeholder)
+								.addClass("jai-vpnclienteditor-pptp")
+								.data("parentWidget", parentWidget)
+								.val( v.value )
+								.change(function(){ $(this).data("parentWidget").update(); })
+						)
+					)
+				);
+			},
+			this	// Pass this into map because inside map "this" refers to the window
+		);
 	}
 });
 
+// The L2TP widget can pretty much be a duplicate of the PPTP widget, except that in future it will need to support
+//	client/server certificates and some advanced features which will require more sophisticated handling
 // $.widget("jai.vpnclienteditor-l2tp", "jai.vpnclienteditor" ,{
 // 	_create: function(){
 // 	}
 // });
 
+// The OpenVPN widget will need to be somewhat more complicated. See the current router interface for guidance.
 // $.widget("jai.vpnclienteditor-openvpn", "jai.vpnclienteditor",{
 // 	_create: function(){
 // 	}
 // });
 
+// IPsec? SSTP?
 
 $(function(){
 	$("#vpn_clients").widgetlist({ list: vpnclients, widgetType: "vpnclient" });
-	$("#kitty").vpnclient("edit");
-//	$("#vpn_clients").widgetlist("addItem");
 });
 
 </script>
