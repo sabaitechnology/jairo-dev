@@ -189,7 +189,7 @@ $.widget("jai.wansetup", {
       pForm[ rawForm[i].name ] = rawForm[i].value;
     }
     $('#testing').html( rawForm )
-
+    console.log(pForm)
     return pForm;
  
   }
