@@ -29,7 +29,10 @@ $.widget("jai.devicelist", {
     
     // BUILDING DOM ELEMENTS
     $(this.element)
-    .prepend( $(document.createElement('table')).addClass("listTable").prop("id","list") )
+    .prepend( $(document.createElement('table'))
+    	.addClass("listTable")
+    	.prop("id","list") 
+    )
 	  
     $('#list').dataTable({
 		'bPaginate': false,
@@ -38,16 +41,16 @@ $.widget("jai.devicelist", {
 		"sAjaxDataProp": "devicelist",
 		"sAjaxSource": "php/network.devicelist.php",
 		"aoColumns": [
-		 { "sTitle": "Type",		"mData":"src" },
-		 { "sTitle": "Address",	"mData":"ip" },
-		 { "sTitle": "MAC",		"mData":"mac" },
-		 { "sTitle": "Link",		"mData":"device" },
-		 { "sTitle": "Name",		"mData":"hostname" },
-		 { "sTitle": "Lease State",	"mData":"state" },
-		 { "sTitle": "Lease Starts",	"mData":"start" },
-		 { "sTitle": "Lease Ends",	"mData":"end" },
-		 { "sTitle": "Last Contact",	"mData":"last" }
-		 ]
+			{ "sTitle": "Type",		"mData":"src" },
+			{ "sTitle": "Address",	"mData":"ip" },
+			{ "sTitle": "MAC",		"mData":"mac" },
+			{ "sTitle": "Link",		"mData":"device" },
+			{ "sTitle": "Name",		"mData":"hostname" },
+			{ "sTitle": "Lease State",	"mData":"state" },
+			{ "sTitle": "Lease Starts",	"mData":"start" },
+			{ "sTitle": "Lease Ends",	"mData":"end" },
+			{ "sTitle": "Last Contact",	"mData":"last" }
+		]
 		})
 
 	  this._super();
