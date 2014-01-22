@@ -33,6 +33,6 @@ $(function(){
  if(panel==''){ panel = 'network'; section = 'wan'; };
  $('#mainTitle').append(' - '+$('.pageTitle').html());
  $('.subMenu').hide(); $('.superMenuLink').click(showSubMenu); $('#'+ panel +'SubMenu' ).show();
- $('#'+ panel +((section)?('_'+ section):'') ).addClass('buttonSelected');
+ $('#menu_'+ panel +((section)?('_'+ section):'') ).addClass('buttonSelected');
  peekaboo();
 });

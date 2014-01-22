@@ -1,28 +1,29 @@
 <?php
 
-$files = array(
-	"libs/jai.js",
-	"libs/jquery.js",
-	"libs/jqueryui.js",
-	"libs/jquery.mousewheel.js",
-	"libs/datatables.js",
-	"libs/jeditable.js",
-	"libs/noty.js",
-	"libs/jquery.noty.jai.js",
-	"libs/math.js",
-	"libs/widgets.js"
-);
+# Currently this file just accumulates all the files included in it
+# Later, we may want to cache them or do some other wizardry
 
 header("Content-Type: text/ecmascript");
 
-echo implode("\n\n", array_map("file_get_contents", $files) );
-
-// $newAccess=implode("", array_map("filemtime", $files));
-// if( (!file_exists("libs/jaiCache.js")) || (!file_exists("libs/jaiCache.date")) || ($newAccess!=file_get_contents("libs/jaiCache.date")) ){
-// 	file_put_contents("libs/jaiCache.date", $newAccess);
-// 	file_put_contents("libs/jaiCache.js", implode("\n\n", array_map("file_get_contents", $files) ) );
-// }
-
-//readfile("libs/jaiCache.js");
+echo implode(
+	"\n\n",
+	array_map(
+		function($v){
+			return file_get_contents("libs/". $v);
+		},
+		array(
+			"jquery.js",
+			"jqueryui.js",
+			"jquery.mousewheel.js",
+			"datatables.js",
+			"jeditable.js",
+			"noty.js",
+			"jquery.noty.jai.js",
+			"math.js",
+			"widgets.js",
+			"jai.js"
+		)
+	)
+);
 
 ?>

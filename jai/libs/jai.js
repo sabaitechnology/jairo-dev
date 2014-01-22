@@ -33,4 +33,45 @@ function getJson(jsonIn){
 
 function help(){ window.open('http://sabaitechnology.zendesk.com/anonymous_requests/new','Submit a Support Request','height=600,width=800,top=50,left=50').focus(); return false; }
 
+/* BEGIN Jai node service */
+
+function jainode(address){
+	var me = this;
+	this.address = address;
+// We save a pointer to 'this' to remedy caller drift in member functions called by outside objects
+//	ie, in functions called externally, the local 'this' will be wrong. Using 'me' here create a closure
+//	that is available inside functions defined in this object, like those in this.handle below.
+	this.showByNoty = function(msg, extrasettings){ noty($.extend({text: msg },extrasettings)); }
+	this.showByAlert = function(msg){ alert(msg); }
+	this.sendByHTTP = function(){ me.show("HTTP/Ajax is not yet implemented."); }
+	this.sendByAjax = function(){ me.show("Ajax/HTTP is not yet implemented."); }
+	this.sendBySocket = function(msg, msgType){
+		me.socket.emit( (msgType || 'cdata') ,{ cmsg: msg }); 
+	}
+	this.handle = {
+		sdata: function(sdata){ me.show( sdata.smsg, { modal: false, timeout: false }); },
+		connect: function(){ me.show("The Jai Node service is connected.",{ timeout: 1000 }); },
+		disconnect: function(){ me.show("The Jai Node service is disconnected.",{ timeout: 1000 }); },
+		reconnect: function(){ me.show("The Jai Node service has reconnected.",{ timeout: 1000 }); }
+	};
+	this.create = function(){
+// TODO: Create notification feed instead of using alert; alert is annoying.
+		me.show = ( (typeof(noty) == "undefined") ? me.showByAlert : me.showByNoty );
+		if(typeof(io) == "undefined"){
+			// use ajax/http
+// TODO: define ajax/http methods
+			me.send = me.sendByAjax;
+//			me.send = me.sendByHTTP;
+		}else{
+			me.socket = io.connect(me.address); //, { secure: true });
+// Handlers so easy!
+			for(var i in me.handle) me.socket.on(i,me.handle[i]);
+			me.send = me.sendBySocket;
+		}
+	}
+	this.create();
+}
+
+/* END Jai node service */
+
 // /* ~ */

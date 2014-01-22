@@ -1,4 +1,57 @@
-;(function($) {
+$(function() {
+
+	$.noty.layouts.center = {
+		name: 'center',
+		options: { // overrides options
+			
+		},
+		container: {
+			object: '<ul id="noty_center_layout_container" />',
+			selector: 'ul#noty_center_layout_container',
+			style: function() {
+				$(this).css({
+					position: 'fixed',
+					width: '310px',
+					height: 'auto',
+					margin: 0,
+					padding: 0,
+					listStyleType: 'none',
+					zIndex: 10000000
+				});
+
+				// getting hidden height
+				var dupe = $(this).clone().css({visibility:"hidden", display:"block", position:"absolute", top: 0, left: 0}).attr('id', 'dupe');
+				$("body").append(dupe);
+				dupe.find('.i-am-closing-now').remove();
+				dupe.find('li').css('display', 'block');
+				var actual_height = dupe.height();
+				dupe.remove();
+
+				if ($(this).hasClass('i-am-new')) {
+					$(this).css({
+						left: ($(window).width() - $(this).outerWidth(false)) / 2 + 'px',
+						top: ($(window).height() - actual_height) / 2 + 'px'
+					});
+				} else {
+					$(this).animate({
+						left: ($(window).width() - $(this).outerWidth(false)) / 2 + 'px',
+						top: ($(window).height() - actual_height) / 2 + 'px'
+					}, 500);
+				}
+				
+			}
+		},
+		parent: {
+			object: '<li />',
+			selector: 'li',
+			css: {}
+		},
+		css: {
+			display: 'none',
+			width: '310px'
+		},
+		addClass: ''
+	};
 
 	$.noty.layouts.top = {
 		name: 'top',
@@ -224,7 +277,7 @@
 		}
 	};
 
-})(jQuery);
+});
 
 $.noty.defaults = {
 	layout: 'bottomRight',
@@ -234,15 +287,15 @@ $.noty.defaults = {
 	dismissQueue: true, // If you want to use queue feature set this true
 	template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
 	animation: {
-		open: {height: 'toggle'},
-		close: {height: 'toggle'},
+		open: { height: 'toggle' },
+		close: { height: 'toggle' },
 		easing: 'swing',
 		speed: 500 // opening & closing animation speed
 	},
-	timeout: 1000, // delay for closing event. Set false for sticky notifications
+	timeout: false, // delay for closing event. Set false for sticky notifications
 	force: false, // adds notification to the beginning of queue when set to true
 	modal: false,
-	maxVisible: 5, // you can set max visible notification for dismissQueue true option
+	maxVisible: 10, // you can set max visible notification for dismissQueue true option
 	closeWith: ['click'], // ['click', 'button', 'hover']
 	callback: {
 		onShow: function() {},
