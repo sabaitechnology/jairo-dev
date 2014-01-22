@@ -3,7 +3,7 @@
 # Currently this file just accumulates all the files included in it
 # Later, we may want to cache them or do some other wizardry
 
-header("Content-Type: text/ecmascript");
+header("Content-Type: text/javascript; charset=utf-8");
 
 echo implode(
 	"\n\n",

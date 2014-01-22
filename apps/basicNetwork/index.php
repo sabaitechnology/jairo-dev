@@ -1,32 +1,32 @@
 <!DOCTYPE html><meta charset="utf-8"><html><head>
-<title id='mainTitle'>Sabai Jai Ro</title>
+<title id="mainTitle">Sabai Jai Ro</title>
 
-<link rel='stylesheet' type='text/css' href='/libs/jqueryui.css'>
-<link rel='stylesheet' type='text/css' href='/libs/jai-widgets.css'>
-<link rel='stylesheet' type='text/css' href='css/main.css'>
+<link rel="stylesheet" type="text/css" href="/libs/jqueryui.css">
+<link rel="stylesheet" type="text/css" href="/libs/jai-widgets.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
 
 <!-- socket.io
 	We're making PHP give us a valid address for our server since this address will actually refer
 	 to the machine we're running on, which is different everywhere.
 -->
-<script type="text/javascript" src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="/libs.php"></script>
-<script type="text/ecmascript" src="js/main.js"></script>
-<script type="text/ecmascript">
+<script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
+<script src="/libs.php"></script>
+<script src="js/main.js"></script>
+<script>
 // noty settings -- moved to /libs/jquery.noty.jai.js
 // jainode definition -- moved to /libs/jai.js
 var ro = new jainode("http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400");
 
 function toggleHelpSection() {
 	$( "#helpClose").show();
-	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 500 );
+	$( "#helpSection" ).toggle( "slide", { direction: "right" }, 500 );
 	$( "#helpButton" ).hide();
 	return false;
 };
 
 function closeHelpSection() {
 	$( "#helpClose").hide();
-	$( "#helpSection" ).toggle( 'slide', { direction: 'right' }, 500 );
+	$( "#helpSection" ).toggle( "slide", { direction: "right" }, 500 );
 	$( "#helpButton" ).show();
 	return false;
 }
@@ -42,35 +42,35 @@ function closeHelpSection() {
 ?>
 
 $(function(){
-	$('#goToHelp').attr('href', 'http://wiki.jairoproject.com' + location.search);
-	$('#goToWiki').attr('href', 'help.php' + location.search);
+	$("#goToHelp").attr("href", "http://wiki.jairoproject.com" + location.search);
+	$("#goToWiki").attr("href", "help.php" + location.search);
 	$( "#helpButton" ).click(toggleHelpSection);
-	$( '#helpClose').click(closeHelpSection)
+	$( "#helpClose").click(closeHelpSection)
 });
 
 </script>
 </head><body>
 
-<div id='backdrop'>
+<div id="backdrop">
 	<?php include('menu.php'); ?>
 
-	<div id='panelContainer'>
+	<div id="panelContainer">
 
-		<div id='helpArea'>
-			<img id='helpButton' src='img/help.png'>
-			<div id='helpSection' class='ui-widget-content ui-corner-al'>
-		<!-- 		<a href='#' id='closeHelp' class='xsmallText fright'>Close</a> -->
+		<div id="helpArea">
+			<img id="helpButton" src="img/help.png">
+			<div id="helpSection" class="ui-widget-content ui-corner-al">
+		<!-- 		<a href="#" id="closeHelp" class="xsmallText fright">Close</a> -->
 				Display Inline Help
-				<a id='helpClose' class='noshow xsmallText' href='#'>Close</a>
-				<input name='inlineHelp' id='inlineHelp' type='checkbox' checked='checked'><br><br>
-				<span style='text-decoration: underline'>Links:</span><br>
-				<a id='goToHelp' href='#'>Help Page</a><br>
-				<a id='goToWiki' href='#'>Wiki Page</a>
+				<a id="helpClose" class="noshow xsmallText" href="#">Close</a>
+				<input name="inlineHelp" id="inlineHelp" type="checkbox" checked="checked"><br><br>
+				<span style="text-decoration: underline">Links:</span><br>
+				<a id="goToHelp" href="#">Help Page</a><br>
+				<a id="goToWiki" href="#">Wiki Page</a>
 			</div>
 		</div>
 
-		<div id='panel'>
-			<form id='fe'>
+		<div id="panel">
+			<form id="fe">
 			<?php include($page); ?>
 			</form>
 		</div>
