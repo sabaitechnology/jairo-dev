@@ -9,7 +9,8 @@
  Static Addresses?
 -->
 
-<div class='controlBox'><span class='controlBoxTitle'>Summary</span>
+<div class='controlBox'>
+	<span class='controlBoxTitle'>Summary</span>
 	<div class='controlBoxContent' id='devicelist'>
 		<br>
 		<span class='smallText'><b>See Also:</b>

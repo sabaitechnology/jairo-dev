@@ -1,77 +1,94 @@
 <div class='pageTitle'>Wireless: Survey</div>
-<!-- TODO: bigger space between search and table -->
+<!-- TODO: make the refresh/expirations actually do something-->
 
 <div class='controlBox'>
   <span class='controlBoxTitle'>Wireless Site Survey</span>
-  <div class='controlBoxContent'>
+  <div class='controlBoxContent' id='wirelesssurvey'>
     <pre id='result'></pre>
     <table id='list' class='listTable'></table>
-    <br>
-    <table><tbody>
-      <tr><td> Expiration: </td>
-        <td><select id="expire-time">
-        <option value="0">Auto Expire</option>
-        <option value="3">3 seconds</option>
-        <option value="4">4 seconds</option>
-        <option value="5">5 seconds</option>
-        <option value="10">10 seconds</option>
-        <option value="15">15 seconds</option>
-        <option value="30">30 seconds</option>
-        <option value="60">1 minute</option>
-        <option value="120">2 minutes</option>
-        <option value="180">3 minutes</option>
-        <option value="240">4 minutes</option>
-        <option value="300">5 minutes</option>
-        <option value="600">10 minutes</option>
-        <option value="900">15 minutes</option>
-        <option value="1200">20 minutes</option>
-        <option value="1800">30 minutes</option>
-        </select></td>
-      </tr>
-
-      <tr><td>Refresh: </td>
-        <td><select id="refresh-time">
-        <option value="0">Auto Refresh</option>
-        <option value="3">3 seconds</option>
-        <option value="4">4 seconds</option>
-        <option value="5">5 seconds</option>
-        <option value="10">10 seconds</option>
-        <option value="15">15 seconds</option>
-        <option value="30">30 seconds</option>
-        <option value="60">1 minute</option>
-        <option value="120">2 minutes</option>
-        <option value="180">3 minutes</option>
-        <option value="240">4 minutes</option>
-        <option value="300">5 minutes</option>
-        <option value="600">10 minutes</option>
-        <option value="900">15 minutes</option>
-        <option value="1200">20 minutes</option>
-        <option value="1800">30 minutes</option>
-        </select></td>
-      </tr>
-    </tbody></table>  
-  </div> <!--end control box content -->
-</div> <!--end control box  -->
+    
+  </div> 
+</div> 
 
 <script type='text/ecmascript'>
 
-var lt =  $('#list').dataTable({
-  'bPaginate': false,
-  'bInfo': false,
-  'sAjaxDataProp': 'survey',
-  'sAjaxSource': 'php/wireless.survey.php',
-  'aoColumns': [
-   { 'sTitle': 'Last Seen',		'mData':'Last Seen' },
-   { 'sTitle': 'SSID',	'mData':'SSID' },
-   { 'sTitle': 'BSSID',		'mData':'BSSID' },
-   { 'sTitle': 'RSSI',   'mData':'RSSI' },
-   { 'sTitle': 'Noise',   'mData':'Noise' },
-   { 'sTitle': 'Quality',  'mData':'Quality' },
-   { 'sTitle': 'Ch',   'mData':'Ch' },
-   { 'sTitle': 'Capabilities',   'mData':'Capabilities' },
-   { 'sTitle': 'Rates',   'mData':'Rates' }
-  ]
+$.widget("jai.wirelesssurvey", {
 
+  //Adding to the built-in widget constructor method - do this when widget is instantiated
+  _create: function(){
+    //TO DO: check to see if containing element has a unique id
+    
+
+    // BUILDING DOM ELEMENTS
+    $(this.element)
+    .prepend( $(document.createElement('table'))
+      .addClass("listTable")
+      .prop("id","list") 
+    )
+    .append( $(document.createElement('table')).addClass("controlTable")
+      .append( $(document.createElement('tbody')) 
+        
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Expiration:') 
+          )
+          .append( $(document.createElement('td') ) 
+            .append(
+              $(document.createElement('select')).addClass("survey_select")
+                .prop("id","survey_expire")
+                .prop("name","survey_expire")
+            )
+          ) //end 2nd td
+        ) // end expiration tr
+
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Refresh:') 
+          )
+          .append( $(document.createElement('td') ) 
+            .append(
+              $(document.createElement('select')).addClass("survey_select") 
+                .prop("id","survey_refresh")
+                .prop("name","survey_refresh")
+            )
+          )
+        ) // end refresh tr
+      ) // end first tbody
+    ) //end 2nd table
+    
+    var options = ["Auto",0,3,4,5,10,15,30,60,120,180,240,300,600,900,1200,1800];
+
+    for(var i in options){
+      $(".survey_select").append( $(document.createElement('option'))
+        .prop("value", options[i])
+        .prop("text", options[i])
+      )
+    }
+
+
+    $('#list').dataTable({
+      'bPaginate': false,
+      'bInfo': false,
+      'sAjaxDataProp': 'survey',
+      'sAjaxSource': 'php/wireless.survey.php',
+      'aoColumns': [
+       { 'sTitle': 'Last Seen',		'mData':'Last Seen' },
+       { 'sTitle': 'SSID',	'mData':'SSID' },
+       { 'sTitle': 'BSSID',		'mData':'BSSID' },
+       { 'sTitle': 'RSSI',   'mData':'RSSI' },
+       { 'sTitle': 'Noise',   'mData':'Noise' },
+       { 'sTitle': 'Quality',  'mData':'Quality' },
+       { 'sTitle': 'Ch',   'mData':'Ch' },
+       { 'sTitle': 'Capabilities',   'mData':'Capabilities' },
+       { 'sTitle': 'Rates',   'mData':'Rates' }
+      ]
+      })
+
+    this._super();
+  }
  });
+
+$(function(){
+  //instatiate widgets on document ready
+  $('#wirelesssurvey').wirelesssurvey();
+})
 
 </script>
