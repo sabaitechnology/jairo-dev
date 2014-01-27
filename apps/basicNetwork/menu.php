@@ -41,6 +41,8 @@
 	 <li><a id='diagnostics_nslookup' href='?panel=diagnostics&section=nslookup' class='subMenuLink button'>NS Lookup</a></li>
 	 <li><a id='diagnostics_route' href='?panel=diagnostics&section=route' class='subMenuLink button'>Route</a></li>
 	 <li><a id='diagnostics_logs' href='?panel=diagnostics&section=logs' class='subMenuLink button'>Logs</a></li>
+	 <li><a id='diagnostics_console' href='?panel=diagnostics&section=console' class='subMenuLink button'>Console</a></li>
+
 	</ul>
 	 </li>
 

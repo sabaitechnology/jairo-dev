@@ -25,7 +25,7 @@
 </div>
 
 
-
+<script type='text/ecmascript' src='php/diagnostics.route.php'></script>
 <script type='text/ecmascript'>
 
 
@@ -267,6 +267,7 @@ $.widget("jai.wirelessstatus", {
 		) //end system table
 	}
 })
+
 $(function(){
   //instatiate widgets on document ready
   $('#systemstatus').systemstatus();
