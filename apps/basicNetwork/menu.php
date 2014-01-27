@@ -5,6 +5,7 @@
 	 <li>
 	<a id='network' class='superMenuLink button'>Network</a>
 	<ul id='networkSubMenu' class='subMenu'>
+	 <li><a id='network_status' href='?panel=network&section=status' class='subMenuLink button'>Status</a></li>
 	 <li><a id='network_wan' href='?panel=network&section=wan' class='subMenuLink button'>WAN</a></li>
 	 <li><a id='network_lan' href='?panel=network&section=lan' class='subMenuLink button'>LAN</a></li>
 	 <li><a id='network_time' href='?panel=network&section=time' class='subMenuLink button'>Time</a></li>
