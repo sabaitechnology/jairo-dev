@@ -33,6 +33,17 @@ function getJson(jsonIn){
 
 function help(){ window.open('http://sabaitechnology.zendesk.com/anonymous_requests/new','Submit a Support Request','height=600,width=800,top=50,left=50').focus(); return false; }
 
+function what(obj,ownonly,pre){
+// if($.isPlainObject(obj)) return 'EMPTY';
+ var txt=[];
+ if(pre) txt.push('<pre>');
+ txt.push(obj);
+ for(var i in obj){
+ if(ownonly && obj.hasOwnProperty(i)) txt.push(i +': '+ obj[i]); }; 
+ if(pre) txt.push('</pre>');
+ return txt.join('\n');
+}
+
 /* BEGIN Jai node service */
 
 function jainode(address){
@@ -49,10 +60,10 @@ function jainode(address){
 		me.socket.emit( (msgType || 'cdata') ,{ cmsg: msg }); 
 	}
 	this.handle = {
-		sdata: function(sdata){ me.show( sdata.smsg, { modal: false, timeout: false }); },
-		connect: function(){ me.show("The Jai Node service is connected.",{ timeout: 1000 }); },
-		disconnect: function(){ me.show("The Jai Node service is disconnected.",{ timeout: 1000 }); },
-		reconnect: function(){ me.show("The Jai Node service has reconnected.",{ timeout: 1000 }); }
+		sdata: function(sdata){ me.show( sdata.smsg, { modal: false, timeout: false }); }
+		// ,connect: function(){ me.show("The Jai Node service is connected.",{ timeout: 1000 }); }
+		,disconnect: function(){ me.show("The Jai Node service is disconnected.",{ timeout: 1000 }); }
+		,reconnect: function(){ me.show("The Jai Node service has reconnected.",{ timeout: 1000 }); }
 	};
 	this.create = function(){
 // TODO: Create notification feed instead of using alert; alert is annoying.

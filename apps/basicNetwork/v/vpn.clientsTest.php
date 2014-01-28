@@ -96,9 +96,10 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 							saveData: function(){ $(parentWidget.element).widgetlist("saveData"); },
 							fixed: parentWidget.options.fixed,
 							type: "widgetlist",
-							element: $(parentWidget.element).attr("id")
+							element: $(parentWidget.element).attr("id"),
+							conf: parentWidget.options.conf
 						},
-						vpnclient: item,
+						details: item,
 						index: index
 					}
 				);
@@ -145,11 +146,11 @@ $.widget("jai.vpnclient", $.Widget,{
 		this.element.addClass("jai-vpnclient")
 		if(this.options.parent){ this.element.addClass( this.options.parent.element +"-list-child"); }
 		this.makeRow();
-		if(!this.options.vpnclient){
+		if(!this.options.details){
 			this.title.html(this.options.nameplaceholder);
 			this.options.editing = true;
 		}else{
-			this.data = this.options.vpnclient;
+			this.data = this.options.details;
 			this.updateName();
 		}
 		if(this.options.editing) this.edit();
@@ -206,17 +207,17 @@ $.widget("jai.vpnclient", $.Widget,{
 		}
 	},
 	updateName: function(){
-		this.options.idString = this.options.vpnclient.name.replace(" ","_");
+		this.options.idString = this.data.name.replace(" ","_");
 		this.element.attr("id",this.options.idString);
-		this.title.html(this.options.vpnclient.name);
+		this.title.html(this.data.name);
 		this.state.attr("id",this.options.idString+"_info")
 		$.map(this.buttons, function(v,i, widgetID){
 			$(v).data("widgetID", widgetID);
 		}, this.options.idString);
 	},
 	selectType: function(){
-		if(!this.options.vpnclient) this.options.vpnclient = {};
-		this.options.vpnclient.type = $("#vpnclienteditor-typeselector").val();
+		if(!this.data) this.data = {};
+		this.data.type = $("#vpnclienteditor-typeselector").val();
 		$("#vpnclienteditor-typeselector-section").remove();
 		this.edit();
 	},
@@ -224,7 +225,7 @@ $.widget("jai.vpnclient", $.Widget,{
 		this.buttons.act.hide();
 		this.buttons.edit.hide();
 // make sure we have a type
-		if(!this.options.vpnclient || !this.options.vpnclient.type){
+		if(!this.data || !this.data.type){
 			$(document.createElement("div"))
 				.attr("id", "vpnclienteditor-typeselector-section")
 				.append(
@@ -248,11 +249,11 @@ $.widget("jai.vpnclient", $.Widget,{
 			this.buttons.save.show();
 //	if we have not yet constructed the editor, do it now
 			if( !this.editor ){
-				this.editorID = "vpnclienteditor_"+ this.options.vpnclient.type;
+				this.editorID = "vpnclienteditor_"+ this.data.type;
 				if($.jai[this.editorID]){
 					this.editor = $(document.createElement("div"))
 						.appendTo( this.element )
-						[this.editorID]({ vpnclient: this.options.vpnclient });
+						[this.editorID]({ details: this.data, parentWidget: this });
 				}else{
 					$(this.element).after("\n!!! There is currently no editor for this type. Please fix this.\nRaw data: "+ JSON.stringify(this.options.vpnclient) +"\n")
 				}
@@ -289,7 +290,10 @@ $.widget("jai.vpnclient", $.Widget,{
 //		toServer({ conf: this.getData() });
 	},
 	getData: function(){
-		return (this.editor ? ( this.data = $(this.editor)[this.editorID]("getData") ) : this.data );
+		return this.data;
+	},
+	setData: function(i,v){
+		this.data[i] = v;
 	},
 	removeFromList: function(){
 		var parentRefresh = this.options.parent.refresh;
@@ -316,50 +320,41 @@ $.widget("jai.vpnclient", $.Widget,{
 $.widget("jai.vpnclienteditor", $.Widget,{
 	_create: function(){
 		this.element.addClass("jai-vpnclient-editor");
-		this.pieces = {};
-		this.data = this.options.vpnclient;
+		this.parentWidget = this.options.parentWidget;
 		this.displaytable = $(document.createElement("table"))
 			.addClass("jai-vpnclienteditor-pptp-table") // ? May be unnecessary
 			.appendTo(this.element);
 
 		this._super();
-	},
-	getData: function(){
-		return this.data;
-	},
-	update: function(){
-		$.map(this.pieces, function(v,i,info){
-			info[i] = $(v).val();
-		}, this.data);
 	}
-
 });
 
 $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
+	// TODO: appropriately abstract _create
 	_create: function(){
 		this._super(); // We call the parent constructor first so we can get things like displaytable and data prepared.
 		$.map(
 			[
 				{
-					value: this.options.vpnclient.name,
+					value: this.parentWidget.data.name,
 					displayname: "Name",
 					name: "name",
 					placeholder: "New PPTP Client"
 				},
 				{
-					value: this.options.vpnclient.server,
+					value: this.parentWidget.data.server,
 					displayname: "Server",
 					name: "server",
 					placeholder: "Server Address"
 				},
 				{
-					value: this.options.vpnclient.username,
+					value: this.parentWidget.data.username,
 					displayname: "Username",
 					name: "username",
 					placeholder: "PPTP Username"
 				},
 				{
-					value: this.options.vpnclient.password,
+					value: this.parentWidget.data.password,
 					displayname: "Password",
 					name: "password",
 					placeholder: "PPTP Password"
@@ -370,13 +365,16 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 					$(document.createElement("tr")).append(
 						$(document.createElement("td")).html(v.displayname)
 					,	$(document.createElement("td")).append(
-							parentWidget.pieces[v.name] = $(document.createElement("input"))
-								.attr("type", "text")	// Extend to use v.type
+							$(document.createElement("input"))
+								.attr("type", "text")	// TODO: Extend to use v.type
 								.attr("placeholder", v.placeholder)
 								.addClass("jai-vpnclienteditor-pptp")
-								.data("parentWidget", parentWidget)
+								.data("parentWidget", parentWidget.parentWidget)
+								.data("name", v.name)
 								.val( v.value )
-								.change(function(){ $(this).data("parentWidget").update(); })
+								.change(function(){
+									$(this).data("parentWidget").setData( $(this).data("name"), $(this).val() );
+								})
 						)
 					)
 				);
@@ -388,6 +386,7 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 
 $(function(){
 	$("#vpnclients").widgetlist({ list: vpnclients, conf: "vpnclients", widgetType: "vpnclient" });
+	$("#kitty").vpnclient("edit");
 });
 
 // The L2TP widget can pretty much be a duplicate of the PPTP widget, except that in future it will need to support

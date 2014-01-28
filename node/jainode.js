@@ -121,7 +121,7 @@ function save(socket, cdata) {
 }
 
 io.sockets.on('connection', function(socket){
-	socket.emit('sdata', { smsg: 'Connected.' }); 
+	// socket.emit('sdata', { smsg: 'Connected.' });
 
 	socket.on('cdata', function(cdata){
 
