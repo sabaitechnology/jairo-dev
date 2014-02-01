@@ -1,6 +1,6 @@
 {
- "icmp": "checked",
- "multicast": "checked",
- "cookies": "checked",
- "wan": ""
+	"icmp": "checked",
+	"multicast": "checked",
+	"cookies": "checked",
+	"wan": ""
 }

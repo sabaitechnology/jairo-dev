@@ -1,3 +1,3 @@
 {
- "domain": "www.google.com"
+	"domain": "www.google.com"
 }

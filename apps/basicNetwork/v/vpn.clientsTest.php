@@ -4,7 +4,7 @@
 
 <pre id="testing"></pre>
 
-<script type="text/ecmascript" src="php/etc.php?q=vpnclients"></script>
+<!-- <script type="text/ecmascript" src="php/etc.php?q=vpnclients"></script> -->
 <script type="text/ecmascript">
 // BEGIN Widget List
 // To create a jQuery Widget we invoke the widget constructor $.widget; it takes three arguments:
@@ -92,6 +92,7 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 	//	here we pass a refresh function for the parent widget as an anonymous function
 	//	this decouples the parent and child widgets
 						parent: {
+							widget: parentWidget,
 							refresh: function(){ $(parentWidget.element).widgetlist("refresh"); },
 							saveData: function(){ $(parentWidget.element).widgetlist("saveData"); },
 							fixed: parentWidget.options.fixed,
@@ -111,10 +112,12 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 		this.refresh();
  	},
  	saveData: function(){
- 		var data = $.map( $("."+ $(this.element).attr("id") +"-list-child" ).get(), function(v,i,me){
- 			return $(v)[me.options.widgetType]("getData");
+ 		var data = {};
+ 		$.map( $("."+ $(this.element).attr("id") +"-list-child" ).get(), function(v,i,me){
+ 			var idata = $(v)[me.options.widgetType]("getData");
+ 			data[idata.name] = idata;
  		}, this);
- 		ro.send(data, "save");
+// 		ro.send(data, "save");
 		// var data = $("."+ $(this.element).attr("id") +"-list-child" ).map(function(i,v){
 		// 	return $(v)[me.options.widgetType]("getData");
 		// }).get();
@@ -269,14 +272,11 @@ $.widget("jai.vpnclient", $.Widget,{
 		this.saveData();
 	},
 	saveData: function(){
-		if(this.options.parent){
-			this.options.parent.saveData(); // call the parent save function
-		}
+		if(this.options.parent) this.options.parent.saveData(); // call the parent save function
 		// $("#testing").html(
 		// 	"Data: "+ JSON.stringify(this.getData())
 		// 	+"\nParent: "+ JSON.stringify(this.options.parent)
 		// );
-		// save this.getData()
 // Called when you hit the save button
 // Should probably use toServer to send changed information
 //		$("#testing").html( "Data: "+ JSON.stringify(this.getData()) );
@@ -294,13 +294,16 @@ $.widget("jai.vpnclient", $.Widget,{
 	},
 	setData: function(i,v){
 		this.data[i] = v;
+		if(i == "name") this.updateName();
+		if(this.options.parent) this.options.parent.setData(this.data.name,this.data); // call the parent set function
 	},
 	removeFromList: function(){
 		var parentRefresh = this.options.parent.refresh;
+		var parent = this.options.parent.widget;
 		$(this.element).remove();
 		parentRefresh();
+		parent.saveData();
 // TODO: needs to also delete this connection in the configuration file.
-
 	},
 	options: {
 		parent: null,
@@ -385,6 +388,29 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 });
 
 $(function(){
+
+var vpnclients = {
+  "kitty": {
+    "type": "pptp",
+    "server": "203.54.1.20",
+    "username": "chinacat",
+    "password": "meowmeow",
+  },
+  "Tokyo": {
+    "type": "l2tp",
+    "server": "200.50.2.7",
+    "username": "someguy",
+    "password": "password",
+    "psk": "presharedkey",
+  },
+  "New York": {
+    "type": "openvpn",
+    "server": "42.2.2.2",
+    "username": "topofspaghetti",
+    "password": "meatball",
+  }
+};
+
 	$("#vpnclients").widgetlist({ list: vpnclients, conf: "vpnclients", widgetType: "vpnclient" });
 	$("#kitty").vpnclient("edit");
 });

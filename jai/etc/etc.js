@@ -107,15 +107,15 @@
 			}
 		]
 	},
-	"vpnclients": [
-		{
+	"vpnclients": {
+		"kitty": {
 			"type": "pptp",
 			"server": "203.54.1.20",
 			"username": "chinacat",
 			"password": "meowmeow",
 			"name": "kitty"
 		},
-		{
+		"Tokyo": {
 			"type": "l2tp",
 			"server": "200.50.2.7",
 			"username": "someguy",
@@ -123,14 +123,14 @@
 			"psk": "presharedkey",
 			"name": "Tokyo"
 		},
-		{
+		"New York": {
 			"type": "openvpn",
 			"server": "42.2.2.2",
 			"username": "topofspaghetti",
 			"password": "meatball",
 			"name": "New York"
 		}
-	],
+	},
 	"vpnservers": [
 	],
 	"gateways": {
