@@ -18,7 +18,7 @@ function jaiconfiguration(){
 				}
 			});
 		}else{
-			console.log("Section already load.");
+			console.log("Section already loaded.");
 		}
 	}
 	this.parse = function(section, sectionData, callback){

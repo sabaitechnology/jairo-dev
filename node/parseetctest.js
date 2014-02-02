@@ -13,22 +13,35 @@ function runTasks(lastResult, taskList, resultList, isRunning, finalCall){
 	}
 }
 
-jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN");
-setTimeout(
-	function(){
+function blockCall(f, check, result){
+	var result = { finished: false };
+	f(function(data){
+		result.data = data;
+		result.finished = true;
+	});
 
-runTasks(null, [
-	function(callback){ jc.get("vpnclients", "kitty.server", callback); },
-	function(callback){ jc.set("vpnclients", "kitty.server", "1.2.3.4", callback); },
-	function(callback){ jc.get("vpnclients", "kitty.server", callback); }
-],
-[], false, function(res){
-	console.log("Res2: "+ JSON.stringify(res, null, "\t") );
-});
+}
 
-	},
-	2000
-);
+var ks = blockCall(function(callback){
+	jc.get("vpnclients", "kitty.server", callback);
+})
+
+// jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN");
+// setTimeout(
+// 	function(){
+
+// runTasks(null, [
+// 	function(callback){ jc.get("vpnclients", "kitty.server", callback); },
+// 	function(callback){ jc.set("vpnclients", "kitty.server", "1.2.3.4", callback); },
+// 	function(callback){ jc.get("vpnclients", "kitty.server", callback); }
+// ],
+// [], false, function(res){
+// 	console.log("Res2: "+ JSON.stringify(res, null, "\t") );
+// });
+
+// 	},
+// 	2000
+// );
 
 // setData(conf, "vpnclients.kitty", { "type": "l2tp", "server": "1.2.3.4", "username": "dave" });
 
