@@ -48,6 +48,7 @@ function what(obj,ownonly,pre){
 
 function jainode(address){
 	var me = this;
+	this.showTimeout = 500;
 	this.address = address;
 // We save a pointer to 'this' to remedy caller drift in member functions called by outside objects
 //	ie, in functions called externally, the local 'this' will be wrong. Using 'me' here create a closure
@@ -61,9 +62,9 @@ function jainode(address){
 	}
 	this.handle = {
 		sdata: function(sdata){ me.show( sdata.smsg, { modal: false, timeout: false }); }
-		// ,connect: function(){ me.show("The Jai Node service is connected.",{ timeout: 1000 }); }
-		,disconnect: function(){ me.show("The Jai Node service is disconnected.",{ timeout: 1000 }); }
-		,reconnect: function(){ me.show("The Jai Node service has reconnected.",{ timeout: 1000 }); }
+		,connect: function(){ me.show("The Jai Node service is connected.",{ timeout: me.showTimeout }); }
+		,disconnect: function(){ me.show("The Jai Node service is disconnected.",{ timeout: me.showTimeout }); }
+		,reconnect: function(){ me.show("The Jai Node service has reconnected.",{ timeout: me.showTimeout }); }
 	};
 	this.create = function(){
 // TODO: Create notification feed instead of using alert; alert is annoying.
@@ -71,12 +72,10 @@ function jainode(address){
 		if(typeof(io) == "undefined"){
 			// use ajax/http
 // TODO: define ajax/http methods
-			me.send = me.sendByAjax;
-//			me.send = me.sendByHTTP;
+			me.send = me.sendByAjax; // me.send = me.sendByHTTP;
 		}else{
-			me.socket = io.connect(me.address); //, { secure: true });
-// Handlers so easy!
-			for(var i in me.handle) me.socket.on(i,me.handle[i]);
+			me.socket = io.connect(me.address);		// Restore this option with certs { secure: true });
+			for(var i in me.handle) me.socket.on(i,me.handle[i]);	// Handlers so easy!
 			me.send = me.sendBySocket;
 		}
 	}

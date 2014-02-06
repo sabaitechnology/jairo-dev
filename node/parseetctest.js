@@ -3,6 +3,8 @@ var fs 		= require("fs");
 var util 	= require("util");
 var jc		= require("./jaiconf.js");
 
+
+
 function runTasks(lastResult, taskList, resultList, isRunning, finalCall){
 	if(isRunning) resultList.push(lastResult);
 	if(taskList.length > 0){
@@ -13,18 +15,11 @@ function runTasks(lastResult, taskList, resultList, isRunning, finalCall){
 	}
 }
 
-function blockCall(f, check, result){
-	var result = { finished: false };
-	f(function(data){
-		result.data = data;
-		result.finished = true;
-	});
+// jc.get("vpnclients", "kitty.server",function(data){
+//  	console.log("Res: "+ JSON.stringify(data, null, "\t") );
+// });
 
-}
 
-var ks = blockCall(function(callback){
-	jc.get("vpnclients", "kitty.server", callback);
-})
 
 // jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN");
 // setTimeout(

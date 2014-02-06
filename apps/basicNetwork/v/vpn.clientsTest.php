@@ -74,6 +74,7 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 	//	 and the addItem function; this keeps the widgetlist widget definition clean
 	//	 and allows individual widgets in the list to manage their own deletion/editing
 	makeItem: function(item, index, parentWidget){
+		item.name = index;
 		// Just create a straightforward list if no widget type is supplied.
 		//  this will need fixed to create the normal editable list, perhaps with a default list item constructor
 		if(!parentWidget.options.widgetType){
@@ -153,6 +154,7 @@ $.widget("jai.vpnclient", $.Widget,{
 			this.title.html(this.options.nameplaceholder);
 			this.options.editing = true;
 		}else{
+			// $("#testing").append("Data: "+ JSON.stringify( this.options.details, null, 1 ) +"\n")
 			this.data = this.options.details;
 			this.updateName();
 		}

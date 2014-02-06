@@ -1,10 +1,45 @@
 var fs 		= require("fs");
+var watch	= require('watch');
 
 function jaiconfiguration(){
 	console.log("Creating conf object.");
 	var me = this;
-	var confRoot = "../jai/etc/";
+	var confRoot = "etc";
 	this.conf = {};
+
+	watch.createMonitor('list',
+		function (monitor){
+			monitor.on("created", function (f, stat) {
+				console.log("Created: "+ f);
+				for(var i in stat){
+					if(!stat.hasOwnProperty(i)) continue;
+					console.log("\t"+ i +": "+ stat[i] )
+				}
+			});
+			monitor.on("changed", function (f, stat, prev) {
+				console.log("Changed: "+ f);
+				for(var i in stat){
+					if(!stat.hasOwnProperty(i)) continue;
+					if(!prev[i]){}else{
+						if(prev[i]==stat[i]){
+							console.log("\t"+ i +": "+ prev[i] );
+						}else{
+							console.log("\t"+ i +" : "+ prev[i] +" --> "+ stat[i] );
+						}
+					}
+				}
+			});
+			monitor.on("removed", function (f, stat) {
+				console.log("Removed: "+ f);
+				for(var i in stat){
+					if(!stat.hasOwnProperty(i)) continue;
+					console.log("\t"+ i +": "+ stat[i] );
+				}
+			});
+		}
+	);
+
+/*
 	this.load = function(section, callback){
 		console.log("Loading "+ section +".");
 		if(!me.conf[section]){
@@ -73,6 +108,7 @@ function jaiconfiguration(){
 			}
 		}
 	}
+*/
 }
 
 module.exports = new jaiconfiguration();

@@ -4,7 +4,8 @@
   "description": "Jairo modular networking platform",
   "main": "jainode.js",
   "dependencies": {
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "watch": "~0.9.0"
   },
   "engines": { "node":  "*"},
   "devDependencies": {},
