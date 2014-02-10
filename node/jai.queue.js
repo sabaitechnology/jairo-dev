@@ -9,14 +9,14 @@ function jaiqueue(){
 	}
 
 	this.run = function(type){
-		if(!me.queue[type]) return;
-		if(!me.queue[type].running){
-			me.queue[type].running = me.queue[type].q.shift();
-			if(typeof(me.queue[type].running) !== 'function'){
-				me.queue[type].running = false;
-				me.run(type);
-			}
-			me.queue[type].running(function(){ me.next(type); });
+		if( !me.queue[type] || me.queue[type].running || (me.queue[type].q.length < 1) ) return;
+		me.queue[type].running = true;
+		if(typeof(me.queue[type].q[0]) !== 'function'){
+			me.queue[type].running = false;
+			me.queue[type].q.shift();
+			me.run(type);
+		}else{
+			me.queue[type].q[0](function(){ me.next(type); });
 		}
 	}
 
