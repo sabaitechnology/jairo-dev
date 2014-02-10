@@ -6,6 +6,7 @@ function jaiconfiguration(){
 	var me = this;
 	var confRoot = "etc";
 	this.conf = {};
+	
 
 	watch.createMonitor('list',
 		function (monitor){
