@@ -7,36 +7,6 @@ function jaiconfiguration(){
 	var confRoot = "etc";
 	this.conf = {};
 
-	watch.createMonitor('list',function (monitor){
-		monitor.on("created", function (f, stat) {
-			console.log("Created: "+ f);
-			for(var i in stat){
-				if(!stat.hasOwnProperty(i)) continue;
-				console.log("\t"+ i +": "+ stat[i] )
-			}
-		});
-		monitor.on("changed", function (f, stat, prev) {
-			console.log("Changed: "+ f);
-			for(var i in stat){
-				if(!stat.hasOwnProperty(i)) continue;
-				if(!prev[i]){}else{
-					if(prev[i]==stat[i]){
-						console.log("\t"+ i +": "+ prev[i] );
-					}else{
-						console.log("\t"+ i +" : "+ prev[i] +" --> "+ stat[i] );
-					}
-				}
-			}
-		});
-		monitor.on("removed", function (f, stat) {
-			console.log("Removed: "+ f);
-			for(var i in stat){
-				if(!stat.hasOwnProperty(i)) continue;
-				console.log("\t"+ i +": "+ stat[i] );
-			}
-		});
-	});
-
 /*
 	this.load = function(section, callback){
 		console.log("Loading "+ section +".");
@@ -107,6 +77,24 @@ function jaiconfiguration(){
 		}
 	}
 */
+
+	// watch.createMonitor('list',function (monitor){
+	// 	monitor.on("created", function (f, stat){
+	// 		console.log("Created: "+ f);
+	// 		// Add file to config list.
+	// 	});
+	// 	monitor.on("changed", function (f, stat, prev) {
+	// 		console.log("Changed: "+ f);
+	// 		// Check for current write op; otherwise queue reread
+	// 	});
+	// 	// monitor.on("removed", function (f, stat) {}); // TODO: What do to when a config file is removed? Anything?
+
+	// });
+
+	var fw = fs.watch('etc', function (event, filename){
+		console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event));
+	});
+
 }
 
 module.exports = new jaiconfiguration();

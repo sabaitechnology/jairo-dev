@@ -1,11 +1,14 @@
 
 var fs 		= require("fs");
 var util 	= require("util");
-var jc		= require("./jai.conf2.js");
+// var jc		= require("./jai.conf.js");
 // var q = require("./jai.queue.js");
 
-var sf = "etc/vpnclients";
+//var sf = "etc/vpnclients";
 
+var fw = fs.watch('etc', function (event, filename){
+	console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event));
+});
 
 
 // jc.get("vpnclients", "kitty.server",function(data){

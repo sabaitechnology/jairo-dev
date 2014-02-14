@@ -1,5 +1,5 @@
 var fs 		= require("fs");
-var watch	= require('watch');
+//var watch	= require('watch');
 
 function jaiconfiguration(){
 	console.log("Creating conf object.");
