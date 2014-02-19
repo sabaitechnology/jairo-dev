@@ -1,6 +1,6 @@
 function jaiqueue(){
 	var me = this;
-	var queue = {};
+	var queue = [];
 
 	this.add = function(type, callback){
 		if(!me.queue[type]) me.queue[type] = { running: false, q: [] };

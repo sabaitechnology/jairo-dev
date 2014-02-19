@@ -2,98 +2,73 @@ var fs 		= require("fs");
 var watch	= require('watch');
 
 function jaiconfiguration(){
-	console.log("Creating conf object.");
 	var me = this;
 	var confRoot = "etc";
-	this.conf = {};
 
-/*
-	this.load = function(section, callback){
-		console.log("Loading "+ section +".");
-		if(!me.conf[section]){
-			console.log("Trying to load "+ confRoot + "jai."+ section +".js.");
-			fs.readFile(confRoot + "jai."+ section +".js", function(e, data){
-				if(!e){
-					console.log("Trying load.");
-					me.parse(section, data, callback);
-				}else{
-					console.log("Load error. Details: "+ JSON.stringify(e) +"\n");
+
+	this.load = function(file, callback){
+		console.log(file +" loading.");
+		fs.readFile(confRoot + file, function(e, data){
+			if(!e){
+				console.log(file +" parsing.");
+				try {
+					data = JSON.parse(data);
+				}catch(e){
+					console.log(file + " parse error: "+ JSON.stringify(e) +"\n");
+					data = false;
+					// console.log(util.inspect(e, { depth: null }))
 				}
-			});
-		}else{
-			console.log("Section already loaded.");
-		}
-	}
-	this.parse = function(section, sectionData, callback){
-		console.log("Parsing "+ section +".");
-		try {
-			console.log("Trying parse.");
-			me.conf[section] = JSON.parse(sectionData);
-		} catch(e){
-			console.log("Parse failed.");
-			console.log("Error details: "+ JSON.stringify(e) +"\n");
-//			console.log(util.inspect(e, { depth: null }))
-			me.conf[section] = false;
-		}
-		console.log("Parse stat: "+ (me.conf[section]==true) +".");
-		if(me.conf[section] && callback) callback();
-	}
-	this.set = function(section, key, value, callback){
-		if(value == null){
-			console.log("No value supplied to set.");
-			if(callback) callback(false);
-		}else{
-			if(!me.conf[section]){
-				me.load(section, function(){ me.set(section, key, value, callback); });
+				console.log(file +"parsed.");
+				if(data && callback) callback(file, data);
 			}else{
-				var obj = me.conf[section];
-				key = key.split('.');
-				var len = key.length;
-				for (var i = 0; i < len - 1; i++){ obj = obj[key[i]]; }	// TODO: while not for?
-				obj[key[len - 1]] = value;
-				if(callback) callback(true);
+				console.log(file +" error: "+ JSON.stringify(e) +"\n");
 			}
-		}
+		});
 	}
-	this.get = function(section, key, callback){
-		if(section == null){
-			console.log("No section specified in get arguments.");
-		}else{
-			if(!me.conf[section]){
-				console.log("Deferring get.");
-				me.load(section, function(){ me.get(section, key, callback); });
-			}else{
-				console.log("Running get.");
-				if(key == null){
-					if(callback) callback(me.conf[section]);
-				}else{
-					var obj = me.conf[section];
-					key = key.split('.');
-					var len = key.length;
-					for (var i = 0; i < len - 1; i++){ obj = obj[key[i]]; }	// TODO: while not for?
-					if(callback) callback(obj[key[len - 1]]);
-				}
-			}
-		}
-	}
-*/
 
-	// watch.createMonitor('list',function (monitor){
-	// 	monitor.on("created", function (f, stat){
-	// 		console.log("Created: "+ f);
-	// 		// Add file to config list.
-	// 	});
-	// 	monitor.on("changed", function (f, stat, prev) {
-	// 		console.log("Changed: "+ f);
-	// 		// Check for current write op; otherwise queue reread
-	// 	});
-	// 	// monitor.on("removed", function (f, stat) {}); // TODO: What do to when a config file is removed? Anything?
+	// this.get = function(file, key, callback){
+	// 	if(file == null){
+	// 		console.log("No file specified in get arguments.");
+	// 	}else{
+	// 		if(!me.conf[file]){
+	// 			console.log("Deferring get.");
+	// 			me.load(file, function(){ me.get(file, key, callback); });
+	// 		}else{
+	// 			console.log("Running get.");
+	// 			if(key == null){
+	// 				if(callback) callback(me.conf[file]);
+	// 			}else{
+	// 				var obj = me.conf[file];
+	// 				key = key.split('.');
+	// 				var len = key.length;
+	// 				for (var i = 0; i < len - 1; i++){ obj = obj[key[i]]; }	// TODO: while not for?
+	// 				if(callback) callback(obj[key[len - 1]]);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
+	// this.set = function(file, key, value, callback){
+	// 	if(value == null){
+	// 		console.log("No value supplied to set.");
+	// 		if(callback) callback(false);
+	// 	}else{
+	// 		if(!me.conf[file]){
+	// 			me.load(file, function(){ me.set(file, key, value, callback); });
+	// 		}else{
+	// 			var obj = me.conf[file];
+	// 			key = key.split('.');
+	// 			var len = key.length;
+	// 			for (var i = 0; i < len - 1; i++){ obj = obj[key[i]]; }	// TODO: while not for?
+	// 			obj[key[len - 1]] = value;
+	// 			if(callback) callback(true);
+	// 		}
+	// 	}
+	// }
+
+	// var fw = fs.watch('etc', function (event, filename){
+	// 	console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event));
 	// });
-
-	var fw = fs.watch('etc', function (event, filename){
-		console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event));
-	});
 
 }
 

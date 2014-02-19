@@ -10,6 +10,8 @@ var fw = fs.watch('etc', function (event, filename){
 	console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event));
 });
 
+console.log( util.inspect(fw) );
+
 
 // jc.get("vpnclients", "kitty.server",function(data){
 //  	console.log("Res: "+ JSON.stringify(data, null, "\t") );
