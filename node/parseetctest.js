@@ -7,10 +7,11 @@ var util 	= require("util");
 //var sf = "etc/vpnclients";
 
 var fw = fs.watch('etc', function (event, filename){
-	console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event));
+	console.log(filename +" / "+ event);
+	// fw.close();
 });
 
-console.log( util.inspect(fw) );
+// console.log( util.inspect(fw) );
 
 
 // jc.get("vpnclients", "kitty.server",function(data){
