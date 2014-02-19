@@ -1,4 +1,4 @@
-function jaiqueue(){
+module.exports = (function(){
 	var me = this;
 	var queue = [];
 
@@ -24,7 +24,4 @@ function jaiqueue(){
 		me.queue[type].running = false;
 		me.run(type);
 	}
-}
-
-
-module.exports = new jaiqueue();
+});

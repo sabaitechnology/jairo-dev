@@ -1,22 +1,14 @@
 
 var fs 		= require("fs");
 var util 	= require("util");
-// var jc		= require("./jai.conf.js");
-// var q = require("./jai.queue.js");
-
-//var sf = "etc/vpnclients";
-
-var fw = fs.watch('etc', function (event, filename){
-	console.log(filename +" / "+ event);
-	// fw.close();
-});
-
-// console.log( util.inspect(fw) );
+var jc		= require("./jai.conf.js");
 
 
-// jc.get("vpnclients", "kitty.server",function(data){
-//  	console.log("Res: "+ JSON.stringify(data, null, "\t") );
-// });
+function showResult(data){ console.log("Res: "+ JSON.stringify(data, null, "\t") ); }
+
+jc.get("vpnclients", "kitty", showResult);
+jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN", showResult);
+jc.get("vpnclients", "kitty", showResult);
 
 // jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN");
 // setTimeout(
