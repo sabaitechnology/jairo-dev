@@ -3,12 +3,13 @@ var fs 		= require("fs");
 var util 	= require("util");
 var jc		= require("./jai.conf.js");
 
-
 function showResult(data){ console.log("Res: "+ JSON.stringify(data, null, "\t") ); }
 
 jc.get("vpnclients", "kitty", showResult);
 jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN", showResult);
 jc.get("vpnclients", "kitty", showResult);
+
+jc.showQueue();
 
 // jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN");
 // setTimeout(

@@ -5,13 +5,28 @@ module.exports = (function(){
 	var confRoot = "etc";
 	var q = [];
 	var running = false;
+	var current = null;
 
-	this.addOp = function(type, callback){
-		me.q.push({  });
+	this.addOp = function(operation){
+		console.log("Running: "+ running);
+		q.push(operation);
 		me.run();
 	}
 
 	this.run = function(){
+		if(running) return;
+		running = true;
+		current = q.shift();
+		current.callback = [ current.callback ];
+		if(current.type == "set"){
+			var file = current.file;
+			for(var i=0; i<q.length; i++){
+				if( (q[i].type == "set") && (q[i].file == current.file) ){
+					current.key.push(q[i].key);
+					current.callback.push(q[i].callback);
+				}
+			}
+		}
 		// if( !me.queue[type] || me.queue[type].running || (me.queue[type].q.length < 1) ) return;
 		// me.queue[type].running = true;
 		// if(typeof(me.queue[type].q[0]) !== 'function'){
@@ -28,8 +43,13 @@ module.exports = (function(){
 	// 	me.run(type);
 	// }
 
-
-
+	this.showQueue = function(){
+		console.log("Running: "+ running);
+		for(var i=0; i<q.length; i++){
+			console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) );
+			console.log("\t"+ typeof( q[i].callback ) );
+		}
+	}
 
 	this.JSONify = function(data){ return JSON.stringify(data, null, "\t"); }
 
@@ -104,14 +124,19 @@ module.exports = (function(){
 		}
 	}
 
-	this.set = function(){
-		//
+	this.set = function(file, key, value, callback){
+		if( !callback && (typeof(value)=="function") ){
+			callback = value;
+		}else{
+			key = [{ key: key, value: value }];
+		}
+		me.addOp({ type: "set", file: file, key: key, callback: callback });
 	}
 
-	this.get = function(){
-		//
+	this.get = function(file, key, callback){
+		me.addOp({ type: "get", file: file, key: key, callback: callback });
 	}
 
 // var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
-
+	return this;
 })();
