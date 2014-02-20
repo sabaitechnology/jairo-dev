@@ -13,29 +13,29 @@ module.exports = (function(){
 		me.run();
 	}
 
-	this.run = function(){
+// set(file, key, value, callback)
+// { type: "set", file: file, key: key, callback: callback }
+// setConf(file, key, value, callback)
+
+
+// get(file, key, callback)
+// { type: "get", file: file, key: key, callback: callback }
+// getConf(file, key, callback)
+
+
+	this.run = function(){ if(q.length == 0) return;
 		if(running) return;
 		running = true;
 		current = q.shift();
-		current.callback = [ current.callback ];
-		if(current.type == "set"){
-			var file = current.file;
-			for(var i=0; i<q.length; i++){
-				if( (q[i].type == "set") && (q[i].file == current.file) ){
-					current.key.push(q[i].key);
-					current.callback.push(q[i].callback);
-				}
-			}
+		switch(q.type){
+			case "get":
+				me.getConf( q. )
+			break;
+			case "set":
+			break;
 		}
-		// if( !me.queue[type] || me.queue[type].running || (me.queue[type].q.length < 1) ) return;
-		// me.queue[type].running = true;
-		// if(typeof(me.queue[type].q[0]) !== 'function'){
-		// 	me.queue[type].running = false;
-		// 	me.queue[type].q.shift();
-		// 	me.run(type);
-		// }else{
-		// 	me.queue[type].q[0](function(){ me.next(type); });
-		// }
+
+
 	}
 
 	// this.next = function(type){
