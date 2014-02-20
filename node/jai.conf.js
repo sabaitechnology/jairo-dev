@@ -13,35 +13,23 @@ module.exports = (function(){
 		me.run();
 	}
 
-// set(file, key, value, callback)
-// { type: "set", file: file, key: key, callback: callback }
-// setConf(file, key, value, callback)
-
-
-// get(file, key, callback)
-// { type: "get", file: file, key: key, callback: callback }
-// getConf(file, key, callback)
-
-
 	this.run = function(){ if(q.length == 0) return;
 		if(running) return;
 		running = true;
 		current = q.shift();
-		switch(q.type){
-			case "get":
-				me.getConf( q. )
-			break;
-			case "set":
-			break;
+		switch(current.type){
+			case "get": me.getConf( current.file, current.key, me.next(current.callback) ); break;
+			case "set": me.setConf( current.file, current.key, current.value, me.next(current.callback) ); break;
 		}
-
-
 	}
 
-	// this.next = function(type){
-	// 	me.queue[type].running = false;
-	// 	me.run(type);
-	// }
+	this.next = function(callback){
+		return function(){
+			running = false;
+			callback();
+			me.run();
+		}
+	}
 
 	this.showQueue = function(){
 		console.log("Running: "+ running);
@@ -51,28 +39,34 @@ module.exports = (function(){
 		}
 	}
 
-	this.JSONify = function(data){ return JSON.stringify(data, null, "\t"); }
-
 	this.loadFile = function(file, callback){ if(!file || !callback) return; // TODO: throw an error?
-		// We discard the error here because we don't care; we just want a copy of the file.
-		// If the file does not exist, we consider an empty file an adequate copy.
-		// Perhaps we should also create the file we are attempting to load?
-		try{ fs.createReadStream(confRoot +"/"+ file).pipe(fs.createWriteStream(confRoot +"/."+ file)); }catch(e){};
-		fs.readFile(confRoot +"/."+ file, function(e, data){
-			if(!e){
-				try { data = JSON.parse(data); } catch(e){
-					console.log(file + " parse error: "+ JSON.stringify(e) +"\n");
-					data = null;
-				}
-				callback(data);
+		if(!fs.exists(confRoot +"/."+ file)){
+			if(fs.exists(confRoot +"/"+ file)){
+				fs.createReadStream(confRoot +"/"+ file).pipe(fs.createWriteStream(confRoot +"/."+ file));
 			}else{
-				console.log(file +" error: "+ JSON.stringify(e) +"\n");
+				callback();
 			}
-		});
+		}
+
+		// fs.readFile(confRoot +"/."+ file, function(e, data){
+		// 	console.log("11?");
+		// 	return;
+		// 	// console.log(file + " contents: "+ JSON.stringify(data) +"\n");
+		// 	if(!e){
+		// 		try { data = JSON.parse(data); } catch(e){
+		// 			console.log(file + " parse error: "+ JSON.stringify(e) +"\n");
+		// 			data = null;
+		// 		}
+		// 		callback(data);
+		// 	}else{
+		// 		console.log(file +" error: "+ JSON.stringify(e) +"\n");
+		// 	}
+		// });
+
 	}
 
 	this.saveFile = function(file, data, callback){
-		fs.writeFile(confRoot +"/."+ file, me.JSONify(data), function(e){
+		fs.writeFile(confRoot +"/."+ file, JSON.stringify(data, null, "\t"), function(e){
 			if(e) console.log(file +" save error: "+ JSON.stringify(e) +"\n");
 			callback(!e);
 		});
@@ -125,12 +119,7 @@ module.exports = (function(){
 	}
 
 	this.set = function(file, key, value, callback){
-		if( !callback && (typeof(value)=="function") ){
-			callback = value;
-		}else{
-			key = [{ key: key, value: value }];
-		}
-		me.addOp({ type: "set", file: file, key: key, callback: callback });
+		me.addOp({ type: "set", file: file, key: key, value: value, callback: callback });
 	}
 
 	this.get = function(file, key, callback){
