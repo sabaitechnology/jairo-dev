@@ -44,7 +44,7 @@ module.exports = (function(){
 			if(fs.exists(confRoot +"/"+ file)){
 				fs.createReadStream(confRoot +"/"+ file).pipe(fs.createWriteStream(confRoot +"/."+ file));
 			}else{
-				callback();
+				callback({});
 			}
 		}
 
