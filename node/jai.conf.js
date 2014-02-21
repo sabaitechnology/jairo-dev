@@ -12,10 +12,11 @@ module.exports = (function(){
 		if( (q.length == 0) || running ) return;
 		running = true;
 		current = q.shift();
-		switch(current.type){
-			case "get": getConf( current.file, current.key, next ); break;
-			case "set": setConf( current.file, current.key, current.value, next ); break;
-		}
+		me[current.type].apply(me, current.args);
+		// switch(current.type){
+		// 	case "get": getConf( current.file, current.key, next ); break;
+		// 	case "set": setConf( current.file, current.key, current.value, next ); break;
+		// }
 	}
 
 	function addOp(operation){
@@ -36,20 +37,19 @@ module.exports = (function(){
 		});
 	}
 
-	function getConf(file, key, callback){
+	function _get(file, key, callback){
 		if(!file) return;
 		if(!callback && (typeof(key) == "function")){ callback = key; key = null; }
 		if(!callback) return; // TODO: throw an error?
 		var confFile = confRoot +"/"+ file;
 		var tempFile = confRoot +"/."+ file;
-		if(!fs.existsSync(tempFile)){
-			if(fs.existsSync(confFile)) fs.createReadStream(confFile).pipe(fs.createWriteStream(tempFile));
-		}
+		if(!fs.existsSync(tempFile) && fs.existsSync(confFile)) fs.createReadStream(confFile).pipe(fs.createWriteStream(tempFile));
 		fs.readFile(tempFile, function(e, data){
 			if(!e){
 				if(data==""){
 					data = {};
 				}else try { data = JSON.parse(data); } catch(e){
+					// TODO: if data is corrupt we ought probably to save the corrupt contents elsewhere and replace the corrupt file.
 					console.log(file + " parse error: "+ JSON.stringify(e) +"\n");
 					data = null;
 				}
@@ -66,12 +66,12 @@ module.exports = (function(){
 		});
 	}
 
-	function setConf(file, key, value, callback){
+	function _set(file, key, value, callback){
 		if(value == null) return;
 		if(!key){
 			saveFile(file,value,callback);
 		}else{
-			getConf(file, function(data){
+			_get(file, function(data){
 				if(!data){
 					// TODO: Spaceballs, DO SOMETHING! (Probably save value as new file contents.)
 					//	Also probably handle creating new keys...
@@ -89,12 +89,18 @@ module.exports = (function(){
 		}
 	}
 
+	function etTest(file, key, callback){
+		for(var i=0; i<arguments.length; i++){
+			console.log(i +": "+ arguments[i]);
+		}
+	}
+
 	this.set = function(file, key, value, callback){
-		addOp({ type: "set", file: file, key: key, value: value, callback: callback });
+		addOp({ type: "_set", args: arguments });
 	}
 
 	this.get = function(file, key, callback){
-		addOp({ type: "get", file: file, key: key, callback: callback });
+		addOp({ type: "_get", args: arguments });
 	}
 
 // var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });

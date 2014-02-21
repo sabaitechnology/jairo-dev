@@ -6,7 +6,7 @@ var jc		= require("./jai.conf.js");
 function showResult(data){ console.log("Res: "+ JSON.stringify(data, null, "\t") ); }
 
 jc.get("vpnclients", "kitty", showResult);
-jc.get("vpnclientsTest", "kitty", showResult);
+// jc.get("vpnclientsTest", "kitty", showResult);
 // jc.get("vpnclients", "kitty,server", showResult);
 // jc.set("vpnclients", "kitty.server", "SERVER FOR OPENVPN", showResult);
 // jc.get("vpnclients", "kitty", showResult);
