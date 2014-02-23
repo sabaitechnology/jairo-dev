@@ -5,7 +5,7 @@
   "main": "jainode.js",
   "dependencies": {
     "socket.io": "~0.9.16",
-    "watch": "~0.9.0"
+    "deep-diff": "~0.1.4"
   },
   "engines": { "node":  "*"},
   "devDependencies": {},
@@ -21,5 +21,9 @@
   ],
   "author": "Sabai Technology",
   "homepage": "http://www.jairoproject.com",
-  "license": "MPL"
+  "license": "MPL",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/sabaitechnology/jairo-dev.git"
+  }
 }

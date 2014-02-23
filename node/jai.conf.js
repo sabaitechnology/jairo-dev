@@ -6,6 +6,7 @@ module.exports = (function(){
 	var q = [];
 	var running = false;
 	var current = null;
+	var deepdiff = false;
 	// this.showQueue = function(){ for(var i=0; i<q.length; i++) console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) +"\t"+ typeof( q[i].callback ) ); }
 
 	function saveFile(file, data, callback){
@@ -95,6 +96,14 @@ module.exports = (function(){
 		if(value == null) value = ""; // Test for null, value may legitimately be false.
 		q.push({ type: "set", callback: callback, args: [ file, key, value, next ] });
 		run();
+	}
+
+	this.diff = function(file){
+		if(!deepdiff) deepdiff = require("deep-diff");
+		return ( !fs.existsSync(confRoot+"/."+file) ? [] : deepdiff.diff(
+			(fs.existsSync(confRoot+"/"+file) ? JSON.parse(fs.readFileSync(confRoot+"/"+file)) : {} ),
+			JSON.parse(fs.readFileSync(confRoot+"/."+file))
+		));
 	}
 
 // var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
