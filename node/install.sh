@@ -5,8 +5,11 @@ ip='127.0.2.2';
 port='31400';
 user="$(logname)";
 installDirectory="$(dirname `readlink -f $0`)"
+node=$(which node)
+# [ "$(node -e 'console.log("Test");')" == "Test" ]
 
-[ ! -d /home/$user ] && _err "Please run as a user with a home directory";
+[ -z $node ] && _err "Please install node.js."
+[ ! -d /home/$user ] && _err "Please run as a user with a home directory.";
 [ $(id -u) -ne 0 ] && _err "Please run with sudo like this:\nsudo ./install.sh";
 [ ! -f /$installDirectory/jainode.js ] && _err "Jainode.js file is missing.";
 

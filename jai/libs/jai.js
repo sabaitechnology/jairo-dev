@@ -58,7 +58,7 @@ function jainode(address){
 	this.sendByHTTP = function(){ me.show("HTTP/Ajax is not yet implemented."); }
 	this.sendByAjax = function(){ me.show("Ajax/HTTP is not yet implemented."); }
 	this.sendBySocket = function(msg, msgType){
-		me.socket.emit( (msgType || 'cdata') ,{ cmsg: msg }); 
+		me.socket.emit("cdata",{ type: msgType, cmsg: msg }); 
 	}
 	this.handle = {
 		sdata: function(sdata){ me.show( sdata.smsg, { modal: false, timeout: false }); }

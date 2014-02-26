@@ -113,27 +113,15 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 		this.refresh();
  	},
  	saveData: function(){
- 		var data = {};
- 		$.map( $("."+ $(this.element).attr("id") +"-list-child" ).get(), function(v,i,me){
- 			var idata = $(v)[me.options.widgetType]("getData");
- 			data[idata.name] = idata;
- 		}, this);
-// 		ro.send(data, "save");
-		// var data = $("."+ $(this.element).attr("id") +"-list-child" ).map(function(i,v){
-		// 	return $(v)[me.options.widgetType]("getData");
-		// }).get();
- 		$("#testing").html("SaveData:\n" +JSON.stringify( data, " ", 2 ) );
-
-		// $("."+ $(this.element).attr("id") +"-list-child" ).map(function(i,v){
-		// 	$("#testing").append(
-		// 		$(v).attr("id") +": "
-		// 		+ JSON.stringify( $(v)[me.options.widgetType]("getData"), " ", 2 ) +"\n"
-		// 	);
-		// });
-//.get().join("\n")
-
-			// "Data: "+ JSON.stringify(this.getData())
-			// +"\nParent: "+ JSON.stringify(this.options.parent)
+ 		// var data = {};
+ 		// $.map( $("."+ $(this.element).attr("id") +"-list-child" ).get(), function(v,i,me){
+ 		// 	$.merge(data,$(v)[me.options.widgetType]("getData"))
+ 		// 	// var idata = $(v)[me.options.widgetType]("getData");
+ 		// 	// data[idata.name] = idata;
+ 		// }, this);
+ 		// $("#testing").html(
+ 		// );
+//		ro.send(data, "save");
  	},
  	options: {
  		fixed: false,
@@ -145,16 +133,20 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 
 $.widget("jai.vpnclient", $.Widget,{
 	_create: function(){
-		if(this.options.parent !== "undefined") this.options.deletable = this.options.deletable && (!this.options.parent.fixed);
+		if(this.options.parent){
+			this.options.deletable = this.options.deletable && (!this.options.parent.fixed);	
+			this.element.addClass( this.options.parent.element +"-list-child");
+			this.conf = this.options.parent.conf +"."+ this.options.index;
+		}else{
+			if(this.options.conf) this.conf = this.options.conf;
+		}
 		if(this.options.index) this.index = this.options.index;
 		this.element.addClass("jai-vpnclient")
-		if(this.options.parent){ this.element.addClass( this.options.parent.element +"-list-child"); }
 		this.makeRow();
 		if(!this.options.details){
 			this.title.html(this.options.nameplaceholder);
 			this.options.editing = true;
 		}else{
-			// $("#testing").append("Data: "+ JSON.stringify( this.options.details, null, 1 ) +"\n")
 			this.data = this.options.details;
 			this.updateName();
 		}
@@ -274,25 +266,17 @@ $.widget("jai.vpnclient", $.Widget,{
 		this.saveData();
 	},
 	saveData: function(){
-		if(this.options.parent) this.options.parent.saveData(); // call the parent save function
-		// $("#testing").html(
-		// 	"Data: "+ JSON.stringify(this.getData())
-		// 	+"\nParent: "+ JSON.stringify(this.options.parent)
-		// );
-// Called when you hit the save button
-// Should probably use toServer to send changed information
-//		$("#testing").html( "Data: "+ JSON.stringify(this.getData()) );
-//		if(!this.conf)
-//		$("#testing").html(
-//			JSON.stringify( this.getData(), " ", 2 )
-//		);
+		// if(this.options.parent){
+		// 	this.options.parent.saveData(); // call the parent save function	
+		// }else{
+		// 	// TODO: save individual configuration section
+		// }
+		$("#testing").append(JSON.stringify(this.getData(), null, " "));
 
-//		jn.emit("cdata",{ cmsg: this.getData(), cmsgType: "" });
 
-//		toServer({ conf: this.getData() });
 	},
 	getData: function(){
-		return this.data;
+		return { index: this.index, data: this.data };
 	},
 	setData: function(i,v){
 		this.data[i] = v;
