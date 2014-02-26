@@ -9,6 +9,7 @@ module.exports = (function(){
 	var current = null;
 	var deepdiff = false;
 	// this.showQueue = function(){ for(var i=0; i<q.length; i++) console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) +"\t"+ typeof( q[i].callback ) ); }
+	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
 
 	function saveFile(file, data, callback){
 		fs.writeFile(confRoot +"/."+ file, JSON.stringify(data, null, "\t"), function(e){
@@ -74,13 +75,13 @@ module.exports = (function(){
 					if(!conf) conf = {};
 					if(!temp) temp = conf;
 					if(!deepdiff) deepdiff = require("deep-diff");
-					callback(deepdiff.diff(temp,conf),temp,conf);
+					callback((deepdiff.diff(temp,conf) || []),temp,conf);
 				});
 			});
 		},
 		revert: function(file, key, callback){
 			if(!key){
-				fs.unlink(confRoot +"/."+ file, callback);
+				fs.unlink(confRoot +"/."+ file, function(){ callback(true) });
 			}else{
 				ops.diff(file, function(d, temp, conf){
 					if(!deepdiff) deepdiff = require("deep-diff");
@@ -130,11 +131,9 @@ module.exports = (function(){
 	this.revert = function(file, key, callback){
 		if(!file) return;
 		if(!callback && (typeof(key) == "function")){ callback = key; key = null; }		
-		q.push({ type: "revert", callback: callback, args: [ file, key ] })
+		q.push({ type: "revert", callback: callback, args: [ file, key, next ] })
 		run();
 	}
 
-
-// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
 	return this;
 })();
