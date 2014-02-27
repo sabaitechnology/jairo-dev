@@ -2,9 +2,10 @@
 <br>
 <div id="vpnclients"></div>
 
+<pre id="reply"></pre>
 <pre id="testing"></pre>
 
-<!-- <script type="text/ecmascript" src="php/etc.php?q=vpnclients"></script> -->
+<!-- <script type="text/ecmascript" php="src/etc.php?q=vpnclients"></script> -->
 <script type="text/ecmascript">
 // BEGIN Widget List
 // To create a jQuery Widget we invoke the widget constructor $.widget; it takes three arguments:
@@ -12,6 +13,7 @@
 	//	- the base widget it inherits from (can be "jQuery.Widget", the generic widget)
 	//	- the prototype, which is the object those properties override the base
 $.widget("jai.widgetlist", $.ui.sortable, {
+	// makeList: function(){},
 	// _create should minimally:
 	//		- set any necessary CSS classes on existing HTML elements
 	//			(all css that can be written in an external file should be;
@@ -24,48 +26,61 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 	//		- attach any event listeners for HTML elements
 	//		- attach and initialize any data for the widget using jQuery's $(element).data() function (http://api.jquery.com/data/)
 	_create: function(){
-	//	the base element for our list is a ul, so if we are passed another type of element we
-	//		- create a ul in it
-	//		- reassign the element's id and rename the element with a new id
-	//		- call our widget's constructor on that
-		if( (!this.options.conf) || (!this.options.list) ){
-			$(this.element).after("\n!!! The configuration section was not specified.\n");
-		}
-		if(!$(this.element).is("ul")){
-			var baseElementID = $(this.element).attr("id");
-			var baseElement = document.createElement("ul");
-			$(this.element).append(baseElement).attr("id", baseElementID +"-base");
-			$(baseElement).attr("id", baseElementID).widgetlist(this.options);
-		}else{
-			var me = this.element.attr("id");
-	//	apply the widgetlist style
-			this.element.addClass("jai-widgetlist");
-	//	the default method for making a list item can be overridden if necessary
-			if(this.options.makeItem) this.makeItem = this.options.makeItem;
-	//	now we add an item for each element of the list
-			$.map(this.options.list, this.makeItem, this);
-			if(!this.options.fixed){
-				$(this.element).after(
- 					$(document.createElement("input"))
- 						.prop("type","button")
- 						.val("Add")
- 						.data("widgetListID",this.element.attr("id"))
- 						.click(function(){
- 							$("#"+ me).widgetlist("addItem");
- 						})
- 				).after(
- 					$(document.createElement("input"))
- 						.prop("type","button")
- 						.val("Save Test")
- 						.click(function(){
- 							$("#kitty").vpnclient("saveData");
- 						})
- 				);
+		// this.makeList();
+		if(!this.options.list){
+			if(!this.options.file){
+				$(this.element).after("\n!!! The configuration section was not specified.\n");
+			}else{
+
+				// $(this.element).after("\n!!! Get config with ajax.\n");
+				// $.ajax()
 			}
-	//	this widget inherits from ui.sortable, so we need to call its constructor to finish up
-			this._super();
+		}else{
+		//	the base element for our list is a ul, so if we are passed another type of element we
+		//		- create a ul in it
+		//		- reassign the element's id and rename the element with a new id
+		//		- call our widget's constructor on that
+			if(!$(this.element).is("ul")){
+				var baseElementID = $(this.element).attr("id");
+				var baseElement = document.createElement("ul");
+				$(this.element).append(baseElement).attr("id", baseElementID +"-base");
+				$(baseElement).attr("id", baseElementID).widgetlist(this.options);
+			}else{
+				var me = this.element.attr("id");
+		//	apply the widgetlist style
+				this.element.addClass("jai-widgetlist");
+		//	the default method for making a list item can be overridden if necessary
+				if(this.options.makeItem) this.makeItem = this.options.makeItem;
+		//	now we add an item for each element of the list
+				$.map(this.options.list, this.makeItem, this);
+				if(!this.options.fixed){
+					$(this.element).after(
+	 					$(document.createElement("input"))
+	 						.prop("type","button")
+	 						.val("Add")
+	 						.data("widgetListID",this.element.attr("id"))
+	 						.click(function(){
+	 							$("#"+ me).widgetlist("addItem");
+	 						})
+	 				).after(
+	 					$(document.createElement("input"))
+	 						.prop("type","button")
+	 						.val("Save Test")
+	 						.click(function(){
+	 							$("#kitty").vpnclient("saveData");
+	 						})
+	 					,$(document.createElement("input"))
+	 						.prop("type","button")
+	 						.val("Send Test")
+	 						.click(testSend)
+	 				);
+				}
+		//	this widget inherits from ui.sortable, so we need to call its constructor to finish up
+				this._super();
+			}
 		}
 	},
+
 	//	 this function builds an item for the list; we will modify it for most lists
 	//	 by default it creates a widget for each element of the list,
 	//	  treating each element as the options for the widget
@@ -272,11 +287,11 @@ $.widget("jai.vpnclient", $.Widget,{
 		// 	// TODO: save individual configuration section
 		// }
 		$("#testing").append(JSON.stringify(this.getData(), null, " "));
-
+		ro.send(this.getData(), "conf");
 
 	},
 	getData: function(){
-		return { index: this.index, data: this.data };
+		return { key: this.key, data: this.data };
 	},
 	setData: function(i,v){
 		this.data[i] = v;
@@ -373,31 +388,40 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 	}
 });
 
-$(function(){
-
-var vpnclients = {
-  "kitty": {
-    "type": "pptp",
-    "server": "203.54.1.20",
-    "username": "chinacat",
-    "password": "meowmeow",
-  },
-  "Tokyo": {
-    "type": "l2tp",
-    "server": "200.50.2.7",
-    "username": "someguy",
-    "password": "password",
-    "psk": "presharedkey",
-  },
-  "New York": {
-    "type": "openvpn",
-    "server": "42.2.2.2",
-    "username": "topofspaghetti",
-    "password": "meatball",
-  }
+var vcl = {
+	"kitty": {
+		"type": "pptp",
+		"server": "203.54.1.20",
+		"username": "chinacat",
+		"password": "meowmeow",
+		"name": "kitty"
+	},
+	"Tokyo": {
+		"type": "l2tp",
+		"server": "200.50.2.7",
+		"username": "someguy",
+		"password": "password",
+		"psk": "presharedkey",
+		"name": "Tokyo"
+	},
+	"New York": {
+		"type": "openvpn",
+		"server": "42.2.2.2",
+		"username": "topofspaghetti",
+		"password": "meatball",
+		"name": "New York"
+	}
 };
 
-	$("#vpnclients").widgetlist({ list: vpnclients, conf: "vpnclients", widgetType: "vpnclient" });
+function testSend(){
+	$("#reply").html("Reply:\n");
+	ro.send({ file: "vpnclients" }, "conf", function(data){
+		$("#reply").append(JSON.stringify(data, null, " "));
+	});	
+}
+
+$(function(){
+	$("#vpnclients").widgetlist({ list: vcl, file: "vpnclients", widgetType: "vpnclient" });
 	$("#kitty").vpnclient("edit");
 });
 

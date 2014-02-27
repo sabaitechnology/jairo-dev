@@ -13,28 +13,37 @@ var fs 		= require("fs");
 	this.port = 31400;
 	this.options = {
 		"log level": 1,
-		"origins": "*:80"		
+		"origins": "localjai:80"
 	}
 	var socket = false;
+	var jaiconf = require("./jai.conf.js");
 
 	function error(msg){ socket ? socket.emit("sdata", { smsg: "Error: "+ msg }) : console.log("Error: "+ msg); }
 
-	var handlers = [
-		{
-			type: "cdata",
-			handler: function(cdata){
-				console.log(cdata);
-				socket.emit("sdata", { smsg: "R: \""+ JSON.stringify(cdata) +"\"."});
+	var handlers = {
+		"cdata": function(cdata){
+			console.log(cdata);
+			socket.emit("sdata", { smsg: "R: \""+ JSON.stringify(cdata) +"\"."});
+		},
+		"conf": function(conf, callback){
+			console.log(conf);
+			if(conf.set){
+				// TODO: Add set functionality
+				socket.emit("sdata", { smsg: "Define Set: \""+ JSON.stringify(conf) +"\"."});
+			}else{
+				jaiconf.get(conf.file, conf.key, callback);
 			}
 		}
-	];
+	};
+
 
 // INIT
 	var io = require("socket.io").listen(this.port, this.options);
 	io.sockets.on("connection", function(iosocket){
 		socket = iosocket;
 		socket.emit("sdata", { smsg: "Connected." });
-		handlers.forEach(function(e){ socket.on(e.type, e.handler); });
+		for(e in handlers){ socket.on(e, handlers[e]); }
+		// handlers.forEach(function(e){ socket.on(e.type, e.handler); });
 	});
 
 })();
