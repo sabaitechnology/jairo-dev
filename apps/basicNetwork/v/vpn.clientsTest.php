@@ -5,13 +5,15 @@
 <pre id="reply"></pre>
 <pre id="testing"></pre>
 
-<!-- <script type="text/ecmascript" php="src/etc.php?q=vpnclients"></script> -->
 <script type="text/ecmascript">
+
+function cyclicJsonify(obj, delimiter){ var seen=[]; return JSON.stringify(obj,function(key, val){ if(typeof val == "object"){ if(seen.indexOf(val) >= 0){ return "(cyclic: @"+key+")"; }else{ seen.push(val); } }; return val; },(delimiter || " ")); }
+
 // BEGIN Widget List
 // To create a jQuery Widget we invoke the widget constructor $.widget; it takes three arguments:
-	//	- the widget we're creating ("jai.widgetlist" in this case)
-	//	- the base widget it inherits from (can be "jQuery.Widget", the generic widget)
-	//	- the prototype, which is the object those properties override the base
+//		- the widget we're creating ("jai.widgetlist" in this case)
+//		- the base widget it inherits from (can be "jQuery.Widget", the generic widget)
+//		- the prototype, which is the object those properties override the base
 $.widget("jai.widgetlist", $.ui.sortable, {
 	// makeList: function(){},
 	// _create should minimally:
@@ -25,62 +27,75 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 	//		- fully construct the internal HTML of the widget
 	//		- attach any event listeners for HTML elements
 	//		- attach and initialize any data for the widget using jQuery's $(element).data() function (http://api.jquery.com/data/)
-	_create: function(){
-		// this.makeList();
+	_init: function(){
+		if(!this.created) return;
+		// First we need to make sure we have our configuration information
+		// It should either be passed in directly, as "list" in our options,
+		// or indicated as "file" so we can get that.
 		if(!this.options.list){
 			if(!this.options.file){
+				// If no configuration information is specified, this is a problem.
+				// We need some error facility with our widgets; something as simple as red text, even.
 				$(this.element).after("\n!!! The configuration section was not specified.\n");
 			}else{
-
-				// $(this.element).after("\n!!! Get config with ajax.\n");
-				// $.ajax()
+				// Retrieve our configuration information
+				// We need to alias "this" for our callback
+				var me = this;
+				// var myElement = this.element;
+				// var myOptions = this.options;
+				ro.send({ file: this.options.file }, "conf", function(data){
+					// At this point, it's as simple as setting the list info and running our usual creation routine.
+					me.options.list = data;
+					// myOptions.list = data;
+					// $("#testing").append("1\n");
+					// $(myElement).widgetlist(myOptions);
+					// $("#testing").append("2\n");
+					// me._create();
+					me._init();
+					// TODO: this double call breaks the "create" event: find a way to circumvent using _create twice
+					// Note: we use _create here to account for the fact that this._super() has limitations on where it is in scope
+					// It does not seem to be available outside of _create
+				});
 			}
 		}else{
-		//	the base element for our list is a ul, so if we are passed another type of element we
-		//		- create a ul in it
-		//		- reassign the element's id and rename the element with a new id
-		//		- call our widget's constructor on that
-			if(!$(this.element).is("ul")){
-				var baseElementID = $(this.element).attr("id");
-				var baseElement = document.createElement("ul");
-				$(this.element).append(baseElement).attr("id", baseElementID +"-base");
-				$(baseElement).attr("id", baseElementID).widgetlist(this.options);
-			}else{
-				var me = this.element.attr("id");
-		//	apply the widgetlist style
-				this.element.addClass("jai-widgetlist");
-		//	the default method for making a list item can be overridden if necessary
-				if(this.options.makeItem) this.makeItem = this.options.makeItem;
-		//	now we add an item for each element of the list
-				$.map(this.options.list, this.makeItem, this);
-				if(!this.options.fixed){
-					$(this.element).after(
-	 					$(document.createElement("input"))
-	 						.prop("type","button")
-	 						.val("Add")
-	 						.data("widgetListID",this.element.attr("id"))
-	 						.click(function(){
-	 							$("#"+ me).widgetlist("addItem");
-	 						})
-	 				).after(
-	 					$(document.createElement("input"))
-	 						.prop("type","button")
-	 						.val("Save Test")
-	 						.click(function(){
-	 							$("#kitty").vpnclient("saveData");
-	 						})
-	 					,$(document.createElement("input"))
-	 						.prop("type","button")
-	 						.val("Send Test")
-	 						.click(testSend)
-	 				);
-				}
-		//	this widget inherits from ui.sortable, so we need to call its constructor to finish up
-				this._super();
-			}
+			$.map(this.options.list, this.makeItem, this);
 		}
 	},
-
+	_create: function(){
+		if(!$(this.element).is("ul")){
+			//	the base element for our list is a ul, so if we are passed another type of element we
+			//		- create a ul in it
+			//		- reassign the element's id and rename the element with a new id
+			//		- call our widget's constructor on that
+			var baseElementID = $(this.element).attr("id");
+			var baseElement = document.createElement("ul");
+			$(this.element).append(baseElement).attr("id", baseElementID +"-base");
+			$(baseElement).attr("id", baseElementID).widgetlist(this.options);
+		}else{
+			//	apply the widgetlist style
+			this.element.addClass("jai-widgetlist");
+			//	the default method for making a list item can be overridden if necessary
+			if(this.options.makeItem) this.makeItem = this.options.makeItem;
+			//	now we add an item for each element of the list
+			if(!this.options.fixed){
+				// Pass the id explicitly into any listeners to ensure they have the correct id;
+				// "this" refers to the window when these functions are called in the UI.
+				var myElementID = this.element.attr("id");
+				$(this.element).after(
+						$(document.createElement("input"))
+							.prop("type","button")
+							.val("Add")
+							.data("widgetListID",this.element.attr("id"))
+							.click(function(){
+								$("#"+ myElementID).widgetlist("addItem");
+							})
+					);
+			}
+			//	this widget inherits from ui.sortable, so we need to call its constructor to finish up
+			this._super();
+			this.created = true;
+		}
+	},
 	//	 this function builds an item for the list; we will modify it for most lists
 	//	 by default it creates a widget for each element of the list,
 	//	  treating each element as the options for the widget
@@ -388,41 +403,8 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 	}
 });
 
-var vcl = {
-	"kitty": {
-		"type": "pptp",
-		"server": "203.54.1.20",
-		"username": "chinacat",
-		"password": "meowmeow",
-		"name": "kitty"
-	},
-	"Tokyo": {
-		"type": "l2tp",
-		"server": "200.50.2.7",
-		"username": "someguy",
-		"password": "password",
-		"psk": "presharedkey",
-		"name": "Tokyo"
-	},
-	"New York": {
-		"type": "openvpn",
-		"server": "42.2.2.2",
-		"username": "topofspaghetti",
-		"password": "meatball",
-		"name": "New York"
-	}
-};
-
-function testSend(){
-	$("#reply").html("Reply:\n");
-	ro.send({ file: "vpnclients" }, "conf", function(data){
-		$("#reply").append(JSON.stringify(data, null, " "));
-	});	
-}
-
 $(function(){
-	$("#vpnclients").widgetlist({ list: vcl, file: "vpnclients", widgetType: "vpnclient" });
-	$("#kitty").vpnclient("edit");
+	$("#vpnclients").widgetlist({ file: "vpnclients", widgetType: "vpnclient" });
 });
 
 // The L2TP widget can pretty much be a duplicate of the PPTP widget, except that in future it will need to support

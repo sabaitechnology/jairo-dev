@@ -61,7 +61,7 @@ function jainode(address){
 		me.socket.emit( (msgType || "cdata"), msg, callback);
 	}
 	this.handle = {
-		sdata: function(sdata){ me.show( sdata, { modal: false, timeout: false }); }
+		sdata: function(sdata){ me.show( sdata.smsg, { modal: false, timeout: false }); }
 		,connect: function(){ me.show("The Jai Node service is connected.",{ timeout: me.showTimeout }); }
 		,disconnect: function(){ me.show("The Jai Node service is disconnected.",{ timeout: me.showTimeout }); }
 		,reconnect: function(){ me.show("The Jai Node service has reconnected.",{ timeout: me.showTimeout }); }

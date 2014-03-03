@@ -26,7 +26,6 @@ var fs 		= require("fs");
 			socket.emit("sdata", { smsg: "R: \""+ JSON.stringify(cdata) +"\"."});
 		},
 		"conf": function(conf, callback){
-			console.log(conf);
 			if(conf.set){
 				// TODO: Add set functionality
 				socket.emit("sdata", { smsg: "Define Set: \""+ JSON.stringify(conf) +"\"."});
@@ -41,7 +40,7 @@ var fs 		= require("fs");
 	var io = require("socket.io").listen(this.port, this.options);
 	io.sockets.on("connection", function(iosocket){
 		socket = iosocket;
-		socket.emit("sdata", { smsg: "Connected." });
+		// socket.emit("sdata", { smsg: "Connected." });
 		for(e in handlers){ socket.on(e, handlers[e]); }
 		// handlers.forEach(function(e){ socket.on(e.type, e.handler); });
 	});
