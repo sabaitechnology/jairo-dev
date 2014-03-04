@@ -36,7 +36,8 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 			if(!this.options.file){
 				// If no configuration information is specified, this is a problem.
 				// We need some error facility with our widgets; something as simple as red text, even.
-				$(this.element).after("\n!!! The configuration section was not specified.\n");
+				this.show("!!! The configuration section was not specified.");
+				// $(this.element).after("\n!!! The configuration section was not specified.\n");
 			}else{
 				// Retrieve our configuration information
 				// We need to alias "this" for our callback
@@ -104,7 +105,6 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 	//	 and the addItem function; this keeps the widgetlist widget definition clean
 	//	 and allows individual widgets in the list to manage their own deletion/editing
 	makeItem: function(item, index, parentWidget){
-		item.name = index;
 		// Just create a straightforward list if no widget type is supplied.
 		//  this will need fixed to create the normal editable list, perhaps with a default list item constructor
 		if(!parentWidget.options.widgetType){
@@ -177,6 +177,7 @@ $.widget("jai.vpnclient", $.Widget,{
 			this.title.html(this.options.nameplaceholder);
 			this.options.editing = true;
 		}else{
+			this.options.details.name = this.options.index;
 			this.data = this.options.details;
 			this.updateName();
 		}
@@ -193,6 +194,8 @@ $.widget("jai.vpnclient", $.Widget,{
 					.html("State")
 				,this.controls = $(document.createElement("span"))
 					.addClass("fright")
+				,this.message = $(document.createElement("div"))
+					.addClass("vpnclient-message")
 			)
 			.appendTo(
 				this.element
@@ -273,8 +276,7 @@ $.widget("jai.vpnclient", $.Widget,{
 				)
 				.appendTo(this.element)
 		}else{
-			this.buttons.save.show();
-//	if we have not yet constructed the editor, do it now
+			//	if we have not yet constructed the editor, do it now
 			if( !this.editor ){
 				this.editorID = "vpnclienteditor_"+ this.data.type;
 				if($.jai[this.editorID]){
@@ -282,9 +284,12 @@ $.widget("jai.vpnclient", $.Widget,{
 						.appendTo( this.element )
 						[this.editorID]({ details: this.data, parentWidget: this });
 				}else{
-					$(this.element).after("\n!!! There is currently no editor for this type. Please fix this.\nRaw data: "+ JSON.stringify(this.options.vpnclient) +"\n")
+					this.show("!!! There is currently no editor for this type. Please fix this.");
+					return;
+					// $(this.element).after("\n!!! There is currently no editor for this type. Please fix this.\nRaw data: "+ JSON.stringify(this.options.vpnclient) +"\n")
 				}
 			}
+			this.buttons.save.show();
 			this.editor.slideDown();
 		}
 	},
@@ -320,6 +325,9 @@ $.widget("jai.vpnclient", $.Widget,{
 		parentRefresh();
 		parent.saveData();
 // TODO: needs to also delete this connection in the configuration file.
+	},
+	show: function(msg){
+		$(this.message).html(msg);
 	},
 	options: {
 		parent: null,
@@ -372,10 +380,11 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 					name: "username",
 					placeholder: "PPTP Username"
 				},
-				{
+				{ // TODO: needs to be "password" type
 					value: this.parentWidget.data.password,
 					displayname: "Password",
 					name: "password",
+					type: "password",
 					placeholder: "PPTP Password"
 				}
 			],
@@ -385,7 +394,7 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 						$(document.createElement("td")).html(v.displayname)
 					,	$(document.createElement("td")).append(
 							$(document.createElement("input"))
-								.attr("type", "text")	// TODO: Extend to use v.type
+								.attr("type", v.type || "text")	// TODO: Extend to use v.type
 								.attr("placeholder", v.placeholder)
 								.addClass("jai-vpnclienteditor-pptp")
 								.data("parentWidget", parentWidget.parentWidget)
