@@ -18,6 +18,7 @@ function parseJson(jsonIn){
 		msg: ( error ? txt.join('\n') : jsonObj )
 	} /* tragically, there's nothing we can do */
 }
+
 function getJson(jsonIn){
 	if(jsonIn==''){
 		return '';
@@ -31,7 +32,20 @@ function getJson(jsonIn){
 	}
 }
 
-function help(){ window.open('http://sabaitechnology.zendesk.com/anonymous_requests/new','Submit a Support Request','height=600,width=800,top=50,left=50').focus(); return false; }
+// This function is a simple utility to dump an object as JSON when it has cyclic references (ie, { a: { b: "b", c: a } } ).
+function cyclicStringify(obj, delimiter){
+	var seen=[];
+	return JSON.stringify(obj,function(key, val){
+		if(typeof val == "object"){
+			if(seen.indexOf(val) >= 0){
+				return "(cyclic: @"+key+")";
+			}else{
+				seen.push(val);
+			}
+		};
+		return val;
+	},(delimiter || " "));
+}
 
 function what(obj,ownonly,pre){
 // if($.isPlainObject(obj)) return 'EMPTY';
@@ -43,6 +57,8 @@ function what(obj,ownonly,pre){
  if(pre) txt.push('</pre>');
  return txt.join('\n');
 }
+
+function help(){ window.open('http://sabaitechnology.zendesk.com/anonymous_requests/new','Submit a Support Request','height=600,width=800,top=50,left=50').focus(); return false; }
 
 /* BEGIN Jai node service */
 

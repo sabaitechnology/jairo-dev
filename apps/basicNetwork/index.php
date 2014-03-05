@@ -10,7 +10,8 @@
 	 to the machine we're running on, which is different everywhere.
 -->
 <script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
-<script src="/libs.php"></script>
+<!-- <script src="/libs.php"></script> -->
+<?php include("/home/vaelyn/jairo/jai/libs.php"); ?>
 <script src="js/main.js"></script>
 <script>
 // noty settings -- moved to /libs/jquery.noty.jai.js
