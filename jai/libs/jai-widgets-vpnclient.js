@@ -24,7 +24,7 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 		// It should either be passed in directly, as "list" in our options,
 		// or indicated as "file" so we can get that.
 		if(!this.options.list){
-		$("#testing").append("Init if ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
+		// $("#testing").append("Init if ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
 			if(!this.options.file){
 				// If no configuration information is specified, this is a problem.
 				// We need some error facility with our widgets; something as simple as red text, even.
@@ -59,8 +59,31 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 			$(this.element).append(baseElement).attr("id", baseElementID +"-base");
 			var baseOptions = $.extend({},this.options);
 			// $(baseElement).attr("id", baseElementID).widgetlist($.extend({},this.options));
-			$("#testing").append("B: "+ JSON.stringify(baseOptions, null, " ") +"\n");
-			this._destroy();
+			// $("#testing").append("C: "+ cyclicStringify($(this.element).data(), null, " ") +"\n");
+			// $("#testing").append("C: "+ cyclicStringify($(this.widget()).data(), null, " ") +"\n");
+
+		// this._destroy();
+		this.element
+			.unbind( this.eventNamespace )
+			// .removeData( this.widgetName )
+			.removeData( this.widgetFullName )
+			// .removeAttr( "aria-disabled" )
+		// 	.removeClass(
+		// 		this.widgetFullName + "-disabled " +
+		// 		"ui-state-disabled" );
+
+		// // clean up events and states
+		this.bindings.unbind( this.eventNamespace );
+		// this.hoverable.removeClass( "ui-state-hover" );
+		// this.focusable.removeClass( "ui-state-focus" );
+
+			// $("#testing").append("D: "+ cyclicStringify($(this.element).data(), null, " ") +"\n");
+			// $("#testing").append("D: "+ cyclicStringify($(this.widget()).data(), null, " ") +"\n");
+
+			// $("#testing").append("B: "+ JSON.stringify(baseOptions, null, " ") +"\n");
+			// $("#testing").append("D:"+ typeof(this.destroy) +"/"+ typeof(this._destroy) +"\n");
+			// $("#testing").append("D:"+ this.destroy.toString() +"\n");
+			// $("#testing").append("D:"+ this._destroy.toString() +"\n");
 			// TODO: this double call breaks the "create" event: it fires once for the widget on this.element
 			// and once for baseElement; we should probably abort it for this widget somehow.
 		}else{

@@ -10,11 +10,11 @@
 
 
 $(function(){
-	// $("#vpnclients").widgetlist({ file: "vpnclients", widgetType: "vpnclient", create: function(){
-	// 	// $("#testing").append("A ("+ arguments.length +"): "+ JSON.stringify(arguments) +"\n");
-	// 	// $("#testing").append("E: "+ JSON.stringify(this) +"\n");
-	// 	$("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n")
-	// } });
+	$("#vpnclients").widgetlist({ file: "vpnclients", widgetType: "vpnclient", create: function(){
+		// $("#testing").append("A ("+ arguments.length +"): "+ JSON.stringify(arguments) +"\n");
+		// $("#testing").append("E: "+ JSON.stringify(this) +"\n");
+		$("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n")
+	} });
 });
 
 
