@@ -19,23 +19,18 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 	//		- attach and initialize any data for the widget using jQuery's $(element).data() function (http://api.jquery.com/data/)
 	_init: function(){
 		if(!this.created) return;
-		$("#testing").append("Init start ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
 		// First we need to make sure we have our configuration information
 		// It should either be passed in directly, as "list" in our options,
 		// or indicated as "file" so we can get that.
 		if(!this.options.list){
-		// $("#testing").append("Init if ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
 			if(!this.options.file){
 				// If no configuration information is specified, this is a problem.
 				// We need some error facility with our widgets; something as simple as red text, even.
 				this.show("!!! The configuration section was not specified.");
-				// $(this.element).after("\n!!! The configuration section was not specified.\n");
 			}else{
 				// Retrieve our configuration information
 				// We need to alias "this" for our callback
 				var me = this;
-				// var myElement = this.element;
-				// var myOptions = this.options;
 				ro.send({ file: this.options.file }, "conf", function(data){
 					// At this point, it's as simple as setting the list info and running our usual creation routine.
 					me.options.list = data;
@@ -43,51 +38,29 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 				});
 			}
 		}else{
-		$("#testing").append("Init else ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
 			$.map(this.options.list, this.makeItem, this);
 		}
 	},
 	_create: function(){
-		$("#testing").append("Create start ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
 		if(!$(this.element).is("ul")){
 			//	the base element for our list is a ul, so if we are passed another type of element we
 			//		- create a ul in it
 			//		- reassign the element's id and rename the element with a new id
 			//		- call our widget's constructor on that
+			//		- clean up any unfortunate pre-_create effects on this.element
 			var baseElementID = $(this.element).attr("id");
 			var baseElement = document.createElement("ul");
 			$(this.element).append(baseElement).attr("id", baseElementID +"-base");
-			var baseOptions = $.extend({},this.options);
-			// $(baseElement).attr("id", baseElementID).widgetlist($.extend({},this.options));
-			// $("#testing").append("C: "+ cyclicStringify($(this.element).data(), null, " ") +"\n");
-			// $("#testing").append("C: "+ cyclicStringify($(this.widget()).data(), null, " ") +"\n");
-
-		// this._destroy();
-		this.element
-			.unbind( this.eventNamespace )
-			// .removeData( this.widgetName )
-			.removeData( this.widgetFullName )
-			// .removeAttr( "aria-disabled" )
-		// 	.removeClass(
-		// 		this.widgetFullName + "-disabled " +
-		// 		"ui-state-disabled" );
-
-		// // clean up events and states
-		this.bindings.unbind( this.eventNamespace );
-		// this.hoverable.removeClass( "ui-state-hover" );
-		// this.focusable.removeClass( "ui-state-focus" );
-
-			// $("#testing").append("D: "+ cyclicStringify($(this.element).data(), null, " ") +"\n");
-			// $("#testing").append("D: "+ cyclicStringify($(this.widget()).data(), null, " ") +"\n");
-
-			// $("#testing").append("B: "+ JSON.stringify(baseOptions, null, " ") +"\n");
-			// $("#testing").append("D:"+ typeof(this.destroy) +"/"+ typeof(this._destroy) +"\n");
-			// $("#testing").append("D:"+ this.destroy.toString() +"\n");
-			// $("#testing").append("D:"+ this._destroy.toString() +"\n");
-			// TODO: this double call breaks the "create" event: it fires once for the widget on this.element
-			// and once for baseElement; we should probably abort it for this widget somehow.
+			$(baseElement).attr("id", baseElementID).widgetlist(this.options);
+			// Everything else in this if is to deconstruct the bits of widget attached to the incorrect element.
+			// In particular we replace this.options with an empty object to prevent events from firing (like create).
+			this.element
+				.unbind( this.eventNamespace )
+				.removeData( this.widgetFullName )
+			this.bindings.unbind( this.eventNamespace );
+			this.options = {};
 		}else{
-		$("#testing").append("Create else ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
+			this.items = {};
 			//	apply the widgetlist style
 			this.element.addClass("jai-widgetlist");
 			//	the default method for making a list item can be overridden if necessary
@@ -108,10 +81,8 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 					);
 			}
 			//	this widget inherits from ui.sortable, so we need to call its constructor to finish up
-		$("#testing").append("Create super ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
 			this._super();
 			this.created = true;
-		$("#testing").append("Create end ("+ $(this.element).prop("tagName") +"/"+ $(this.element).attr("id") +").\n")
 		}
 	},
 	//	 this function builds an item for the list; we will modify it for most lists
@@ -131,7 +102,8 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 		}else{
 	//	We're passing the fixed option and parent element to the widget constructor
 	//	 so that it can add appropriate delete buttons and call the parent's refresh function
-			$(document.createElement("li"))
+
+			this.items[index] = $(document.createElement("li"))
 				.appendTo(parentWidget.element)
 	//	the object element named in brackets here is the constructor for the widgets that make up the list
 				[parentWidget.options.widgetType](
@@ -146,7 +118,7 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 							fixed: parentWidget.options.fixed,
 							type: "widgetlist",
 							element: $(parentWidget.element).attr("id"),
-							conf: parentWidget.options.conf
+							conf: parentWidget.options.file
 						},
 						details: item,
 						index: index
@@ -160,13 +132,18 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 		this.refresh();
  	},
  	saveData: function(){
- 		// var data = {};
+ 		var data = {};
+ 		for(var i in data){
+			$("#testing").html();
+
+ 		}
  		// $.map( $("."+ $(this.element).attr("id") +"-list-child" ).get(), function(v,i,me){
  		// 	$.merge(data,$(v)[me.options.widgetType]("getData"))
  		// 	// var idata = $(v)[me.options.widgetType]("getData");
  		// 	// data[idata.name] = idata;
  		// }, this);
  		// $("#testing").html(
+ 		// 	JSON.stringify(data, null, " ")
  		// );
 //		ro.send(data, "save");
  	},
@@ -323,12 +300,12 @@ $.widget("jai.vpnclient", $.Widget,{
 		// }else{
 		// 	// TODO: save individual configuration section
 		// }
-		$("#testing").append(JSON.stringify(this.getData(), null, " "));
-		ro.send(this.getData(), "conf");
+		$("#testing").append("saveData: "+ JSON.stringify(this.getData(), null, " "));
+		// ro.send(this.getData(), "conf");
 
 	},
 	getData: function(){
-		return { key: this.key, data: this.data };
+		return { key: this.conf, data: this.data };
 	},
 	setData: function(i,v){
 		this.data[i] = v;
