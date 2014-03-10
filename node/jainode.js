@@ -29,6 +29,7 @@ var fs 		= require("fs");
 			if(conf.set){
 				// TODO: Add set functionality
 				socket.emit("sdata", { smsg: "Define Set: \""+ JSON.stringify(conf) +"\"."});
+				console.log(conf);
 			}else{
 				jaiconf.get(conf.file, conf.key, callback);
 			}
