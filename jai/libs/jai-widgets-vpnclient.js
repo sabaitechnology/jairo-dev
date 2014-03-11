@@ -38,7 +38,8 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 				});
 			}
 		}else{
-			$.map(this.options.list, this.makeItem, this);
+			// $("#testing").html( JSON.stringify(this.options.list, null, "  ") );
+			this.items = $.map(this.options.list, this.makeItem, this);
 		}
 	},
 	_create: function(){
@@ -60,7 +61,6 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 			this.bindings.unbind( this.eventNamespace );
 			this.options = {};
 		}else{
-			this.items = {};
 			//	apply the widgetlist style
 			this.element.addClass("jai-widgetlist");
 			//	the default method for making a list item can be overridden if necessary
@@ -77,6 +77,13 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 							.data("widgetListID",this.element.attr("id"))
 							.click(function(){
 								$("#"+ myElementID).widgetlist("addItem");
+							})
+						,$(document.createElement("input"))
+							.prop("type","button")
+							.val("Save")
+							.data("widgetListID",this.element.attr("id"))
+							.click(function(){
+								$("#"+ myElementID).widgetlist("saveData");
 							})
 					);
 			}
@@ -96,14 +103,13 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 		// Just create a straightforward list if no widget type is supplied.
 		//  this will need fixed to create the normal editable list, perhaps with a default list item constructor
 		if(!parentWidget.options.widgetType){
-			$(document.createElement("li"))
+			return $(document.createElement("li"))
 				.appendTo(parentWidget.element)
 				.append(JSON.stringify(item))
 		}else{
 	//	We're passing the fixed option and parent element to the widget constructor
 	//	 so that it can add appropriate delete buttons and call the parent's refresh function
-
-			this.items[index] = $(document.createElement("li"))
+			return $(document.createElement("li"))
 				.appendTo(parentWidget.element)
 	//	the object element named in brackets here is the constructor for the widgets that make up the list
 				[parentWidget.options.widgetType](
@@ -118,38 +124,35 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 							fixed: parentWidget.options.fixed,
 							type: "widgetlist",
 							element: $(parentWidget.element).attr("id"),
-							conf: parentWidget.options.file
+							file: parentWidget.options.file
 						},
 						details: item,
-						index: index
+						key: index
 					}
-				);
+				)
 		}
 	},
 	//	the default function for adding an item
- 	addItem: function(){
+	addItem: function(){
 		this.makeItem(null,-1,this);
 		this.refresh();
- 	},
- 	saveData: function(){
- 		var data = {};
- 		for(var i in data){
-			$("#testing").html();
-
- 		}
- 		// $.map( $("."+ $(this.element).attr("id") +"-list-child" ).get(), function(v,i,me){
- 		// 	$.merge(data,$(v)[me.options.widgetType]("getData"))
- 		// 	// var idata = $(v)[me.options.widgetType]("getData");
- 		// 	// data[idata.name] = idata;
- 		// }, this);
- 		// $("#testing").html(
- 		// 	JSON.stringify(data, null, " ")
- 		// );
-//		ro.send(data, "save");
- 	},
- 	options: {
- 		fixed: false,
- 	}
+	},
+	saveData: function(){
+		//ro.save(conf
+		$("#testing").append("Listdata:\n"+ JSON.stringify(
+			{
+				data: $.map(this.items, function(v,i,widgetType){
+					return v[widgetType]("getData").data;
+				}, this.options.widgetType),
+				set: true,
+				file: this.options.file
+			}
+		, null, "  ")
+		);
+	},
+	options: {
+		fixed: false,
+	}
 });
 // END Widget List
 
@@ -160,18 +163,17 @@ $.widget("jai.vpnclient", $.Widget,{
 		if(this.options.parent){
 			this.options.deletable = this.options.deletable && (!this.options.parent.fixed);	
 			this.element.addClass( this.options.parent.element +"-list-child");
-			this.conf = this.options.parent.conf +"."+ this.options.index;
+			this.file = this.options.parent.file;
+			this.key = this.options.key;
 		}else{
-			if(this.options.conf) this.conf = this.options.conf;
+			if(this.options.key) this.key = this.options.key;
 		}
-		if(this.options.index) this.index = this.options.index;
 		this.element.addClass("jai-vpnclient")
 		this.makeRow();
 		if(!this.options.details){
 			this.title.html(this.options.nameplaceholder);
 			this.options.editing = true;
 		}else{
-			this.options.details.name = this.options.index;
 			this.data = this.options.details;
 			this.updateName();
 		}
@@ -298,19 +300,20 @@ $.widget("jai.vpnclient", $.Widget,{
 		// if(this.options.parent){
 		// 	this.options.parent.saveData(); // call the parent save function	
 		// }else{
-		// 	// TODO: save individual configuration section
+		
+		// var conf = this.getData();
+		// $("#testing").append("Listdata:\n"+ JSON.stringify(conf, null, "  ") +"\n");
+		
+			ro.save(this.getData());
 		// }
-		$("#testing").append("saveData: "+ JSON.stringify(this.getData(), null, " "));
-		// ro.send(this.getData(), "conf");
-
 	},
 	getData: function(){
-		return { key: this.conf, data: this.data };
+		return { file: this.file, key: this.key, data: this.data };
 	},
 	setData: function(i,v){
 		this.data[i] = v;
 		if(i == "name") this.updateName();
-		if(this.options.parent) this.options.parent.setData(this.data.name,this.data); // call the parent set function
+		// if(this.options.parent) this.options.parent.setData(this.data.name,this.data); // call the parent set function
 	},
 	removeFromList: function(){
 		var parentRefresh = this.options.parent.refresh;
@@ -340,7 +343,6 @@ $.widget("jai.vpnclient", $.Widget,{
 
 $.widget("jai.vpnclienteditor", $.Widget,{
 	_create: function(){
-		// $("#testing").append("Opts: "+ cyclicStringify(this.options) +"\n");
 		this.element.addClass("jai-vpnclient-editor");
 		this.parentWidget = this.options.parentWidget;
 		this.displaytable = $(document.createElement("table"))

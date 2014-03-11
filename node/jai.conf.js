@@ -26,7 +26,8 @@ module.exports = (function(){
 	}
 
 	function getKey(data,key){
-		if(!key) return data;
+		if(key == null) return data;
+		if( (typeof(key) != "string") && (key != null) ) key = key.toString();
 		var obj = data;
 		key = key.split('.');
 		var len = key.length;
@@ -48,12 +49,13 @@ module.exports = (function(){
 			});
 		},
 		set: function (file, key, value, callback){
-			if(!key){
+			if(key == null){
 				saveFile(file,value,callback);
 			}else{
 				ops.get(file, null, function(data){
 					if(!data) data = {};
 					var obj = data;
+					if( (typeof(key) != "string") && (key != null) ) key = key.toString();
 					key = key.split('.');
 					var len = key.length;
 					for(var i=0; i<(len-1); i++){
@@ -80,7 +82,7 @@ module.exports = (function(){
 			});
 		},
 		revert: function(file, key, callback){
-			if(!key){
+			if(key == null){
 				fs.unlink(confRoot +"/."+ file, function(){ callback(true) });
 			}else{
 				ops.diff(file, function(d, temp, conf){
@@ -116,7 +118,8 @@ module.exports = (function(){
 
 	this.set = function(file, key, value, callback){
 		if(!file) return;
-		if(!key) key = "";
+		if(!callback && (typeof(value) == "function")){ callback = value; value = key; key = null; }
+		if(key == null) key = "";
 		if(value == null) value = ""; // Test for null, value may legitimately be false.
 		q.push({ type: "set", callback: callback, args: [ file, key, value, next ] });
 		run();

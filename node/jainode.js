@@ -27,15 +27,12 @@ var fs 		= require("fs");
 		},
 		"conf": function(conf, callback){
 			if(conf.set){
-				// TODO: Add set functionality
-				socket.emit("sdata", { smsg: "Define Set: \""+ JSON.stringify(conf) +"\"."});
-				console.log(conf);
+				jaiconf.set(conf.file, conf.key, conf.data, callback);
 			}else{
 				jaiconf.get(conf.file, conf.key, callback);
 			}
 		}
 	};
-
 
 // INIT
 	var io = require("socket.io").listen(this.port, this.options);

@@ -12,7 +12,7 @@
 $(function(){
 	$("#vpnclients").widgetlist({ file: "vpnclients", widgetType: "vpnclient"
 		// ,create: function()
-{		// 	$("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n")
+		// 	$("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n")
 		// }
 	});
 });

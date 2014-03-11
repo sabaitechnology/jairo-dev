@@ -76,20 +76,18 @@ function jainode(address){
 	this.sendBySocket = function(msg, msgType, callback){
 		me.socket.emit( (msgType || "cdata"), msg, callback);
 	}
+	this.save = function(conf){
+		conf.set = true;
+		me.send(conf, "conf", function(data){
+			if(data) me.show(data ? "Saved." : "Not saved.");
+		});
+	}
 	this.handle = {
 		sdata: function(sdata){ me.show( sdata.smsg, { modal: false, timeout: false }); }
 		,connect: function(){ me.show("The Jai Node service is connected.",{ timeout: me.showTimeout }); }
 		,disconnect: function(){ me.show("The Jai Node service is disconnected.",{ timeout: me.showTimeout }); }
 		,reconnect: function(){ me.show("The Jai Node service has reconnected.",{ timeout: me.showTimeout }); }
 	};
-	// this.request = function(){
-  // var socket = io.connect(); // TIP: .connect with no args does auto-discovery
-  // socket.on('connect', function () { // TIP: you can avoid listening on `connect` and listen on events directly too!
-  //   socket.emit('ferret', 'tobi', function (data) {
-  //     console.log(data); // data will be 'woot'
-  //   });
-  // });
-	// };
 	this.create = function(){
 // TODO: Create notification feed instead of using alert; alert is annoying.
 		me.show = ( (typeof(noty) == "undefined") ? me.showByAlert : me.showByNoty );
