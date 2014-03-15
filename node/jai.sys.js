@@ -92,9 +92,17 @@ var ops = {
 			run();
 		}
 	}
-	save: {
-		
-	}
+}
+
+module.exports = (function(){
+	var me = this;
+	var filePath = "conf/etc";
+	var q = [];
+	var running = false;
+	var current = null;
+	var deepdiff = false;
+	// this.showQueue = function(){ for(var i=0; i<q.length; i++) console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) +"\t"+ typeof( q[i].callback ) ); }
+	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
 
 	function saveFile(file, data, callback){
 		fs.writeFile(filePath +"/."+ file, JSON.stringify(data, null, "\t"), function(e){
@@ -110,19 +118,6 @@ var ops = {
 		});
 	}
 
-
-}
-
-module.exports = (function(){
-	var me = this;
-	var filePath = "conf/etc";
-	var q = [];
-	var running = false;
-	var current = null;
-	var deepdiff = false;
-	// this.showQueue = function(){ for(var i=0; i<q.length; i++) console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) +"\t"+ typeof( q[i].callback ) ); }
-	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
-
 	function getKey(data,key){
 		if(key == null) return data;
 		if( (typeof(key) != "string") && (key != null) ) key = key.toString();
@@ -135,7 +130,7 @@ module.exports = (function(){
 
 	function next(){
 		running = false;
-		if(current && current.callback && (typeof(current.callback) == "function") ) current.callback.apply(me,arguments);
+		current.callback.apply(me,arguments);
 		current = null;
 		run();
 	}
