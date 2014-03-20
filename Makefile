@@ -9,6 +9,8 @@ ifdef BASH
 	SHELL = $(BASH)
 endif
 
+export installRoot = $(shell pwd)
+
 # update: $(shell find jai -type f) $(shell find configuration -type f)
 
 # built/jairo.deb: update
@@ -16,18 +18,33 @@ endif
 
 # debian: built/jairo.deb
 
+# jainode: dependencies
+
+jainode:
+	# MAKE $@
+	@install/install-jainode.sh
+	# DONE $@
+
 dependencies:
 	# MAKE $@
-	@install/dependencies.sh
+	#@install/dependencies.sh
+	# DONE $@
 
-dev-install: dependencies
+#dev-install: dependencies jainode
+
+dev-install:
 	# MAKE $@
-	echo hi
-
-.PHONY : clean debian dependencies dev-install
+	# $(installRoot)
+	touch hi
+	# DONE $@
 
 clean:
+	# MAKE $@
 #	@rm built/*
+	@echo clean
+	# DONE $@
+
+.PHONY: clean debian dependencies dev-install jainode
 
 # demo:
 # 	@rm -rf demo
