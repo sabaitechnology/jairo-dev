@@ -11,7 +11,7 @@
 -->
 <script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
 <!-- <script src="/libs.php"></script> -->
-<?php include("/home/vaelyn/jairo/jai/libs.php"); ?>
+<?php include("./libs.php"); ?>
 <script src="js/main.js"></script>
 <script>
 // noty settings -- moved to /libs/jquery.noty.jai.js

@@ -1,12 +1,22 @@
 var fs 		= require("fs");
 // var util	= require("util");
 
+module.exports = (function(){
+	var me = this;
+	var filePath = "conf/etc";
+	var q = [];
+	var running = false;
+	var current = null;
+	var deepdiff = false;
+	// this.showQueue = function(){ for(var i=0; i<q.length; i++) console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) +"\t"+ typeof( q[i].callback ) ); }
+	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
+
 var ops = {
 	get: {
-		action: function (file, key, callback){
-			loadFile(file, true, function(temp){
+		runner: function (file, key, callback){
+			ops.load.runner(file, true, function(temp){
 				if(!temp){
-					loadFile(file, false, function(conf){
+					ops.load.runner(file, false, function(conf){
 						if(!conf) conf = {};
 						callback(getKey(conf,key));
 					});
@@ -15,20 +25,19 @@ var ops = {
 				}
 			});
 		},
-		schedule: function(file, key, callback){
+		scheduler: function(file, key, callback){
 			if(!file) return;
 			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }
 			if(!callback) return; // TODO: throw an error?
-			q.push({ type: "get", callback: callback, args: [ file, key, next ] });
-			run();
+			schedule({ type: "get", callback: callback, args: [ file, key ] });
 		}
 	},
 	set: {
-		action: function (file, key, value, callback){
+		runner: function (file, key, value, callback){
 			if(key == null){
-				saveFile(file,value,callback);
+				ops.save.runner(file,value,callback);
 			}else{
-				ops.get.action(file, null, function(data){
+				ops.get.runner(file, null, function(data){
 					if(!data) data = {};
 					var obj = data;
 					if( (typeof(key) != "string") && (key != null) ) key = key.toString();
@@ -42,24 +51,23 @@ var ops = {
 						callback(true);
 					}else{
 						obj[key[len-1]] = value;
-						saveFile(file,data,callback);
+						ops.save.runner(file,data,callback);
 					}
 				});
 			}
 		},
-		schedule: function(file, key, value, callback){
+		scheduler: function(file, key, value, callback){
 			if(!file) return;
 			if(!callback && (typeof(value) == "function")){ callback = value; value = key; key = null; }
 			if(key == null) key = "";
 			if(value == null) value = ""; // Test for null, value may legitimately be false.
-			q.push({ type: "set", callback: callback, args: [ file, key, value, next ] });
-			run();
+			schedule({ type: "set", callback: callback, args: [ file, key, value ] });
 		}
 	},
 	diff: {
-		action: function(file, callback){
-			loadFile(file, true, function(temp){
-				loadFile(file, false, function(conf){
+		runner: function(file, callback){
+			ops.load.runner(file, true, function(temp){
+				ops.load.runner(file, false, function(conf){
 					if(!conf) conf = {};
 					if(!temp) temp = conf;
 					if(!deepdiff) deepdiff = require("deep-diff");
@@ -67,61 +75,46 @@ var ops = {
 				});
 			});
 		},
-		schedule: function(file, callback){
+		scheduler: function(file, callback){
 			if(!file || !callback) return;
-			q.push({ type: "diff", callback: callback, args: [ file, next ] })
-			run();
+			schedule({ type: "diff", callback: callback, args: [ file ] })
 		}
 	},
 	revert: {
-		action: function(file, key, callback){
+		runner: function(file, key, callback){
 			if(key == null){
 				fs.unlink(filePath +"/."+ file, function(){ callback(true) });
 			}else{
-				ops.diff.action(file, function(d, temp, conf){
+				ops.diff.runner(file, function(d, temp, conf){
 					if(!deepdiff) deepdiff = require("deep-diff");
 					d.forEach(function(v, i, t){ if( (v.path.join(".")) == key){ deepdiff.applyChange(temp,conf,v); } });
-					saveFile(file, temp, callback);
+					ops.save.runner(file, temp, callback);
 				});
 			}
 		},
-		schedule: function(file, key, callback){
+		scheduler: function(file, key, callback){
 			if(!file) return;
 			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }		
-			q.push({ type: "revert", callback: callback, args: [ file, key, next ] })
-			run();
+			schedule({ type: "revert", callback: callback, args: [ file, key ] })
+		}
+	},
+	save: {
+		runner: function(file, data, callback){
+			fs.writeFile(filePath +"/."+ file, JSON.stringify(data, null, "\t"), function(e){
+				if(e) console.log(file +" save error: "+ JSON.stringify(e) +"\n");
+				callback(!e);
+			});
+		}
+	},
+	load: {
+		runner: function(file, temp, callback){
+			fs.readFile(filePath +"/"+ (temp?".":"") + file, function(fe, data){
+				try { data = JSON.parse(data); } catch(pe){ data = null; } // More error checking?
+				callback(data);
+			});
 		}
 	}
-	save: {
-		
-	}
-
-	function saveFile(file, data, callback){
-		fs.writeFile(filePath +"/."+ file, JSON.stringify(data, null, "\t"), function(e){
-			if(e) console.log(file +" save error: "+ JSON.stringify(e) +"\n");
-			callback(!e);
-		});
-	}
-
-	function loadFile(file, temp, callback){
-		fs.readFile(filePath +"/"+ (temp?".":"") + file, function(fe, data){
-			try { data = JSON.parse(data); } catch(pe){ data = null; } // More error checking?
-			callback(data);
-		});
-	}
-
-
 }
-
-module.exports = (function(){
-	var me = this;
-	var filePath = "conf/etc";
-	var q = [];
-	var running = false;
-	var current = null;
-	var deepdiff = false;
-	// this.showQueue = function(){ for(var i=0; i<q.length; i++) console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) +"\t"+ typeof( q[i].callback ) ); }
-	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
 
 	function getKey(data,key){
 		if(key == null) return data;
@@ -134,9 +127,17 @@ module.exports = (function(){
 	}
 
 	function next(){
+		var last = null;
+		if(current && current.callback && (typeof(current.callback) == "function") ) last = current.callback;
 		running = false;
-		if(current && current.callback && (typeof(current.callback) == "function") ) current.callback.apply(me,arguments);
 		current = null;
+		if(last) last.apply(me,arguments);
+		run();
+	}
+
+	function schedule(op){
+		op.args.push(next);
+		q.push(op);
 		run();
 	}
 
@@ -144,11 +145,11 @@ module.exports = (function(){
 		if( (q.length == 0) || running ) return;
 		running = true;
 		current = q.shift();
-		ops[current.type].action.apply(me, current.args);
+		ops[current.type].runner.apply(me, current.args);
 	}
 
 	for(var op in ops){
-		this[op] = ops[op].schedule;
+		this[op] = ( ops[op].scheduler || ops[op].runner ); // assign scheduler if available
 	}
 
 	return this;
