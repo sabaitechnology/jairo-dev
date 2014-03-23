@@ -1,27 +1,37 @@
-module.exports = (function(){
+
+module.exports = (function(ops){
+
 	var me = this;
-	var queue = [];
+	var queued = [];
+	var running = false;
+	var current = null;
+	// this.showQueue = function(){ for(var i=0; i<queued.length; i++) console.log("queued["+ i +"]: "+ JSON.stringify( queued[i] ) +"\t"+ typeof( queued[i].callback ) ); }
 
-	this.add = function(type, callback){
-		if(!me.queue[type]) me.queue[type] = { running: false, q: [] };
-		me.queue[type].q.push(callback);
-		me.run(type);
+	function next(){
+		var last = null;
+		if(current && current.callback && (typeof(current.callback) == "function") ) last = current.callback;
+		running = false;
+		current = null;
+		if(last) last.apply(me,arguments);
+		run();
 	}
 
-	this.run = function(type){
-		if( !me.queue[type] || me.queue[type].running || (me.queue[type].q.length < 1) ) return;
-		me.queue[type].running = true;
-		if(typeof(me.queue[type].q[0]) !== 'function'){
-			me.queue[type].running = false;
-			me.queue[type].q.shift();
-			me.run(type);
-		}else{
-			me.queue[type].q[0](function(){ me.next(type); });
-		}
+	function run(){
+		if( (queued.length == 0) || running ) return;
+		running = true;
+		current = queued.shift();
+		ops[current.type].runner.apply(me, current.args);
 	}
 
-	this.next = function(type){
-		me.queue[type].running = false;
-		me.run(type);
+	this.schedule = function(op){
+		op.args.push(next);
+		queued.push(op);
+		run();
 	}
+
+	for(var op in ops){
+		this[op] = ( ops[op].scheduler || ops[op].runner ); // assign scheduler if available
+	}
+
+	return this;
 });

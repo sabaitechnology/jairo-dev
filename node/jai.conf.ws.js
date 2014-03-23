@@ -1,17 +1,27 @@
 var fs 		= require("fs");
 // var util	= require("util");
 
-var confOps = {
+module.exports = (function(){
+	var me = this;
+	var filePath = "conf/etc";
+	var q = [];
+	var running = false;
+	var current = null;
+	var deepdiff = false;
+	// this.showQueue = function(){ for(var i=0; i<q.length; i++) console.log("Q["+ i +"]: "+ JSON.stringify( q[i] ) +"\t"+ typeof( q[i].callback ) ); }
+	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
+
+var ops = {
 	get: {
 		runner: function (file, key, callback){
 			ops.load.runner(file, true, function(temp){
 				if(!temp){
 					ops.load.runner(file, false, function(conf){
 						if(!conf) conf = {};
-						callback(ops.getKey.runner(conf,key));
+						callback(getKey(conf,key));
 					});
 				}else{
-					callback(ops.getKey.runner(temp,key));
+					callback(getKey(temp,key));
 				}
 			});
 		},
@@ -19,7 +29,7 @@ var confOps = {
 			if(!file) return;
 			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }
 			if(!callback) return; // TODO: throw an error?
-			q.schedule({ type: "get", callback: callback, args: [ file, key ] });
+			schedule({ type: "get", callback: callback, args: [ file, key ] });
 		}
 	},
 	set: {
@@ -51,7 +61,7 @@ var confOps = {
 			if(!callback && (typeof(value) == "function")){ callback = value; value = key; key = null; }
 			if(key == null) key = "";
 			if(value == null) value = ""; // Test for null, value may legitimately be false.
-			q.schedule({ type: "set", callback: callback, args: [ file, key, value ] });
+			schedule({ type: "set", callback: callback, args: [ file, key, value ] });
 		}
 	},
 	diff: {
@@ -67,7 +77,7 @@ var confOps = {
 		},
 		scheduler: function(file, callback){
 			if(!file || !callback) return;
-			q.schedule({ type: "diff", callback: callback, args: [ file ] })
+			schedule({ type: "diff", callback: callback, args: [ file ] })
 		}
 	},
 	revert: {
@@ -85,7 +95,7 @@ var confOps = {
 		scheduler: function(file, key, callback){
 			if(!file) return;
 			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }		
-			q.schedule({ type: "revert", callback: callback, args: [ file, key ] })
+			schedule({ type: "revert", callback: callback, args: [ file, key ] })
 		}
 	},
 	save: {
@@ -103,28 +113,44 @@ var confOps = {
 				callback(data);
 			});
 		}
-	},
-	getKey: {
-		runner: function(data,key){
-			if(key == null) return data;
-			if( (typeof(key) != "string") && (key != null) ) key = key.toString();
-			var obj = data;
-			key = key.split('.');
-			var len = key.length;
-			for(var i=0; i<(len-1); i++) obj = obj[key[i]];
-			return obj[key[len - 1]];
-		}
 	}
-};
+}
 
-module.exports = (function(ops){
-	var me = this;
-	var filePath = "conf/etc";
+	function getKey(data,key){
+		if(key == null) return data;
+		if( (typeof(key) != "string") && (key != null) ) key = key.toString();
+		var obj = data;
+		key = key.split('.');
+		var len = key.length;
+		for(var i=0; i<(len-1); i++) obj = obj[key[i]];
+		return obj[key[len - 1]];
+	}
 
-	var deepdiff = false;
-	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
+	function next(){
+		var last = null;
+		if(current && current.callback && (typeof(current.callback) == "function") ) last = current.callback;
+		running = false;
+		current = null;
+		if(last) last.apply(me,arguments);
+		run();
+	}
 
-	var q = require("./jai.queue.js")(ops);
+	function schedule(op){
+		op.args.push(next);
+		q.push(op);
+		run();
+	}
+
+	function run(){
+		if( (q.length == 0) || running ) return;
+		running = true;
+		current = q.shift();
+		ops[current.type].runner.apply(me, current.args);
+	}
+
+	for(var op in ops){
+		this[op] = ( ops[op].scheduler || ops[op].runner ); // assign scheduler if available
+	}
 
 	return this;
-})(confOps);
+})();
