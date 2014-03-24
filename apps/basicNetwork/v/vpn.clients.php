@@ -9,12 +9,12 @@
 <script type="text/ecmascript">
 
 
-// $(function(){
-// 	$("#vpnclients").widgetlist({ file: "vpnclients", widgetType: "vpnclient" });
-// 		// ,create: function(){ $("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n") }
-// });
+$(function(){
+	$("#vpnclients").widgetlist({ file: "vpnclients", widgetType: "vpnclient" });
+		// ,create: function(){ $("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n") }
+});
 
-$.ajax()
+// $.ajax()
 
 </script>
 

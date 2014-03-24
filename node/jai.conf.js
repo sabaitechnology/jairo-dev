@@ -1,7 +1,14 @@
 var fs 		= require("fs");
 // var util	= require("util");
 
-var confOps = {
+module.exports = (function(){
+	var me = this;
+	var filePath = "conf/etc";
+
+	var deepdiff = false;
+	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
+
+var ops = {
 	get: {
 		runner: function (file, key, callback){
 			ops.load.runner(file, true, function(temp){
@@ -117,14 +124,7 @@ var confOps = {
 	}
 };
 
-module.exports = (function(ops){
-	var me = this;
-	var filePath = "conf/etc";
-
-	var deepdiff = false;
-	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
-
 	var q = require("./jai.queue.js")(ops);
 
 	return this;
-})(confOps);
+})();
