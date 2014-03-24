@@ -9,6 +9,20 @@ var fs		= require("fs");
 var http 	= require("http");
 var sio 	= require("socket.io");
 
+function cyclicStringify(obj, delimiter){
+	var seen=[];
+	return JSON.stringify(obj,function(key, val){
+		if(typeof val == "object"){
+			if(seen.indexOf(val) >= 0){
+				return "(cyclic: @"+key+")";
+			}else{
+				seen.push(val);
+			}
+		};
+		return val;
+	},(delimiter || " "));
+}
+
 // var util 	= require("util");
 
 (function(){
@@ -43,20 +57,16 @@ var sio 	= require("socket.io");
 
 	var serv = http.createServer(function (req, res){
 		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.write("\n\tBEGIN:\n");
 
 		res.write("Request\n");
-		res.write(JSON.stringify(req));
+		// res.write(cyclicStringify(req));
+		res.write(cyclicStringify(res));
 
-		res.write("Request\n");
-		res.write(JSON.stringify(req));
+		// req.write("Response\n");
+		// res.write(cyclicStringify(res));
 
-		// console.log("req:");
-		// console.log(req);
-
-		// console.log("res:");
-		// console.log(res);
-
-		res.end('Hello World\n');
+		res.end("\n\t:END\n");
 	});
 
 	serv.listen(this.port, this.host);
