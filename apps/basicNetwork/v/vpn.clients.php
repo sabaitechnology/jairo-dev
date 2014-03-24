@@ -14,7 +14,7 @@ $(function(){
 		// ,create: function(){ $("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n") }
 });
 
-//$.ajax()
+// $.ajax()
 
 </script>
 

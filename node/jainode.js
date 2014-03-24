@@ -29,7 +29,7 @@ function cyclicStringify(obj, delimiter){
 	var me = this;
 	this.port = 31400;
 	this.host = "localjai";
-	this.origins = "localjai:80 walle:80";
+	this.origins = this.host + "80" +" walle:80";
 	this.options = {
 		"log level": 1,
 		"origins": this.origins
