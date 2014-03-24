@@ -1,8 +1,8 @@
 <div class='pageTitle'>Security: Firewall</div>
 
 <div class='controlBox'><span class='controlBoxTitle'>Firewall</span>
-	<div class='controlBoxContent'>
-		<table>
+	<div class='controlBoxContent' id='firewall'>
+<!-- 		<table>
 			<tr><td>Respond to ICMP ping</td>
 				<td><input type="checkbox" id="respondToggle" name='respondToggle' class="slideToggle" />
 					 <label class="slideToggleViewport" for="respondToggle">
@@ -47,7 +47,7 @@
 					 </label>
 				</td>
 			</tr>
-		</table>
+		</table> -->
 	</div>
 </div>
 
@@ -55,9 +55,55 @@
 <script type='text/ecmascript' src='php/etc.php?q=firewall'></script>
 <script type='text/ecmascript'>
 
-	$('#respondToggle').prop({'checked': firewall.icmp});
-	$('#multicastToggle').prop({'checked': firewall.multicast});
-	$('#synToggle').prop({'checked': firewall.cookies});
-	$('#wanToggle').prop({'checked':firewall.wan});
+$.widget("jai.firewall", {
+    
+  //Adding to the built-in widget constructor method - do this when widget is instantiated
+  _create: function(){
+    //TO DO: check to see if containing element has a unique id
+    
+    // BUILDING DOM ELEMENTS
+    $(this.element)
+    .append( $(document.createElement('table')).addClass("controlTable")
+      .append( $(document.createElement('tbody')).addClass("smallText") 
+        
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Respond to ICMP ping') 
+          )
+          .append( $(document.createElement('td')).html('SLIDE TOGGLE') 
+          )
+        )
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Allow multicast') 
+          )
+          .append( $(document.createElement('td')).html('SLIDE TOGGLE') 
+          )
+        )
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Enable SYN cookies') 
+          )
+          .append( $(document.createElement('td')).html('SLIDE TOGGLE') 
+          )
+        )
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Enable WAN route input') 
+          )
+          .append( $(document.createElement('td')).html('SLIDE TOGGLE') 
+          )
+        )
+      ) //end tbody
+		) //end system table
+	}
+})
+
+	// $('#respondToggle').prop({'checked': firewall.icmp});
+	// $('#multicastToggle').prop({'checked': firewall.multicast});
+	// $('#synToggle').prop({'checked': firewall.cookies});
+	// $('#wanToggle').prop({'checked':firewall.wan});
+
+$(function(){
+  //instatiate widgets on document ready
+  $('#firewall').firewall();
+
+})
 
 </script>

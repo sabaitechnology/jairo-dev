@@ -2,7 +2,7 @@
 <!-- TODO: -->
 
 <div class='controlBox'><span class='controlBoxTitle'>DMZ</span>
-	<div class='controlBoxContent'>
+	<div class='controlBoxContent' id='dmz'>
 
 		<input type="checkbox" id="dmzToggle" name='dmzToggle' class="slideToggle"/>
 		<label class="slideToggleViewport" for="dmzToggle">
@@ -12,14 +12,7 @@
 			  <div class="slideToggleContent slideToggleRight button"><span>Off</span></div>
 			</div>
 		</label>
-		<table>
-		 	<tr><td>Destination Address</td> <td><input id='dmz_destination' name='dmz_destination'></input><td></tr>
-		 	<tr><td>Source Address Restriction</td> <td> <input name='dmz_drestriction' disabled></input> </td></tr>
-		</table>
-		<div><span class='xsmallText'>
-			(optional; ex: "1.1.1.1", "1.1.1.0/24", "1.1.1.1 - 2.2.2.2" or "me.example.com")
-		</span></div>
-
+		
 	</div>
 </div>
 
@@ -47,5 +40,49 @@
 		}
 
 	});
+
+
+	$.widget("jai.dmz", {
+    
+  //Adding to the built-in widget constructor method - do this when widget is instantiated
+  _create: function(){
+    //TO DO: check to see if containing element has a unique id
+    
+    // BUILDING DOM ELEMENTS
+    $(this.element)
+    .append( $(document.createElement('table'))
+      .append( $(document.createElement('tbody')) 
+        
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Destination Address') 
+          )
+          .append( $(document.createElement('td'))
+          	.append( $(document.createElement('input') )
+          	.prop('name', 'dmz_destination') ) 
+          )
+        )
+        .append( $(document.createElement('tr'))
+          .append( $(document.createElement('td')).html('Destination Restriction') 
+          )
+          .append( $(document.createElement('td'))
+          	.append( $(document.createElement('input') )
+          		.prop('name', 'dmz_drestriction')  
+          	)
+          )
+        )  //end tr
+      ) //end tbody
+		) //end system table
+   	.append( $(document.createElement('div'))
+   		.append( $(document.createElement('span')).addClass('xsmallText')
+   			.html('(optional; ex: "1.1.1.1", "1.1.1.0/24", "1.1.1.1 - 2.2.2.2" or "me.example.com")')
+   		)
+   	) //end div
+	}
+})
+
+$(function(){
+  //instatiate widgets on document ready
+  $('#dmz').dmz();
+})
 
 </script>

@@ -2,32 +2,6 @@
 
 <div class='controlBox'><span class='controlBoxTitle'>Filter Settings</span>
 	<div class='controlBoxContent' id='macfilter'>
-		
-<!-- 		<table class='controlTable'><tbody>
-     <tr><td>Set Policy: </td><td>
-      <select id='default_policy' name='default_policy' class='radioSwitchElement'>
-       <option value='allow'>Allow</option>
-       <option value='deny'>Deny</option>
-      </select>
-     </td></tr>
-    </tbody></table>
-
-
-
-<h3>Allow</h3>
-		<table id='allowList' class='listTable clickable'></table>
-		<input type='button' value='Add' id='allowAdd'>
-		<input type='button' value='Cancel' onclick='cancelMAC();'>
-
-
-<h3>Deny</h3>
-		<table id='denyList' class='listTable clickable'></table>
-		<input type='button' value='Add' id='denyAdd'>
-		<input type='button' value='Cancel' onclick='cancelMAC();'>
-<br>
-
-		<input type='button' value='Save' id='save'> -->
-
 	</div>
 </div>
 

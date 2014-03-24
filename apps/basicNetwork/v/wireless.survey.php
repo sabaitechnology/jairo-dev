@@ -4,9 +4,7 @@
 <div class='controlBox'>
   <span class='controlBoxTitle'>Wireless Site Survey</span>
   <div class='controlBoxContent' id='wirelesssurvey'>
-    <pre id='result'></pre>
-    <table id='list' class='listTable'></table>
-    
+    <pre id='result'></pre>    
   </div> 
 </div> 
 
