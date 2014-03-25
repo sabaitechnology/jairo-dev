@@ -72,7 +72,10 @@ function jainode(address){
 	this.showByNoty = function(msg, extrasettings){ noty($.extend({text: msg },extrasettings)); }
 	this.showByAlert = function(msg){ alert(msg); }
 	this.sendByHTTP = function(){ me.show("HTTP/Ajax is not yet implemented."); }
-	this.sendByAjax = function(){ me.show("Ajax/HTTP is not yet implemented."); }
+	this.sendByAjax = function(){
+		// $.ajax()
+		me.show("Ajax/HTTP is not yet implemented.");
+	}
 	this.sendBySocket = function(msg, msgType, callback){
 		me.socket.emit( (msgType || "cdata"), msg, callback);
 	}
