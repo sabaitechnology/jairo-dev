@@ -11,18 +11,18 @@ endif
 
 export installRoot = $(shell pwd)
 
-# update: $(shell find jai -type f) $(shell find configuration -type f)
+.PHONY: help jainode dependencies dev-install debian clean
 
-# built/jairo.deb: update
-# 	dpkg-deb --build ./debian built/jairo.deb
+help:
+	-@cat README
 
-# debian: built/jairo.deb
+# We have an empty rule for the Makefile to keep make from bothering
+Makefile: ;
 
 # jainode: dependencies
-
 jainode:
 	# MAKE $@
-	@install/install-jainode.sh
+	#@install/install-jainode.sh
 	# DONE $@
 
 dependencies:
@@ -38,13 +38,18 @@ dev-install:
 	touch hi
 	# DONE $@
 
+# update: $(shell find jai -type f) $(shell find configuration -type f)
+
+# built/jairo.deb: update
+# 	dpkg-deb --build ./debian built/jairo.deb
+
+# debian: built/jairo.deb
+
 clean:
 	# MAKE $@
 #	@rm built/*
 	@echo clean
 	# DONE $@
-
-.PHONY: clean debian dependencies dev-install jainode
 
 # demo:
 # 	@rm -rf demo
