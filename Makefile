@@ -9,7 +9,9 @@ ifdef BASH
 	SHELL = $(BASH)
 endif
 
-export installRoot = $(shell pwd)
+export jai_installRoot = $(shell pwd)
+
+include options.make
 
 .PHONY: help jainode dependencies dev-install debian clean
 
@@ -19,36 +21,36 @@ help:
 # We have an empty rule for the Makefile to keep make from bothering
 Makefile: ;
 
+dependencies:
+	# MAKE $@
+	#@install/install-dependencies.sh
+	# DONE $@
+
 # jainode: dependencies
 jainode:
 	# MAKE $@
 	#@install/install-jainode.sh
 	# DONE $@
 
-dependencies:
-	# MAKE $@
-	#@install/dependencies.sh
-	# DONE $@
-
-#dev-install: dependencies jainode
-
+#dev-install: dependencies jainode jaiui
 dev-install:
 	# MAKE $@
-	# $(installRoot)
-	touch hi
+	@install/install-jainode.sh
+	@true
+#	@install/test.sh
 	# DONE $@
 
 # update: $(shell find jai -type f) $(shell find configuration -type f)
 
 # built/jairo.deb: update
-# 	dpkg-deb --build ./debian built/jairo.deb
+#	@install/create-debian-package.sh
 
 # debian: built/jairo.deb
 
 clean:
 	# MAKE $@
 #	@rm built/*
-	@echo clean
+	@echo "clean?"
 	# DONE $@
 
 # demo:
