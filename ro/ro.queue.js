@@ -1,10 +1,11 @@
 
-module.exports = (function(ops){
-
+module.exports = function roqueue(ops){
 	var me = this;
 	var queued = [];
 	var running = false;
 	var current = null;
+	this.now = {};
+	this.later = {};
 	// this.showQueue = function(){ for(var i=0; i<queued.length; i++) console.log("queued["+ i +"]: "+ JSON.stringify( queued[i] ) +"\t"+ typeof( queued[i].callback ) ); }
 
 	function next(){
@@ -31,7 +32,11 @@ module.exports = (function(ops){
 
 	for(var op in ops){
 		this[op] = ( ops[op].scheduler || ops[op].runner ); // assign scheduler if available
+		if(ops[op].scheduler) this.later[op] = ops[op].scheduler; // assign runner if available
+		if(ops[op].runner) this.now[op] = ops[op].runner; // assign runner if available
 	}
+}
 
-	return this;
-});
+// module.exports = {
+// 	roqueue: roqueue
+// }

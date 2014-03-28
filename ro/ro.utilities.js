@@ -13,4 +13,20 @@ module.exports = (function(){
 
 		return true;
 	}
+
+	this.cyclicStringify = function(obj, delimiter){
+		var seen=[];
+		return JSON.stringify(obj,function(key, val){
+			if(typeof val == "object"){
+				if(seen.indexOf(val) >= 0){
+					return "(cyclic: @"+key+")";
+				}else{
+					seen.push(val);
+				}
+			};
+			return val;
+		},(delimiter || " "));
+	}
+
+	return this;
 })();

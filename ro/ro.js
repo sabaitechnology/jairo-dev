@@ -9,19 +9,6 @@ var fs		= require("fs");
 var http 	= require("http");
 var sio 	= require("socket.io");
 
-function cyclicStringify(obj, delimiter){
-	var seen=[];
-	return JSON.stringify(obj,function(key, val){
-		if(typeof val == "object"){
-			if(seen.indexOf(val) >= 0){
-				return "(cyclic: @"+key+")";
-			}else{
-				seen.push(val);
-			}
-		};
-		return val;
-	},(delimiter || " "));
-}
 
 // var util 	= require("util");
 
@@ -29,14 +16,20 @@ function cyclicStringify(obj, delimiter){
 	var me = this;
 	this.port = 31400;
 	this.host = "localjai";
-	this.origins = this.host + "80" +" walle:80";
+	this.origins = this.host + ":80" +" walle:80";
 	this.options = {
 		"log level": 1,
 		"origins": this.origins
 	}
 	var socket = false;
-	var jaiconf = require("./jai.conf.js");
+	var roconf = require("./ro.conf.js");
 
+roconf.get("vpnclients", "", function(data){
+	console.log("Result:");
+	console.log(data);
+});
+
+return;
 	function error(msg){ socket ? socket.emit("sdata", { smsg: "Error: "+ msg }) : console.log("Error: "+ msg); }
 
 	var handlers = {
@@ -46,32 +39,38 @@ function cyclicStringify(obj, delimiter){
 		},
 		"conf": function(conf, callback){
 			if(conf.set){
-				jaiconf.set(conf.file, conf.key, conf.data, callback);
+				roconf.set(conf.file, conf.key, conf.data, callback);
 			}else{
-				jaiconf.get(conf.file, conf.key, callback);
+				roconf.get(conf.file, conf.key, callback);
 			}
 		}
 	};
 
 // INIT
 
-	// var serv = http.createServer(function (req, res){
-	// 	res.writeHead(200, {'Content-Type': 'text/plain'});
-	// 	res.write("\n\tBEGIN:\n");
+	var ju = require("./ro.utilities.js");
 
-	// 	res.write("Request\n");
-	// 	// res.write(cyclicStringify(req));
-	// 	res.write(cyclicStringify(res));
+	var serv = http.createServer(function (req, res){
+		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.write("\n\tBEGIN:\n");
 
-	// 	// req.write("Response\n");
-	// 	// res.write(cyclicStringify(res));
+		res.write("Request\n");
+		res.write(ju.cyclicStringify(req));
 
-	// 	res.end("\n\t:END\n");
-	// });
+		// res.write("Response\n");
+		// res.write(cyclicStringify(res));
 
-	// serv.listen(this.port, this.host);
+		res.end("\n\t:END\n");
+	});
 
-	var io = sio.listen(this.port, this.options);
+
+	// Using socket.io bound to a server appears to be the only way to limit its listening to
+	// a specific socket (instead of it listening on *:PORT, we want it on HOST:PORT).
+	// This is fine since we want a web handler available anyhow.
+	serv.listen(this.port, this.host);
+
+	var io = sio.listen(serv, this.options);
+	// var io = sio.listen(this.port, "127.0.2.1", this.options);
 	io.sockets.on("connection", function(iosocket){
 		socket = iosocket;
 		// socket.emit("sdata", { smsg: "Connected." });

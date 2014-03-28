@@ -1,1 +1,1 @@
-Backend node service used with the Jairo modular networking platform.
+Backend node service used with the JaiRo modular networking platform.

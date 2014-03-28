@@ -1,24 +1,24 @@
 var fs 		= require("fs");
+var roqueue	= require("./ro.queue.js");
 // var util	= require("util");
 
 module.exports = (function(){
 	var me = this;
 	var filePath = "conf/etc";
-
 	var deepdiff = false;
 	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
 
-var ops = {
+roqueue.call(this,{
 	get: {
 		runner: function (file, key, callback){
-			ops.load.runner(file, true, function(temp){
+			me.now.load(file, true, function(temp){
 				if(!temp){
-					ops.load.runner(file, false, function(conf){
+					me.now.load(file, false, function(conf){
 						if(!conf) conf = {};
-						callback(ops.getKey.runner(conf,key));
+						callback(me.now.getKey(conf,key));
 					});
 				}else{
-					callback(ops.getKey.runner(temp,key));
+					callback(me.now.getKey(temp,key));
 				}
 			});
 		},
@@ -26,15 +26,15 @@ var ops = {
 			if(!file) return;
 			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }
 			if(!callback) return; // TODO: throw an error?
-			q.schedule({ type: "get", callback: callback, args: [ file, key ] });
+			schedule({ type: "get", callback: callback, args: [ file, key ] });
 		}
 	},
 	set: {
 		runner: function (file, key, value, callback){
 			if(key == null){
-				ops.save.runner(file,value,callback);
+				me.now.save(file,value,callback);
 			}else{
-				ops.get.runner(file, null, function(data){
+				me.now.get(file, null, function(data){
 					if(!data) data = {};
 					var obj = data;
 					if( (typeof(key) != "string") && (key != null) ) key = key.toString();
@@ -48,7 +48,7 @@ var ops = {
 						callback(true);
 					}else{
 						obj[key[len-1]] = value;
-						ops.save.runner(file,data,callback);
+						me.now.save(file,data,callback);
 					}
 				});
 			}
@@ -58,13 +58,13 @@ var ops = {
 			if(!callback && (typeof(value) == "function")){ callback = value; value = key; key = null; }
 			if(key == null) key = "";
 			if(value == null) value = ""; // Test for null, value may legitimately be false.
-			q.schedule({ type: "set", callback: callback, args: [ file, key, value ] });
+			schedule({ type: "set", callback: callback, args: [ file, key, value ] });
 		}
 	},
 	diff: {
 		runner: function(file, callback){
-			ops.load.runner(file, true, function(temp){
-				ops.load.runner(file, false, function(conf){
+			me.now.load(file, true, function(temp){
+				me.now.load(file, false, function(conf){
 					if(!conf) conf = {};
 					if(!temp) temp = conf;
 					if(!deepdiff) deepdiff = require("deep-diff");
@@ -74,7 +74,7 @@ var ops = {
 		},
 		scheduler: function(file, callback){
 			if(!file || !callback) return;
-			q.schedule({ type: "diff", callback: callback, args: [ file ] })
+			schedule({ type: "diff", callback: callback, args: [ file ] })
 		}
 	},
 	revert: {
@@ -82,17 +82,17 @@ var ops = {
 			if(key == null){
 				fs.unlink(filePath +"/."+ file, function(){ callback(true) });
 			}else{
-				ops.diff.runner(file, function(d, temp, conf){
+				me.now.diff(file, function(d, temp, conf){
 					if(!deepdiff) deepdiff = require("deep-diff");
 					d.forEach(function(v, i, t){ if( (v.path.join(".")) == key){ deepdiff.applyChange(temp,conf,v); } });
-					ops.save.runner(file, temp, callback);
+					me.now.save(file, temp, callback);
 				});
 			}
 		},
 		scheduler: function(file, key, callback){
 			if(!file) return;
 			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }		
-			q.schedule({ type: "revert", callback: callback, args: [ file, key ] })
+			schedule({ type: "revert", callback: callback, args: [ file, key ] })
 		}
 	},
 	save: {
@@ -113,18 +113,17 @@ var ops = {
 	},
 	getKey: {
 		runner: function(data,key){
-			if(key == null) return data;
+			if(key == null || key =="") return data;
 			if( (typeof(key) != "string") && (key != null) ) key = key.toString();
 			var obj = data;
 			key = key.split('.');
 			var len = key.length;
+			if(len==1 && key[0] == "") return data;
 			for(var i=0; i<(len-1); i++) obj = obj[key[i]];
 			return obj[key[len - 1]];
 		}
 	}
-};
-
-	var q = require("./jai.queue.js")(ops);
+});
 
 	return this;
 })();
