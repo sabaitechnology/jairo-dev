@@ -1,5 +1,9 @@
 
-#export
+export
+development:=false
+
+jai_installRoot = $(shell pwd)
+
 jai_hostName=jai
 jai_mysqlPassword=heart router sabai home
 jai_useMail=yes

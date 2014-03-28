@@ -9,11 +9,9 @@ ifdef BASH
 	SHELL = $(BASH)
 endif
 
-export jai_installRoot = $(shell pwd)
-
 include options.make
 
-.PHONY: help jainode dependencies dev-install debian clean
+.PHONY: help dependencies jainode dev jairo debian clean
 
 help:
 	-@cat README
@@ -22,28 +20,37 @@ help:
 Makefile: ;
 
 dependencies:
-	# MAKE $@
-	#@install/install-dependencies.sh
-	# DONE $@
+	# MAKE: $@
+	#@makeScripts/install-dependencies.sh
+	# DONE: $@
+
+jai:
+	# MAKE: $@
+#	#@makeScripts/install-jainode.sh
+	# DONE: $@
 
 # jainode: dependencies
-jainode:
-	# MAKE $@
-	#@install/install-jainode.sh
-	# DONE $@
+ro:
+	# MAKE: $@
+#	#@makeScripts/install-jainode.sh
+	# DONE: $@
 
 #dev-install: dependencies jainode jaiui
-dev-install:
-	# MAKE $@
-	@install/install-jainode.sh
-	@true
-#	@install/test.sh
-	# DONE $@
+dev:
+	# MAKE: $@
+	@$(MAKE) jairo development=true
+	# DONE: $@
+
+jairo: dependencies ro jai
+	# MAKE: $@
+	@makeScripts/install-jainode.sh
+	# DONE: $@
+
 
 # update: $(shell find jai -type f) $(shell find configuration -type f)
 
 # built/jairo.deb: update
-#	@install/create-debian-package.sh
+#	@makeScripts/create-debian-package.sh
 
 # debian: built/jairo.deb
 

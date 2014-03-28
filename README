@@ -5,4 +5,4 @@ Development instructions and deployment scripts to follow.
 For active development, make the "dev-install" target.
 
 Normal users, please type:
-	sudo make install
+	sudo make jairo
