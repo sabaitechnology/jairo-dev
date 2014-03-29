@@ -11,9 +11,7 @@ else
 	IFS=$OIFS
 fi
 
-( IFS=.; echo "Start: ${dot[*]}" )
-
-while (grep -q "^${dot[0]}.${dot[1]}.${dot[2]}.${dot[3]}" $hostsFile); do
+incrementIP(){
 	(( dot[3]++ ))
 	if [ ${dot[3]} -gt 254 ]; then
 		dot[3]=1;
@@ -26,7 +24,36 @@ while (grep -q "^${dot[0]}.${dot[1]}.${dot[2]}.${dot[3]}" $hostsFile); do
 				exit 1;
 			fi
 		fi
-	fi
-done
+	fi	
+}
 
-( IFS=.; echo "Found: ${dot[*]}" )
+isInHosts(){
+	if (grep -q "^$dip" $hostsFile); then
+		inHosts=false
+	else
+		inHosts=true
+	fi
+}
+
+isInUse(){
+	lsof
+}
+
+
+# dip=$(IFS=.; echo "${dot[*]}")
+# dip=$(IFS=.; echo "${dot[*]}")
+
+inHosts=true;
+inUse=true;
+
+
+
+# echo "Start: $dip";
+
+# while ($inHosts || $inUse); do
+# 	incrementIP;
+# 	isInHosts;
+# 	isInUse;
+# done
+
+# ( IFS=.; echo "Found: ${dot[*]}" )

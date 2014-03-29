@@ -24,12 +24,12 @@ var sio 	= require("socket.io");
 	var socket = false;
 	var roconf = require("./ro.conf.js");
 
-roconf.get("vpnclients", "", function(data){
-	console.log("Result:");
-	console.log(data);
-});
+// roconf.get("vpnclients", "", function(data){
+// 	console.log("Result:");
+// 	console.log(data);
+// });
 
-return;
+// return;
 	function error(msg){ socket ? socket.emit("sdata", { smsg: "Error: "+ msg }) : console.log("Error: "+ msg); }
 
 	var handlers = {
@@ -61,14 +61,17 @@ return;
 		// res.write(cyclicStringify(res));
 
 		res.end("\n\t:END\n");
-	});
+	}).listen(this.port, this.host);
 
+	//Testing server
+	http.createServer(function (req, res){
+		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.end("Server Two!\n");
+	}).listen(this.port, "127.0.2.2");
 
 	// Using socket.io bound to a server appears to be the only way to limit its listening to
 	// a specific socket (instead of it listening on *:PORT, we want it on HOST:PORT).
 	// This is fine since we want a web handler available anyhow.
-	serv.listen(this.port, this.host);
-
 	var io = sio.listen(serv, this.options);
 	// var io = sio.listen(this.port, "127.0.2.1", this.options);
 	io.sockets.on("connection", function(iosocket){
