@@ -3,6 +3,7 @@
 		Add firewall rule to block jainode service through wan port (unless enabled)
 		Restrict origins if possible
 		Add https/certs back in
+		Add forking/multithreading into the server
 */
 
 var fs		= require("fs");
@@ -38,10 +39,10 @@ var sio 	= require("socket.io");
 			socket.emit("sdata", { smsg: "R: \""+ JSON.stringify(cdata) +"\"."});
 		},
 		"conf": function(conf, callback){
-			if(conf.set){
-				roconf.set(conf.file, conf.key, conf.data, callback);
+			if(roconf[conf.type]){
+				roconf[conf.type].call(roconf, conf.file, conf.key, conf.data, callback);
 			}else{
-				roconf.get(conf.file, conf.key, callback);
+				roconf.get(conf.file,conf.key,callback);
 			}
 		}
 	};

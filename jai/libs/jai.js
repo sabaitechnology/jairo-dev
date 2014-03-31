@@ -80,7 +80,7 @@ function jainode(address){
 		me.socket.emit( (msgType || "cdata"), msg, callback);
 	}
 	this.save = function(conf){
-		conf.set = true;
+		conf.type = "set";
 		me.send(conf, "conf", function(data){
 			if(data) me.show(data ? "Saved." : "Not saved.");
 		});

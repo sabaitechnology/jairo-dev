@@ -5,7 +5,7 @@
 
 ppas="\
 ppa:ondrej/php5 \
-chris-lea/node.js";
+ppa:chris-lea/node.js";
 
 dependencies="\
 nodejs apache2 tree \

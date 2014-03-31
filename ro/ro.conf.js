@@ -22,10 +22,19 @@ roqueue.call(this,{
 				}
 			});
 		},
-		scheduler: function(file, key, callback){
+		scheduler: function(file, key, value, callback){
 			if(!file) return;
-			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }
-			if(!callback) return; // TODO: throw an error?
+			if(!callback){
+				if(typeof(value) == "function"){
+					callback = value; value = null;
+				}else if(typeof(key) == "function"){
+					callback = key; key = null;
+				}else{
+					return; // TODO: throw an error?
+					// Set doesn't need a callback because it has effects, but if get has no callback,
+					// then it is basically a no-op: get data and do nothing with it.
+				}
+			}
 			schedule({ type: "get", callback: callback, args: [ file, key ] });
 		}
 	},
