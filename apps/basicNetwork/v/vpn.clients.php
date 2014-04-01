@@ -12,6 +12,16 @@
 $(function(){
 	$("#vpnclients").widgetlist({ file: "vpnclients", widgetType: "vpnclient" });
 		// ,create: function(){ $("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n") }
+	// });
+
+	// $("#testing").append("\tRequest:\n");
+	// ro.send("Data String", "cdata", function(data){
+	// 	$("#testing").append("BEGIN:\n");
+	// 	$("#testing").append(data);
+	// 	$("#testing").append("\n:END\n");
+	// });
+
+
 });
 
 // $.ajax()

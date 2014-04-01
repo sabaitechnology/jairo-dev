@@ -13,7 +13,8 @@ module.exports = function roqueue(ops){
 		if(current && current.callback && (typeof(current.callback) == "function") ) last = current.callback;
 		running = false;
 		current = null;
-		process.nextTick(run);
+		// process.nextTick(run);
+		setImmediate(run);
 		if(last) last.apply(me,arguments);
 		// run();
 	}
