@@ -3,10 +3,12 @@ var roqueue	= require("./ro.queue.js");
 // var util	= require("util");
 
 module.exports = (function(){
-	var me = this;
-	var filePath = "conf/etc";
-	var deepdiff = false;
-	// var fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); });
+	var
+		me = this
+		,filePath = "conf/etc"
+		,deepdiff = false
+		// ,fw = fs.watch('etc', function (event, filename){ console.log("Filename:"+ filename +"\nEvent:\n" + JSON.stringify(event)); })
+	;
 
 roqueue.call(this,{
 	get: {
@@ -21,8 +23,8 @@ roqueue.call(this,{
 					callback(me.now.getKey(temp,key));
 				}
 			});
-		},
-		scheduler: function(file, key, value, callback){
+		}
+		,scheduler: function(file, key, value, callback){
 			if(!file) return;
 			if(!callback){
 				if(typeof(value) == "function"){
@@ -37,8 +39,8 @@ roqueue.call(this,{
 			}
 			schedule({ type: "get", callback: callback, args: [ file, key ] });
 		}
-	},
-	set: {
+	}
+	,set: {
 		runner: function (file, key, value, callback){
 			if(key == null){
 				me.now.save(file,value,callback);
@@ -61,16 +63,16 @@ roqueue.call(this,{
 					}
 				});
 			}
-		},
-		scheduler: function(file, key, value, callback){
+		}
+		,scheduler: function(file, key, value, callback){
 			if(!file) return;
 			if(!callback && (typeof(value) == "function")){ callback = value; value = key; key = null; }
 			if(key == null) key = "";
 			if(value == null) value = ""; // Test for null, value may legitimately be false.
 			schedule({ type: "set", callback: callback, args: [ file, key, value ] });
 		}
-	},
-	diff: {
+	}
+	,diff: {
 		runner: function(file, callback){
 			me.now.load(file, true, function(temp){
 				me.now.load(file, false, function(conf){
@@ -80,13 +82,13 @@ roqueue.call(this,{
 					callback((deepdiff.diff(temp,conf) || []),temp,conf);
 				});
 			});
-		},
-		scheduler: function(file, callback){
+		}
+		,scheduler: function(file, callback){
 			if(!file || !callback) return;
 			schedule({ type: "diff", callback: callback, args: [ file ] })
 		}
-	},
-	revert: {
+	}
+	,revert: {
 		runner: function(file, key, callback){
 			if(key == null){
 				fs.unlink(filePath +"/."+ file, function(){ callback(true) });
@@ -97,30 +99,30 @@ roqueue.call(this,{
 					me.now.save(file, temp, callback);
 				});
 			}
-		},
-		scheduler: function(file, key, callback){
+		}
+		,scheduler: function(file, key, callback){
 			if(!file) return;
 			if(!callback && (typeof(key) == "function")){ callback = key; key = null; }		
 			schedule({ type: "revert", callback: callback, args: [ file, key ] })
 		}
-	},
-	save: {
+	}
+	,save: {
 		runner: function(file, data, callback){
 			fs.writeFile(filePath +"/."+ file, JSON.stringify(data, null, "\t"), function(e){
 				if(e) console.log(file +" save error: "+ JSON.stringify(e) +"\n");
 				callback(!e);
 			});
 		}
-	},
-	load: {
+	}
+	,load: {
 		runner: function(file, temp, callback){
 			fs.readFile(filePath +"/"+ (temp?".":"") + file, function(fe, data){
 				try { data = JSON.parse(data); } catch(pe){ data = null; } // More error checking?
 				callback(data);
 			});
 		}
-	},
-	getKey: {
+	}
+	,getKey: {
 		runner: function(data,key){
 			if(key == null || key =="") return data;
 			if( (typeof(key) != "string") && (key != null) ) key = key.toString();
