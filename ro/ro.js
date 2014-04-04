@@ -44,7 +44,6 @@ var
 				case "apply": {
 					break;
 				}
-				case ""
 				default: {
 					roconf.get(conf.file,conf.key,callback);
 				}
@@ -77,10 +76,10 @@ var
 	}).listen(this.port, this.host);
 
 	// //Testing server
-	// http.createServer(function (req, res){
-	// 	res.writeHead(200, {'Content-Type': 'text/plain'});
-	// 	res.end("Server Two!\n");
-	// }).listen(this.port, "127.0.2.2");
+	http.createServer(function (req, res){
+		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.end("Server Two!\n");
+	}).listen(this.port, "127.0.2.2");
 
 	// Using socket.io bound to a server appears to be the only way to limit its listening to
 	// a specific socket (instead of it listening on *:PORT, we want it on HOST:PORT).
@@ -89,8 +88,8 @@ var
 	// var io = sio.listen(this.port, "127.0.2.1", this.options);
 
 	io.sockets.on("connection", function(iosocket){
-		// socket.emit("sdata", { smsg: "Connected." });
-		for(e in handlers){ iosocket.on(e, handlers[e]); }
+		socket.emit("sdata", { smsg: "Connected." });
+		// for(e in handlers){ iosocket.on(e, handlers[e]); }
 	});
 
 })();

@@ -25,35 +25,20 @@ incrementIP(){
 			fi
 		fi
 	fi	
+	dip=$(IFS=.; echo "${dot[*]}")
 }
 
-isInHosts(){
-	if (grep -q "^$dip" $hostsFile); then
-		inHosts=false
-	else
-		inHosts=true
-	fi
-}
+isInHosts(){ grep -q "^$dip" $hostsFile; }
 
 isInUse(){
-	lsof
+	lsof -i4tcp@$dip
 }
 
+dip=$(IFS=.; echo "${dot[*]}")
 
-# dip=$(IFS=.; echo "${dot[*]}")
-# dip=$(IFS=.; echo "${dot[*]}")
-
-inHosts=true;
-inUse=true;
-
-
-
-# echo "Start: $dip";
-
-# while ($inHosts || $inUse); do
-# 	incrementIP;
-# 	isInHosts;
-# 	isInUse;
-# done
-
-# ( IFS=.; echo "Found: ${dot[*]}" )
+echo "Start: $dip";
+while (isInHosts || isInUse); do
+	echo "Discarded: $dip";
+	incrementIP;
+done
+echo "Stop: $dip";
