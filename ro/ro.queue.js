@@ -10,7 +10,9 @@ module.exports = function roqueue(ops){
 
 	function next(){
 		var last = null;
+		// var finalAction = null;
 		if(current && current.callback && (typeof(current.callback) == "function") ) last = current.callback;
+		// if(current && current.finalAction && (typeof(current.finalAction) == "function") ) finalAction = current.finalAction;
 		running = false;
 		current = null;
 		// process.nextTick(run);

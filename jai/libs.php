@@ -18,6 +18,9 @@ function insertJavascriptTag($lib,$found){
 	echo ( $found ? ("<script src=\"". $lib ."\"></script>\n") : ("<!-- ". $lib ." not found. -->\n") );
 }
 
+
+// echo "<script src=\"http://". $_SERVER['HTTP_HOST'] .":31400/socket.io/socket.io.js\"></script>\n";
+
 foreach(array(
 	"jquery.js",
 	"jqueryui.js",

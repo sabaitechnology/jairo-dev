@@ -3,6 +3,7 @@ export
 development:=false
 
 jai_installRoot = $(shell pwd)
+jai_user = $(shell logname)
 
 jai_hostName=jai
 jai_mysqlPassword=heart router sabai home

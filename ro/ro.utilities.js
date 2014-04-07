@@ -101,6 +101,7 @@ module.exports = (function(){
 			try {
 				body = JSON.parse(body);
 			}catch(e){
+				console.error("JSON parse error on data:\n"+ body);
 				body = {};
 			}
 		}else{ body = {}; }
@@ -115,9 +116,19 @@ module.exports = (function(){
 			actionURL = {};
 		}
 
+		console.log(body);
+		console.log(actionURL);
+
 		// if(!ju) ju = require("./ro.utilities.js");
 
 		return me.extend(body,actionURL);
+	}
+
+	this.error = function(s,msg){
+		s ?
+			s.emit("sdata", { smsg: "Error: "+ msg })
+				:
+			console.error("Error: "+ msg);
 	}
 
 	return this;

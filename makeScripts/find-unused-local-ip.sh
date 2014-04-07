@@ -3,7 +3,7 @@
 hostsFile=/etc/hosts
 
 if [ -z "$1" ]; then
-	dot=(127 0 0 2);
+	dot=(127 0 2 1);
 else
 	OIFS=$IFS
 	IFS=.
@@ -28,17 +28,14 @@ incrementIP(){
 	dip=$(IFS=.; echo "${dot[*]}")
 }
 
-isInHosts(){ grep -q "^$dip" $hostsFile; }
+ipInHosts(){ grep -q "^$dip" $hostsFile; }
 
-isInUse(){
-	lsof -i4tcp@$dip
-}
+ipInUse(){ lsof -ni4tcp@$dip; }
 
-dip=$(IFS=.; echo "${dot[*]}")
+dip=$(IFS=.; echo "${dot[*]}");
 
-echo "Start: $dip";
-while (isInHosts || isInUse); do
-	echo "Discarded: $dip";
+while (ipInHosts || ipInUse); do
 	incrementIP;
 done
-echo "Stop: $dip";
+
+echo $dip;

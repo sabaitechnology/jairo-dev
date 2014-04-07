@@ -32,6 +32,7 @@ roqueue.call(this,{
 				}else if(typeof(key) == "function"){
 					callback = key; key = null;
 				}else{
+					console.error("No callback for get so no action performed.");
 					return; // TODO: throw an error?
 					// Set doesn't need a callback because it has effects, but if get has no callback,
 					// then it is basically a no-op: get data and do nothing with it.
