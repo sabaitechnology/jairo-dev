@@ -87,6 +87,8 @@ $.widget("jai.wansetup", {
             )
 
           )
+
+
         ) // end type tr
       ) // end first tbody
       .append( $(document.createElement('tbody')).addClass("wan_type wan_type-static") 

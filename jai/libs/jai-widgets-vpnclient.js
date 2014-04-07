@@ -421,9 +421,67 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 // });
 
 // The OpenVPN widget will need to be somewhat more complicated. See the current router interface for guidance.
-// $.widget("jai.vpnclienteditor-openvpn", "jai.vpnclienteditor",{
-// 	_create: function(){
-// 	}
-// });
+$.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor,{
+	_create: function(){
+		this._super(); // We call the parent constructor first so we can get things like displaytable and data prepared.
+		console.log("I made the open vpn editor!")
+		$(this.element)
+    // .append( $(document.createElement('table')).addClass("controlTable")
+      .append( $(document.createElement('tbody'))   
+        .append( $(document.createElement('tr'))
+        	.append( $document.createElement ('td').html('Current File') )
+        	.append( $document.createElement ('td').html('File Opener Thingy') )
+        )
+        .append( $(document.createElement('tr'))
+        	.append( $(document.createElement('td')) 
+        		.append( $(document.createElement("input"))
+							.prop("type","button")
+							.val("Start")
+							.click(function(){
+								//start ze stuffs
+							})
+						,$(document.createElement("input"))
+							.prop("type","button")
+							.val("Stop")
+							.click(function(){
+								//stop ze stuffs
+							})
+						,$(document.createElement("input"))
+							.prop("type","button")
+							.val("Erase")
+							.click(function(){
+								//Erase ze stuffs
+							})
+							,$(document.createElement("input"))
+							.prop("type","button")
+							.val("Show Log")
+							.click(function(){
+								//Show ze Logz
+							})
+							,$(document.createElement("input"))
+							.prop("type","button")
+							.val("Hide File")
+							.click(function(){
+								//Hide ze file
+							})
+							,$(document.createElement("input"))
+							.prop("type","button")
+							.val("Done")
+							.click(function(){
+								//doneski
+							})
+							,$(document.createElement("input"))
+							.prop("type","button")
+							.val("Cancel")
+							.click(function(){
+								//I did a stupid - scrap that!
+							})
+						) //end
+					) //end td
+				) //end tr
+			) //end tbody
+		// ) //end contrl table
+	}
+});
 
 // TODO: IPsec? SSTP?
