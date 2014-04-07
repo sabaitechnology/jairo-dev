@@ -421,67 +421,124 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 // });
 
 // The OpenVPN widget will need to be somewhat more complicated. See the current router interface for guidance.
-$.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor,{
+
+$.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor, {
+	// TODO: appropriately abstract _create
 	_create: function(){
 		this._super(); // We call the parent constructor first so we can get things like displaytable and data prepared.
 		console.log("I made the open vpn editor!")
-		$(this.element)
-    // .append( $(document.createElement('table')).addClass("controlTable")
-      .append( $(document.createElement('tbody'))   
-        .append( $(document.createElement('tr'))
-        	.append( $document.createElement ('td').html('Current File') )
-        	.append( $document.createElement ('td').html('File Opener Thingy') )
-        )
-        .append( $(document.createElement('tr'))
-        	.append( $(document.createElement('td')) 
-        		.append( $(document.createElement("input"))
-							.prop("type","button")
-							.val("Start")
-							.click(function(){
-								//start ze stuffs
-							})
-						,$(document.createElement("input"))
-							.prop("type","button")
-							.val("Stop")
-							.click(function(){
-								//stop ze stuffs
-							})
-						,$(document.createElement("input"))
-							.prop("type","button")
-							.val("Erase")
-							.click(function(){
-								//Erase ze stuffs
-							})
+		this.fields = [
+			{
+				value: this.parentWidget.data.name,
+				displayname: "Name",
+				name: "name",
+				placeholder: "New PPTP Client"
+			},
+			// {
+			// 	value: "File Opener Thingy",
+			// 	displayname: "Upload File",
+			// 	name: "file",
+			// 	placeholder: "Server Address"
+			// },
+			{
+				value: this.parentWidget.data.username,
+				displayname: "Username",
+				name: "username",
+				placeholder: "PPTP Username"
+			},
+			{ // TODO: needs to be "password" type
+				value: this.parentWidget.data.password,
+				displayname: "Password",
+				name: "password",
+				type: "password",
+				placeholder: "PPTP Password"
+			}
+		];
+		this.makeEditor();
+
+		console.log("I appended some buttons where they shouldn't go")
+		$(document.createElement("div"))
+			.attr("id", "openvpncontrol")
+			.append( $(document.createElement('table')).addClass("controlTable")
+	      .append( $(document.createElement('tbody'))   
+	        .append( $(document.createElement('tr'))
+	        	.append( $(document.createElement('td')).html('Current File') )
+	        	.append( $(document.createElement('td')).html('File Opener Thingy') )
+	        )
+	        .append( $(document.createElement('tr'))
+	        	.append( $(document.createElement('td')) 
+	        		.append( $(document.createElement("input"))
+								.prop("type","button")
+								.val("Start")
+								.click(function(){
+									//start ze stuffs
+								})
 							,$(document.createElement("input"))
-							.prop("type","button")
-							.val("Show Log")
-							.click(function(){
-								//Show ze Logz
-							})
+								.prop("type","button")
+								.val("Stop")
+								.click(function(){
+									//stop ze stuffs
+								})
 							,$(document.createElement("input"))
-							.prop("type","button")
-							.val("Hide File")
-							.click(function(){
-								//Hide ze file
-							})
-							,$(document.createElement("input"))
-							.prop("type","button")
-							.val("Done")
-							.click(function(){
-								//doneski
-							})
-							,$(document.createElement("input"))
-							.prop("type","button")
-							.val("Cancel")
-							.click(function(){
-								//I did a stupid - scrap that!
-							})
-						) //end
-					) //end td
-				) //end tr
-			) //end tbody
-		// ) //end contrl table
+								.prop("type","button")
+								.val("Delete")
+								.click(function(){
+									//Delete ze stuffs
+								})
+								,$(document.createElement("input"))
+								.attr("id", "showvpnlog")
+								.prop("type","button")
+								.val("Show Log")
+								.click(function(){
+									//Show ze Logz
+									$("#openvpnlog").show()
+									$(this).hide()
+									$("#hidevpnlog").show()
+								})
+								,$(document.createElement("input"))
+								.attr("id", "hidevpnlog")
+								.prop("type","button")
+								.css("display", "none")
+								.val("Hide Log")
+								.click(function(){
+									//hide ze Logz
+									$("#openvpnlog").hide()
+									$(this).hide()
+									$("#showvpnlog").show()
+
+								})
+								,$(document.createElement("input"))
+								.prop("type","button")
+								.val("Hide File")
+								.click(function(){
+									//Hide ze file
+								})
+								,$(document.createElement("input"))
+								.prop("type","button")
+								.val("Done")
+								.click(function(){
+									//doneski
+								})
+								,$(document.createElement("input"))
+								.prop("type","button")
+								.val("Cancel")
+								.click(function(){
+									//I did a stupid - scrap that!
+								})
+							) //end
+						) //end td
+					) //end tr
+				) //end tbody
+				.append($(document.createElement("input"))
+					.attr("id", "openvpnlog")
+					.prop("type","textarea")
+					.css("display", "none")
+				)
+			) //end contrl table
+
+		.appendTo(".jai-vpnclient-editor")//     
 	}
 });
+
 
 // TODO: IPsec? SSTP?
