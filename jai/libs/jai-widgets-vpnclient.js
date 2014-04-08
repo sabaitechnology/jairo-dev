@@ -434,12 +434,6 @@ $.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor, {
 				name: "name",
 				placeholder: "New PPTP Client"
 			},
-			// {
-			// 	value: "File Opener Thingy",
-			// 	displayname: "Upload File",
-			// 	name: "file",
-			// 	placeholder: "Server Address"
-			// },
 			{
 				value: this.parentWidget.data.username,
 				displayname: "Username",
@@ -453,10 +447,15 @@ $.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor, {
 				type: "password",
 				placeholder: "PPTP Password"
 			}
+			// ,{
+			// 	value: "File Opener",
+			// 	displayname: "Upload File",
+			// 	name: "file",
+			// 	placeholder: ""
+			// }
 		];
 		this.makeEditor();
 
-		console.log("I appended some buttons where they shouldn't go")
 		$(document.createElement("div"))
 			.attr("id", "openvpncontrol")
 			.append( $(document.createElement('table')).addClass("controlTable")
@@ -508,10 +507,25 @@ $.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor, {
 
 								})
 								,$(document.createElement("input"))
+								.attr("id", "showvpnfile")
+								.prop("type","button")
+								.val("Show File")
+								.click(function(){
+									//Show ze file
+									$("#openvpnfile").show()
+									$(this).hide()
+									$("#hidevpnfile").show()
+								})
+								,$(document.createElement("input"))
+								.attr("id", "hidevpnfile")
 								.prop("type","button")
 								.val("Hide File")
+								.css("display", "none")
 								.click(function(){
 									//Hide ze file
+									$("#openvpnfile").hide()
+									$(this).hide()
+									$("#showvpnfile").show()
 								})
 								,$(document.createElement("input"))
 								.prop("type","button")
@@ -532,6 +546,11 @@ $.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor, {
 				.append($(document.createElement("input"))
 					.attr("id", "openvpnlog")
 					.prop("type","textarea")
+					.css("display", "none")
+				)
+				.append($(document.createElement("div"))
+					.attr("id", "openvpnfile")
+					.html("File here!")
 					.css("display", "none")
 				)
 			) //end contrl table
