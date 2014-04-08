@@ -375,6 +375,40 @@ $.widget("jai.vpnclienteditor", $.Widget,{
 			},
 			this	// Pass this into map because inside map "this" refers to the window
 		);
+	},
+
+	buildFileEditor: function(){
+		$("#openvpnfile").html("");
+
+		//for each key
+		for(i=0; i<keys.length; i++){
+			var temp=keys[i];
+			//TODO:tempmatch should use regex to find each key in conf file (see confkeys.js)
+			var tempmatch=[]
+			
+			$(document.createElement("tr"))
+				.prop("id", i)
+				.append($(document.createElement("td")).html(temp + " \/ ")
+					.prepend($(document.createElement("input"))
+						.prop("id", i)
+						.attr('type', 'checkbox')
+					)
+					.append($(document.createElement("input"))
+							.attr("type","text")
+							.val(tempmatch)
+					)
+				)
+				.append($(document.createElement("td"))
+					.prepend($(document.createElement("input"))
+						.prop("id", i)
+						.prop("class", "deletebutton")
+						.attr('type', 'button')
+						.val("Delete")
+					)
+				)
+
+			.appendTo("#openvpnfile")
+		}
 	}
 });
 
@@ -415,18 +449,59 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 
 // The L2TP widget can pretty much be a duplicate of the PPTP widget with a PSK field, except that in future it will need to support
 //	client/server certificates and some advanced features which will require more sophisticated handling
-// $.widget("jai.vpnclienteditor-l2tp", "jai.vpnclienteditor" ,{
-// 	_create: function(){
-// 	}
-// });
+
+$.widget("jai.vpnclienteditor_l2tp", $.jai.vpnclienteditor, {
+	_create: function(){
+		this._super(); 
+		this.fields = [
+			{
+				value: this.parentWidget.data.name,
+				displayname: "Name",
+				name: "name",
+				placeholder: "New PPTP Client"
+			},
+			{
+				value: this.parentWidget.data.server,
+				displayname: "Server",
+				name: "server",
+				placeholder: "Server Address"
+			},
+			{
+				value: this.parentWidget.data.username,
+				displayname: "Username",
+				name: "username",
+				placeholder: "PPTP Username"
+			},
+			{ // TODO: needs to be "password" type
+				value: this.parentWidget.data.password,
+				displayname: "Password",
+				name: "password",
+				type: "password",
+				placeholder: "PPTP Password"
+			},
+			{ // TODO: needs to be "password" type
+				value: this.parentWidget.data.psk,
+				displayname: "PSK",
+				name: "PSK",
+				type: "password",
+				placeholder: "PPTP Preshared Key"
+			}
+		];
+		this.makeEditor();
+	}
+});
+
+
+
+
 
 // The OpenVPN widget will need to be somewhat more complicated. See the current router interface for guidance.
+
 
 $.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor, {
 	// TODO: appropriately abstract _create
 	_create: function(){
 		this._super(); // We call the parent constructor first so we can get things like displaytable and data prepared.
-		console.log("I made the open vpn editor!")
 		this.fields = [
 			{
 				value: this.parentWidget.data.name,
@@ -447,117 +522,298 @@ $.widget("jai.vpnclienteditor_openvpn", $.jai.vpnclienteditor, {
 				type: "password",
 				placeholder: "PPTP Password"
 			}
-			// ,{
-			// 	value: "File Opener",
-			// 	displayname: "Upload File",
-			// 	name: "file",
-			// 	placeholder: ""
-			// }
 		];
 		this.makeEditor();
 
 		$(document.createElement("div"))
 			.attr("id", "openvpncontrol")
-			.append( $(document.createElement('table')).addClass("controlTable")
-	      .append( $(document.createElement('tbody'))   
-	        .append( $(document.createElement('tr'))
-	        	.append( $(document.createElement('td')).html('Current File') )
-	        	.append( $(document.createElement('td')).html('File Opener Thingy') )
-	        )
-	        .append( $(document.createElement('tr'))
-	        	.append( $(document.createElement('td')) 
-	        		.append( $(document.createElement("input"))
-								.prop("type","button")
-								.val("Start")
-								.click(function(){
-									//start ze stuffs
-								})
-							,$(document.createElement("input"))
-								.prop("type","button")
-								.val("Stop")
-								.click(function(){
-									//stop ze stuffs
-								})
-							,$(document.createElement("input"))
-								.prop("type","button")
-								.val("Delete")
-								.click(function(){
-									//Delete ze stuffs
-								})
-								,$(document.createElement("input"))
-								.attr("id", "showvpnlog")
-								.prop("type","button")
-								.val("Show Log")
-								.click(function(){
-									//Show ze Logz
-									$("#openvpnlog").show()
-									$(this).hide()
-									$("#hidevpnlog").show()
-								})
-								,$(document.createElement("input"))
-								.attr("id", "hidevpnlog")
-								.prop("type","button")
-								.css("display", "none")
-								.val("Hide Log")
-								.click(function(){
-									//hide ze Logz
-									$("#openvpnlog").hide()
-									$(this).hide()
-									$("#showvpnlog").show()
+			.append( $(document.createElement('p')).html('file opener widget') )
+	        	
+	   //TODO: this should appear after a file is selected
+		.append($(document.createElement("input"))
+			.attr("id", "editovpnfile")
+			.prop("type","button")
+			.val("Edit File")
+			.click( function(){
+				$("#openvpnfile").show()
+				$(this).hide()
+				$("#closeedit").show()
+			})
+		)
+		.append($(document.createElement("input"))
+			.attr("id", "closeedit")
+			.prop("type","button")
+			.val("Close Editor")
+			.css("display", "none")
+			.click( function(){
+				$("#openvpnfile").hide()
+				$(this).hide()
+				$("#editovpnfile").show()
+			})
+		)
+		.append($(document.createElement("div"))
+			.attr("id", "openvpnfile")
+			.html("File here!")
+			.css("display", "none")
+			.css("background", "#DBDBDB")
+		)
+		.appendTo(".jai-vpnclient-editor")
 
-								})
-								,$(document.createElement("input"))
-								.attr("id", "showvpnfile")
-								.prop("type","button")
-								.val("Show File")
-								.click(function(){
-									//Show ze file
-									$("#openvpnfile").show()
-									$(this).hide()
-									$("#hidevpnfile").show()
-								})
-								,$(document.createElement("input"))
-								.attr("id", "hidevpnfile")
-								.prop("type","button")
-								.val("Hide File")
-								.css("display", "none")
-								.click(function(){
-									//Hide ze file
-									$("#openvpnfile").hide()
-									$(this).hide()
-									$("#showvpnfile").show()
-								})
-								,$(document.createElement("input"))
-								.prop("type","button")
-								.val("Done")
-								.click(function(){
-									//doneski
-								})
-								,$(document.createElement("input"))
-								.prop("type","button")
-								.val("Cancel")
-								.click(function(){
-									//I did a stupid - scrap that!
-								})
-							) //end
-						) //end td
-					) //end tr
-				) //end tbody
-				.append($(document.createElement("input"))
-					.attr("id", "openvpnlog")
-					.prop("type","textarea")
-					.css("display", "none")
-				)
-				.append($(document.createElement("div"))
-					.attr("id", "openvpnfile")
-					.html("File here!")
-					.css("display", "none")
-				)
-			) //end contrl table
+		this.buildFileEditor();
 
-		.appendTo(".jai-vpnclient-editor")//     
 	}
 });
 
 
 // TODO: IPsec? SSTP?
+//TODO: add log to log page
+
+var keys = ["help",
+"config file",
+"mode m",
+"local host",
+"remote host [port] [proto]",
+"remote-random-hostname",
+"proto-force p",
+"remote-random",
+"proto p",
+"connect-retry n",
+"connect-timeout n",
+"connect-retry-max n",
+"show-proxy-settings",
+"http-proxy server port [authfile|'auto'|'auto-nct'] [auth-method]",
+"http-proxy-retry",
+"http-proxy-timeout n",
+"http-proxy-option type [parm]",
+"socks-proxy server [port]",
+"socks-proxy-retry",
+"resolv-retry n",
+"float",
+"ipchange cmd",
+"port port",
+"lport port",
+"rport port",
+"bind",
+"nobind",
+"dev tunX | tapX | null",
+"dev-type device-type",
+"topology mode",
+"tun-ipv6",
+"dev-node node",
+"lladdr address",
+"iproute cmd",
+"ifconfig l rn",
+"ifconfig-noexec",
+"ifconfig-nowarn",
+"route network/IP [netmask] [gateway] [metric]",
+"max-routes n",
+"route-gateway gw|'dhcp'",
+"route-metric m",
+"route-delay [n] [w]",
+"route-up cmd",
+"route-pre-down cmd",
+"route-noexec",
+"route-nopull",
+"allow-pull-fqdn",
+"client-nat snat|dnat network netmask alias",
+"redirect-gateway flags...",
+"link-mtu n",
+"redirect-private [flags]",
+"tun-mtu n",
+"tun-mtu-extra n",
+"mtu-disc type",
+"mtu-test",
+"fragment max",
+"mssfix max",
+"sndbuf size",
+"rcvbuf size",
+"mark value",
+"socket-flags flags...",
+"txqueuelen n",
+"shaper n",
+"inactive n [bytes]",
+"ping n",
+"ping-exit n",
+"ping-restart n",
+"keepalive n m",
+"ping-timer-rem",
+"persist-tun",
+"persist-key",
+"persist-local-ip",
+"persist-remote-ip",
+"mlock",
+"up cmd",
+"up-delay",
+"down cmd",
+"down-pre",
+"up-restart",
+"setenv name value",
+"setenv FORWARD_COMPATIBLE 1",
+"setenv-safe name value",
+"script-security level",
+"disable-occ",
+"user user",
+"group group",
+"cd dir",
+"chroot dir",
+"setcon context",
+"daemon [progname]",
+"syslog [progname]",
+"errors-to-stderr",
+"passtos",
+"inetd [wait|nowait] [progname]",
+"log file",
+"log-append file",
+"suppress-timestamps",
+"writepid file",
+"nice n",
+"fast-io",
+"multihome",
+"echo [parms...]",
+"remap-usr1 signal",
+"verb n",
+"status file [n]",
+"status-version [n]",
+"mute n",
+"comp-lzo [mode]",
+"comp-noadapt",
+"management IP port [pw-file]",
+"management-client",
+"management-query-passwords",
+"management-query-proxy",
+"management-query-remote",
+"management-forget-disconnect",
+"management-hold",
+"management-signal",
+"management-log-cache n",
+"management-up-down",
+"management-client-auth",
+"management-client-pf",
+"management-client-user u",
+"management-client-group g",
+"plugin module-pathname [init-string]",
+"server network netmask",
+"server-bridge gateway netmask pool-start-IP pool-end-IP",
+"server-bridge ['nogw']",
+"push option",
+"push-reset",
+"push-peer-info",
+"disable",
+"ifconfig-pool start-IP end-IP [netmask]",
+"ifconfig-pool-persist file [seconds]",
+"ifconfig-pool-linear",
+"ifconfig-push local remote-netmask [alias]",
+"iroute network [netmask]",
+"client-to-client",
+"duplicate-cn",
+"client-connect cmd",
+"client-disconnect cmd",
+"client-config-dir dir",
+"ccd-exclusive",
+"tmp-dir dir",
+"hash-size r v",
+"bcast-buffers n",
+"tcp-queue-limit n",
+"tcp-nodelay",
+"max-clients n",
+"max-routes-per-client n",
+"stale-routes-check n [t]",
+"connect-freq n sec",
+"learn-address cmd",
+"auth-user-pass-verify cmd method",
+"opt-verify",
+"auth-user-pass-optional",
+"client-cert-not-required",
+"username-as-common-name",
+"compat-names [no-remapping] (DEPRECATED)",
+"no-name-remapping (DEPRECATED)",
+"port-share host port [dir]",
+"client",
+"pull",
+"auth-user-pass [up]",
+"auth-retry type",
+"static-challenge t e",
+"server-poll-timeout n",
+"explicit-exit-notify [n]",
+"secret file [direction]",
+"key-direction",
+"auth alg",
+"cipher alg",
+"keysize n",
+"prng alg [nsl]",
+"engine [engine-name]",
+"no-replay",
+"replay-window n [t]",
+"mute-replay-warnings",
+"replay-persist file",
+"no-iv",
+"use-prediction-resistance",
+"test-crypto",
+"tls-server",
+"tls-client",
+"ca file",
+"capath dir",
+"dh file",
+"cert file",
+"extra-certs file",
+"key file",
+"pkcs12 file",
+"verify-hash hash",
+"pkcs11-cert-private [0|1]...",
+"pkcs11-id name",
+"pkcs11-id-management",
+"pkcs11-pin-cache seconds",
+"pkcs11-protected-authentication [0|1]...",
+"pkcs11-providers provider...",
+"pkcs11-private-mode mode...",
+"cryptoapicert select-string",
+"key-method m",
+"tls-cipher l",
+"tls-timeout n",
+"reneg-bytes n",
+"reneg-pkts n",
+"reneg-sec n",
+"hand-window n",
+"tran-window n",
+"single-session",
+"tls-exit",
+"tls-auth file [direction]",
+"askpass [file]",
+"auth-nocache",
+"tls-verify cmd",
+"tls-export-cert directory",
+"x509-username-field fieldname",
+"tls-remote name (DEPRECATED)",
+"verify-x509-name name type",
+"x509-track attribute",
+"ns-cert-type client|server",
+"remote-cert-ku v...",
+"remote-cert-eku oid",
+"remote-cert-tls client|server",
+"crl-verify crl ['dir']",
+"show-ciphers",
+"show-digests",
+"show-tls",
+"show-engines",
+"genkey",
+"secret file",
+"mktun",
+"rmtun",
+"dev tunX | tapX",
+"user user",
+"group group",
+"win-sys path",
+"ip-win32 method",
+"route-method m",
+"dhcp-option type [parm]",
+"tap-sleep n",
+"show-net-up",
+"dhcp-renew",
+"dhcp-release",
+"register-dns",
+"pause-exit",
+"service exit-event [0|1]",
+"show-adapters",
+"allow-nonadmin [TAP-adapter]",
+"show-valid-subnets",
+"show-net"]
