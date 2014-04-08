@@ -21,7 +21,7 @@ else
 	ro_ports=($(./find-unused-ports.sh $ro_ip));
 fi
 
-echo "IP & Ports: $ro_ip / (${#ro_ports[*]}) ${ro_ports[@]}" >&2
+#echo "IP & Ports: $ro_ip / (${#ro_ports[*]}) ${ro_ports[@]}" >&2
 # echo $jaiUser
 # echo $ro_root
 # echo $nodejs
@@ -29,10 +29,11 @@ echo "IP & Ports: $ro_ip / (${#ro_ports[*]}) ${ro_ports[@]}" >&2
 # [ -z $ro_nodejs ] && _err "Please install node.js."
 # [ ! -d /home/$ro_user ] && _err "Please run as a user with a home directory.";
 # [ $(id -u) -ne 0 ] && _err "Please run with sudo like this:\nsudo ./install.sh";
-# [ ! -f /$ro_root/jainode.js ] && _err "Jainode.js file is missing.";
+# [ ! -f /$ro_root/ro.js ] && _err "ro.js file is missing.";
 
-# [ ! -d node_modules/socket.io ] && sudo -u $jainode_user npm install socket.io;
-# cp node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.min.js ../jai/libs/
+# if [ ! -d $ro_root/node_modules/socket.io ]; then
+#	cd $ro_root && sudo -u $ro_user npm install socket.io;
+# cp $ro_root/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.min.js $ro_root/jai/libs/
 
 # cat  >/etc/init/jainode.conf <<ROCONF
 # description "JaiRo node.js backend component service"
@@ -50,6 +51,6 @@ echo "IP & Ports: $ro_ip / (${#ro_ports[*]}) ${ro_ports[@]}" >&2
 # end script
 # ROCONF
 
-# grep -q jainode /etc/hosts || sed -i "/$(grep "^127" /etc/hosts | tail -n1)/ a$jainode_ip\tjainode" /etc/hosts
+# grep -q $ro_hostname /etc/hosts || sed -i "/$(grep "^127" /etc/hosts | tail -n1)/ a$ro_ip\tro_hostname" /etc/hosts
 
 # service ro restart
