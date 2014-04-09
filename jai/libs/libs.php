@@ -18,10 +18,23 @@ function insertJavascriptTag($lib,$found){
 	echo ( $found ? ("<script src=\"". $lib ."\"></script>\n") : ("<!-- ". $lib ." not found. -->\n") );
 }
 
+function insertRoClient(){
+	$roo=json_decode(file_get_contents( __DIR__ . "/ro.options.json"));
+	if(gettype($roo) != "NULL"){
+		$roourl = "http". ($roo->ssl ? "s" : "") ."://". $roo->host .":". $roo->port;
+		echo "<script src=\"$roourl/socket.io/socket.io.js\"></script>\n";
+		echo "<script>\nvar ro = new Ro(\"$roourl\");\n</script>\n";
+	}
+}
 
-// echo "<script src=\"http://". $_SERVER['HTTP_HOST'] .":31400/socket.io/socket.io.js\"></script>\n";
+function insertLibs($libs){
+	foreach($libs as $libFile){
+		// dumpJavaScript("/libs/". $libFile,file_exists("libs/".$libFile));
+		insertJavascriptTag("/libs/". $libFile,file_exists($_SERVER['DOCUMENT_ROOT'] ."/libs/". $libFile));
+	}
+}
 
-foreach(array(
+insertLibs(array(
 	"jquery.js",
 	"jqueryui.js",
 	"jquery.mousewheel.js",
@@ -33,11 +46,8 @@ foreach(array(
 	"jai-widgets.js",
 	"jai.js",
 	"wallawalla.js"
-) as $libFile){
-	// dumpJavaScript("/libs/". $libFile,file_exists("libs/".$libFile));
-	insertJavascriptTag("/libs/". $libFile,file_exists($_SERVER['DOCUMENT_ROOT'] ."/libs/". $libFile));
-}
-
+));
+insertRoClient();
 // header("Content-Type: text/javascript; charset=utf-8");
 
 // echo $_SERVER['DOCUMENT_ROOT'] ."\n";

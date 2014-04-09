@@ -9,20 +9,9 @@
 	We're making PHP give us a valid address for our server since this address will actually refer
 	 to the machine we're running on, which is different everywhere.
 -->
-<!--
-	TODO: resolve multiple inclusion of node.js ro service information
-	We ought to only include this once and retrieve it in both the front end and the back end from one place.
-	Currently it's all over the place.
--->
-<!-- script src="/libs/ro.info.js"></script -->
-<script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
-<!-- <script src="/libs.php"></script> -->
-<?php include("./libs.php"); ?>
+<?php include("libs/libs.php"); ?>
 <script src="js/main.js"></script>
 <script>
-// noty settings -- moved to /libs/jquery.noty.jai.js
-// jainode definition -- moved to /libs/jai.js
-var ro = new Ro("http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400");
 
 function toggleHelpSection() {
 	$( "#helpClose").show();
