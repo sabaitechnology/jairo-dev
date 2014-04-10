@@ -197,9 +197,20 @@ $.widget("jai.wansetup", {
 });
 
 $(function(){
+
+  ro.send({ file: "wan" }, "conf", function(data){
+    // At this point, it's as simple as setting the list info and running our usual creation routine.
+    $('#wansetup').wansetup({ conf: data });
+  });
+
+  ro.send({ file: "dns" }, "conf", function(data){
+    // At this point, it's as simple as setting the list info and running our usual creation routine.
+    $('#dns_servers').oldeditablelist({ list: data.servers, fixed: true })
+  });
+
   //instatiate widgets on document ready
-  $('#wansetup').wansetup({ conf: wan });
-	$('#dns_servers').oldeditablelist({ list: dns.servers, fixed: true })
+//  $('#wansetup').wansetup({ conf: wan });
+//	$('#dns_servers').oldeditablelist({ list: dns.servers, fixed: true })
 })
 
 $('#save').click( function() {
