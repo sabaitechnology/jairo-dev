@@ -260,3 +260,6 @@ var keys = ["help",
 // 	//fill input with match
 
 
+//read file. split by line into array
+
+//read each array. display first word and put everything else in input
