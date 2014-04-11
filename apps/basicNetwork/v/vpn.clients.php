@@ -20,13 +20,13 @@ $(function(){
 		// ,create: function(){ $("#testing").append("Create fires ("+ $(this).prop("tagName") +"/"+ $(this).attr("id") +").\n") }
 	// });
 
-	$("#fileexample1").textfile();
-	$("#fileexample2").textfile({
-		file: {
-			name: "UnrealFile.txt",
-			content: "I am a file.\nI have things in me.\nTHINGS."
-		}
-	});
+	// $("#fileexample1").textfile();
+	// $("#fileexample2").textfile({
+	// 	file: {
+	// 		name: "UnrealFile.txt",
+	// 		content: "I am a file.\nI have things in me.\nTHINGS."
+	// 	}
+	// });
 
 });
 

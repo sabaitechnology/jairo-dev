@@ -178,8 +178,8 @@ $.widget("jai.vpnclient", $.Widget,{
 			this.updateName();
 		}
 		if(this.options.editing) this.edit();
-	},
-	makeRow: function(){
+	}
+	,makeRow: function(){
 		$(document.createElement("div"))
 			.addClass("jai-vpnclient-container")
 			.append(
@@ -231,8 +231,8 @@ $.widget("jai.vpnclient", $.Widget,{
 				.data("parentWidget", this)
 				.click(function(){ $(this).data("parentWidget").removeFromList(); })
 		}
-	},
-	updateName: function(){
+	}
+	,updateName: function(){
 		this.options.idString = this.data.name.replace(" ","_");
 		this.element.attr("id",this.options.idString);
 		this.title.html(this.data.name);
@@ -240,14 +240,14 @@ $.widget("jai.vpnclient", $.Widget,{
 		$.map(this.buttons, function(v,i, widgetID){
 			$(v).data("widgetID", widgetID);
 		}, this.options.idString);
-	},
-	selectType: function(){
+	}
+	,selectType: function(){
 		if(!this.data) this.data = {};
 		this.data.type = $("#vpnclienteditor-typeselector").val();
 		$("#vpnclienteditor-typeselector-section").remove();
 		this.edit();
-	},
-	edit: function(){
+	}
+	,edit: function(){
 		this.buttons.act.hide();
 		this.buttons.edit.hide();
 // make sure we have a type
@@ -288,15 +288,15 @@ $.widget("jai.vpnclient", $.Widget,{
 			this.buttons.save.show();
 			this.editor.slideDown();
 		}
-	},
-	save: function(){
+	}
+	,save: function(){
 		this.buttons.act.show();
 		this.buttons.edit.show();
 		this.buttons.save.hide();
 		if(this.editor) $(this.editor).slideUp();
 		this.saveData();
-	},
-	saveData: function(){
+	}
+	,saveData: function(){
 		// if(this.options.parent){
 		// 	this.options.parent.saveData(); // call the parent save function	
 		// }else{
@@ -306,27 +306,30 @@ $.widget("jai.vpnclient", $.Widget,{
 		
 			ro.save(this.getData());
 		// }
-	},
-	getData: function(){
+	}
+	,getData: function(){
 		return { file: this.file, key: this.key, data: this.data };
-	},
-	setData: function(i,v){
+	}
+	,setData: function(i,v){
 		this.data[i] = v;
 		if(i == "name") this.updateName();
 		// if(this.options.parent) this.options.parent.setData(this.data.name,this.data); // call the parent set function
-	},
-	removeFromList: function(){
+	}
+	,removeFromList: function(){
 		var parentRefresh = this.options.parent.refresh;
 		var parent = this.options.parent.widget;
 		$(this.element).remove();
 		parentRefresh();
 		parent.saveData();
 // TODO: needs to also delete this connection in the configuration file.
-	},
-	show: function(msg){
+	}
+	,show: function(msg){
 		$(this.message).html(msg);
-	},
-	options: {
+	}
+	,act: function(){
+		$("#testing").append( $(this.element).attr("id") );
+	}
+	,options: {
 		parent: null,
 		deletable: true,
 		editable: true,

@@ -37,13 +37,20 @@ rosocket.call(this,{
 				break;
 			}
 			case "apply": {
-				roconf.set(conf.file, conf.key, conf.data, callback);
+				roconf.set(conf.file, conf.key, conf.data, function(){
+					// Needs to have call to "act" somewhere
+					callback.apply(this,arguments);
+				});
 				break;
 			}
 			default: {
 				roconf.get(conf.file,conf.key,callback);
 			}
 		}
+	}
+	,"act": function(act, callback){
+		console.log(act);
+		callback(true);
 	}
 });
 
