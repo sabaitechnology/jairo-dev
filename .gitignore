@@ -4,3 +4,5 @@ built/*
 .Trash*
 jai/libs/jaiCache.*
 #*#
+.jairo.sublime-project
+.jairo.sublime-workspace

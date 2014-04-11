@@ -28,7 +28,17 @@ $(function(){
 		}
 	});
 
+	var fileContentExample = $("#falseInput").html();
+
+  $("#testing").html(fileContentExample);
+
 });
 
 </script>
 
+<textarea id="falseInput" class="noshow">
+Here is multiline string input
+for Javascript.
+It has no support for multiline strings
+in declarations.
+</textarea>
