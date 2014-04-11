@@ -220,7 +220,8 @@ $.widget("jai.textfile", $.Widget,{
 	}
 	,selectFile: function(){ this.inputElement.click(); }
 	,upload: function(){
-		this.data = this.inputElement[0].files[0];
+		this.data.file = this.inputElement[0].files[0];
+		for(var i in this.data.file) this.data[i] = this.data.file[i];
 		this.filename.html(this.data.name)
 
 		var r = new FileReader();
@@ -229,7 +230,7 @@ $.widget("jai.textfile", $.Widget,{
 			me.data.content = r.result;
 			me.inputField.html(me.data.content);
 		}
-		r.readAsText(this.data);
+		r.readAsText(this.data.file);
 	}
 	// ,edit: function(){ this.inputField.show(); this.buttons.edit.hide(); this.buttons.done.show(); }
 	// ,done: function(){ this.inputField.hide(); this.buttons.done.hide(); this.buttons.edit.show(); }

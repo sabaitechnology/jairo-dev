@@ -1,3 +1,11 @@
+//  _    _ _     _            _     _     _     _   
+// | |  | (_)   | |          | |   | |   (_)   | |  
+// | |  | |_  __| | __ _  ___| |_  | |    _ ___| |_ 
+// | |/\| | |/ _` |/ _` |/ _ \ __| | |   | / __| __|
+// \  /\  / | (_| | (_| |  __/ |_  | |___| \__ \ |_ 
+//  \/  \/|_|\__,_|\__, |\___|\__| \_____/_|___/\__|
+//                  __/ |                           
+//                 |___/                            
 
 // BEGIN Widget List
 // To create a jQuery Widget we invoke the widget constructor $.widget; it takes three arguments:
@@ -156,6 +164,15 @@ $.widget("jai.widgetlist", $.ui.sortable, {
 });
 // END Widget List
 
+
+//  _   _______ _   _   _____ _ _            _   
+// | | | | ___ \ \ | | /  __ \ (_)          | |  
+// | | | | |_/ /  \| | | /  \/ |_  ___ _ __ | |_ 
+// | | | |  __/| . ` | | |   | | |/ _ \ '_ \| __|
+// \ \_/ / |   | |\  | | \__/\ | |  __/ | | | |_ 
+//  \___/\_|   \_| \_/  \____/_|_|\___|_| |_|\__|
+                                              
+                                              
 // BEGIN VPN Client Widget
 
 $.widget("jai.vpnclient", $.Widget,{
@@ -341,6 +358,16 @@ $.widget("jai.vpnclient", $.Widget,{
 
 // END VPN Client Widget
 
+
+//  _____ _ _            _     _____    _ _ _             
+// /  __ \ (_)          | |   |  ___|  | (_) |            
+// | /  \/ |_  ___ _ __ | |_  | |__  __| |_| |_ ___  _ __ 
+// | |   | | |/ _ \ '_ \| __| |  __|/ _` | | __/ _ \| '__|
+// | \__/\ | |  __/ | | | |_  | |__| (_| | | || (_) | |   
+//  \____/_|_|\___|_| |_|\__| \____/\__,_|_|\__\___/|_|   
+                                                       
+                                                       
+
 $.widget("jai.vpnclienteditor", $.Widget,{
 	_create: function(){
 		this.element.addClass("jai-vpnclient-editor");
@@ -431,6 +458,15 @@ $.widget("jai.vpnclienteditor", $.Widget,{
 	}
 });
 
+
+// ____________ ___________ 
+// | ___ \ ___ \_   _| ___ \
+// | |_/ / |_/ / | | | |_/ /
+// |  __/|  __/  | | |  __/ 
+// | |   | |     | | | |    
+// \_|   \_|     \_/ \_|    
+                         
+                        
 $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 	// TODO: appropriately abstract _create
 	_create: function(){
@@ -465,6 +501,15 @@ $.widget("jai.vpnclienteditor_pptp", $.jai.vpnclienteditor, {
 		this.makeEditor();
 	}
 });
+
+
+//  _      _____ ___________ 
+// | |    / __  \_   _| ___ \
+// | |    `' / /' | | | |_/ /
+// | |      / /   | | |  __/ 
+// | |____./ /___ | | | |    
+// \_____/\_____/ \_/ \_|    
+                          
 
 // The L2TP widget can pretty much be a duplicate of the PPTP widget with a PSK field, except that in future it will need to support
 //	client/server certificates and some advanced features which will require more sophisticated handling
@@ -512,7 +557,14 @@ $.widget("jai.vpnclienteditor_l2tp", $.jai.vpnclienteditor, {
 
 
 
-
+//  _____                  _   _______ _   _ 
+// |  _  |                | | | | ___ \ \ | |
+// | | | |_ __   ___ _ __ | | | | |_/ /  \| |
+// | | | | '_ \ / _ \ '_ \| | | |  __/| . ` |
+// \ \_/ / |_) |  __/ | | \ \_/ / |   | |\  |
+//  \___/| .__/ \___|_| |_|\___/\_|   \_| \_/
+//       | |                                 
+//       |_|                                 
 
 // The OpenVPN widget will need to be somewhat more complicated. See the current router interface for guidance.
 

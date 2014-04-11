@@ -116,8 +116,8 @@ module.exports = (function(){
 			actionURL = {};
 		}
 
-		console.log(body);
-		console.log(actionURL);
+		// console.log(body);
+		// console.log(actionURL);
 
 		return me.extend(body,actionURL);
 	}
