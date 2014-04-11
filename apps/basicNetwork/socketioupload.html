@@ -5,7 +5,23 @@
 
 $.widget("jai.fileupload", $.Widget,{
 	_create: function(){
+		if(!$(this.element).is("input")){
+			$("#testing").html("Correct.");
+		}else{
+			$("#testing").html("Incorrect.");
+			console.error("Not a file input element.");
+			// var baseElementID = $(this.element).attr("id");
+			// var baseElement = document.createElement("input");
+			// $(this.element).append(baseElement).attr("id", baseElementID +"-base");
+			// $(baseElement).attr("id", baseElementID).widgetlist(this.options);
 
+			// Deconstruct leftovers
+			// this.element
+			// 	.unbind( this.eventNamespace )
+			// 	.removeData( this.widgetFullName )
+			// this.bindings.unbind( this.eventNamespace );
+			// this.options = {};
+		}
 		// if(this.options.parent){
 		// 	this.options.deletable = this.options.deletable && (!this.options.parent.fixed);	
 		// 	this.element.addClass( this.options.parent.element +"-list-child");
@@ -14,7 +30,7 @@ $.widget("jai.fileupload", $.Widget,{
 		// }else{
 		// 	if(this.options.key) this.key = this.options.key;
 		// }
-		// this.element.addClass("jai-vpnclient"
+		// this.element.addClass("jai-file");
 		// $(document.createElement("div"))
 		// 	.addClass("jai-vpnclient-container")
 		// 	.append(

@@ -1,0 +1,29 @@
+{
+  "name": "ro",
+  "version": "0.0.1",
+  "description": "Backend component for JaiRo modular networking platform",
+  "main": "ro.js",
+  "dependencies": {
+    "socket.io": "~0.9.16",
+    "deep-diff": "~0.1.4"
+  },
+  "engines": { "node":  "*"},
+  "devDependencies": {},
+  "scripts": {
+    "test": "nodejs test.js",
+    "start": "nodejs ro.js"
+  },
+  "keywords": [
+    "networking",
+    "routing",
+    "Sabai",
+    "VPN"
+  ],
+  "author": "Sabai Technology",
+  "homepage": "http://www.jairoproject.com",
+  "license": "MPL",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/sabaitechnology/jairo-dev.git"
+  }
+}

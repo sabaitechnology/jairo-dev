@@ -60,9 +60,9 @@ function what(obj,ownonly,pre){
 
 function help(){ window.open('http://sabaitechnology.zendesk.com/anonymous_requests/new','Submit a Support Request','height=600,width=800,top=50,left=50').focus(); return false; }
 
-/* BEGIN Jai node service */
+/* BEGIN JaiRo Ro node service */
 
-function jainode(address){
+function Ro(address){
 	var me = this;
 	this.showTimeout = 500;
 	this.address = address;
@@ -80,7 +80,7 @@ function jainode(address){
 		me.socket.emit( (msgType || "cdata"), msg, callback);
 	}
 	this.save = function(conf){
-		conf.set = true;
+		conf.type = "set";
 		me.send(conf, "conf", function(data){
 			if(data) me.show(data ? "Saved." : "Not saved.");
 		});
@@ -107,6 +107,6 @@ function jainode(address){
 	this.create();
 }
 
-/* END Jai node service */
+/* END JaiRo Ro node service */
 
 // /* ~ */

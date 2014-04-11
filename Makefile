@@ -9,42 +9,56 @@ ifdef BASH
 	SHELL = $(BASH)
 endif
 
-export installRoot = $(shell pwd)
+include options.make
+
+.PHONY: help dependencies jainode dev jairo debian clean
+
+help:
+	-@cat README
+
+# We have an empty rule for the Makefile to keep make from bothering
+Makefile: ;
+
+dependencies:
+	# MAKE: $@
+	#@makeScripts/install-dependencies.sh
+	# DONE: $@
+
+jai:
+	# MAKE: $@
+#	#@makeScripts/install-jainode.sh
+	# DONE: $@
+
+# jainode: dependencies
+ro:
+	# MAKE: $@
+#	#@makeScripts/install-jainode.sh
+	# DONE: $@
+
+#dev-install: dependencies jainode jaiui
+dev:
+	# MAKE: $@
+	@$(MAKE) jairo development=true
+	# DONE: $@
+
+jairo: dependencies ro jai
+	# MAKE: $@
+	@makeScripts/install-jainode.sh
+	# DONE: $@
+
 
 # update: $(shell find jai -type f) $(shell find configuration -type f)
 
 # built/jairo.deb: update
-# 	dpkg-deb --build ./debian built/jairo.deb
+#	@makeScripts/create-debian-package.sh
 
 # debian: built/jairo.deb
-
-# jainode: dependencies
-
-jainode:
-	# MAKE $@
-	@install/install-jainode.sh
-	# DONE $@
-
-dependencies:
-	# MAKE $@
-	#@install/dependencies.sh
-	# DONE $@
-
-#dev-install: dependencies jainode
-
-dev-install:
-	# MAKE $@
-	# $(installRoot)
-	touch hi
-	# DONE $@
 
 clean:
 	# MAKE $@
 #	@rm built/*
-	@echo clean
+	@echo "clean?"
 	# DONE $@
-
-.PHONY: clean debian dependencies dev-install jainode
 
 # demo:
 # 	@rm -rf demo

@@ -9,14 +9,9 @@
 	We're making PHP give us a valid address for our server since this address will actually refer
 	 to the machine we're running on, which is different everywhere.
 -->
-<script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400/socket.io/socket.io.js"></script>
-<!-- <script src="/libs.php"></script> -->
-<?php include("./libs.php"); ?>
+<?php include("libs/libs.php"); ?>
 <script src="js/main.js"></script>
 <script>
-// noty settings -- moved to /libs/jquery.noty.jai.js
-// jainode definition -- moved to /libs/jai.js
-var ro = new jainode("http://<?php echo $_SERVER['HTTP_HOST']; ?>:31400");
 
 function toggleHelpSection() {
 	$( "#helpClose").show();
